@@ -38,13 +38,13 @@ import {
 
 // API URLs
 const BILLING_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 const VIKAS_KHAND_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/get-vikas-khand-by-center/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/get-vikas-khand-by-center/";
 const FORM_FILTERS_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/billing-form-filters/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-form-filters/";
 const CENTERS_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/centers/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/centers/";
 
 // Utility function to round numbers to 2 decimal places
 const roundTo2Decimals = (value) => {
@@ -53,30 +53,53 @@ const roundTo2Decimals = (value) => {
 };
 
 const validKendraNames = [
-  "कोटद्वार",
-  "किनगोड़िखाल",
-  "चौखाल",
-  "धुमाकोट",
-  "बीरोंखाल",
-  "हल्दूखाल",
-  "किल्वोंखाल",
-  "चेलूसैंण",
-  "जयहरीखाल",
-  "जेठागांव",
-  "देवियोंखाल",
-  "सिलोगी",
-  "सिसल्ड़ी",
-  "पौखाल",
-  "सतपुली",
-  "संगलाकोटी",
-  "देवराजखाल",
-  "पोखड़ा",
-  "वेदीखाल",
-  "विथ्याणी",
-  "गंगाभोगपुर",
-  "दिउली",
-  "दुगड्डा",
-  "सेंधीखाल",
+   "अखोरी",
+  "अंजनीसैंण",
+  "अच्चरीखूंट",
+  "गाजा",
+  "गर्केत",
+  "घनसाली",
+  "घुत्तू",
+  "चम्बा",
+  "जड़ीपानी",
+  "जौनपुर",
+  "टिहरी",
+  "थत्यूड़",
+  "थौलधार",
+  "देवदर्शनी",
+  "देवप्रयाग",
+  "धनोल्टी",
+  "नंदगांव",
+  "नैनबाग",
+  "नरेन्द्रनगर",
+  "न्योली",
+  "पंतवारी",
+  "पवखाल",
+  "पावकी देवी",
+  "प्रतापनगर",
+  "बौराड़ी",
+  "बाचेलीखाल",
+  "भवान",
+  "भेदियाना",
+  "भिलंगना",
+  "मरौड़ा",
+  "मुनि की रेती",
+  "म्याणी",
+  "राजाखेत",
+  "लंबगांव",
+  "लेसर",
+  "वली",
+  "श्रीकोट",
+  "सबली",
+  "हुलानाखाल",
+  "हिंडोलाखाल",
+  "हिसरियाखाल",
+  "फकोट",
+  "कमांद",
+  "कोड़ी",
+  "कुमाल्डा",
+  "कीर्तिनगर",
+  "छाम"
 ];
 
 // Static options for form fields
@@ -90,22 +113,24 @@ const unitOptions = ["बैग", "क्विंटल", "किलोग्�
 const sourceOptions = ["PWD", "PMGSY", "NREGA"];
 const schemeOptions = ["MGNREGA", "PMKSY", "DDUGJY"];
 const vikasKhandOptions = [
-  "नैनीडांडा",
-  "बीरोंखाल",
-  "यमकेश्वर",
-  "दुगड्डा",
-  "पौड़ी",
-  "द्वारीखाल",
-  "जयहरीखाल",
-  "रिखणीखाल",
-  "नगर निगम कोटद्वार",
+  "घनसाली",
+  "टिहरी",
+  "देवप्रयाग",
+  "धनोल्टी",
+  "नरेन्द्रनगर",
+  "प्रतापनगर",
+ 
 ];
 const vidhanSabhaOptions = [
-  "लैन्सडाउन",
-  "यमकेश्वर",
-  "चौबट्टाखाल",
-  "कोटद्वार",
-  "श्रीनगर",
+  "भिलंगना",
+  "चम्बा",
+  "जाखणीधार",
+  "थौलधार",
+  "देवप्रयाग",
+  "कीर्तिनगर",
+  "जौनपुर",
+  "नरेन्द्रनगर",
+  "प्रतापनगर",
 ];
 
 // Available columns for the table (excluding sno which is always shown)
@@ -1440,7 +1465,7 @@ const Registration = () => {
       setIsLoading(true);
       const payload = { bill_id: selectedItems };
       await axios.delete(
-        "https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/",
+        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
         { data: payload },
       );
 
