@@ -1,0 +1,29 @@
+.filter-sidebar{
+    margin-top: 0px;
+}
+.left-top {
+    /* Positioning */
+   margin-top: 60px;
+    top: 60px;  
+   
+    
+  
+}
+.gov-form-label{
+    color: #fff;
+}
+.card-header-main{
+    background-color: #194e8b !important;
+    border-radius: 8px !important;
+    color: #fff !important;
+}
+.filter-select{
+    border-color: none !important;
+}
+.card-header{
+        cursor: pointer;
+    background-color: #e7e3e3;
+}
+.filter-section-card{
+   
+}

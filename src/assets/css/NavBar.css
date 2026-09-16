@@ -1,0 +1,148 @@
+.awc-main {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffff !important;
+
+}
+
+.br-span {
+    color: var(--gov-primary) !important;
+    font-size: var(--gov-space-400) !important;
+    font-weight: var(--gov-space-800) !important;
+    text-decoration: none;
+}
+
+.nav-sub-list {
+    font-size: var(--gov-space-300) !important;
+    background-color: #F6B325;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    color: var(--gov-white) !important;
+    padding-left: var(--gov-space-200);
+    box-shadow: 1px 1px 5px rgba(161, 182, 253, 0.825);
+    max-width: 178px;
+}
+
+.awc-title {
+    line-height: var(--awc-space-400);
+    color: var(--gov-black) !important;
+    margin-top: 0px;
+}
+
+img.logo1 {
+    width: 45px;
+}
+
+
+.awc-subtitle {
+    color: var(--gov-blue-dark-bg) !important;
+    font-size: var(--gov-space-400) !important;
+    display: flex;
+    font-weight: 600;
+}
+
+img.logo-wecd {
+    width: 50px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+.subtitle {
+    color: var(--gov-Primary) !important;
+    font-size: var(--gov-space-350) !important;
+    line-height: var(--gov-space-600) !important;
+}
+
+.nav-link {
+    color: var(--gov-black);
+    font-weight: var(--gov-space-800) !important;
+    font-size: var(--gov-space-350);
+}
+
+.nav-link:hover {
+    color: #F6B325;
+}
+
+.awc-title p {
+    font-size: var(--gov-space-250) !important;
+    color: var(--gov-Primary);
+    margin-top: var(--gov-space-50);
+    margin-bottom: var(--gov-space-50);
+}
+
+
+.nav-link {
+    color: var(--gov-black);
+    font-weight: var(--gov-space-800) !important;
+    font-size: var(--gov-space-350);
+}
+
+/* Style for the active top-level link */
+.nav-link.active {
+    color: #F6B325; /* Your hover color */
+    font-weight: var(--gov-space-800) !important;
+}
+
+/* Style for the active dropdown item */
+.dropdown-item.active {
+    color: #F6B325; /* Your hover color */
+    background-color: transparent; /* Optional: removes the default blue background */
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #F6B325;
+}
+
+/* Optional: Ensure the dropdown toggle is also styled when its children are active */
+.nav-dropdown .nav-link.active {
+    color: #F6B325;
+}
+
+@media (max-width: 576px) {
+
+    .awc-title p {
+        font-size: var(--gov-space-200);
+    }
+.nav-link {
+   
+    font-size: var(--gov-space-400);
+    padding: 8px;
+}
+    /* Prevent double-click on dropdown from closing navbar */
+    .navbar .dropdown-menu.show {
+        display: block;
+        background-color: #a5969621;
+    }
+
+
+
+    .awc-title {
+        margin-top: 4px;
+    }
+
+    .logo {
+        display: flex;
+        margin-right: var(--gov-space-0) !important;
+    }
+
+    .awc-title {
+
+        font-size: var(--gov-space-200) !important;
+    }
+
+    .awc-subtitle {
+
+        display: flex;
+
+    }
+
+    .subtitle {
+        font-size: var(--gov-space-250) !important;
+    }
+
+    .awc-mob-responsive {
+        padding: var(--gov-space-150)var(--gov-space-150) var(--gov-space-150) var(--gov-space-150) !important;
+    }
+
+}

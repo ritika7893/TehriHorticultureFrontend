@@ -1,0 +1,391 @@
+/* registration.css */
+
+/* --- 1. CSS Variables for Easy Theming --- */
+:root {
+  --primary-color: #006edc;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-color: #ced4da;
+  --input-bg: #fff;
+
+  --font-family-sans-serif: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-base: 0.9rem;
+  --font-size-sm: 0.8rem;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- 2. Layout & Sectioning --- */
+/* Styling for the two main sections (Excel Upload and Single Entry) */
+.form-section-card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  background-color: #fff;
+  margin-bottom: 2rem;
+  overflow: hidden; /* Ensures content respects border-radius */
+}
+
+.form-section-card .card-body {
+  padding: 2rem;
+}
+
+/* Separator between the two sections */
+.form-section-divider {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  margin: 2rem 0;
+}
+
+/* --- 3. Form Elements --- */
+.registration-form .form-label {
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+}
+
+.registration-form .form-control,
+.registration-form .form-select {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+  font-size: var(--font-size-base);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.registration-form .form-control:focus,
+.registration-form .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(0, 110, 220, 0.25);
+  outline: 0;
+}
+
+/* Placeholder text styling */
+.registration-form .form-control::placeholder {
+  color: var(--secondary-color);
+  opacity: 0.7;
+}
+
+/* Invalid feedback styling */
+.registration-form .form-control.is-invalid {
+  border-color: var(--danger-color);
+}
+
+.registration-form .invalid-feedback {
+  color: var(--danger-color);
+  font-size: var(--font-size-sm);
+  margin-top: 0.25rem;
+  display: block; /* Ensure feedback is always visible when invalid */
+}
+
+/* --- 4. Specific Components --- */
+
+/* File Input Styling */
+.form-section-card .form-control[type="file"] {
+  padding: 0.5rem;
+}
+
+/* Instructions text */
+.instructions-text {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* Buttons */
+.btn-submit-excel {
+  background-color: var(--success-color);
+  border-color: var(--success-color);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+}
+
+.btn-submit-excel:hover:not(:disabled) {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: translateY(-1px);
+}
+
+.btn-submit-excel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- 5. Responsive Design --- */
+@media (max-width: 767.98px) {
+  .form-section-card .card-body {
+    padding: 1rem;
+  }
+
+  .registration-form .form-control,
+  .registration-form .form-select {
+    font-size: var(--font-size-sm);
+    padding: 0.6rem;
+  }
+}
+.page-title{
+  font-size: 18px !important;
+}
+.pdf-button-section {
+    display: flex;
+    justify-content: end;
+}
+
+/* --- 6. Summary Cards and Modal Enhancements --- */
+.summary-cards {
+  padding: 1.5rem 0;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary-color);
+}
+
+.summary-card h5 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.summary-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  color: var(--dark-color);
+}
+
+.summary-card strong {
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+/* Modal Enhancements */
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #0057a8 100%);
+  color: white;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  padding: 1.5rem;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+/* Tabs styling */
+.nav-pills {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-pills .nav-link {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+  color: var(--dark-color);
+  background-color: #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #e0e0e0;
+  color: var(--primary-color);
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.tab-content {
+  border-radius: 8px;
+}
+
+.tab-pane {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Summary section within tabs */
+.summary-section {
+  margin: 0;
+}
+
+.summary-stats {
+  background-color: #f8f9fa !important;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+}
+
+.summary-stats p {
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+  font-size: 0.95rem;
+}
+
+.summary-stats p strong {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* Enhanced Table Styling */
+.summary-section table {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.summary-section table thead {
+  background-color: #f0f0f0;
+}
+
+.summary-section table thead th {
+  font-weight: 600;
+  color: var(--dark-color);
+  border-bottom: 2px solid var(--primary-color);
+  padding: 0.75rem;
+}
+
+.summary-section table tbody td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.summary-section table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.summary-section table tbody tr:last-child td {
+  border-bottom: 2px solid #e9ecef;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Modal Footer */
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  border-radius: 0 0 12px 12px;
+  padding: 1.5rem;
+}
+
+.modal-footer p {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .summary-card {
+    padding: 1rem !important;
+  }
+
+  .summary-card h5 {
+    font-size: 1rem;
+  }
+
+  .summary-card p {
+    font-size: 0.85rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  .nav-pills {
+    justify-content: center;
+  }
+
+  .nav-pills .nav-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .summary-section table {
+    font-size: 0.8rem;
+  }
+
+  .summary-section table th,
+  .summary-section table td {
+    padding: 0.5rem !important;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-header .modal-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-cards {
+    padding: 0.5rem 0;
+  }
+
+  .nav-pills {
+    gap: 0.25rem;
+  }
+
+  .nav-pills .nav-link {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.75rem;
+    border-radius: 16px;
+  }
+
+  .summary-section table thead {
+    font-size: 0.7rem;
+  }
+
+  .summary-section table tbody {
+    font-size: 0.75rem;
+  }
+}

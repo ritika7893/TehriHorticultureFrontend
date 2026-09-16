@@ -1,0 +1,47 @@
+/* DemandCenterwiseEntry Structure CSS */
+.demand-center-report-page {
+    padding: 20px;
+    background-color: #f4f6f7;
+    min-height: calc(100vh - 60px);
+}
+
+.demand-center-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-bottom: 3px solid #194e8b;
+}
+
+.demand-center-header h4 {
+    margin: 0;
+    color: #194e8b;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.demand-center-alert {
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.demand-center-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    gap: 15px;
+    color: #194e8b;
+    font-weight: 600;
+}
+
+.demand-center-empty {
+    text-align: center;
+    font-weight: 500;
+    padding: 30px;
+}

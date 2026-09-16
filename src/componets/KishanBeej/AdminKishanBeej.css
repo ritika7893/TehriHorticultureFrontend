@@ -1,0 +1,1555 @@
+/* Global Styles & Layout */
+.admin-kishan-container {
+  padding: 32px;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  color: #1e293b;
+}
+
+/* Enhanced Header Section UI */
+.header-section {
+  margin-bottom: 24px;
+  margin-top: 60px;
+  background: linear-gradient(135deg, #2563eb 0%, #5e91fe 100%);
+  padding: 28px 32px;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.header-section h2 {
+  margin: 0 0 6px 0;
+  font-size: 26px;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.header-section p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+}
+
+/* Unified Controls Bar - 1 Row Layout */
+.admin-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Tabs */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  background: transparent;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.tab-btn {
+  padding: 10px 18px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  color: #64748b;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn:hover {
+  background: #e2e8f0;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+/* Filters */
+.admin-filters {
+  display: flex;
+  gap: 12px;
+  flex-grow: 1;
+  max-width: 600px;
+}
+
+.search-wrapper {
+  position: relative;
+  flex-grow: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px 10px 42px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+  background: #f8fafc;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.status-select {
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 160px;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #2563eb;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Table */
+.table-responsive {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  min-width: 1050px;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  background: #f8fafc;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.data-row {
+  transition: background 0.15s;
+}
+
+.data-row:hover {
+  background: #f8fafc;
+}
+
+.form-id-cell {
+  font-family: monospace;
+  font-weight: 600;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.name-cell {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.scheme-cell {
+  min-width: 180px;
+  max-width: 230px;
+  color: #334155;
+}
+
+.scheme-cell strong {
+  display: block;
+  color: #166534;
+  font-weight: 700;
+}
+
+.scheme-cell small {
+  display: block;
+  margin-top: 3px;
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status-badge.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge.completed .status-dot {
+  background: #16a34a;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-badge.pending .status-dot {
+  background: #f59e0b;
+}
+
+/* View Button */
+.view-btn {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  padding: 8px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+}
+
+.action-cell {
+  white-space: nowrap;
+}
+
+/* No Data */
+.no-data-content {
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+}
+
+.no-data-content span {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Loading Screen */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f0f2f5;
+  color: #2563eb;
+}
+
+.loader-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #cbd5e1;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.admin-error {
+  margin: 40px;
+  padding: 20px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-weight: 600;
+}
+
+/* =========================================================
+   FULL-SCREEN APPLICATION DOCUMENT VIEW
+   This replaces the old small details modal.
+   ========================================================= */
+
+body.admin-application-view-open {
+  overflow: hidden;
+}
+
+.application-document-view {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.document-view-toolbar {
+  flex: 0 0 auto;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #d1d5db;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.document-view-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.document-view-title span {
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.document-view-title strong {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #f1f5f9;
+  color: #0f172a;
+  font-family: monospace;
+  font-size: 13px;
+}
+
+.document-view-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.document-print-btn {
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.document-print-btn:hover {
+  background: #1d4ed8;
+}
+
+.document-close-btn {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  background: #fff;
+  color: #334155;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.document-close-btn:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.document-view-scroll {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding: 30px 20px 50px;
+  background: #e5e7eb;
+}
+
+/* A4-like document, similar to the application portal preview. */
+.admin-print-page {
+  width: 210mm;
+  min-height: 297mm;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 14mm;
+  background: #fff;
+  color: #111827;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+  font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', 'Segoe UI', sans-serif;
+}
+
+.admin-print-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 7mm;
+  margin-bottom: 7mm;
+  border-bottom: 2px solid #1f2937;
+}
+
+.admin-print-department {
+  margin-bottom: 2mm;
+  font-size: 11pt;
+  font-weight: 700;
+  color: #166534;
+}
+
+.admin-print-header h1 {
+  margin: 0;
+  font-size: 19pt;
+  line-height: 1.25;
+  color: #111827;
+}
+
+.admin-print-scheme {
+  margin-top: 2mm;
+  font-size: 12pt;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.admin-print-meta {
+  min-width: 43mm;
+  font-size: 10pt;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.admin-print-meta div {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-print-meta strong {
+  font-family: monospace;
+  font-size: 10.5pt;
+}
+
+.admin-print-section {
+  margin-bottom: 7mm;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.admin-print-section-title {
+  padding: 2.5mm 3mm;
+  margin-bottom: 2.5mm;
+  border: 1px solid #9ca3af;
+  background: #f3f4f6;
+  color: #111827;
+  font-size: 11pt;
+  font-weight: 800;
+}
+
+.admin-print-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.admin-print-table td {
+  width: 25%;
+  border: 1px solid #6b7280;
+  padding: 2.2mm 2.5mm;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  font-size: 9.7pt;
+  line-height: 1.45;
+}
+
+.admin-print-table .print-key {
+  width: 18%;
+  background: #f8fafc;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.print-bool {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 9pt;
+  font-weight: 700;
+}
+
+.print-bool.yes {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.print-bool.no {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.admin-documents-box {
+  margin-top: 3mm;
+  padding: 3.5mm;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  font-size: 9.7pt;
+}
+
+.admin-documents-box strong {
+  display: block;
+  margin-bottom: 2mm;
+}
+
+.admin-documents-box ol {
+  margin: 0;
+  padding-left: 6mm;
+}
+
+.admin-documents-box li {
+  margin: 1.2mm 0;
+  line-height: 1.4;
+}
+
+.admin-documents-box p {
+  margin: 0;
+  color: #64748b;
+}
+
+.admin-print-declaration {
+  margin-top: 7mm;
+  padding-top: 4mm;
+  border-top: 1px solid #111827;
+  font-size: 10pt;
+  line-height: 1.55;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.admin-print-declaration strong {
+  display: block;
+  margin-bottom: 2mm;
+  font-size: 11pt;
+}
+
+.admin-print-declaration p {
+  margin: 0;
+}
+
+.admin-print-signatures {
+  display: flex;
+  justify-content: space-between;
+  gap: 25mm;
+  margin-top: 16mm;
+  font-size: 10pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.admin-print-signatures > div {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 9mm;
+}
+
+.admin-print-signatures > div:last-child {
+  text-align: right;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design for Controls Bar */
+@media (max-width: 1024px) {
+  .admin-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-tabs {
+    flex-wrap: wrap;
+  }
+
+  .admin-filters {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-kishan-container {
+    padding: 18px;
+  }
+
+  .header-section {
+    margin-top: 35px;
+    padding: 22px;
+  }
+
+  .header-section h2 {
+    font-size: 22px;
+  }
+
+  .admin-filters {
+    flex-direction: column;
+  }
+
+  .status-select {
+    width: 100%;
+  }
+
+  .document-view-toolbar {
+    padding: 10px 12px;
+  }
+
+  .document-view-title span {
+    display: none;
+  }
+
+  .document-view-scroll {
+    padding: 16px 8px 30px;
+  }
+
+  .admin-print-page {
+    width: 210mm;
+    margin-left: max(0px, calc((100vw - 210mm) / 2));
+    margin-right: max(0px, calc((100vw - 210mm) / 2));
+  }
+}
+
+/* ---------- PRINT ---------- */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  body.admin-application-view-open .application-document-view,
+  body.admin-application-view-open .application-document-view * {
+    visibility: visible !important;
+  }
+
+  body.admin-application-view-open .application-document-view {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body.admin-application-view-open .document-view-toolbar {
+    display: none !important;
+  }
+
+  body.admin-application-view-open .document-view-scroll {
+    display: block !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body.admin-application-view-open .admin-print-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 14mm !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  .admin-print-section,
+  .admin-print-declaration,
+  .admin-print-signatures {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .admin-print-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+
+/* ============================================================
+   EXACT KISAN AAVEDAN PORTAL PREVIEW / PRINT STRUCTURE
+   ============================================================ */
+/* ---------- PRINT PREVIEW / PRINT DOCUMENT ----------
+   NOTE: .print-document and its children are rendered OUTSIDE the .kisan-page
+   wrapper, so these rules must NOT be scoped under .kisan-page.
+   .print-preview-box stays inside .kisan-page, so it IS scoped.
+*/
+.kisan-page .print-preview-box {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid var(--kp-line);
+  border-radius: 14px;
+  background: #f3f5f1;
+}
+
+.kisan-page .print-preview-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--kp-ink);
+}
+
+.kisan-page .print-preview-heading b {
+  display: block;
+  font-size: 16px;
+}
+
+.kisan-page .print-preview-heading span {
+  display: block;
+  margin-top: 3px;
+  color: var(--kp-ink2);
+  font-size: 12px;
+}
+
+/*
+  Instead of display: none, we move the actual print container off-screen.
+  This ensures Chromium captures its layout properly when printing.
+*/
+.print-document {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 210mm;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.print-document-preview {
+  position: static;
+  z-index: 1;
+  display: block;
+  overflow-x: auto;
+  padding: 4px;
+  width: 100%;
+  opacity: 1;
+}
+
+.print-page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  padding: 12mm;
+  background: #fff;
+  color: #000;
+  font-family: "Noto Sans Devanagari", "Nirmala UI", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.print-top {
+  min-height: 36mm;
+  position: relative;
+}
+
+.print-app-no {
+  font-size: 10.5pt;
+  font-weight: 700;
+  padding-right: 34mm;
+}
+
+.print-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28mm;
+  height: 34mm;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 8.5pt;
+  line-height: 1.35;
+  overflow: hidden;
+}
+
+.print-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.print-title {
+  margin: 2mm 0 1mm;
+  text-align: center;
+  font-size: 17pt;
+  line-height: 1.35;
+  font-weight: 800;
+}
+
+.print-department {
+  text-align: center;
+  font-size: 11pt;
+  font-weight: 700;
+  margin-bottom: 5mm;
+}
+
+.print-section {
+  margin-top: 5mm;
+}
+
+.print-section h2 {
+  margin: 0 0 2mm;
+  padding-bottom: 1.5mm;
+  border-bottom: 1px solid #000;
+  font-size: 12.5pt;
+  line-height: 1.4;
+  font-weight: 800;
+}
+
+.print-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.print-table td {
+  border: 1px solid #555;
+  padding: 2.2mm 2.5mm;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.print-table .print-key {
+  width: 36%;
+  background: #f2f2f2;
+  font-weight: 700;
+}
+
+.print-list {
+  margin: 0;
+  padding-left: 7mm;
+}
+
+.print-list li {
+  margin: 1.5mm 0;
+  line-height: 1.5;
+}
+
+.print-note {
+  margin: 2mm 0 0;
+  font-size: 9.5pt;
+  line-height: 1.5;
+}
+
+.print-check {
+  font-weight: 700;
+}
+
+.print-signatures {
+  display: flex;
+  justify-content: space-between;
+  gap: 20mm;
+  margin-top: 13mm;
+  font-size: 10.5pt;
+}
+
+.print-signatures > div {
+  width: 48%;
+}
+
+.print-signatures > div:last-child {
+  text-align: right;
+}
+
+.print-officer {
+  margin-top: 10mm;
+  padding-top: 4mm;
+  border-top: 1px solid #000;
+  font-size: 10.5pt;
+}
+
+.print-officer p {
+  margin: 2mm 0 8mm;
+}
+
+.print-avoid-break {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+@media (max-width: 768px) {
+  .kisan-page .print-preview-box {
+    padding: 10px;
+  }
+
+  .print-document-preview {
+    margin: 0 -4px;
+  }
+}
+
+
+/* ---------- COMPLETED APPLICATION PRINT PREVIEW ---------- */
+.application-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(9, 20, 13, .68);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.application-preview-modal {
+  width: min(1120px, 97vw);
+  height: min(94vh, 960px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f0f3ef;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(0,0,0,.38);
+}
+
+.preview-modal-head {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 18px;
+  border-bottom: 1px solid #d6ded4;
+  background: #fff;
+}
+
+.preview-heading-copy {
+  min-width: 0;
+}
+
+.preview-eyebrow {
+  display: block;
+  margin-bottom: 2px;
+  color: #2f6b42;
+  font-size: 10.5px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.preview-modal-head h2 {
+  margin: 0 0 2px;
+  font-size: 20px;
+  color: #12251a;
+  line-height: 1.25;
+}
+
+.preview-modal-head span:not(.preview-eyebrow) {
+  color: #617067;
+  font-size: 12px;
+}
+
+.preview-modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.preview-print-btn {
+  border: 0;
+  border-radius: 9px;
+  background: #245a35;
+  color: #fff;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 3px 9px rgba(36,90,53,.18);
+}
+
+.preview-print-btn:hover {
+  background: #1c492b;
+}
+
+.preview-close {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: 1px solid #d7dfd5;
+  border-radius: 9px;
+  background: #f4f6f3;
+  color: #26372c;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.preview-close:hover {
+  background: #e7ece5;
+}
+
+.preview-modal-body {
+  flex: 1;
+  overflow: auto;
+  padding: 22px;
+  background: #e9ede8;
+}
+
+.preview-modal-body .print-document-preview {
+  margin: 0 auto;
+  max-width: 210mm;
+}
+
+@media (max-width: 768px) {
+  .portal-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-tab {
+    min-height: 48px;
+  }
+
+  .new-application-panel,
+  .completed-panel {
+    padding: 17px;
+    border-radius: 14px;
+  }
+
+  .panel-heading,
+  .completed-toolbar {
+    flex-direction: column;
+  }
+
+  .completed-toolbar .btn {
+    width: 100%;
+  }
+
+  .completed-filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .application-preview-overlay {
+    padding: 6px;
+  }
+
+  .application-preview-modal {
+    width: 100%;
+    height: 97vh;
+    border-radius: 12px;
+  }
+
+  .preview-modal-head {
+    padding: 12px;
+  }
+
+  .preview-modal-actions {
+    gap: 5px;
+  }
+
+  .preview-print-btn {
+    padding: 8px 10px;
+    font-size: 11.5px;
+  }
+
+  .preview-modal-body {
+    padding: 8px;
+  }
+}
+
+/* ---------- FINAL PREVIEW / PRINT FIXES ---------- */
+.application-preview-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 24px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+}
+
+.application-preview-modal {
+  width: min(1120px, calc(100vw - 48px));
+  height: auto;
+  max-height: calc(100vh - 48px);
+  min-height: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.preview-modal-head {
+  min-height: 70px;
+  box-sizing: border-box;
+}
+
+.preview-modal-body {
+  min-height: 0;
+  overflow: auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.preview-modal-body .print-document-preview {
+  display: block;
+  width: 210mm;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .application-preview-overlay {
+    padding: 10px;
+  }
+
+  .application-preview-modal {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 20px);
+  }
+
+  .preview-modal-body {
+    padding: 10px;
+  }
+}
+
+
+
+/* ============================================================
+   ADMIN: EXACT KISAN APPLICATION PREVIEW / PRINT BEHAVIOUR
+   ============================================================ */
+.application-preview-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  box-sizing: border-box !important;
+  background: rgba(9, 20, 13, .68) !important;
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+}
+
+.application-preview-modal {
+  width: min(1120px, calc(100vw - 48px)) !important;
+  height: min(94vh, 960px) !important;
+  max-height: calc(100vh - 48px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: #f0f3ef !important;
+  border: 1px solid rgba(255,255,255,.25) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 30px 90px rgba(0,0,0,.38) !important;
+}
+
+.preview-modal-head { flex-shrink: 0 !important; }
+.preview-modal-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  padding: 24px !important;
+  background: #e9ede8 !important;
+  box-sizing: border-box !important;
+}
+
+.preview-modal-body .print-document-preview {
+  display: block !important;
+  width: 210mm !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+@page { size: A4 portrait; margin: 0; }
+
+@media print {
+  html, body, #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    background: #fff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body.printing-completed-application .admin-kishan-container {
+    display: none !important;
+  }
+
+  body.printing-completed-application .application-preview-overlay {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.printing-completed-application .application-preview-modal {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.printing-completed-application .preview-modal-head,
+  body.printing-completed-application .preview-modal-actions {
+    display: none !important;
+  }
+
+  body.printing-completed-application .preview-modal-body {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.printing-completed-application .print-document,
+  body.printing-completed-application .print-document-preview {
+    display: block !important;
+    position: static !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    transform: none !important;
+  }
+
+  body.printing-completed-application .print-document-preview .print-page,
+  body.printing-completed-application .print-document .print-page {
+    display: block !important;
+    position: static !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 12mm !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  body.printing-completed-application .print-avoid-break,
+  body.printing-completed-application .print-table tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .application-preview-overlay { padding: 10px !important; }
+  .application-preview-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 20px) !important;
+    border-radius: 12px !important;
+  }
+  .preview-modal-head { padding: 12px !important; }
+  .preview-modal-body { padding: 10px !important; }
+}
+
+/* ============================================================
+   FINAL BLANK PRINT PREVIEW FIX
+   ------------------------------------------------------------
+   Screen UI is unchanged.
+   These rules only apply while Chrome is rendering the page
+   for printing.
+   ============================================================ */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /*
+   * The older stylesheet hides every element with:
+   * body * { visibility: hidden !important; }
+   *
+   * Explicitly expose the complete application document and ALL
+   * descendants so Chrome cannot generate a blank A4 page.
+   */
+  body.printing-completed-application .application-preview-overlay,
+  body.printing-completed-application .application-preview-overlay *,
+  body.printing-completed-application .application-preview-modal,
+  body.printing-completed-application .application-preview-modal *,
+  body.printing-completed-application .preview-modal-body,
+  body.printing-completed-application .preview-modal-body *,
+  body.printing-completed-application .print-document-preview,
+  body.printing-completed-application .print-document-preview *,
+  body.printing-completed-application .print-page,
+  body.printing-completed-application .print-page * {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* Hide the admin list/table while printing. */
+  body.printing-completed-application .admin-kishan-container {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Turn the full-screen viewer into normal document flow. */
+  body.printing-completed-application .application-preview-overlay {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  body.printing-completed-application .application-preview-modal {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  /* Hide only viewer controls; never hide the application itself. */
+  body.printing-completed-application .preview-modal-head,
+  body.printing-completed-application .preview-modal-actions,
+  body.printing-completed-application .preview-print-btn,
+  body.printing-completed-application .preview-close {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  body.printing-completed-application .preview-modal-body {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+  }
+
+  /*
+   * Keep the existing Kisan Avedan print structure.
+   * Do NOT create a new print document or iframe.
+   */
+  body.printing-completed-application .print-document-preview {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    transform: none !important;
+    z-index: auto !important;
+  }
+
+  /*
+   * The actual A4 page must be visible to the print renderer.
+   * Existing screen-only modal/scroll constraints are removed.
+   */
+  body.printing-completed-application .print-page {
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    padding: 12mm !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    transform: none !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  body.printing-completed-application .print-page img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-width: 100% !important;
+  }
+
+  body.printing-completed-application .print-section,
+  body.printing-completed-application .print-avoid-break,
+  body.printing-completed-application .print-signatures,
+  body.printing-completed-application .print-officer {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  body.printing-completed-application .print-table,
+  body.printing-completed-application .print-table tbody,
+  body.printing-completed-application .print-table tr,
+  body.printing-completed-application .print-table td,
+  body.printing-completed-application .print-table th {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  body.printing-completed-application .print-table tr,
+  body.printing-completed-application .print-avoid-break {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+

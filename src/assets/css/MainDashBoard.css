@@ -1,0 +1,802 @@
+/* Custom Dashboard Styles */
+.dashboard-body-main {
+
+  margin: 0px;
+}
+
+/* Table border styles for export */
+#scheme-table,
+#investment-table,
+#subinvestment-table {
+  border-collapse: collapse !important;
+  width: 100%;
+}
+
+#scheme-table th,
+#scheme-table td,
+#investment-table th,
+#investment-table td,
+#subinvestment-table th,
+#subinvestment-table td {
+  border: 1px solid #ddd !important;
+  padding: 8px !important;
+  text-align: left !important;
+}
+
+#scheme-table th,
+#investment-table th,
+#subinvestment-table th {
+  background-color: #f2f2f2 !important;
+  font-weight: bold !important;
+}
+
+.gov-edit-btn {
+  font-size: 10px;
+}
+
+.gov-delete-btn {
+  font-size: 10px;
+}
+
+.dashboard-body-main h1,
+.dashboard-body-main h2,
+.dashboard-body-main h3 {
+  color: #000000;
+  font-weight: 600;
+}
+
+.dashboard-body-main p {
+  color: #020202;
+  font-size: 14px;
+}
+
+/* Custom Tabs Styling */
+.custom-tabs .nav-tabs {
+  border-bottom: 2px solid #e0e0e0;
+  background: white;
+  padding: 0 15px;
+  border-radius: 8px 8px 0 0;
+}
+
+.custom-tabs .nav-link {
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 15px;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 14px;
+  background-color: #194e8b;
+  margin-left: 12px;
+}
+
+.custom-tabs .nav-link:hover {
+  color: #fff;
+  background-color: #0a1a2d;
+}
+
+.dashborad-card-header {
+  background-color: #194e8b;
+  color: #fff;
+
+}
+
+.dashborad-card-header h5 {
+  font-size: 16px;
+}
+
+.unselected-details h6 {
+  font-size: 14px;
+  color: #022147;
+  font-weight: 600;
+}
+
+.view-details-btn {
+  background-color: #fff;
+  color: #000;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.selected-details {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+
+}
+
+.selected-details h6 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #022147;
+}
+
+.view-details-btn:hover {
+  background-color: #0a1a2d;
+  color: #fff;
+  border: 1px solid #0a1a2d;
+  ;
+}
+
+.custom-tabs .nav-link.active {
+  color: #fff;
+  background-color: #764ba2;
+  border-radius: 8px 8px 0 0;
+}
+
+.custom-tabs .tab-content {
+  background: #194e8b;
+  padding: 15px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Base Styles */
+.gov-card-body {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  min-height: 100px;
+}
+
+.gov-card-body:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.gov-card-inner {
+  padding: 15px;
+  color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.gov-card-inner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.gov-card-body:hover .gov-card-inner::before {
+  top: -100%;
+  right: -100%;
+}
+
+.gov-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.gov-icon i {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+.gov-icon p {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.95;
+}
+
+.gov-text {
+  position: relative;
+  z-index: 1;
+}
+
+.gov-text h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  margin-top: 5px;
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.card-trend.trend-down {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Individual Card Gradients */
+
+/* Card 1 - Blue Gradient */
+.card-gradient-1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Card 2 - Green Gradient */
+.card-gradient-2 {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+/* Card 3 - Orange Gradient */
+.card-gradient-3 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Card 4 - Purple Gradient */
+.card-gradient-4 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* Card 5 - Gold Gradient */
+.card-gradient-5 {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+/* Card 6 - Red Gradient */
+.card-gradient-6 {
+  background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+}
+
+/* Card 7 - Teal Gradient */
+.card-gradient-7 {
+  background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+}
+
+/* Card 8 - Pink Gradient */
+.card-gradient-8 {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+
+
+.dashboard-graphs {
+  box-shadow: 0 0 0 0 rgba(90, 113, 208, 0.11), 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+  border: solid 1px #dde4eb;
+  border-radius: 0px;
+}
+
+.dashboard-graphs h6 {
+  font-size: 16px;
+  font-weight: 600;
+
+  
+  margin-bottom: 15px;
+}
+.column-filter-dropdown{
+  font-size: 8px !important;
+}
+/* Hide selected tags/chips in react-select */
+.government-select .css-1rhbuit-MultiValue {
+  display: none !important;
+}
+ 
+.government-select .css-12jo7m5 {
+  display: none !important;
+}
+ 
+.government-select .MultiValue {
+  display: none !important;
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gov-card-inner {
+    padding: 12px;
+  }
+
+  .gov-icon i {
+    font-size: 1.3rem;
+  }
+
+  .gov-text h2 {
+    font-size: 1.3rem;
+  }
+
+  .custom-tabs .nav-link {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .custom-tabs .tab-content {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-body-main {
+    padding: 10px;
+  }
+
+  .gov-card-inner {
+    padding: 10px;
+  }
+
+  .gov-icon {
+    margin-bottom: 8px;
+  }
+
+  .gov-icon p {
+    font-size: 0.75rem;
+  }
+
+  .gov-text h2 {
+    font-size: 1.2rem;
+  }
+
+  .card-trend {
+    font-size: 0.65rem;
+    padding: 2px 5px;
+  }
+}
+
+/* Animation for numbers */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gov-text h2 {
+  animation: countUp 0.8s ease-out;
+}
+
+/* Pulse animation for icons */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.gov-card-body:hover .gov-icon i {
+  animation: pulse 1s infinite;
+}
+
+/* Additional styles for new components */
+.clickable-card {
+  cursor: pointer;
+}
+
+.clickable-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.badges-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.badge-large {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.graph-placeholder {
+  text-align: center;
+}
+
+.graph-skeleton {
+  margin-top: 20px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+/* Bar Chart Styles */
+.bar-chart-container {
+  position: relative;
+}
+
+.bar-chart-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  left: 0;
+  top: 0;
+}
+
+/* Badge Styles */
+.clickable-badge {
+  transition: all 0.3s ease;
+}
+
+.clickable-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+}
+
+/* Accordion Styles */
+.accordion-button {
+  border: none;
+  padding: 12px 16px;
+  font-size: 14px;
+  text-align: left;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #e7f3ff;
+  color: #007bff;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+  border: none;
+}
+
+.accordion-item {
+  border: none;
+  background: transparent;
+}
+
+.accordion-body {
+  padding: 10px 16px 16px 16px;
+  background-color: #f8f9fa;
+  border-radius: 0 0 6px 6px;
+  border-top: 1px solid #dee2e6;
+}
+
+.accordion-header {
+  margin-bottom: 0;
+}
+
+.multiselect-item-grid {
+  padding: 8px 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 10px;
+  transition: all 0.2s ease;
+  border-radius: 22px;
+  border: 1px solid #4facfe;
+}
+
+/* Multiselect Styles */
+.multiselect-container {
+  padding: 8px;
+  background-color: #ffffffe7;
+}
+
+.multiselect-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.multiselect-item {
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.multiselect-item:hover {
+  background-color: #e9ecef;
+}
+
+.multiselect-item.selected {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Graph Visualization Styles */
+.graph-visualization-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.graph-visualization-section h6 {
+  color: #194e8b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+}
+
+.graph-type-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.graph-type-selector .btn {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  flex: 1;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.graph-type-selector .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.graph-column-selector {
+  margin-bottom: 15px;
+}
+
+.graph-column-selector .form-select {
+  border: 2px solid #e0e0e0;
+  border-radius: 4px;
+  font-weight: 500;
+  padding: 8px 12px;
+  transition: border-color 0.3s ease;
+}
+
+.graph-column-selector .form-select:focus {
+  border-color: #194e8b;
+  box-shadow: 0 0 0 0.2rem rgba(25, 78, 139, 0.25);
+}
+
+/* Chart Scrolling Wrapper */
+.chart-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: 15px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  padding: 10px 0;
+  max-height: 400px;
+  min-height: 350px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #194e8b;
+  border-radius: 4px;
+}
+
+.chart-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #0a1a2d;
+}
+
+/* Custom scrollbar for Firefox */
+.chart-scroll-wrapper {
+  scrollbar-color: #194e8b #f1f1f1;
+  scrollbar-width: thin;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  min-width: 100%;
+  width: fit-content;
+  margin-top: 0;
+  padding: 0 15px;
+}
+
+.chart-container canvas {
+  max-height: 300px;
+}
+
+.chart-no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #999;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 4px;
+}
+
+/* Responsive adjustments for new layout */
+@media (max-width: 768px) {
+  .badges-container {
+    justify-content: center;
+  }
+
+  .badge-large {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+
+  .multiselect-container {
+    padding: 10px;
+  }
+
+  .multiselect-list {
+    max-height: 200px;
+  }
+
+  .graph-type-selector {
+    gap: 5px;
+  }
+
+  .graph-type-selector .btn {
+    font-size: 0.75rem;
+    padding: 6px 8px;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 576px) {
+  .gov-card-body {
+    margin-bottom: 15px;
+  }
+
+  .badge-large {
+    font-size: 0.75rem;
+    padding: 5px 8px;
+  }
+
+  .graph-visualization-section {
+    padding: 15px;
+  }
+
+  .chart-container {
+    height: 220px;
+  }
+
+  .graph-type-selector {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .graph-type-selector .btn {
+    font-size: 0.8rem;
+  }
+}
+
+/* Chart Tooltip Scrolling Styles - Make tooltip appear above and outside graph */
+.chartjs-tooltip-custom {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid white;
+  z-index: 10000;
+  pointer-events: auto;
+  max-width: 500px;
+  max-height: 650px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Webkit scrollbar styles for Chrome/Edge */
+.chartjs-tooltip-custom::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chartjs-tooltip-custom::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chartjs-tooltip-custom::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.chartjs-tooltip-custom::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Firefox scrollbar */
+.chartjs-tooltip-custom {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1);
+}
+
+/* Chart container relative positioning for tooltip */
+.chart-scroll-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Chart.js Tooltip Scrolling Styles */
+.chartjs-tooltip {
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px !important;
+}
+
+/* Custom scrollbar for tooltip */
+.chartjs-tooltip::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chartjs-tooltip::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.chartjs-tooltip::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+}
+
+.chartjs-tooltip::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Firefox scrollbar */
+.chartjs-tooltip {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.1);
+}

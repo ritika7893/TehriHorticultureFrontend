@@ -1,0 +1,14 @@
+.Dash-header{
+    background-color: #194e8b !important;
+    
+}
+a.nav-link{
+    color: #fff;
+
+}
+.navbar-collapse {
+     flex-grow: 0; 
+}
+.dash-img img{
+    max-width: 56px;
+}

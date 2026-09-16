@@ -1,0 +1,2664 @@
+:root {
+    --ink: #111;
+    --panel: #f4f2ec;
+    --accent: #2b5c3f;
+    --accent-dark: #214a32;
+    --warn: #a54a22;
+    --paper: #ffffff;
+    --line: #9a9a9a;
+    --soft-line: #d7d7d7;
+}
+.control-field select:disabled {
+    opacity: 1;
+    color: #333 !important;
+    background-color: #f1f1f1 !important;
+  
+    -webkit-text-fill-color: #333;
+}
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #858585;
+    color: var(--ink);
+
+    font-family:
+        "Nirmala UI",
+        "Mangal",
+        "Noto Sans Devanagari",
+        "Kokila",
+        "Segoe UI",
+        sans-serif;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.udyan-app {
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   CONTROL PANEL
+   ========================================================= */
+
+.control-panel {
+    position: relative;
+    top: auto;
+    z-index: 100;
+
+    background: var(--panel);
+
+    border-bottom: 2px solid #555;
+
+    padding: 13px 18px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.35);
+
+    max-height: none;
+    overflow: visible;
+}
+
+.control-heading {
+    max-width: 1450px;
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.control-eyebrow {
+    color: var(--accent);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 3px;
+}
+
+.control-heading h1 {
+    margin: 0;
+
+    font-size: 17px;
+    line-height: 1.3;
+
+    font-weight: 750;
+}
+
+.control-heading p {
+    margin: 3px 0 0;
+
+    color: #555;
+
+    font-size: 11px;
+}
+
+.panel-year {
+    min-width: 105px;
+
+    padding: 7px 12px;
+
+    background: #fff;
+
+    border: 1px solid #aaa;
+
+    border-radius: 4px;
+
+    text-align: center;
+}
+
+.panel-year span {
+    display: block;
+
+    font-size: 10px;
+
+    color: #666;
+}
+
+.panel-year strong {
+    font-size: 15px;
+
+    color: var(--accent);
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.control-tabs {
+    max-width: 1450px;
+    margin: auto;
+
+    display: flex;
+
+    gap: 3px;
+
+    border-bottom: 1px solid #bbb;
+
+    margin-bottom: 10px;
+}
+
+.control-tabs button {
+    border: 0;
+
+    background: transparent;
+
+    padding: 7px 14px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    color: #555;
+
+    border-bottom: 2px solid transparent;
+}
+
+.control-tabs button.active {
+    color: var(--accent);
+
+    font-weight: 700;
+
+    border-bottom-color:
+        var(--accent);
+}
+
+
+/* =========================================================
+   QUICK CONTROLS
+   ========================================================= */
+
+.quick-controls {
+    max-width: 1450px;
+
+    margin: auto;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: flex-end;
+
+    gap: 9px 13px;
+}
+
+.control-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.control-field span {
+    font-size: 10.5px;
+
+    color: #444;
+}
+
+.control-field input,
+.control-field select {
+    min-width: 105px;
+
+    height: 31px;
+
+    padding: 4px 7px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    border: 1px solid #999;
+
+    border-radius: 3px;
+
+    background: #fff;
+
+    outline: none;
+}
+
+.control-field input:focus,
+.control-field select:focus {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 2px rgba(
+            43,
+            92,
+            63,
+            0.12
+        );
+}
+
+.crop-field select {
+    min-width: 220px;
+}
+
+.control-field input:disabled {
+    background: #eee;
+
+    color: #555;
+}
+
+
+/* =========================================================
+   ACTION ROW
+   ========================================================= */
+
+.action-row {
+    max-width: 1450px;
+
+    margin: 11px auto 0;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.green-button,
+.outline-button,
+.warning-button {
+    font-family: inherit;
+
+    font-size: 12px;
+
+    padding: 7px 14px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    font-weight: 650;
+}
+
+.green-button {
+    border: 1px solid var(--accent);
+
+    background: var(--accent);
+
+    color: #fff;
+}
+
+.green-button:hover {
+    background: var(--accent-dark);
+}
+
+.green-button:disabled {
+    opacity: 0.55;
+
+    cursor: not-allowed;
+}
+
+.outline-button {
+    border: 1px solid var(--accent);
+
+    background: #fff;
+
+    color: var(--accent);
+}
+
+.warning-button {
+    border: 1px solid var(--warn);
+
+    background: #fff;
+
+    color: var(--warn);
+}
+
+.print-check {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 11px;
+
+    color: #444;
+
+    margin-left: 4px;
+}
+
+
+/* =========================================================
+   CENTER SELECTION
+   ========================================================= */
+
+.center-selection-section {
+    max-width: 1450px;
+
+    margin: 14px auto 0;
+
+    background: #fff;
+
+    border: 1px solid #d4d0c7;
+
+    border-radius: 6px;
+
+    padding: 14px 16px;
+}
+
+.center-selection-header {
+    margin-bottom: 12px;
+}
+
+.center-selection-header .section-kicker {
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    color: var(--accent);
+
+    letter-spacing: 1.2px;
+
+    margin-bottom: 3px;
+}
+
+.center-selection-header h3 {
+    margin: 0;
+
+    font-size: 15px;
+
+    color: #1a1a1a;
+
+    font-weight: 700;
+}
+
+.center-selection-header p {
+    margin: 4px 0 0;
+
+    font-size: 11.5px;
+
+    color: #666;
+}
+
+.centers-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 10px;
+}
+
+.center-card {
+    display: flex;
+
+    align-items: stretch;
+
+    border: 1px solid #d4d0c7;
+
+    border-radius: 6px;
+
+    background: #fff;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition: all 0.2s ease;
+}
+
+.center-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+
+    border-color: #b0a898;
+}
+
+.center-card--selected {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 2px rgba(43, 92, 63, 0.15);
+}
+
+.center-card-color {
+    width: 5px;
+
+    flex: 0 0 5px;
+}
+
+.center-card--blue .center-card-color { background-color: #155eef; }
+.center-card--green .center-card-color { background-color: #039855; }
+.center-card--purple .center-card-color { background-color: #7c3aed; }
+.center-card--orange .center-card-color { background-color: #f59e0b; }
+.center-card--teal .center-card-color { background-color: #0d9488; }
+.center-card--pink .center-card-color { background-color: #db2777; }
+.center-card--indigo .center-card-color { background-color: #4f46e5; }
+.center-card--cyan .center-card-color { background-color: #0891b2; }
+
+.center-card-body {
+    padding: 10px 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.center-card-body strong {
+    font-size: 13px;
+
+    color: #1a1a1a;
+
+    font-weight: 650;
+
+    line-height: 1.3;
+
+    word-break: break-word;
+}
+
+.center-card-body span {
+    font-size: 10.5px;
+
+    color: #888;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.doc-input[readonly] {
+    background-color: #f4f4f4;
+
+    color: #333;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .centers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .centers-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   LIVE TALLY
+   ========================================================= */
+
+.live-tally {
+    max-width: 1450px;
+
+    margin: 10px auto 0;
+
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    font-size: 11px;
+}
+
+.live-tally > div:not(.tally-status) {
+    padding: 5px 9px;
+
+    border-radius: 3px;
+
+    background: #e2f0e6;
+
+    border: 1px solid #3f7a55;
+
+    color: #1e4a30;
+}
+
+.live-tally span {
+    margin-right: 5px;
+}
+
+.live-tally strong {
+    font-size: 12px;
+}
+
+.tally-status {
+    padding: 5px 9px;
+
+    background: #e2f0e6;
+
+    border: 1px solid #3f7a55;
+
+    color: #1e4a30;
+
+    border-radius: 3px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   STANDARDS INLINE
+   ========================================================= */
+
+.standards-inline {
+    max-width: 1450px;
+
+    margin: 10px auto 0;
+
+    background: #fffdf7;
+
+    border: 1px solid #b9b3a2;
+
+    border-radius: 4px;
+
+    padding: 8px 10px;
+}
+
+.standards-inline summary {
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: var(--accent);
+}
+
+.standards-section {
+    max-width: 1450px;
+
+    margin: 10px auto 0;
+
+    background: #fffdf7;
+
+    border: 1px solid #b9b3a2;
+
+    border-radius: 4px;
+
+    padding: 8px 10px;
+}
+
+.standards-section > summary {
+    cursor: pointer;
+
+    color: var(--accent);
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.standards-section .standards-manager {
+    max-width: none;
+
+    margin-top: 10px;
+}
+
+.standard-inline-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin: 9px 0;
+}
+
+.standard-inline-header span {
+    font-size: 11px;
+
+    color: #555;
+}
+
+.inline-standard-table-wrapper {
+    overflow-x: auto;
+}
+
+.inline-standard-table {
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: collapse;
+
+    font-size: 11px;
+}
+
+.inline-standard-table th,
+.inline-standard-table td {
+    border: 1px solid #b5b5b5;
+
+    padding: 5px 7px;
+
+    text-align: right;
+}
+
+.inline-standard-table th {
+    background: #f0ede2;
+
+    text-align: center;
+
+    font-size: 10px;
+}
+
+.inline-standard-table td:first-child {
+    text-align: left;
+
+    font-weight: 650;
+}
+
+.small-actions {
+    display: flex;
+
+    gap: 5px;
+
+    justify-content: center;
+}
+
+.small-actions button {
+    border: 1px solid #999;
+
+    background: #fff;
+
+    border-radius: 3px;
+
+    padding: 4px 7px;
+
+    font-family: inherit;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+.small-actions button:first-child {
+    color: #245a42;
+
+    border-color: #719b85;
+}
+
+.small-actions button:last-child {
+    color: var(--warn);
+
+    border-color: #d2997e;
+}
+
+.inline-empty {
+    padding: 20px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
+.preview-wrapper {
+    padding: 18px 0 50px;
+}
+
+.preview-heading {
+    width: 210mm;
+
+    max-width: calc(100% - 20px);
+
+    margin: 0 auto 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    color: #000;
+}
+
+.preview-heading > div:first-child span {
+    font-size: 9px;
+
+    letter-spacing: 1.4px;
+
+    opacity: 1;
+
+    color: #000;
+}
+
+.preview-heading h2 {
+    margin: 2px 0 0;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #000;
+}
+
+.preview-meta {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    background: #f3f4f6;
+
+    border: 1px solid #d1d5db;
+
+    padding: 7px 10px;
+
+    border-radius: 4px;
+
+    font-size: 10px;
+
+    color: #000;
+}
+
+.preview-meta strong {
+    font-size: 11px;
+
+    color: #000;
+}
+
+
+/* =========================================================
+   EMPTY PREVIEW
+   ========================================================= */
+
+.preview-empty {
+    width: 210mm;
+
+    max-width: calc(100% - 20px);
+
+    min-height: 220px;
+
+    margin: auto;
+
+    background: #fff;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    box-shadow:
+        0 3px 14px rgba(0, 0, 0, 0.35);
+}
+
+.preview-empty-icon {
+    width: 50px;
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #e5eee8;
+
+    color: var(--accent);
+
+    font-size: 22px;
+
+    margin-bottom: 10px;
+}
+
+.preview-empty h3 {
+    margin: 0;
+
+    font-size: 17px;
+}
+
+.preview-empty p {
+    max-width: 500px;
+
+    color: #666;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   DOCUMENT AREA
+   ========================================================= */
+
+.document-area {
+    padding: 0 0 20px;
+}
+
+.a4-page {
+    width: 210mm;
+
+    min-height: 297mm;
+
+    margin: 0 auto 16px;
+
+    padding: 12mm 12mm 10mm;
+
+    background: #fff;
+
+    box-shadow:
+        0 3px 14px rgba(
+            0,
+            0,
+            0,
+            0.4
+        );
+
+    color: #111;
+
+    font-size: 11pt;
+
+    line-height: 1.65;
+
+    overflow: hidden;
+
+    page-break-after: always;
+}
+
+.a4-page:last-child {
+    page-break-after: auto;
+}
+
+
+/* =========================================================
+   DOCUMENT TYPOGRAPHY
+   ========================================================= */
+
+.document-center {
+    text-align: center;
+}
+
+.document-title-small {
+    font-size: 11.5pt;
+
+    font-weight: 700;
+}
+
+.document-title {
+    font-size: 12.5pt;
+
+    font-weight: 700;
+}
+
+.treasury-copy {
+    text-align: right;
+
+    font-weight: 700;
+
+    font-size: 11pt;
+}
+
+.document-line {
+    margin-top: 5px;
+    line-height: 1.65;
+}
+
+.document-line.indent {
+    padding-left: 25px;
+}
+
+.document-paragraph {
+    margin-top: 16px;
+
+    text-align: justify;
+
+    font-size: 11pt;
+}
+
+.document-paragraph.large-gap {
+    margin-top: 24px;
+}
+
+.document-paragraph strong {
+    font-weight: 700;
+}
+
+.signature-block {
+    margin-top: 13px;
+
+    text-align: right;
+
+    line-height: 2.1;
+
+    font-size: 11pt;
+}
+
+.officer-sign {
+    margin-top: 16px;
+
+    text-align: right;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+}
+
+.small-text {
+    font-size: 9pt;
+}
+
+.right {
+    text-align: right !important;
+}
+
+.center {
+    text-align: center !important;
+}
+
+.money {
+    text-align: right !important;
+
+    white-space: nowrap;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   DOCUMENT INPUT
+   ========================================================= */
+
+.doc-input {
+    font-family: inherit;
+
+    font-size: 10.5pt;
+
+    color: #000;
+
+    border: none;
+
+    border-bottom: 1px dotted #444;
+
+    background: transparent;
+
+    padding: 0 3px;
+
+    outline: none;
+
+    min-width: 60px;
+
+    line-height: 1.4;
+}
+
+.doc-input::placeholder {
+    color: transparent;
+}
+
+.doc-input:focus {
+    background: #eef6f0;
+
+    border-bottom:
+        1px solid var(--accent);
+}
+
+.inline-document-input {
+    width: 115px;
+}
+
+.signature-input {
+    width: 150px;
+}
+
+.officer-input {
+    width: 100px;
+}
+
+.w-110 {
+    width: 110px;
+}
+
+.w-150 {
+    width: 150px;
+}
+
+.w-160 {
+    width: 160px;
+}
+
+.w-200 {
+    width: 200px;
+}
+
+.w-210 {
+    width: 210px;
+}
+
+.w-220 {
+    width: 220px;
+}
+
+
+/* =========================================================
+   BILL TABLE
+   ========================================================= */
+
+.document-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 10px;
+
+    font-size: 10pt;
+}
+
+.document-table th,
+.document-table td {
+    border: 1px solid #000;
+
+    padding: 3px 5px;
+
+    vertical-align: middle;
+}
+
+.document-table th {
+    text-align: center;
+
+    font-weight: 700;
+
+    font-size: 9.5pt;
+
+    background-color: #f1f3f5;
+
+    color: #000;
+}
+
+.bill-table td:nth-child(2) {
+    text-align: left;
+}
+
+/* ---------------------------------------------------------
+   BILL TABLE - KEEP ALL COLUMNS INSIDE THE A4 PAGE
+   --------------------------------------------------------- */
+
+.bill-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}
+
+/*
+   Column layout:
+   7%  = serial number
+   40% = work/item description
+   10% = quantity
+   43% = expenditure group
+          ├─ 14.333% total expenditure
+          ├─ 14.333% subsidy
+          └─ 14.333% farmer contribution
+
+   The first header row contains a colspan over the last three columns,
+   so its widths must be defined separately. This prevents the browser
+   from compressing the monetary columns and making numbers overlap.
+*/
+.bill-table thead tr:first-child th:nth-child(1) {
+    width: 7% !important;
+}
+
+.bill-table thead tr:first-child th:nth-child(2) {
+    width: 40% !important;
+}
+
+.bill-table thead tr:first-child th:nth-child(3) {
+    width: 10% !important;
+}
+
+.bill-table thead tr:first-child th:nth-child(4) {
+    width: 43% !important;
+}
+
+/* Three sub-columns inside the expenditure group */
+.bill-table thead tr:nth-child(2) th {
+    width: 14.333% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+}
+
+.bill-table th,
+.bill-table td {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+}
+
+.bill-table tbody td:nth-child(1) {
+    width: 7% !important;
+    text-align: center !important;
+}
+
+.bill-table tbody td:nth-child(2) {
+    width: 40% !important;
+    text-align: left !important;
+}
+
+.bill-table tbody td:nth-child(3) {
+    width: 10% !important;
+    text-align: center !important;
+}
+
+.bill-table tbody td:nth-child(4),
+.bill-table tbody td:nth-child(5),
+.bill-table tbody td:nth-child(6) {
+    width: 14.333% !important;
+}
+
+.bill-table th {
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
+    padding: 3px 2px !important;
+    color:#000 !important;
+}
+
+.bill-table td {
+    font-size: 8.2pt !important;
+    line-height: 1.35 !important;
+    padding: 3px 3px !important;
+}
+
+/* Keep descriptions readable without allowing them to enlarge the table */
+.bill-table tbody td:nth-child(2) {
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
+    overflow: hidden !important;
+}
+
+/* Numeric/currency cells must stay inside their own column */
+.bill-table td.money,
+.bill-table th.money {
+    width: 14.333% !important;
+    min-width: 0 !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: clip !important;
+    font-size: 7.5pt !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.15px !important;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+}
+
+.bill-table .small-text {
+    font-size: 7.5pt !important;
+    line-height: 1.3 !important;
+}
+
+/* Total/subtotal rows use the same compact numeric sizing */
+.bill-table .total-row td,
+.bill-table .grand-row td {
+    font-size: 7.5pt !important;
+    line-height: 1.15 !important;
+}
+
+.bill-table .total-row td.money,
+.bill-table .grand-row td.money {
+    font-size: 7.5pt !important;
+    white-space: nowrap !important;
+}
+
+
+
+
+/* Align subtotal / योग amounts to the right exactly like all other
+   monetary values in the bill table. */
+.bill-table .total-row td.money,
+.bill-table .grand-row td.money,
+.bill-table .standard-total-row td.money,
+.bill-table .standard-sum-row td.money {
+    text-align: right !important;
+    white-space: nowrap !important;
+    padding-right: 3px !important;
+}
+
+/* Keep the "योग :-" label centered in its merged label cell. */
+.bill-table .total-row td:first-child:not(.money),
+.bill-table .grand-row td:first-child:not(.money) {
+    text-align: center !important;
+}
+
+
+.total-row td {
+    font-weight: 700;
+}
+
+.grand-row td {
+    font-weight: 700;
+
+    background: #ececec;
+}
+
+
+/* =========================================================
+   STANDARD PRINT
+   ========================================================= */
+
+.standard-print-page {
+    font-size: 10pt;
+}
+
+.standard-print-block {
+    margin-top: 11px;
+}
+
+.standard-print-block h3 {
+    font-size: 11pt;
+
+    margin: 10px 0 3px;
+}
+
+.standard-table {
+    font-size: 9pt;
+
+    margin-top: 3px;
+}
+
+.standard-table th {
+    font-size: 8.5pt;
+
+    background-color: black;
+
+    color: white;
+
+    text-align: center;
+
+    font-weight: 700;
+}
+
+.standard-total-row td {
+    font-weight: 700;
+
+    background: #f4f4f4;
+}
+
+.uploaded-bills-panel {
+    max-width: 1450px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #d5d1c8;
+    border-radius: 6px;
+    padding: 18px;
+}
+
+.uploaded-bills-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.uploaded-bills-heading h2 {
+    margin: 3px 0 2px;
+    font-size: 18px;
+}
+
+.uploaded-bills-heading p {
+    margin: 0;
+    color: #666;
+    font-size: 11px;
+}
+
+.section-kicker {
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.uploaded-bills-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #d9d9d9;
+}
+
+.uploaded-bills-table {
+    width: 100%;
+    min-width: 920px;
+    border-collapse: collapse;
+    font-size: 11px;
+    background: #fff;
+}
+
+.uploaded-bills-table th {
+    padding: 10px 8px;
+    color: #fff;
+    background: var(--accent);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.uploaded-bills-table td {
+    padding: 9px 8px;
+    border-bottom: 1px solid #e5e5e5;
+    white-space: nowrap;
+}
+
+.uploaded-bills-table tbody tr:nth-child(even) {
+    background: #fafbf8;
+}
+
+.uploaded-bills-table tbody tr:hover {
+    background: #f0f6ef;
+}
+
+.uploaded-bills-table td small {
+    display: block;
+    margin-top: 2px;
+    color: #777;
+    font-size: 10px;
+}
+
+.table-view-button {
+    padding: 5px 11px;
+    font-size: 11px;
+}
+
+.uploaded-bill-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap !important;
+}
+
+.uploaded-bill-actions button {
+    margin: 0;
+}
+
+.table-delete-button {
+    padding: 5px 11px;
+    font-size: 11px;
+}
+
+.table-delete-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   STANDARDS MANAGER
+   ========================================================= */
+
+.panel-content {
+    max-width: 1450px;
+
+    margin: auto;
+}
+
+.year-selector-row {
+    margin-bottom: 10px;
+}
+
+.year-selector-row label {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    width: 110px;
+}
+
+.year-selector-row span {
+    font-size: 10.5px;
+
+    color: #444;
+}
+
+.year-selector-row input {
+    height: 30px;
+
+    border: 1px solid #999;
+
+    border-radius: 3px;
+
+    padding: 4px 7px;
+
+    font-family: inherit;
+}
+
+.standards-manager {
+    background: #fffdf7;
+
+    border: 1px solid #b9b3a2;
+
+    border-radius: 5px;
+
+    padding: 10px;
+}
+
+.standards-toolbar {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 10px;
+}
+
+.standards-toolbar h2 {
+    margin: 0;
+
+    font-size: 15px;
+
+    color: var(--accent);
+}
+
+.standards-toolbar p {
+    margin: 3px 0 0;
+
+    color: #666;
+
+    font-size: 10.5px;
+}
+
+.standards-scroll {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.standard-card {
+    border: 1px solid #9b937f;
+
+    border-radius: 4px;
+
+    background: #fff;
+
+    overflow: hidden;
+}
+
+.standard-card-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 7px 9px;
+
+    background: #eae6d9;
+
+    border-bottom: 1px solid #9b937f;
+}
+
+.standard-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.standard-title span {
+    font-size: 11px;
+
+    color: #555;
+}
+
+.standard-title strong {
+    font-size: 13px;
+
+    color: #222;
+}
+
+.standard-card-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.match-badge,
+.warning-badge {
+    padding: 3px 7px;
+
+    border-radius: 3px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.match-badge {
+    color: #1e4a30;
+
+    background: #e2f0e6;
+
+    border: 1px solid #3f7a55;
+}
+
+.warning-badge {
+    color: #7a2f0f;
+
+    background: #fbe6df;
+
+    border: 1px solid #a54a22;
+}
+
+.edit-button,
+.delete-button {
+    font-family: inherit;
+
+    font-size: 10px;
+
+    padding: 4px 8px;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+
+    background: #fff;
+}
+
+.edit-button {
+    color: var(--accent);
+
+    border: 1px solid var(--accent);
+}
+
+.delete-button {
+    color: var(--warn);
+
+    border: 1px solid var(--warn);
+}
+
+.standard-values-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            7,
+            minmax(90px, 1fr)
+        );
+}
+
+.standard-values-grid > div {
+    padding: 8px;
+
+    border-right: 1px solid #ddd;
+
+    text-align: center;
+}
+
+.standard-values-grid > div:last-child {
+    border-right: 0;
+}
+
+.standard-values-grid span {
+    display: block;
+
+    color: #666;
+
+    font-size: 9px;
+
+    margin-bottom: 3px;
+}
+
+.standard-values-grid strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   NO STANDARDS
+   ========================================================= */
+
+.no-standards,
+.loading-box {
+    padding: 35px 20px;
+
+    text-align: center;
+
+    background: #fff;
+
+    border: 1px dashed #aaa;
+
+    border-radius: 5px;
+}
+
+.no-standard-icon {
+    width: 42px;
+
+    height: 42px;
+
+    margin: auto auto 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #e5eee8;
+
+    color: var(--accent);
+
+    font-size: 22px;
+}
+
+.no-standards h3 {
+    margin: 0 0 5px;
+
+    font-size: 14px;
+}
+
+.no-standards p {
+    max-width: 650px;
+
+    margin: 0 auto 12px;
+
+    color: #666;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    /* z-index: 9999; */
+
+    background: rgba(
+        0,
+        0,
+        0,
+        0.55
+    );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 15px;
+}
+
+.standard-modal {
+    width: min(
+        850px,
+        100%
+    );
+
+    max-height: 92vh;
+
+    background: #fff;
+
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px
+        rgba(
+            0,
+            0,
+            0,
+            0.3
+        );
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 14px 17px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    background: #f4f2ec;
+
+    border-bottom: 1px solid #ccc;
+}
+
+.modal-header > div > span {
+    display: block;
+
+    font-size: 9px;
+
+    color: var(--accent);
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+.modal-header h2 {
+    margin: 3px 0 0;
+
+    font-size: 17px;
+}
+
+.modal-close {
+    border: 0;
+
+    background: transparent;
+
+    font-family: inherit;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    color: #666;
+}
+
+.modal-body {
+    padding: 18px;
+
+    overflow-y: auto;
+}
+
+.modal-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 12px;
+}
+
+.modal-grid label {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.modal-grid label > span {
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #444;
+}
+
+.modal-grid input {
+    width: 100%;
+
+    height: 34px;
+
+    border: 1px solid #aaa;
+
+    border-radius: 3px;
+
+    padding: 5px 8px;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+}
+
+.modal-grid input:focus {
+    border-color: var(--accent);
+
+    box-shadow:
+        0 0 0 2px rgba(
+            43,
+            92,
+            63,
+            0.1
+        );
+}
+
+.active-checkbox {
+    flex-direction: row !important;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    padding-top: 20px;
+
+    gap: 7px !important;
+}
+
+.active-checkbox input {
+    width: 16px;
+
+    height: 16px;
+
+    accent-color: var(--accent);
+}
+
+.modal-note {
+    margin-top: 14px;
+
+    padding: 9px 11px;
+
+    border: 1px solid #c8ddd0;
+
+    background: #eef7f2;
+
+    color: #345747;
+
+    font-size: 10.5px;
+
+    display: flex;
+
+    gap: 5px;
+
+    line-height: 1.6;
+}
+
+.modal-footer {
+    padding: 12px 17px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 7px;
+
+    border-top: 1px solid #ccc;
+
+    background: #fafafa;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast-message {
+    position: fixed;
+
+    right: 18px;
+
+    bottom: 18px;
+
+    z-index: 10000;
+
+    min-width: 250px;
+
+    max-width: 400px;
+
+    background: #e2f0e6;
+
+    border: 1px solid #3f7a55;
+
+    color: #1e4a30;
+
+    padding: 9px 12px;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(
+            0,
+            0,
+            0,
+            0.2
+        );
+
+    font-size: 11px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.toast-message button {
+    border: 0;
+
+    background: transparent;
+
+    color: inherit;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .input-grid {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(150px, 1fr)
+            );
+    }
+
+    .standard-values-grid {
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(100px, 1fr)
+            );
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .control-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .panel-year {
+        width: 100%;
+    }
+
+    .input-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(140px, 1fr)
+            );
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .standard-card-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .standard-card-actions {
+        flex-wrap: wrap;
+    }
+
+    .standard-values-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                1fr
+            );
+    }
+
+    .standard-values-grid > div {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .preview-heading {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .control-panel {
+        position: relative;
+
+        max-height: none;
+
+        padding: 10px;
+    }
+
+    .control-heading h1 {
+        font-size: 15px;
+    }
+
+    .quick-controls {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .crop-field {
+        grid-column: 1 / -1;
+    }
+
+    .crop-field select {
+        width: 100%;
+    }
+
+    .action-row {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .action-row button {
+        width: 100%;
+    }
+
+    .print-check {
+        margin: 4px 0;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .standard-inline-header {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .standard-inline-header button {
+        width: 100%;
+    }
+
+    .a4-page {
+        width: 210mm;
+
+        transform-origin: top left;
+    }
+
+    .preview-wrapper {
+        overflow-x: auto;
+    }
+
+    .preview-heading {
+        width: calc(100% - 20px);
+    }
+
+    .standards-toolbar {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .standards-toolbar button {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   PRINT
+   ========================================================= */
+
+
+/* =========================================================
+   DATABASE STANDARD TABLE - REFERENCE HTML MATCH
+   ========================================================= */
+.standard-card-header-editable {
+    align-items: center;
+}
+
+.standard-title-editable {
+    flex: 1;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.standard-crop-name-input,
+.standard-top-input,
+.standard-cell-input {
+    font-family: inherit;
+    font-size: 12px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    background: #fffef0;
+    outline: none;
+}
+
+.standard-crop-name-input {
+    width: min(280px, 100%);
+    min-width: 180px;
+    height: 32px;
+    padding: 5px 8px;
+    font-weight: 700;
+}
+
+.standard-top-input {
+    height: 32px;
+    padding: 5px 8px;
+}
+
+.spacing-input {
+    width: 120px;
+}
+
+.money-input {
+    width: 120px;
+}
+
+.standard-inline-label {
+    font-size: 11px;
+    color: #555;
+    white-space: nowrap;
+}
+
+.standard-table-wrapper {
+    overflow-x: auto;
+}
+
+.standard-calc-table {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.standard-calc-table th,
+.standard-calc-table td {
+    border: 1px solid #999;
+    padding: 5px 7px;
+    /* color:#fff; */
+    vertical-align: middle;
+}
+
+.standard-calc-table th {
+    background: #194e8b;
+    text-align: center;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.standard-calc-table td:nth-child(2) {
+    text-align: left;
+    min-width: 360px;
+}
+
+.standard-cell-input {
+    width: 94px;
+    height: 29px;
+    padding: 4px 7px;
+    text-align: right;
+}
+
+.standard-cell-input:focus,
+.standard-crop-name-input:focus,
+.standard-top-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(43, 92, 63, 0.12);
+}
+
+.standard-cell-input:disabled {
+    background: #ececec;
+    color: #666;
+}
+
+.auto-qty-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 7px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.auto-qty-label input {
+    width: 14px;
+    height: 14px;
+    accent-color: #1976d2;
+}
+
+.standard-sum-row td {
+    font-weight: 700;
+    background: #f3f2ee;
+}
+
+.standard-sum-row .money {
+    font-size: 12px;
+}
+
+.standard-card-actions button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+@media (max-width: 900px) {
+    .standard-card-header-editable {
+        align-items: flex-start;
+    }
+
+    .standard-title-editable {
+        width: 100%;
+    }
+
+    .standard-crop-name-input {
+        width: 100%;
+    }
+}
+
+/* =========================================================
+   PRINT / PDF — FIXED A4 PRINT
+   ========================================================= */
+
+@page {
+    size: A4 portrait;
+    margin: 12mm;
+}
+
+@media print {
+
+    html,
+    body,
+    #root {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: #ffffff !important;
+    }
+
+    body {
+        color: #111 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /*
+       IMPORTANT:
+       Do not use "body * { visibility: hidden }".
+       #printDocument is nested inside the React layout, so hiding its
+       ancestors can produce a completely blank Chrome print preview.
+    */
+
+    .control-panel,
+    .preview-heading,
+    .toast-message,
+    .modal-backdrop,
+    .uploaded-bills-panel,
+    .standards-section,
+    .quick-controls,
+    .action-row,
+    .live-tally {
+        display: none !important;
+    }
+
+    .udyan-app,
+    .preview-wrapper,
+    .document-area,
+    #printDocument {
+        display: block !important;
+        position: static !important;
+        float: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+        background: #ffffff !important;
+    }
+
+    #printDocument,
+    #printDocument * {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .a4-page {
+        display: block !important;
+        position: relative !important;
+        float: none !important;
+
+        /* Printable width = A4 width minus 12mm left/right @page margins */
+        width: 186mm !important;
+        max-width: 186mm !important;
+        min-width: 0 !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+
+        margin: 0 auto !important;
+        padding: 0 !important;
+
+        color: #111 !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+
+        overflow: visible !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        transform: none !important;
+
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-before: auto !important;
+        break-before: auto !important;
+    }
+
+    .a4-page:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+    }
+
+    .document-center,
+    .document-title-small,
+    .document-title,
+    .treasury-copy,
+    .document-line,
+    .document-paragraph,
+    .signature-block,
+    .officer-sign,
+    .small-text,
+    .right,
+    .center,
+    .money {
+        visibility: visible !important;
+        color: #111 !important;
+    }
+
+    .document-line {
+        display: block !important;
+        margin-top: 5px !important;
+        line-height: 1.65 !important;
+    }
+
+    .document-line.indent {
+        padding-left: 25px !important;
+    }
+
+    .document-paragraph {
+        margin-top: 16px !important;
+        text-align: justify !important;
+    }
+
+    .document-paragraph.large-gap {
+        margin-top: 24px !important;
+    }
+
+    .signature-block {
+        margin-top: 13px !important;
+        text-align: right !important;
+    }
+
+    .officer-sign {
+        margin-top: 16px !important;
+        text-align: right !important;
+    }
+
+
+    .bill-table {
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+    }
+
+    .bill-table thead tr:first-child th:nth-child(1) {
+        width: 7% !important;
+    }
+
+    .bill-table thead tr:first-child th:nth-child(2) {
+        width: 40% !important;
+    }
+
+    .bill-table thead tr:first-child th:nth-child(3) {
+        width: 10% !important;
+    }
+
+    .bill-table thead tr:first-child th:nth-child(4) {
+        width: 43% !important;
+    }
+
+    .bill-table thead tr:nth-child(2) th {
+        width: 14.333% !important;
+        min-width: 0 !important;
+    }
+
+    .bill-table th,
+    .bill-table td {
+        min-width: 0 !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+
+    .bill-table th {
+        font-size: 8pt !important;
+        line-height: 1.15 !important;
+        padding: 3px 2px !important;
+    }
+
+    .bill-table td {
+        font-size: 8.2pt !important;
+        line-height: 1.35 !important;
+        padding: 3px 3px !important;
+    }
+
+    .bill-table tbody td:nth-child(1) {
+        width: 7% !important;
+    }
+
+    .bill-table tbody td:nth-child(2) {
+        width: 40% !important;
+        overflow-wrap: anywhere !important;
+        overflow: hidden !important;
+    }
+
+    .bill-table tbody td:nth-child(3) {
+        width: 10% !important;
+    }
+
+    .bill-table tbody td:nth-child(4),
+    .bill-table tbody td:nth-child(5),
+    .bill-table tbody td:nth-child(6) {
+        width: 14.333% !important;
+    }
+
+    .bill-table td.money,
+    .bill-table th.money {
+        width: 14.333% !important;
+        min-width: 0 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: clip !important;
+        font-size: 7.5pt !important;
+        line-height: 1.1 !important;
+        letter-spacing: -0.15px !important;
+        padding-left: 1px !important;
+        padding-right: 1px !important;
+    }
+
+    .document-table {
+        display: table !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+        margin-top: 10px !important;
+        color: #111 !important;
+        background: #ffffff !important;
+    }
+
+    .document-table thead {
+        display: table-header-group !important;
+    }
+
+    .document-table tbody {
+        display: table-row-group !important;
+    }
+
+    .document-table tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    .document-table th,
+    .document-table td {
+        border: 1px solid #000 !important;
+        padding: 3px 5px !important;
+        color: #111 !important;
+        background: transparent !important;
+        vertical-align: middle !important;
+    }
+
+    .grand-row td,
+    .standard-total-row td,
+    .standard-sum-row td {
+        background: #ececec !important;
+    }
+
+    .doc-input {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+
+        font-family: inherit !important;
+        font-size: 10.5pt !important;
+        line-height: 1.4 !important;
+        color: #000 !important;
+
+        border: 0 !important;
+        border-bottom: 1px dotted #444 !important;
+        border-radius: 0 !important;
+
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none !important;
+
+        padding: 0 3px !important;
+        margin: 0 !important;
+
+        -webkit-appearance: none !important;
+        appearance: none !important;
+    }
+
+    .doc-input::placeholder {
+        color: transparent !important;
+    }
+
+    /*
+       These belong to the standards editor/control UI.
+       They are not part of the printable bill pages.
+    */
+    .standard-card-header-editable input,
+    .standard-card-actions,
+    .standards-toolbar {
+        display: none !important;
+    }
+
+    .standard-print-page,
+    .standard-print-block,
+    .standard-table {
+        visibility: visible !important;
+    }
+
+    .standard-table {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    .standard-print-block,
+    .standard-card {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+} 
