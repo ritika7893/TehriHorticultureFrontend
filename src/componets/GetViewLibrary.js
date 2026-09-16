@@ -1,20 +1,39 @@
 import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import {
-  FaFileAlt, FaFilePdf, FaFileImage, FaFileWord, FaFileExcel,
-  FaDownload, FaExternalLinkAlt, FaSearch, FaTimes, FaEdit,
-  FaTrash, FaPlus, FaUpload, FaLink, FaClipboardList, FaFolder, FaArrowLeft
+  FaFileAlt,
+  FaFilePdf,
+  FaFileImage,
+  FaFileWord,
+  FaFileExcel,
+  FaDownload,
+  FaExternalLinkAlt,
+  FaSearch,
+  FaTimes,
+  FaEdit,
+  FaTrash,
+  FaPlus,
+  FaUpload,
+  FaLink,
+  FaClipboardList,
+  FaFolder,
+  FaArrowLeft,
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import "./GetViewLibrary.css";
 
-const LIBRARY_API_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/library";
+const LIBRARY_API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/library";
 const LIBRARY_CATEGORIES_API_URL = `${LIBRARY_API_URL}/categories`;
-const CENTER_LINKS_API_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/center-links";
-const DETAILS_API_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/center-link-details-bycenter";
-const MEDIA_BASE_URL = "https://mahadevaaya.com/govbillingsystem/backend";
+const CENTER_LINKS_API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/center-links";
+const DETAILS_API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/center-link-details-bycenter";
+const MEDIA_BASE_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
 
-const getToken = () => localStorage.getItem("access_token") || localStorage.getItem("token");
+const getToken = () =>
+  localStorage.getItem("access_token") || localStorage.getItem("token");
 const getHeaders = () => {
   const token = getToken();
   return token ? { Authorization: `Bearer ${token}` } : {};
@@ -83,9 +102,7 @@ const getCenterNameFromUser = (user) => {
 
   const found = values.find(
     (value) =>
-      value !== null &&
-      value !== undefined &&
-      String(value).trim() !== ""
+      value !== null && value !== undefined && String(value).trim() !== "",
   );
 
   return found ? String(found).trim() : "";
@@ -142,8 +159,11 @@ const formatDate = (date) => {
   const d = new Date(date);
   if (Number.isNaN(d.getTime())) return "-";
   return d.toLocaleDateString("en-IN", {
-    day: "2-digit", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit"
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
   });
 };
 
@@ -151,9 +171,10 @@ const getFileIcon = (file) => {
   if (!file) return <FaFileAlt />;
   const ext = String(file).split("?")[0].split(".").pop().toLowerCase();
   if (ext === "pdf") return <FaFilePdf />;
-  if (["jpg","jpeg","png","webp","gif"].includes(ext)) return <FaFileImage />;
-  if (["doc","docx"].includes(ext)) return <FaFileWord />;
-  if (["xls","xlsx","csv"].includes(ext)) return <FaFileExcel />;
+  if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext))
+    return <FaFileImage />;
+  if (["doc", "docx"].includes(ext)) return <FaFileWord />;
+  if (["xls", "xlsx", "csv"].includes(ext)) return <FaFileExcel />;
   return <FaFileAlt />;
 };
 
@@ -184,7 +205,7 @@ const GetViewLibrary = () => {
     center_link: "",
     center_name: "",
     img: null,
-    remark: ""
+    remark: "",
   });
 
   // =====================================================
@@ -204,16 +225,14 @@ const GetViewLibrary = () => {
       const categoryList = getArray(response);
 
       const activeCategories = categoryList.filter((category) =>
-        toBoolean(category?.is_active)
+        toBoolean(category?.is_active),
       );
 
       setCategories(activeCategories);
     } catch (error) {
       console.error("Category fetch error:", error);
       setCategories([]);
-      setDocumentsError(
-        getError(error, "Failed to fetch library categories")
-      );
+      setDocumentsError(getError(error, "Failed to fetch library categories"));
     } finally {
       setCategoriesLoading(false);
     }
@@ -240,15 +259,15 @@ const GetViewLibrary = () => {
       const requests = [
         axios.get(
           `${LIBRARY_API_URL}/documents/?category=${encodeURIComponent(id)}`,
-          { headers: getHeaders() }
+          { headers: getHeaders() },
         ),
         axios.get(
           `${LIBRARY_API_URL}/documents/?category=${encodeURIComponent(id)}&is_active=true`,
-          { headers: getHeaders() }
+          { headers: getHeaders() },
         ),
         axios.get(
           `${LIBRARY_API_URL}/documents/?category=${encodeURIComponent(id)}&is_active=false`,
-          { headers: getHeaders() }
+          { headers: getHeaders() },
         ),
       ];
 
@@ -274,21 +293,20 @@ const GetViewLibrary = () => {
         });
       });
 
-      const categoryDocuments = Array.from(documentMap.values()).filter((doc) => {
-        const docCategoryId = getDocumentCategoryId(doc);
+      const categoryDocuments = Array.from(documentMap.values()).filter(
+        (doc) => {
+          const docCategoryId = getDocumentCategoryId(doc);
 
-        return (
-          docCategoryId === null ||
-          String(docCategoryId) === String(id)
-        );
-      });
+          return docCategoryId === null || String(docCategoryId) === String(id);
+        },
+      );
 
       setDocuments(categoryDocuments);
     } catch (error) {
       console.error("Document fetch error:", error);
       setDocuments([]);
       setDocumentsError(
-        getError(error, "Failed to fetch documents for this category")
+        getError(error, "Failed to fetch documents for this category"),
       );
     } finally {
       setDocumentsLoading(false);
@@ -316,7 +334,6 @@ const GetViewLibrary = () => {
     setDocumentsError("");
   };
 
-
   /*
    * Fetch ADMIN REQUESTS separately from CENTER RESPONSES.
    *
@@ -342,7 +359,9 @@ const GetViewLibrary = () => {
     if (!centerName) {
       setCenterLinks([]);
       setDetails([]);
-      setRequestsError("Logged-in center name is not available in AuthContext.");
+      setRequestsError(
+        "Logged-in center name is not available in AuthContext.",
+      );
       return;
     }
 
@@ -355,7 +374,7 @@ const GetViewLibrary = () => {
         `${CENTER_LINKS_API_URL}/?center_name=${encodeURIComponent(centerName)}`,
         {
           headers: getHeaders(),
-        }
+        },
       );
 
       console.log("CENTER-LINKS API:", requestResponse.data);
@@ -368,9 +387,7 @@ const GetViewLibrary = () => {
     } catch (error) {
       console.error("Center-links API error:", error);
       setCenterLinks([]);
-      setRequestsError(
-        getError(error, "Failed to fetch admin requests.")
-      );
+      setRequestsError(getError(error, "Failed to fetch admin requests."));
     }
 
     // 2. GET responses already submitted by this center.
@@ -381,7 +398,7 @@ const GetViewLibrary = () => {
         `${DETAILS_API_URL}/?center_name=${encodeURIComponent(centerName)}`,
         {
           headers: getHeaders(),
-        }
+        },
       );
 
       console.log("CENTER-LINK-DETAILS API:", detailResponse.data);
@@ -397,16 +414,19 @@ const GetViewLibrary = () => {
 
       // Only show this error if the Admin request API did not
       // already produce an error.
-      setRequestsError((currentError) =>
-        currentError ||
-        getError(error, "Unable to fetch submitted center responses.")
+      setRequestsError(
+        (currentError) =>
+          currentError ||
+          getError(error, "Unable to fetch submitted center responses."),
       );
     } finally {
       setRequestsLoading(false);
     }
   };
 
-  useEffect(() => { fetchCategories(); }, []);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   useEffect(() => {
     if (activeTab === "requests") fetchRequests();
   }, [activeTab, centerName]);
@@ -421,22 +441,23 @@ const GetViewLibrary = () => {
       center_link: String(request.id),
       center_name: centerName,
       img: null,
-      remark: ""
+      remark: "",
     });
     setShowModal(true);
   };
 
   const openEdit = (detail) => {
     if (!detail?.id) return;
-    const linkId = typeof detail.center_link === "object"
-      ? detail.center_link?.id
-      : detail.center_link;
+    const linkId =
+      typeof detail.center_link === "object"
+        ? detail.center_link?.id
+        : detail.center_link;
     setEditingDetail(detail);
     setForm({
       center_link: linkId ? String(linkId) : "",
       center_name: centerName,
       img: null,
-      remark: detail.remark || ""
+      remark: detail.remark || "",
     });
     setShowModal(true);
   };
@@ -445,12 +466,20 @@ const GetViewLibrary = () => {
     if (saving) return;
     setShowModal(false);
     setEditingDetail(null);
-    setForm({ center_link: "", center_name: centerName || "", img: null, remark: "" });
+    setForm({
+      center_link: "",
+      center_name: centerName || "",
+      img: null,
+      remark: "",
+    });
   };
 
   const changeForm = (e) => {
     const { name, value, files } = e.target;
-    setForm(prev => ({ ...prev, [name]: name === "img" ? (files?.[0] || null) : value }));
+    setForm((prev) => ({
+      ...prev,
+      [name]: name === "img" ? files?.[0] || null : value,
+    }));
   };
 
   const saveRequirement = async (e) => {
@@ -479,17 +508,23 @@ const GetViewLibrary = () => {
 
       const response = editingDetail?.id
         ? await axios.put(`${DETAILS_API_URL}/${editingDetail.id}/`, data, {
-            headers: { ...getHeaders(), "Content-Type": "multipart/form-data" }
+            headers: { ...getHeaders(), "Content-Type": "multipart/form-data" },
           })
         : await axios.post(`${DETAILS_API_URL}/`, data, {
-            headers: { ...getHeaders(), "Content-Type": "multipart/form-data" }
+            headers: { ...getHeaders(), "Content-Type": "multipart/form-data" },
           });
 
       if (response.status < 200 || response.status >= 300) {
-        throw new Error(response?.data?.message || "Unable to save requirement.");
+        throw new Error(
+          response?.data?.message || "Unable to save requirement.",
+        );
       }
 
-      alert(editingDetail ? "Requirement updated successfully." : "Requirement submitted successfully.");
+      alert(
+        editingDetail
+          ? "Requirement updated successfully."
+          : "Requirement submitted successfully.",
+      );
       closeModal();
       await fetchRequests();
     } catch (error) {
@@ -502,10 +537,17 @@ const GetViewLibrary = () => {
 
   const deleteRequirement = async (detail) => {
     if (!detail?.id) return;
-    if (!window.confirm("Are you sure you want to delete this submitted requirement?")) return;
+    if (
+      !window.confirm(
+        "Are you sure you want to delete this submitted requirement?",
+      )
+    )
+      return;
 
     try {
-      await axios.delete(`${DETAILS_API_URL}/${detail.id}/`, { headers: getHeaders() });
+      await axios.delete(`${DETAILS_API_URL}/${detail.id}/`, {
+        headers: getHeaders(),
+      });
       alert("Requirement deleted successfully.");
       await fetchRequests();
     } catch (error) {
@@ -519,32 +561,43 @@ const GetViewLibrary = () => {
     if (!q) return true;
 
     return (
-      String(category?.name || "").toLowerCase().includes(q) ||
-      String(category?.description || "").toLowerCase().includes(q)
+      String(category?.name || "")
+        .toLowerCase()
+        .includes(q) ||
+      String(category?.description || "")
+        .toLowerCase()
+        .includes(q)
     );
   });
 
   const filteredDocuments = documents.filter((doc) =>
-    String(doc?.title || "").toLowerCase().includes(documentSearch.toLowerCase())
+    String(doc?.title || "")
+      .toLowerCase()
+      .includes(documentSearch.toLowerCase()),
   );
 
-  const filteredRequests = centerLinks.filter(request => {
+  const filteredRequests = centerLinks.filter((request) => {
     const q = requestSearch.toLowerCase();
     const names = Array.isArray(request?.center_names)
       ? request.center_names.join(" ")
       : String(request?.center_names || "");
     return (
-      String(request?.description || "").toLowerCase().includes(q) ||
-      String(request?.link || "").toLowerCase().includes(q) ||
+      String(request?.description || "")
+        .toLowerCase()
+        .includes(q) ||
+      String(request?.link || "")
+        .toLowerCase()
+        .includes(q) ||
       names.toLowerCase().includes(q)
     );
   });
 
   const getDetailsForRequest = (requestId) =>
-    details.filter(detail => {
-      const id = typeof detail?.center_link === "object"
-        ? detail.center_link?.id
-        : detail?.center_link;
+    details.filter((detail) => {
+      const id =
+        typeof detail?.center_link === "object"
+          ? detail.center_link?.id
+          : detail?.center_link;
       return String(id) === String(requestId);
     });
 
@@ -552,7 +605,9 @@ const GetViewLibrary = () => {
     <div className="gvl-container">
       <div className="gvl-header">
         <div>
-          <h1>{activeTab === "documents" ? "Library Documents" : "Admin Requests"}</h1>
+          <h1>
+            {activeTab === "documents" ? "Library Documents" : "Admin Requests"}
+          </h1>
           <p>
             {activeTab === "documents"
               ? "View and access all uploaded documents"
@@ -563,16 +618,23 @@ const GetViewLibrary = () => {
         </div>
         {activeTab === "requests" && centerName && (
           <div className="gvl-center-badge">
-            <span>Center</span><strong>{centerName}</strong>
+            <span>Center</span>
+            <strong>{centerName}</strong>
           </div>
         )}
       </div>
 
       <div className="gvl-tabs">
-        <button className={`gvl-tab ${activeTab === "documents" ? "active" : ""}`} onClick={() => setActiveTab("documents")}>
+        <button
+          className={`gvl-tab ${activeTab === "documents" ? "active" : ""}`}
+          onClick={() => setActiveTab("documents")}
+        >
           <FaFileAlt /> Library Documents
         </button>
-        <button className={`gvl-tab ${activeTab === "requests" ? "active" : ""}`} onClick={() => setActiveTab("requests")}>
+        <button
+          className={`gvl-tab ${activeTab === "requests" ? "active" : ""}`}
+          onClick={() => setActiveTab("requests")}
+        >
           <FaClipboardList /> Admin Requests
         </button>
       </div>
@@ -621,8 +683,7 @@ const GetViewLibrary = () => {
                       <div className="gvl-category-content">
                         <h3>{category?.name || "Untitled Category"}</h3>
                         <p>
-                          {category?.description ||
-                            "No description available"}
+                          {category?.description || "No description available"}
                         </p>
                       </div>
 
@@ -672,9 +733,7 @@ const GetViewLibrary = () => {
                 <div className="gvl-empty">
                   <FaFileAlt />
                   <h3>No Documents Found</h3>
-                  <p>
-                    No documents are available in this category.
-                  </p>
+                  <p>No documents are available in this category.</p>
                 </div>
               ) : (
                 <div className="gvl-document-list">
@@ -683,10 +742,7 @@ const GetViewLibrary = () => {
                     const url = getFileUrl(raw);
 
                     return (
-                      <div
-                        className="gvl-document-card"
-                        key={doc.id || index}
-                      >
+                      <div className="gvl-document-card" key={doc.id || index}>
                         <div className="gvl-document-icon">
                           {getFileIcon(raw)}
                         </div>
@@ -695,18 +751,14 @@ const GetViewLibrary = () => {
                           <h3>{doc?.title || "Untitled Document"}</h3>
 
                           <p>
-                            {doc?.description ||
-                              "No description available"}
+                            {doc?.description || "No description available"}
                           </p>
 
                           <div className="gvl-document-meta">
                             <span>
-                              Uploaded by:{" "}
-                              {doc?.uploaded_by_name || "Admin"}
+                              Uploaded by: {doc?.uploaded_by_name || "Admin"}
                             </span>
-                            <span>
-                              {formatDate(doc?.created_at)}
-                            </span>
+                            <span>{formatDate(doc?.created_at)}</span>
                           </div>
                         </div>
 
@@ -742,17 +794,32 @@ const GetViewLibrary = () => {
         </>
       )}
 
-      {activeTab === "requests" && (
-        !centerName ? <div className="gvl-error">Center name could not be found in AuthContext.</div> :
-        <>
-          <div className="gvl-search-wrapper">
-            <FaSearch />
-            <input placeholder="Search admin requests..." value={requestSearch} onChange={e => setRequestSearch(e.target.value)} />
+      {activeTab === "requests" &&
+        (!centerName ? (
+          <div className="gvl-error">
+            Center name could not be found in AuthContext.
           </div>
-          {requestsError && <div className="gvl-error">{requestsError}</div>}
-          {requestsLoading ? <div className="gvl-loading">Loading admin requests...</div> :
-            filteredRequests.length === 0 ? (
-              <div className="gvl-empty"><FaClipboardList /><h3>No Admin Requests Found</h3><p>No request has been sent to <strong>{centerName}</strong>.</p></div>
+        ) : (
+          <>
+            <div className="gvl-search-wrapper">
+              <FaSearch />
+              <input
+                placeholder="Search admin requests..."
+                value={requestSearch}
+                onChange={(e) => setRequestSearch(e.target.value)}
+              />
+            </div>
+            {requestsError && <div className="gvl-error">{requestsError}</div>}
+            {requestsLoading ? (
+              <div className="gvl-loading">Loading admin requests...</div>
+            ) : filteredRequests.length === 0 ? (
+              <div className="gvl-empty">
+                <FaClipboardList />
+                <h3>No Admin Requests Found</h3>
+                <p>
+                  No request has been sent to <strong>{centerName}</strong>.
+                </p>
+              </div>
             ) : (
               <div className="gvl-request-list">
                 {filteredRequests.map((request, index) => {
@@ -763,25 +830,58 @@ const GetViewLibrary = () => {
                         <div className="gvl-request-number">{index + 1}</div>
                         <div className="gvl-request-title">
                           <h3>Admin Request #{request.id}</h3>
-                          <p>{request.description || "Admin has sent a request to your center."}</p>
+                          <p>
+                            {request.description ||
+                              "Admin has sent a request to your center."}
+                          </p>
                         </div>
-                        <div className={`gvl-request-status ${submitted.length > 0 ? "responded" : ""}`}>
+                        <div
+                          className={`gvl-request-status ${submitted.length > 0 ? "responded" : ""}`}
+                        >
                           {submitted.length > 0 ? "Responded" : "Pending"}
                         </div>
                       </div>
 
                       <div className="gvl-request-body">
                         <div className="gvl-request-info-grid">
-                          <div className="gvl-info-item"><span>Center</span><strong>{centerName}</strong></div>
-                          <div className="gvl-info-item"><span>Admin Link</span>
-                            {request.link ? <a href={request.link} target="_blank" rel="noopener noreferrer" className="gvl-request-link"><FaLink /> Open Link</a> : <strong>-</strong>}
+                          <div className="gvl-info-item">
+                            <span>Center</span>
+                            <strong>{centerName}</strong>
                           </div>
-                          <div className="gvl-info-item"><span>Assigned Centers</span><strong>{Array.isArray(request.center_names) ? request.center_names.join(", ") : request.center_names || "-"}</strong></div>
+                          <div className="gvl-info-item">
+                            <span>Admin Link</span>
+                            {request.link ? (
+                              <a
+                                href={request.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="gvl-request-link"
+                              >
+                                <FaLink /> Open Link
+                              </a>
+                            ) : (
+                              <strong>-</strong>
+                            )}
+                          </div>
+                          <div className="gvl-info-item">
+                            <span>Assigned Centers</span>
+                            <strong>
+                              {Array.isArray(request.center_names)
+                                ? request.center_names.join(", ")
+                                : request.center_names || "-"}
+                            </strong>
+                          </div>
                         </div>
 
                         <div className="gvl-submission-section">
                           <div className="gvl-section-heading">
-                            <div><h4>Center Requirement / Response</h4><p>Submit your requirement against this admin request.</p></div>
+                            <div>
+                              <h4>Center Requirement / Response</h4>
+                              <p>
+                                Submit your requirement against this admin
+                                request.
+                              </p>
+                            </div>
                             {submitted.length === 0 && (
                               <button
                                 className="gvl-submit-btn"
@@ -792,30 +892,77 @@ const GetViewLibrary = () => {
                             )}
                           </div>
 
-                          {submitted.length === 0 ? <div className="gvl-no-submission">No response submitted yet.</div> :
+                          {submitted.length === 0 ? (
+                            <div className="gvl-no-submission">
+                              No response submitted yet.
+                            </div>
+                          ) : (
                             <div className="gvl-submission-table-wrapper">
                               <table className="gvl-submission-table">
-                                <thead><tr><th>S.No.</th><th>Center Name</th><th>Remark</th><th>Image</th><th>Action</th></tr></thead>
+                                <thead>
+                                  <tr>
+                                    <th>S.No.</th>
+                                    <th>Center Name</th>
+                                    <th>Remark</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
                                 <tbody>
                                   {submitted.map((detail, i) => {
                                     const img = getFileUrl(detail?.img);
                                     return (
                                       <tr key={detail.id || i}>
                                         <td>{i + 1}</td>
-                                        <td><strong>{detail?.center_name || centerName}</strong></td>
+                                        <td>
+                                          <strong>
+                                            {detail?.center_name || centerName}
+                                          </strong>
+                                        </td>
                                         <td>{detail?.remark || "-"}</td>
-                                        <td>{img ? <a href={img} target="_blank" rel="noopener noreferrer" className="gvl-image-link"><FaFileImage /> View Image</a> : <span className="gvl-muted">No image</span>}</td>
-                                        <td><div className="gvl-actions">
-                                          <button className="gvl-action-btn edit" onClick={() => openEdit(detail)} title="Edit"><FaEdit /></button>
-                                          <button className="gvl-action-btn delete" onClick={() => deleteRequirement(detail)} title="Delete"><FaTrash /></button>
-                                        </div></td>
+                                        <td>
+                                          {img ? (
+                                            <a
+                                              href={img}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="gvl-image-link"
+                                            >
+                                              <FaFileImage /> View Image
+                                            </a>
+                                          ) : (
+                                            <span className="gvl-muted">
+                                              No image
+                                            </span>
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div className="gvl-actions">
+                                            <button
+                                              className="gvl-action-btn edit"
+                                              onClick={() => openEdit(detail)}
+                                              title="Edit"
+                                            >
+                                              <FaEdit />
+                                            </button>
+                                            <button
+                                              className="gvl-action-btn delete"
+                                              onClick={() =>
+                                                deleteRequirement(detail)
+                                              }
+                                              title="Delete"
+                                            >
+                                              <FaTrash />
+                                            </button>
+                                          </div>
+                                        </td>
                                       </tr>
                                     );
                                   })}
                                 </tbody>
                               </table>
                             </div>
-                          }
+                          )}
                         </div>
                       </div>
                     </div>
@@ -823,45 +970,105 @@ const GetViewLibrary = () => {
                 })}
               </div>
             )}
-        </>
-      )}
+          </>
+        ))}
 
       {showModal && (
         <div className="gvl-modal-overlay">
           <div className="gvl-modal">
             <div className="gvl-modal-header">
-              <div><h2>{editingDetail ? "Edit Requirement" : "Submit Requirement"}</h2><p>Respond to the requirement sent by Admin.</p></div>
-              <button className="gvl-modal-close" onClick={closeModal} disabled={saving}><FaTimes /></button>
+              <div>
+                <h2>
+                  {editingDetail ? "Edit Requirement" : "Submit Requirement"}
+                </h2>
+                <p>Respond to the requirement sent by Admin.</p>
+              </div>
+              <button
+                className="gvl-modal-close"
+                onClick={closeModal}
+                disabled={saving}
+              >
+                <FaTimes />
+              </button>
             </div>
 
             <form className="gvl-form" onSubmit={saveRequirement}>
               <div className="gvl-form-group">
-                <label>Admin Request ID <span>*</span></label>
+                <label>
+                  Admin Request ID <span>*</span>
+                </label>
                 <input type="text" value={form.center_link} disabled readOnly />
                 <small>This is the ID of the request sent by Admin.</small>
               </div>
 
               <div className="gvl-form-group">
-                <label>Center Name <span>*</span></label>
+                <label>
+                  Center Name <span>*</span>
+                </label>
                 <input type="text" value={centerName} disabled readOnly />
-                <small>Center name is automatically taken from AuthContext and cannot be changed.</small>
+                <small>
+                  Center name is automatically taken from AuthContext and cannot
+                  be changed.
+                </small>
               </div>
 
               <div className="gvl-form-group">
                 <label>Image</label>
-                <div className="gvl-file-input-wrapper"><FaUpload /><input type="file" name="img" accept="image/*" onChange={changeForm} /></div>
-                {form.img && <div className="gvl-selected-file">Selected: <strong>{form.img.name}</strong></div>}
+                <div className="gvl-file-input-wrapper">
+                  <FaUpload />
+                  <input
+                    type="file"
+                    name="img"
+                    accept="image/*"
+                    onChange={changeForm}
+                  />
+                </div>
+                {form.img && (
+                  <div className="gvl-selected-file">
+                    Selected: <strong>{form.img.name}</strong>
+                  </div>
+                )}
               </div>
 
               <div className="gvl-form-group">
-                <label>Remark <span>*</span></label>
-                <textarea name="remark" rows="5" value={form.remark} onChange={changeForm} placeholder="Enter your requirement / response..." disabled={saving} />
+                <label>
+                  Remark <span>*</span>
+                </label>
+                <textarea
+                  name="remark"
+                  rows="5"
+                  value={form.remark}
+                  onChange={changeForm}
+                  placeholder="Enter your requirement / response..."
+                  disabled={saving}
+                />
               </div>
 
               <div className="gvl-modal-footer">
-                <button type="button" className="gvl-cancel-btn" onClick={closeModal} disabled={saving}>Cancel</button>
-                <button type="submit" className="gvl-submit-btn" disabled={saving}>
-                  {saving ? "Saving..." : editingDetail ? <><FaEdit /> Update Requirement</> : <><FaPlus /> Submit Requirement</>}
+                <button
+                  type="button"
+                  className="gvl-cancel-btn"
+                  onClick={closeModal}
+                  disabled={saving}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="gvl-submit-btn"
+                  disabled={saving}
+                >
+                  {saving ? (
+                    "Saving..."
+                  ) : editingDetail ? (
+                    <>
+                      <FaEdit /> Update Requirement
+                    </>
+                  ) : (
+                    <>
+                      <FaPlus /> Submit Requirement
+                    </>
+                  )}
                 </button>
               </div>
             </form>

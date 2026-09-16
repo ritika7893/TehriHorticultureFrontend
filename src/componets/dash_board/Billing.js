@@ -23,9 +23,9 @@ import Footer from "../footer/Footer";
 
 // API URLs
 const GET_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 const UPDATE_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/update-billing-item/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/update-billing-item/";
 
 // Custom styles for react-select
 const customSelectStyles = {
@@ -235,7 +235,7 @@ const Billing = () => {
   const [modifiedItems, setModifiedItems] = useState({});
 
   const [selectedColumns, setSelectedColumns] = useState(
-    availableColumns.map((col) => col.key)
+    availableColumns.map((col) => col.key),
   );
 
   const [submitting, setSubmitting] = useState(false);
@@ -244,8 +244,11 @@ const Billing = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   const [filters, setFilters] = useState({
-    center_name: [], source_of_receipt: [], nivesh: [],
-    subnivesh_name: [], scheme_name: [],
+    center_name: [],
+    source_of_receipt: [],
+    nivesh: [],
+    subnivesh_name: [],
+    scheme_name: [],
   });
 
   const [fromDate, setFromDate] = useState("");
@@ -256,34 +259,107 @@ const Billing = () => {
 
   // Page Number State
   const [showPageNoModal, setShowPageNoModal] = useState(false);
-  const [pageNoInputs, setPageNoInputs] = useState({}); 
+  const [pageNoInputs, setPageNoInputs] = useState({});
 
   const columnMapping = {
-    sno: { header: "क्र.सं.", accessor: (item, index, currentPage, itemsPerPage) => (currentPage - 1) * itemsPerPage + index + 1 },
-    center_name: { header: translations.centerName, accessor: (item) => item.center_name },
-    source_of_receipt: { header: translations.sourceOfReceipt, accessor: (item) => item.source_of_receipt },
-    nivesh: { header: translations.nivesh, accessor: (item) => item.investment_name },
-    subnivesh_name: { header: translations.subniveshName, accessor: (item) => item.sub_investment_name },
-    scheme_name: { header: translations.schemeName, accessor: (item) => item.scheme_name },
+    sno: {
+      header: "क्र.सं.",
+      accessor: (item, index, currentPage, itemsPerPage) =>
+        (currentPage - 1) * itemsPerPage + index + 1,
+    },
+    center_name: {
+      header: translations.centerName,
+      accessor: (item) => item.center_name,
+    },
+    source_of_receipt: {
+      header: translations.sourceOfReceipt,
+      accessor: (item) => item.source_of_receipt,
+    },
+    nivesh: {
+      header: translations.nivesh,
+      accessor: (item) => item.investment_name,
+    },
+    subnivesh_name: {
+      header: translations.subniveshName,
+      accessor: (item) => item.sub_investment_name,
+    },
+    scheme_name: {
+      header: translations.schemeName,
+      accessor: (item) => item.scheme_name,
+    },
     unit: { header: translations.unit, accessor: (item) => item.unit },
-    allocated_quantity: { header: translations.allocatedQuantity, accessor: (item) => item.allocated_quantity },
+    allocated_quantity: {
+      header: translations.allocatedQuantity,
+      accessor: (item) => item.allocated_quantity,
+    },
     rate: { header: "क्रय दर (प्रति इकाई)", accessor: (item) => item.rate },
-    farmer_selling_rate: { header: translations.farmerSellingRate, accessor: (item) => item.farmer_selling_rate },
-    farmer_subsidy_rate: { header: translations.farmerSubsidyRate, accessor: (item) => item.farmer_subsidy_rate },
-    amount_of_farmer_share: { header: translations.farmerShareAmount, accessor: (item) => item.amount_of_farmer_share },
-    amount_of_subsidy: { header: translations.subsidyAmount, accessor: (item) => item.amount_of_subsidy },
-    total_amount: { header: translations.totalAmount, accessor: (item) => item.total_amount },
-    anudan_name: { header: translations.anudanName, accessor: (item) => item.anudan_name },
+    farmer_selling_rate: {
+      header: translations.farmerSellingRate,
+      accessor: (item) => item.farmer_selling_rate,
+    },
+    farmer_subsidy_rate: {
+      header: translations.farmerSubsidyRate,
+      accessor: (item) => item.farmer_subsidy_rate,
+    },
+    amount_of_farmer_share: {
+      header: translations.farmerShareAmount,
+      accessor: (item) => item.amount_of_farmer_share,
+    },
+    amount_of_subsidy: {
+      header: translations.subsidyAmount,
+      accessor: (item) => item.amount_of_subsidy,
+    },
+    total_amount: {
+      header: translations.totalAmount,
+      accessor: (item) => item.total_amount,
+    },
+    anudan_name: {
+      header: translations.anudanName,
+      accessor: (item) => item.anudan_name,
+    },
     remark: { header: translations.remark, accessor: (item) => item.remark },
-    bill_date: { header: translations.billDate, accessor: (item) => item.bill_date },
-    updated_quantity: { header: translations.updatedQuantity, accessor: (item) => item.updated_quantity },
-    quantity_left: { header: translations.quantityLeft, accessor: (item) => calculateQuantityLeft(item.allocated_quantity, item.updated_quantity, item.cut_quantity) },
-    alloted_rashi: { header: translations.allotedRashi, accessor: (item) => calculateAllocatedAmount(item.allocated_quantity, item.rate) },
-    sold_rashi: { header: translations.soldRashi, accessor: (item) => calculateAmount(item.updated_quantity, item.rate) },
-    cut_quantity: { header: translations.cutQuantity, accessor: (item) => item.cut_quantity },
-    total_bill: { header: translations.totalBill, accessor: (item) => calculateTotalBill(item.cut_quantity, item.rate) },
-    bill_id: { header: translations.billId, accessor: (item) => item.bill_report_id },
-    billing_date: { header: translations.billingDate, accessor: (item) => item.billing_date },
+    bill_date: {
+      header: translations.billDate,
+      accessor: (item) => item.bill_date,
+    },
+    updated_quantity: {
+      header: translations.updatedQuantity,
+      accessor: (item) => item.updated_quantity,
+    },
+    quantity_left: {
+      header: translations.quantityLeft,
+      accessor: (item) =>
+        calculateQuantityLeft(
+          item.allocated_quantity,
+          item.updated_quantity,
+          item.cut_quantity,
+        ),
+    },
+    alloted_rashi: {
+      header: translations.allotedRashi,
+      accessor: (item) =>
+        calculateAllocatedAmount(item.allocated_quantity, item.rate),
+    },
+    sold_rashi: {
+      header: translations.soldRashi,
+      accessor: (item) => calculateAmount(item.updated_quantity, item.rate),
+    },
+    cut_quantity: {
+      header: translations.cutQuantity,
+      accessor: (item) => item.cut_quantity,
+    },
+    total_bill: {
+      header: translations.totalBill,
+      accessor: (item) => calculateTotalBill(item.cut_quantity, item.rate),
+    },
+    bill_id: {
+      header: translations.billId,
+      accessor: (item) => item.bill_report_id,
+    },
+    billing_date: {
+      header: translations.billingDate,
+      accessor: (item) => item.billing_date,
+    },
   };
 
   useEffect(() => {
@@ -291,17 +367,22 @@ const Billing = () => {
       try {
         setLoading(true);
         const response = await fetch(GET_API_URL);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
 
         const sourceMapping = {};
         data.forEach((item) => {
-          if (item.source_of_receipt && item.user_id) sourceMapping[item.source_of_receipt] = item.user_id;
+          if (item.source_of_receipt && item.user_id)
+            sourceMapping[item.source_of_receipt] = item.user_id;
         });
         setSourceUserMap(sourceMapping);
 
         const initializedData = data.map((item) => ({
-          ...item, cut_quantity: "", billing_date: "", bill_report_id: "",
+          ...item,
+          cut_quantity: "",
+          billing_date: "",
+          bill_report_id: "",
         }));
         setBillingData(initializedData);
       } catch (e) {
@@ -330,35 +411,96 @@ const Billing = () => {
   }, [filters, fromDate, toDate]);
 
   const filterOptions = useMemo(() => {
-    if (!billingData || billingData.length === 0) return { center_name: [], source_of_receipt: [], nivesh: [], subnivesh_name: [], scheme_name: [] };
+    if (!billingData || billingData.length === 0)
+      return {
+        center_name: [],
+        source_of_receipt: [],
+        nivesh: [],
+        subnivesh_name: [],
+        scheme_name: [],
+      };
     return {
-      center_name: [{ value: "select_all", label: "सभी चुनें" }, ...[...new Set(billingData.map((item) => item.center_name))].map((name) => ({ value: name, label: name }))],
-      source_of_receipt: [{ value: "select_all", label: "सभी चुनें" }, ...[...new Set(billingData.map((item) => item.source_of_receipt))].map((name) => ({ value: name, label: name }))],
-      nivesh: [{ value: "select_all", label: "सभी चुनें" }, ...[...new Set(billingData.map((item) => item.investment_name))].map((name) => ({ value: name, label: name }))],
-      subnivesh_name: [{ value: "select_all", label: "सभी चुनें" }, ...[...new Set(billingData.map((item) => item.sub_investment_name))].map((name) => ({ value: name, label: name }))],
-      scheme_name: [{ value: "select_all", label: "सभी चुनें" }, ...[...new Set(billingData.map((item) => item.scheme_name))].map((name) => ({ value: name, label: name }))],
+      center_name: [
+        { value: "select_all", label: "सभी चुनें" },
+        ...[...new Set(billingData.map((item) => item.center_name))].map(
+          (name) => ({ value: name, label: name }),
+        ),
+      ],
+      source_of_receipt: [
+        { value: "select_all", label: "सभी चुनें" },
+        ...[...new Set(billingData.map((item) => item.source_of_receipt))].map(
+          (name) => ({ value: name, label: name }),
+        ),
+      ],
+      nivesh: [
+        { value: "select_all", label: "सभी चुनें" },
+        ...[...new Set(billingData.map((item) => item.investment_name))].map(
+          (name) => ({ value: name, label: name }),
+        ),
+      ],
+      subnivesh_name: [
+        { value: "select_all", label: "सभी चुनें" },
+        ...[
+          ...new Set(billingData.map((item) => item.sub_investment_name)),
+        ].map((name) => ({ value: name, label: name })),
+      ],
+      scheme_name: [
+        { value: "select_all", label: "सभी चुनें" },
+        ...[...new Set(billingData.map((item) => item.scheme_name))].map(
+          (name) => ({ value: name, label: name }),
+        ),
+      ],
     };
   }, [billingData]);
 
   const filteredData = useMemo(() => {
     return billingData.filter((item) => {
-      const matchesCenter = filters.center_name.length === 0 || filters.center_name.some((c) => c.value === item.center_name);
-      const matchesSource = filters.source_of_receipt.length === 0 || filters.source_of_receipt.some((s) => s.value === item.source_of_receipt);
-      const matchesScheme = filters.scheme_name.length === 0 || filters.scheme_name.some((scheme) => scheme.value === item.scheme_name);
-      const matchesNivesh = filters.nivesh.length === 0 || filters.nivesh.some((n) => n.value === item.investment_name);
-      const matchesSubnivesh = filters.subnivesh_name.length === 0 || filters.subnivesh_name.some((sub) => sub.value === item.sub_investment_name);
+      const matchesCenter =
+        filters.center_name.length === 0 ||
+        filters.center_name.some((c) => c.value === item.center_name);
+      const matchesSource =
+        filters.source_of_receipt.length === 0 ||
+        filters.source_of_receipt.some(
+          (s) => s.value === item.source_of_receipt,
+        );
+      const matchesScheme =
+        filters.scheme_name.length === 0 ||
+        filters.scheme_name.some((scheme) => scheme.value === item.scheme_name);
+      const matchesNivesh =
+        filters.nivesh.length === 0 ||
+        filters.nivesh.some((n) => n.value === item.investment_name);
+      const matchesSubnivesh =
+        filters.subnivesh_name.length === 0 ||
+        filters.subnivesh_name.some(
+          (sub) => sub.value === item.sub_investment_name,
+        );
 
       let matchesDateRange = true;
       if (fromDate || toDate) {
         const itemDate = item.bill_date ? new Date(item.bill_date) : null;
         if (itemDate && !isNaN(itemDate.getTime())) {
-          if (fromDate) { const from = new Date(fromDate); from.setHours(0, 0, 0, 0); if (itemDate < from) matchesDateRange = false; }
-          if (toDate) { const to = new Date(toDate); to.setHours(23, 59, 59, 999); if (itemDate > to) matchesDateRange = false; }
+          if (fromDate) {
+            const from = new Date(fromDate);
+            from.setHours(0, 0, 0, 0);
+            if (itemDate < from) matchesDateRange = false;
+          }
+          if (toDate) {
+            const to = new Date(toDate);
+            to.setHours(23, 59, 59, 999);
+            if (itemDate > to) matchesDateRange = false;
+          }
         } else {
           matchesDateRange = false;
         }
       }
-      return matchesCenter && matchesSource && matchesScheme && matchesNivesh && matchesSubnivesh && matchesDateRange;
+      return (
+        matchesCenter &&
+        matchesSource &&
+        matchesScheme &&
+        matchesNivesh &&
+        matchesSubnivesh &&
+        matchesDateRange
+      );
     });
   }, [billingData, filters, fromDate, toDate]);
 
@@ -377,38 +519,64 @@ const Billing = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const paginatedBillingData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const paginatedBillingData = filteredData.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const downloadExcel = (data, filename) => {
     try {
       const excelData = data.map((item, index) => {
         const row = {};
-        selectedColumns.forEach((col) => { row[columnMapping[col].header] = columnMapping[col].accessor(item, index, currentPage, itemsPerPage); });
+        selectedColumns.forEach((col) => {
+          row[columnMapping[col].header] = columnMapping[col].accessor(
+            item,
+            index,
+            currentPage,
+            itemsPerPage,
+          );
+        });
         return row;
       });
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.json_to_sheet(excelData);
       XLSX.utils.book_append_sheet(wb, ws, "BillingItems");
       XLSX.writeFile(wb, `${filename}.xlsx`);
-    } catch (e) { console.error("Error generating Excel file:", e); }
+    } catch (e) {
+      console.error("Error generating Excel file:", e);
+    }
   };
 
   const downloadPdf = (data, filename) => {
     try {
-      const headers = selectedColumns.map((col) => `<th>${columnMapping[col].header}</th>`).join("");
-      const rows = data.map((item, index) => `<tr>${selectedColumns.map((col) => `<td>${columnMapping[col].accessor(item, index, currentPage, itemsPerPage)}</td>`).join("")}</tr>`).join("");
+      const headers = selectedColumns
+        .map((col) => `<th>${columnMapping[col].header}</th>`)
+        .join("");
+      const rows = data
+        .map(
+          (item, index) =>
+            `<tr>${selectedColumns.map((col) => `<td>${columnMapping[col].accessor(item, index, currentPage, itemsPerPage)}</td>`).join("")}</tr>`,
+        )
+        .join("");
       const tableHtml = `<html><head><style>table{border-collapse:collapse;width:100%;font-family:Arial,sans-serif;}th,td{border:1px solid #ddd;padding:8px;text-align:left;}th{background-color:#f2f2f2;font-weight:bold;}</style></head><body><h2>${translations.billingItems}</h2><table><tr>${headers}</tr>${rows}</table></body></html>`;
       const printWindow = window.open("", "_blank");
       printWindow.document.write(tableHtml);
       printWindow.document.close();
-      setTimeout(() => { printWindow.print(); printWindow.close(); }, 500);
-    } catch (e) { console.error("Error generating PDF:", e); }
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 500);
+    } catch (e) {
+      console.error("Error generating PDF:", e);
+    }
   };
 
   const handleFilterChange = (filterName, value) => {
     if (value && value.some((v) => v.value === "select_all")) {
-      const allOptions = filterOptions[filterName].filter((opt) => opt.value !== "select_all");
+      const allOptions = filterOptions[filterName].filter(
+        (opt) => opt.value !== "select_all",
+      );
       setFilters((prev) => ({ ...prev, [filterName]: allOptions }));
     } else {
       setFilters((prev) => ({ ...prev, [filterName]: value }));
@@ -417,17 +585,31 @@ const Billing = () => {
 
   const handleCutQuantityChange = (id, value) => {
     const sanitizedValue = value === "" ? "" : String(value).trim();
-    const numValue = sanitizedValue === "" ? 0 : Math.max(0, parseFloat(sanitizedValue) || 0);
-    setBillingData((prevData) => prevData.map((row) => (row.id === id ? { ...row, cut_quantity: numValue } : row)));
+    const numValue =
+      sanitizedValue === "" ? 0 : Math.max(0, parseFloat(sanitizedValue) || 0);
+    setBillingData((prevData) =>
+      prevData.map((row) =>
+        row.id === id ? { ...row, cut_quantity: numValue } : row,
+      ),
+    );
     setModifiedItems((prev) => ({ ...prev, [id]: true }));
   };
 
   const applyBulkFieldValue = (fieldName, value, changedItemId) => {
-    const normalizedValue = value === "" || value === null || value === undefined ? "" : typeof value === "string" ? value.trim() : value;
-    setBillingData((prevData) => prevData.map((item) => ({ ...item, [fieldName]: normalizedValue })));
+    const normalizedValue =
+      value === "" || value === null || value === undefined
+        ? ""
+        : typeof value === "string"
+          ? value.trim()
+          : value;
+    setBillingData((prevData) =>
+      prevData.map((item) => ({ ...item, [fieldName]: normalizedValue })),
+    );
     setModifiedItems((prev) => {
       const next = { ...prev };
-      billingData.forEach((item) => { next[item.id] = true; });
+      billingData.forEach((item) => {
+        next[item.id] = true;
+      });
       next[changedItemId] = true;
       return next;
     });
@@ -439,7 +621,8 @@ const Billing = () => {
       formattedDate = value;
     } else if (value) {
       const date = new Date(value);
-      if (!isNaN(date.getTime())) formattedDate = date.toISOString().split("T")[0];
+      if (!isNaN(date.getTime()))
+        formattedDate = date.toISOString().split("T")[0];
     }
     applyBulkFieldValue("billing_date", formattedDate, id);
   };
@@ -447,20 +630,28 @@ const Billing = () => {
   // FIXED: Only apply Bill Report ID to rows with the same Center and Billing Date
   const handleBillReportIdChange = (id, value) => {
     const trimmed = value ? value.toString().trim() : "";
-    const changedItem = billingData.find(item => item.id === id);
+    const changedItem = billingData.find((item) => item.id === id);
     if (!changedItem) return;
 
-    setBillingData((prevData) => prevData.map((item) => {
-      if (item.center_id === changedItem.center_id && item.billing_date === changedItem.billing_date) {
-        return { ...item, bill_report_id: trimmed };
-      }
-      return item;
-    }));
-    
+    setBillingData((prevData) =>
+      prevData.map((item) => {
+        if (
+          item.center_id === changedItem.center_id &&
+          item.billing_date === changedItem.billing_date
+        ) {
+          return { ...item, bill_report_id: trimmed };
+        }
+        return item;
+      }),
+    );
+
     setModifiedItems((prev) => {
       const next = { ...prev };
       billingData.forEach((item) => {
-        if (item.center_id === changedItem.center_id && item.billing_date === changedItem.billing_date) {
+        if (
+          item.center_id === changedItem.center_id &&
+          item.billing_date === changedItem.billing_date
+        ) {
           next[item.id] = true;
         }
       });
@@ -470,14 +661,28 @@ const Billing = () => {
   };
 
   const resetRowFields = (id) => {
-    setBillingData((prevData) => prevData.map((item) => item.id === id ? { ...item, cut_quantity: 0, billing_date: "", bill_report_id: "" } : item));
+    setBillingData((prevData) =>
+      prevData.map((item) =>
+        item.id === id
+          ? { ...item, cut_quantity: 0, billing_date: "", bill_report_id: "" }
+          : item,
+      ),
+    );
     setModifiedItems((prev) => ({ ...prev, [id]: true }));
   };
 
-  const calculateQuantityLeft = (allocated, updated, cut) => ((parseFloat(allocated) || 0) - (parseFloat(updated) || 0) - (parseFloat(cut) || 0)).toFixed(2);
-  const calculateAmount = (quantity, rate) => ((parseFloat(quantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
-  const calculateAllocatedAmount = (allocatedQuantity, rate) => ((parseFloat(allocatedQuantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
-  const calculateTotalBill = (cutQuantity, rate) => ((parseFloat(cutQuantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
+  const calculateQuantityLeft = (allocated, updated, cut) =>
+    (
+      (parseFloat(allocated) || 0) -
+      (parseFloat(updated) || 0) -
+      (parseFloat(cut) || 0)
+    ).toFixed(2);
+  const calculateAmount = (quantity, rate) =>
+    ((parseFloat(quantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
+  const calculateAllocatedAmount = (allocatedQuantity, rate) =>
+    ((parseFloat(allocatedQuantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
+  const calculateTotalBill = (cutQuantity, rate) =>
+    ((parseFloat(cutQuantity) || 0) * (parseFloat(rate) || 0)).toFixed(2);
 
   const handleOpenPageNoModal = () => {
     setShowPageNoModal(true);
@@ -494,7 +699,9 @@ const Billing = () => {
   // Main form submit (includes both multiple_bills and component_pageno)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updatedItems = billingData.filter((item) => modifiedItems[item.id] && item.cut_quantity > 0);
+    const updatedItems = billingData.filter(
+      (item) => modifiedItems[item.id] && item.cut_quantity > 0,
+    );
     if (updatedItems.length === 0) {
       setSubmitError(translations.noItemsUpdated);
       return;
@@ -505,21 +712,34 @@ const Billing = () => {
       setShowErrorModal(false);
       setSubmitSuccess(false);
 
-      const itemsWithoutDate = updatedItems.filter((item) => !item.billing_date);
+      const itemsWithoutDate = updatedItems.filter(
+        (item) => !item.billing_date,
+      );
       if (itemsWithoutDate.length > 0) {
-        setSubmitError(`Please select billing date for all items. Missing dates for ${itemsWithoutDate.length} item(s).`);
+        setSubmitError(
+          `Please select billing date for all items. Missing dates for ${itemsWithoutDate.length} item(s).`,
+        );
         return;
       }
       const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-      const itemsWithInvalidDate = updatedItems.filter((item) => !dateRegex.test(item.billing_date));
+      const itemsWithInvalidDate = updatedItems.filter(
+        (item) => !dateRegex.test(item.billing_date),
+      );
       if (itemsWithInvalidDate.length > 0) {
-        setSubmitError(`Invalid date format found. All dates must be in YYYY-MM-DD format. Please check ${itemsWithInvalidDate.length} item(s).`);
+        setSubmitError(
+          `Invalid date format found. All dates must be in YYYY-MM-DD format. Please check ${itemsWithInvalidDate.length} item(s).`,
+        );
         return;
       }
 
-      const itemsWithoutReportId = updatedItems.filter((item) => !item.bill_report_id || item.bill_report_id.toString().trim() === "");
+      const itemsWithoutReportId = updatedItems.filter(
+        (item) =>
+          !item.bill_report_id || item.bill_report_id.toString().trim() === "",
+      );
       if (itemsWithoutReportId.length > 0) {
-        setSubmitError(`Please enter Bill Report ID for all modified items. Missing for ${itemsWithoutReportId.length} item(s).`);
+        setSubmitError(
+          `Please enter Bill Report ID for all modified items. Missing for ${itemsWithoutReportId.length} item(s).`,
+        );
         return;
       }
 
@@ -530,62 +750,83 @@ const Billing = () => {
         const billReportId = item.bill_report_id || "";
         const compositeKey = `${centerId}_${billingDate}_${billReportId}`;
         if (!itemsByCenterDateReport[compositeKey]) {
-          itemsByCenterDateReport[compositeKey] = { center_id: centerId, billing_date: billingDate, bill_report_id: billReportId, items: [] };
+          itemsByCenterDateReport[compositeKey] = {
+            center_id: centerId,
+            billing_date: billingDate,
+            bill_report_id: billReportId,
+            items: [],
+          };
         }
         itemsByCenterDateReport[compositeKey].items.push(item);
       });
 
       // Check if the user entered the same Bill Report ID for different centers/dates
-      const reportIdsArray = Object.values(itemsByCenterDateReport).map(g => g.bill_report_id);
-      const duplicateReportIds = reportIdsArray.filter((id, index) => reportIdsArray.indexOf(id) !== index);
+      const reportIdsArray = Object.values(itemsByCenterDateReport).map(
+        (g) => g.bill_report_id,
+      );
+      const duplicateReportIds = reportIdsArray.filter(
+        (id, index) => reportIdsArray.indexOf(id) !== index,
+      );
       if (duplicateReportIds.length > 0) {
-        setSubmitError(`Duplicate Bill Report ID found: ${duplicateReportIds.join(", ")}. Please ensure each Center/Date combination has a unique Bill Report ID.`);
+        setSubmitError(
+          `Duplicate Bill Report ID found: ${duplicateReportIds.join(", ")}. Please ensure each Center/Date combination has a unique Bill Report ID.`,
+        );
         return;
       }
 
-      const payloads = Object.keys(itemsByCenterDateReport).map((compositeKey) => {
-        const group = itemsByCenterDateReport[compositeKey];
-        const multiple_bills = group.items.map((item) => {
-          const existingUpdated = parseFloat(item.updated_quantity) || 0;
-          const newCut = parseFloat(item.cut_quantity) || 0;
-          const totalUpdated = (existingUpdated + newCut).toString();
-          return [item.bill_id, totalUpdated];
-        });
+      const payloads = Object.keys(itemsByCenterDateReport).map(
+        (compositeKey) => {
+          const group = itemsByCenterDateReport[compositeKey];
+          const multiple_bills = group.items.map((item) => {
+            const existingUpdated = parseFloat(item.updated_quantity) || 0;
+            const newCut = parseFloat(item.cut_quantity) || 0;
+            const totalUpdated = (existingUpdated + newCut).toString();
+            return [item.bill_id, totalUpdated];
+          });
 
-        // --- Build component_pageno array ---
-        const pnoGrouped = {};
-        group.items.forEach(item => {
-          const name = item.sub_investment_name;
-          const pno = pageNoInputs[name];
-          if (pno !== undefined && pno !== null && String(pno).trim() !== "") {
-            const pnoStr = String(pno).trim();
-            if (!pnoGrouped[pnoStr]) pnoGrouped[pnoStr] = new Set();
-            pnoGrouped[pnoStr].add(name);
+          // --- Build component_pageno array ---
+          const pnoGrouped = {};
+          group.items.forEach((item) => {
+            const name = item.sub_investment_name;
+            const pno = pageNoInputs[name];
+            if (
+              pno !== undefined &&
+              pno !== null &&
+              String(pno).trim() !== ""
+            ) {
+              const pnoStr = String(pno).trim();
+              if (!pnoGrouped[pnoStr]) pnoGrouped[pnoStr] = new Set();
+              pnoGrouped[pnoStr].add(name);
+            }
+          });
+
+          const pnoPairs = Object.entries(pnoGrouped).map(([pno, namesSet]) => {
+            const parsedPno = parseInt(pno, 10);
+            const finalPnoVal = isNaN(parsedPno) ? pno : parsedPno;
+            return [Array.from(namesSet), finalPnoVal];
+          });
+
+          let finalComponentPageno = [];
+          if (pnoPairs.length > 0) {
+            finalComponentPageno =
+              pnoPairs.length === 1 ? pnoPairs[0] : pnoPairs;
           }
-        });
+          // -----------------------------------
 
-        const pnoPairs = Object.entries(pnoGrouped).map(([pno, namesSet]) => {
-          const parsedPno = parseInt(pno, 10);
-          const finalPnoVal = isNaN(parsedPno) ? pno : parsedPno;
-          return [Array.from(namesSet), finalPnoVal];
-        });
+          return {
+            bill_report_id: group.bill_report_id || "",
+            center_id: group.center_id,
+            billing_date: group.billing_date,
+            multiple_bills: multiple_bills,
+            component_pageno: finalComponentPageno,
+          };
+        },
+      );
 
-        let finalComponentPageno = [];
-        if (pnoPairs.length > 0) {
-          finalComponentPageno = pnoPairs.length === 1 ? pnoPairs[0] : pnoPairs;
-        }
-        // -----------------------------------
-
-        return {
-          bill_report_id: group.bill_report_id || "",
-          center_id: group.center_id,
-          billing_date: group.billing_date,
-          multiple_bills: multiple_bills,
-          component_pageno: finalComponentPageno
-        };
-      });
-
-      console.log("Submitting payloads:", JSON.stringify({ data: payloads }, null, 2));
+      console.log(
+        "Submitting payloads:",
+        JSON.stringify({ data: payloads }, null, 2),
+      );
 
       const response = await fetch(UPDATE_API_URL, {
         method: "POST",
@@ -594,18 +835,40 @@ const Billing = () => {
       });
 
       let responseText;
-      try { responseText = await response.text(); } catch (e) { console.error("Error reading response text:", e); }
+      try {
+        responseText = await response.text();
+      } catch (e) {
+        console.error("Error reading response text:", e);
+      }
       let responseData;
-      try { if (responseText) responseData = JSON.parse(responseText); } catch (e) { console.error("Error parsing response as JSON:", e); }
+      try {
+        if (responseText) responseData = JSON.parse(responseText);
+      } catch (e) {
+        console.error("Error parsing response as JSON:", e);
+      }
 
       if (!response.ok) {
         let errorMessage;
-        if (responseData && Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+        if (
+          responseData &&
+          Array.isArray(responseData.errors) &&
+          responseData.errors.length > 0
+        ) {
           // Deduplicate error messages so they don't show 9 times
-          const uniqueErrorStrings = Array.from(new Set(responseData.errors.map(err => `बिल रिपोर्ट आईडी '${err.bill_report_id}' के लिए त्रुटि: ${err.error}`)));
+          const uniqueErrorStrings = Array.from(
+            new Set(
+              responseData.errors.map(
+                (err) =>
+                  `बिल रिपोर्ट आईडी '${err.bill_report_id}' के लिए त्रुटि: ${err.error}`,
+              ),
+            ),
+          );
           errorMessage = uniqueErrorStrings.join("\n");
         } else {
-          errorMessage = responseData?.message || responseData?.error || `HTTP error! status: ${response.status}`;
+          errorMessage =
+            responseData?.message ||
+            responseData?.error ||
+            `HTTP error! status: ${response.status}`;
         }
         throw new Error(errorMessage);
       }
@@ -618,9 +881,14 @@ const Billing = () => {
       if (refreshResponse.ok) {
         const data = await refreshResponse.json();
         const sourceMapping = {};
-        data.forEach((item) => { if (item.source_of_receipt && item.user_id) sourceMapping[item.source_of_receipt] = item.user_id; });
+        data.forEach((item) => {
+          if (item.source_of_receipt && item.user_id)
+            sourceMapping[item.source_of_receipt] = item.user_id;
+        });
         setSourceUserMap(sourceMapping);
-        setBillingData(data.map((item) => ({ ...item, cut_quantity: "", billing_date: "" })));
+        setBillingData(
+          data.map((item) => ({ ...item, cut_quantity: "", billing_date: "" })),
+        );
       }
     } catch (e) {
       console.error("Submit error:", e);
@@ -632,8 +900,15 @@ const Billing = () => {
   };
 
   const clearFilters = () => {
-    setFilters({ center_name: [], source_of_receipt: [], nivesh: [], subnivesh_name: [], scheme_name: [] });
-    setFromDate(""); setToDate("");
+    setFilters({
+      center_name: [],
+      source_of_receipt: [],
+      nivesh: [],
+      subnivesh_name: [],
+      scheme_name: [],
+    });
+    setFromDate("");
+    setToDate("");
   };
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
@@ -642,32 +917,74 @@ const Billing = () => {
   const maxVisiblePages = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-  if (endPage - startPage < maxVisiblePages - 1) startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  if (endPage - startPage < maxVisiblePages - 1)
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
   if (startPage > 1) {
-    paginationItems.push(<Pagination.Item key={1} onClick={() => handlePageChange(1)}>1</Pagination.Item>);
-    if (startPage > 2) paginationItems.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
+    paginationItems.push(
+      <Pagination.Item key={1} onClick={() => handlePageChange(1)}>
+        1
+      </Pagination.Item>,
+    );
+    if (startPage > 2)
+      paginationItems.push(
+        <Pagination.Ellipsis key="start-ellipsis" disabled />,
+      );
   }
   for (let number = startPage; number <= endPage; number++) {
-    paginationItems.push(<Pagination.Item key={number} active={number === currentPage} onClick={() => handlePageChange(number)}>{number}</Pagination.Item>);
+    paginationItems.push(
+      <Pagination.Item
+        key={number}
+        active={number === currentPage}
+        onClick={() => handlePageChange(number)}
+      >
+        {number}
+      </Pagination.Item>,
+    );
   }
   if (endPage < totalPages) {
-    if (endPage < totalPages - 1) paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
-    paginationItems.push(<Pagination.Item key={totalPages} onClick={() => handlePageChange(totalPages)}>{totalPages}</Pagination.Item>);
+    if (endPage < totalPages - 1)
+      paginationItems.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
+    paginationItems.push(
+      <Pagination.Item
+        key={totalPages}
+        onClick={() => handlePageChange(totalPages)}
+      >
+        {totalPages}
+      </Pagination.Item>,
+    );
   }
 
   if (loading) {
     return (
       <div className="dashboard-container">
-        <LeftNav sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} isMobile={isMobile} isTablet={isTablet} />
-        <div className="main-content d-flex justify-content-center align-items-center"><Spinner animation="border" /></div>
+        <LeftNav
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          isMobile={isMobile}
+          isTablet={isTablet}
+        />
+        <div className="main-content d-flex justify-content-center align-items-center">
+          <Spinner animation="border" />
+        </div>
       </div>
     );
   }
   if (error) {
     return (
       <div className="dashboard-container">
-        <LeftNav sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} isMobile={isMobile} isTablet={isTablet} />
-        <div className="main-content"><Container fluid className="dashboard-body"><Alert variant="danger">{translations.error}: {error}</Alert></Container></div>
+        <LeftNav
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          isMobile={isMobile}
+          isTablet={isTablet}
+        />
+        <div className="main-content">
+          <Container fluid className="dashboard-body">
+            <Alert variant="danger">
+              {translations.error}: {error}
+            </Alert>
+          </Container>
+        </div>
       </div>
     );
   }
@@ -677,35 +994,199 @@ const Billing = () => {
       <style>{billingTableCss}</style>
       <div>
         <Container fluid className="p-4">
-          <Row><Col lg={12} md={12} sm={12}><DashBoardHeader /></Col></Row>
+          <Row>
+            <Col lg={12} md={12} sm={12}>
+              <DashBoardHeader />
+            </Col>
+          </Row>
           <Row className="left-top">
             <Col lg={12} md={12} sm={10}>
               <Container fluid className="dashboard-body-main bg-home">
-                <h1 className="page-title small-fonts">{translations.billing}</h1>
+                <h1 className="page-title small-fonts">
+                  {translations.billing}
+                </h1>
 
-                {submitSuccess && (<Alert variant="success" dismissible onClose={() => setSubmitSuccess(false)}>{translations.billingDataUpdated}</Alert>)}
-                {submitError && (<Alert variant="danger" dismissible onClose={() => setSubmitError(null)}>{translations.error}: {submitError}</Alert>)}
+                {submitSuccess && (
+                  <Alert
+                    variant="success"
+                    dismissible
+                    onClose={() => setSubmitSuccess(false)}
+                  >
+                    {translations.billingDataUpdated}
+                  </Alert>
+                )}
+                {submitError && (
+                  <Alert
+                    variant="danger"
+                    dismissible
+                    onClose={() => setSubmitError(null)}
+                  >
+                    {translations.error}: {submitError}
+                  </Alert>
+                )}
 
                 {/* Filters Section */}
                 <div className="filter-section mb-4 p-3 border rounded bg-light">
                   <Row className="mb-3">
-                    <Col md={12} className="d-flex justify-content-between align-items-center">
-                      <h5 className="mb-0 small-fonts">{translations.filters}</h5>
-                      {(filters.center_name.length > 0 || filters.source_of_receipt.length > 0 || filters.nivesh.length > 0 || filters.subnivesh_name.length > 0 || filters.scheme_name.length > 0 || fromDate || toDate) && (
-                        <Button variant="outline-secondary" size="sm" onClick={clearFilters} className="small-fonts">{translations.clearAllFilters}</Button>
+                    <Col
+                      md={12}
+                      className="d-flex justify-content-between align-items-center"
+                    >
+                      <h5 className="mb-0 small-fonts">
+                        {translations.filters}
+                      </h5>
+                      {(filters.center_name.length > 0 ||
+                        filters.source_of_receipt.length > 0 ||
+                        filters.nivesh.length > 0 ||
+                        filters.subnivesh_name.length > 0 ||
+                        filters.scheme_name.length > 0 ||
+                        fromDate ||
+                        toDate) && (
+                        <Button
+                          variant="outline-secondary"
+                          size="sm"
+                          onClick={clearFilters}
+                          className="small-fonts"
+                        >
+                          {translations.clearAllFilters}
+                        </Button>
                       )}
                     </Col>
                   </Row>
                   <Row>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.fromDate}</FormLabel><Form.Control type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} className="small-fonts compact-input" /></FormGroup></Col>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.toDate}</FormLabel><Form.Control type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} className="small-fonts compact-input" /></FormGroup></Col>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.centerName}</FormLabel><Select value={filters.center_name} onChange={(value) => handleFilterChange("center_name", value)} options={filterOptions.center_name} isMulti={true} isClearable={true} placeholder={translations.allCenters} styles={customSelectStyles} className="compact-input small-fonts filter-dropdown" menuPortalTarget={document.body} menuPosition="fixed" /></FormGroup></Col>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.sourceOfReceipt}</FormLabel><Select value={filters.source_of_receipt} onChange={(value) => handleFilterChange("source_of_receipt", value)} options={filterOptions.source_of_receipt} isMulti={true} isClearable={true} placeholder={translations.allSources} styles={customSelectStyles} className="compact-input small-fonts filter-dropdown" menuPortalTarget={document.body} menuPosition="fixed" /></FormGroup></Col>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.schemeName}</FormLabel><Select value={filters.scheme_name} onChange={(value) => handleFilterChange("scheme_name", value)} options={filterOptions.scheme_name} isClearable={true} isMulti={true} placeholder={translations.allSchemes} styles={customSelectStyles} className="compact-input small-fonts filter-dropdown" menuPortalTarget={document.body} menuPosition="fixed" /></FormGroup></Col>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.nivesh}</FormLabel><Select value={filters.nivesh} onChange={(value) => handleFilterChange("nivesh", value)} options={filterOptions.nivesh} isClearable={true} isMulti={true} placeholder={translations.allNivesh} styles={customSelectStyles} className="compact-input small-fonts filter-dropdown" menuPortalTarget={document.body} menuPosition="fixed" /></FormGroup></Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.fromDate}
+                        </FormLabel>
+                        <Form.Control
+                          type="date"
+                          value={fromDate}
+                          onChange={(e) => setFromDate(e.target.value)}
+                          className="small-fonts compact-input"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.toDate}
+                        </FormLabel>
+                        <Form.Control
+                          type="date"
+                          value={toDate}
+                          onChange={(e) => setToDate(e.target.value)}
+                          className="small-fonts compact-input"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.centerName}
+                        </FormLabel>
+                        <Select
+                          value={filters.center_name}
+                          onChange={(value) =>
+                            handleFilterChange("center_name", value)
+                          }
+                          options={filterOptions.center_name}
+                          isMulti={true}
+                          isClearable={true}
+                          placeholder={translations.allCenters}
+                          styles={customSelectStyles}
+                          className="compact-input small-fonts filter-dropdown"
+                          menuPortalTarget={document.body}
+                          menuPosition="fixed"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.sourceOfReceipt}
+                        </FormLabel>
+                        <Select
+                          value={filters.source_of_receipt}
+                          onChange={(value) =>
+                            handleFilterChange("source_of_receipt", value)
+                          }
+                          options={filterOptions.source_of_receipt}
+                          isMulti={true}
+                          isClearable={true}
+                          placeholder={translations.allSources}
+                          styles={customSelectStyles}
+                          className="compact-input small-fonts filter-dropdown"
+                          menuPortalTarget={document.body}
+                          menuPosition="fixed"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.schemeName}
+                        </FormLabel>
+                        <Select
+                          value={filters.scheme_name}
+                          onChange={(value) =>
+                            handleFilterChange("scheme_name", value)
+                          }
+                          options={filterOptions.scheme_name}
+                          isClearable={true}
+                          isMulti={true}
+                          placeholder={translations.allSchemes}
+                          styles={customSelectStyles}
+                          className="compact-input small-fonts filter-dropdown"
+                          menuPortalTarget={document.body}
+                          menuPosition="fixed"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.nivesh}
+                        </FormLabel>
+                        <Select
+                          value={filters.nivesh}
+                          onChange={(value) =>
+                            handleFilterChange("nivesh", value)
+                          }
+                          options={filterOptions.nivesh}
+                          isClearable={true}
+                          isMulti={true}
+                          placeholder={translations.allNivesh}
+                          styles={customSelectStyles}
+                          className="compact-input small-fonts filter-dropdown"
+                          menuPortalTarget={document.body}
+                          menuPosition="fixed"
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
-                    <Col xs={12} sm={6} md={3} className="mb-2"><FormGroup><FormLabel className="small-fonts fw-bold">{translations.subniveshName}</FormLabel><Select value={filters.subnivesh_name} onChange={(value) => handleFilterChange("subnivesh_name", value)} options={filterOptions.subnivesh_name} isClearable={true} isMulti={true} placeholder={translations.allSubnivesh} styles={customSelectStyles} className="compact-input small-fonts filter-dropdown" menuPortalTarget={document.body} menuPosition="fixed" /></FormGroup></Col>
+                    <Col xs={12} sm={6} md={3} className="mb-2">
+                      <FormGroup>
+                        <FormLabel className="small-fonts fw-bold">
+                          {translations.subniveshName}
+                        </FormLabel>
+                        <Select
+                          value={filters.subnivesh_name}
+                          onChange={(value) =>
+                            handleFilterChange("subnivesh_name", value)
+                          }
+                          options={filterOptions.subnivesh_name}
+                          isClearable={true}
+                          isMulti={true}
+                          placeholder={translations.allSubnivesh}
+                          styles={customSelectStyles}
+                          className="compact-input small-fonts filter-dropdown"
+                          menuPortalTarget={document.body}
+                          menuPosition="fixed"
+                        />
+                      </FormGroup>
+                    </Col>
                   </Row>
                 </div>
 
@@ -716,112 +1197,462 @@ const Billing = () => {
                         <div className="col-md-12">
                           <div className="table-wrapper">
                             {!fromDate && !toDate ? (
-                              <Alert variant="info" className="text-center"><h5>{translations.selectDateRange}</h5><p className="mb-0">{translations.pleaseSelectDateRange}</p></Alert>
+                              <Alert variant="info" className="text-center">
+                                <h5>{translations.selectDateRange}</h5>
+                                <p className="mb-0">
+                                  {translations.pleaseSelectDateRange}
+                                </p>
+                              </Alert>
                             ) : filteredData.length > 0 ? (
                               <>
                                 <div className="d-flex justify-content-end mb-2 flex-wrap gap-2">
-                                  <Button variant="primary" size="sm" onClick={handleOpenPageNoModal} className="small-fonts" title="Click to assign page numbers to unique उप-निवेश names">
-                                    <FaListAlt className="me-1" />{translations.assignPageNoBtn}
+                                  <Button
+                                    variant="primary"
+                                    size="sm"
+                                    onClick={handleOpenPageNoModal}
+                                    className="small-fonts"
+                                    title="Click to assign page numbers to unique उप-निवेश names"
+                                  >
+                                    <FaListAlt className="me-1" />
+                                    {translations.assignPageNoBtn}
                                   </Button>
-                                  <Button variant="outline-success" size="sm" onClick={() => downloadExcel(filteredData, `BillingItems_${new Date().toISOString().split("T")[0]}`)}><FaFileExcel className="me-1" />Excel</Button>
-                                  <Button variant="outline-danger" size="sm" onClick={() => downloadPdf(filteredData, `BillingItems_${new Date().toISOString().split("T")[0]}`)}><FaFilePdf className="me-1" />PDF</Button>
+                                  <Button
+                                    variant="outline-success"
+                                    size="sm"
+                                    onClick={() =>
+                                      downloadExcel(
+                                        filteredData,
+                                        `BillingItems_${new Date().toISOString().split("T")[0]}`,
+                                      )
+                                    }
+                                  >
+                                    <FaFileExcel className="me-1" />
+                                    Excel
+                                  </Button>
+                                  <Button
+                                    variant="outline-danger"
+                                    size="sm"
+                                    onClick={() =>
+                                      downloadPdf(
+                                        filteredData,
+                                        `BillingItems_${new Date().toISOString().split("T")[0]}`,
+                                      )
+                                    }
+                                  >
+                                    <FaFilePdf className="me-1" />
+                                    PDF
+                                  </Button>
                                 </div>
 
                                 <div className="table-info mb-2 d-flex justify-content-between align-items-center">
-                                  <span className="small-fonts">{translations.showing} {indexOfFirstItem + 1} {translations.to} {Math.min(indexOfLastItem, filteredData.length)} {translations.of} {filteredData.length} {translations.entries}</span>
-                                  <div className="d-flex align-items-center"><span className="small-fonts me-2">{translations.itemsPerPage}</span><span className="badge bg-primary">{itemsPerPage}</span></div>
+                                  <span className="small-fonts">
+                                    {translations.showing}{" "}
+                                    {indexOfFirstItem + 1} {translations.to}{" "}
+                                    {Math.min(
+                                      indexOfLastItem,
+                                      filteredData.length,
+                                    )}{" "}
+                                    {translations.of} {filteredData.length}{" "}
+                                    {translations.entries}
+                                  </span>
+                                  <div className="d-flex align-items-center">
+                                    <span className="small-fonts me-2">
+                                      {translations.itemsPerPage}
+                                    </span>
+                                    <span className="badge bg-primary">
+                                      {itemsPerPage}
+                                    </span>
+                                  </div>
                                 </div>
 
                                 <div className="column-selection mb-3 p-3 border rounded bg-light">
-                                  <h6 className="small-fonts mb-3">{translations.selectColumns}</h6>
-                                  <Row><Col><div className="d-flex flex-wrap">
-                                    {availableColumns.map((col) => (
-                                      <div key={col.key} className="form-check me-3 mb-2">
-                                        <input type="checkbox" id={`col-${col.key}`} checked={selectedColumns.includes(col.key)} onChange={(e) => { if (e.target.checked) setSelectedColumns([...selectedColumns, col.key]); else setSelectedColumns(selectedColumns.filter((c) => c !== col.key)); }} className="form-check-input" />
-                                        <label className="form-check-label small-fonts ms-1" htmlFor={`col-${col.key}`}>{col.label}</label>
+                                  <h6 className="small-fonts mb-3">
+                                    {translations.selectColumns}
+                                  </h6>
+                                  <Row>
+                                    <Col>
+                                      <div className="d-flex flex-wrap">
+                                        {availableColumns.map((col) => (
+                                          <div
+                                            key={col.key}
+                                            className="form-check me-3 mb-2"
+                                          >
+                                            <input
+                                              type="checkbox"
+                                              id={`col-${col.key}`}
+                                              checked={selectedColumns.includes(
+                                                col.key,
+                                              )}
+                                              onChange={(e) => {
+                                                if (e.target.checked)
+                                                  setSelectedColumns([
+                                                    ...selectedColumns,
+                                                    col.key,
+                                                  ]);
+                                                else
+                                                  setSelectedColumns(
+                                                    selectedColumns.filter(
+                                                      (c) => c !== col.key,
+                                                    ),
+                                                  );
+                                              }}
+                                              className="form-check-input"
+                                            />
+                                            <label
+                                              className="form-check-label small-fonts ms-1"
+                                              htmlFor={`col-${col.key}`}
+                                            >
+                                              {col.label}
+                                            </label>
+                                          </div>
+                                        ))}
                                       </div>
-                                    ))}
-                                  </div></Col></Row>
+                                    </Col>
+                                  </Row>
                                 </div>
 
                                 <div className="billing-table-scroll">
                                   <table className="responsive-table small-fonts billing-data-table">
                                     <thead>
                                       <tr>
-                                        <th>{translations.sno}</th><th>{translations.centerName}</th><th>{translations.sourceOfReceipt}</th><th>{translations.nivesh}</th><th>{translations.subniveshName}</th><th>{translations.schemeName}</th><th>{translations.unit}</th><th>{translations.allocatedQuantity}</th><th>क्रय दर<br />(प्रति इकाई)</th><th>{translations.farmerSellingRate}</th><th>{translations.farmerSubsidyRate}</th><th>{translations.farmerShareAmount}</th><th>{translations.subsidyAmount}</th><th>{translations.totalAmount}</th><th>{translations.anudanName}</th><th>{translations.remark}</th><th>{translations.billDate}</th><th>{translations.updatedQuantity}</th><th>{translations.quantityLeft}</th><th>{translations.allotedRashi}</th><th>{translations.soldRashi}</th><th>{translations.cutQuantity}</th><th>{translations.totalBill}</th><th>{translations.billId}</th><th>{translations.billingDate}</th>
+                                        <th>{translations.sno}</th>
+                                        <th>{translations.centerName}</th>
+                                        <th>{translations.sourceOfReceipt}</th>
+                                        <th>{translations.nivesh}</th>
+                                        <th>{translations.subniveshName}</th>
+                                        <th>{translations.schemeName}</th>
+                                        <th>{translations.unit}</th>
+                                        <th>
+                                          {translations.allocatedQuantity}
+                                        </th>
+                                        <th>
+                                          क्रय दर
+                                          <br />
+                                          (प्रति इकाई)
+                                        </th>
+                                        <th>
+                                          {translations.farmerSellingRate}
+                                        </th>
+                                        <th>
+                                          {translations.farmerSubsidyRate}
+                                        </th>
+                                        <th>
+                                          {translations.farmerShareAmount}
+                                        </th>
+                                        <th>{translations.subsidyAmount}</th>
+                                        <th>{translations.totalAmount}</th>
+                                        <th>{translations.anudanName}</th>
+                                        <th>{translations.remark}</th>
+                                        <th>{translations.billDate}</th>
+                                        <th>{translations.updatedQuantity}</th>
+                                        <th>{translations.quantityLeft}</th>
+                                        <th>{translations.allotedRashi}</th>
+                                        <th>{translations.soldRashi}</th>
+                                        <th>{translations.cutQuantity}</th>
+                                        <th>{translations.totalBill}</th>
+                                        <th>{translations.billId}</th>
+                                        <th>{translations.billingDate}</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      {paginatedBillingData.map((item, index) => {
-                                        const allocatedAmount = calculateAllocatedAmount(item.allocated_quantity, item.rate);
-                                        const soldAmount = calculateAmount(item.updated_quantity, item.rate);
-                                        const quantityLeft = calculateQuantityLeft(item.allocated_quantity, item.updated_quantity, item.cut_quantity);
-                                        const maxCut = (parseFloat(item.allocated_quantity) || 0) - (parseFloat(item.updated_quantity) || 0);
-                                        const totalBill = calculateTotalBill(item.cut_quantity, item.rate);
-                                        return (
-                                          <tr key={item.id}>
-                                            <td data-label={translations.sno}>{indexOfFirstItem + index + 1}</td>
-                                            <td data-label={translations.centerName}>{item.center_name}</td>
-                                            <td data-label={translations.sourceOfReceipt}>{item.source_of_receipt}</td>
-                                            <td data-label={translations.nivesh}>{item.investment_name}</td>
-                                            <td data-label={translations.subniveshName}>{item.sub_investment_name}</td>
-                                            <td data-label={translations.schemeName}>{item.scheme_name}</td>
-                                            <td data-label={translations.unit}>{item.unit}</td>
-                                            <td data-label={translations.allocatedQuantity}>{item.allocated_quantity}</td>
-                                            <td data-label="क्रय दर (प्रति इकाई)">{item.rate}</td>
-                                            <td data-label={translations.farmerSellingRate}>{item.farmer_selling_rate}</td>
-                                            <td data-label={translations.farmerSubsidyRate}>{item.farmer_subsidy_rate}</td>
-                                            <td data-label={translations.farmerShareAmount}>{item.amount_of_farmer_share}</td>
-                                            <td data-label={translations.subsidyAmount}>{item.amount_of_subsidy}</td>
-                                            <td data-label={translations.totalAmount}>{item.total_amount}</td>
-                                            <td data-label={translations.anudanName}>{item.anudan_name}</td>
-                                            <td data-label={translations.remark}>{item.remark}</td>
-                                            <td data-label={translations.billDate}>{item.bill_date}</td>
-                                            <td data-label={translations.updatedQuantity}>{item.updated_quantity}</td>
-                                            <td data-label={translations.quantityLeft}>{quantityLeft}</td>
-                                            <td data-label={translations.allotedRashi}>{allocatedAmount}</td>
-                                            <td data-label={translations.soldRashi}>{soldAmount}</td>
-                                            <td data-label={translations.cutQuantity}>
-                                              <Form.Control type="number" min="0" max={maxCut} step="0.01" value={item.cut_quantity || ""} onChange={(e) => handleCutQuantityChange(item.id, e.target.value)} className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`} />
-                                            </td>
-                                            <td data-label={translations.totalBill}><Form.Control type="text" value={totalBill} disabled className="bg-light small-fonts" /></td>
-                                            <td data-label={translations.billId}>
-                                              <Form.Control type="text" value={item.bill_report_id || ""} onChange={(e) => handleBillReportIdChange(item.id, e.target.value)} className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`} />
-                                            </td>
-                                            <td data-label={translations.billingDate}>
-                                              <div className="d-flex align-items-center gap-2">
-                                                <Form.Control type="date" value={item.billing_date || ""} onChange={(e) => handleBillingDateChange(item.id, e.target.value)} className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`} />
-                                                <Button variant="outline-secondary" size="sm" onClick={() => resetRowFields(item.id)} title="Reset row">00</Button>
-                                              </div>
-                                            </td>
-                                          </tr>
-                                        );
-                                      })}
+                                      {paginatedBillingData.map(
+                                        (item, index) => {
+                                          const allocatedAmount =
+                                            calculateAllocatedAmount(
+                                              item.allocated_quantity,
+                                              item.rate,
+                                            );
+                                          const soldAmount = calculateAmount(
+                                            item.updated_quantity,
+                                            item.rate,
+                                          );
+                                          const quantityLeft =
+                                            calculateQuantityLeft(
+                                              item.allocated_quantity,
+                                              item.updated_quantity,
+                                              item.cut_quantity,
+                                            );
+                                          const maxCut =
+                                            (parseFloat(
+                                              item.allocated_quantity,
+                                            ) || 0) -
+                                            (parseFloat(
+                                              item.updated_quantity,
+                                            ) || 0);
+                                          const totalBill = calculateTotalBill(
+                                            item.cut_quantity,
+                                            item.rate,
+                                          );
+                                          return (
+                                            <tr key={item.id}>
+                                              <td data-label={translations.sno}>
+                                                {indexOfFirstItem + index + 1}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.centerName
+                                                }
+                                              >
+                                                {item.center_name}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.sourceOfReceipt
+                                                }
+                                              >
+                                                {item.source_of_receipt}
+                                              </td>
+                                              <td
+                                                data-label={translations.nivesh}
+                                              >
+                                                {item.investment_name}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.subniveshName
+                                                }
+                                              >
+                                                {item.sub_investment_name}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.schemeName
+                                                }
+                                              >
+                                                {item.scheme_name}
+                                              </td>
+                                              <td
+                                                data-label={translations.unit}
+                                              >
+                                                {item.unit}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.allocatedQuantity
+                                                }
+                                              >
+                                                {item.allocated_quantity}
+                                              </td>
+                                              <td data-label="क्रय दर (प्रति इकाई)">
+                                                {item.rate}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.farmerSellingRate
+                                                }
+                                              >
+                                                {item.farmer_selling_rate}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.farmerSubsidyRate
+                                                }
+                                              >
+                                                {item.farmer_subsidy_rate}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.farmerShareAmount
+                                                }
+                                              >
+                                                {item.amount_of_farmer_share}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.subsidyAmount
+                                                }
+                                              >
+                                                {item.amount_of_subsidy}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.totalAmount
+                                                }
+                                              >
+                                                {item.total_amount}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.anudanName
+                                                }
+                                              >
+                                                {item.anudan_name}
+                                              </td>
+                                              <td
+                                                data-label={translations.remark}
+                                              >
+                                                {item.remark}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.billDate
+                                                }
+                                              >
+                                                {item.bill_date}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.updatedQuantity
+                                                }
+                                              >
+                                                {item.updated_quantity}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.quantityLeft
+                                                }
+                                              >
+                                                {quantityLeft}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.allotedRashi
+                                                }
+                                              >
+                                                {allocatedAmount}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.soldRashi
+                                                }
+                                              >
+                                                {soldAmount}
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.cutQuantity
+                                                }
+                                              >
+                                                <Form.Control
+                                                  type="number"
+                                                  min="0"
+                                                  max={maxCut}
+                                                  step="0.01"
+                                                  value={
+                                                    item.cut_quantity || ""
+                                                  }
+                                                  onChange={(e) =>
+                                                    handleCutQuantityChange(
+                                                      item.id,
+                                                      e.target.value,
+                                                    )
+                                                  }
+                                                  className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`}
+                                                />
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.totalBill
+                                                }
+                                              >
+                                                <Form.Control
+                                                  type="text"
+                                                  value={totalBill}
+                                                  disabled
+                                                  className="bg-light small-fonts"
+                                                />
+                                              </td>
+                                              <td
+                                                data-label={translations.billId}
+                                              >
+                                                <Form.Control
+                                                  type="text"
+                                                  value={
+                                                    item.bill_report_id || ""
+                                                  }
+                                                  onChange={(e) =>
+                                                    handleBillReportIdChange(
+                                                      item.id,
+                                                      e.target.value,
+                                                    )
+                                                  }
+                                                  className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`}
+                                                />
+                                              </td>
+                                              <td
+                                                data-label={
+                                                  translations.billingDate
+                                                }
+                                              >
+                                                <div className="d-flex align-items-center gap-2">
+                                                  <Form.Control
+                                                    type="date"
+                                                    value={
+                                                      item.billing_date || ""
+                                                    }
+                                                    onChange={(e) =>
+                                                      handleBillingDateChange(
+                                                        item.id,
+                                                        e.target.value,
+                                                      )
+                                                    }
+                                                    className={`small-fonts ${modifiedItems[item.id] ? "border-warning" : ""}`}
+                                                  />
+                                                  <Button
+                                                    variant="outline-secondary"
+                                                    size="sm"
+                                                    onClick={() =>
+                                                      resetRowFields(item.id)
+                                                    }
+                                                    title="Reset row"
+                                                  >
+                                                    00
+                                                  </Button>
+                                                </div>
+                                              </td>
+                                            </tr>
+                                          );
+                                        },
+                                      )}
                                     </tbody>
                                   </table>
                                 </div>
 
                                 {totalPages > 1 && (
                                   <div className="mt-2">
-                                    <div className="small-fonts mb-3 text-center">{translations.page} {currentPage} {translations.of} {totalPages}</div>
+                                    <div className="small-fonts mb-3 text-center">
+                                      {translations.page} {currentPage}{" "}
+                                      {translations.of} {totalPages}
+                                    </div>
                                     <Pagination className="d-flex justify-content-center">
-                                      <Pagination.Prev disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)} />
+                                      <Pagination.Prev
+                                        disabled={currentPage === 1}
+                                        onClick={() =>
+                                          handlePageChange(currentPage - 1)
+                                        }
+                                      />
                                       {paginationItems}
-                                      <Pagination.Next disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)} />
+                                      <Pagination.Next
+                                        disabled={currentPage === totalPages}
+                                        onClick={() =>
+                                          handlePageChange(currentPage + 1)
+                                        }
+                                      />
                                     </Pagination>
                                   </div>
                                 )}
                               </>
                             ) : fromDate || toDate ? (
-                              <Alert variant="info">{translations.noMatchingItems}</Alert>
+                              <Alert variant="info">
+                                {translations.noMatchingItems}
+                              </Alert>
                             ) : null}
                           </div>
                         </div>
                       </Row>
 
                       <div className="d-flex justify-content-end mt-3">
-                        <Button variant="primary" type="submit" disabled={submitting || Object.keys(modifiedItems).length === 0}>
-                          {submitting ? <Spinner as="span" animation="border" size="sm" /> : null}
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          disabled={
+                            submitting ||
+                            Object.keys(modifiedItems).length === 0
+                          }
+                        >
+                          {submitting ? (
+                            <Spinner as="span" animation="border" size="sm" />
+                          ) : null}
                           {translations.submitUpdates}
                         </Button>
                       </div>
@@ -835,30 +1666,64 @@ const Billing = () => {
       </div>
 
       {/* ===== Page Number Assignment Modal ===== */}
-      <Modal show={showPageNoModal} onHide={() => setShowPageNoModal(false)} centered size="lg" backdrop="static">
-        <Modal.Header closeButton style={{ backgroundColor: "#238dce", color: "white" }}>
-          <Modal.Title><FaListAlt className="me-2" />{translations.pageNoModalTitle}</Modal.Title>
+      <Modal
+        show={showPageNoModal}
+        onHide={() => setShowPageNoModal(false)}
+        centered
+        size="lg"
+        backdrop="static"
+      >
+        <Modal.Header
+          closeButton
+          style={{ backgroundColor: "#238dce", color: "white" }}
+        >
+          <Modal.Title>
+            <FaListAlt className="me-2" />
+            {translations.pageNoModalTitle}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="pageno-modal-body">
           {uniqueSubniveshNames.length === 0 ? (
-            <Alert variant="warning" className="text-center">{translations.noUniqueSubnivesh}</Alert>
+            <Alert variant="warning" className="text-center">
+              {translations.noUniqueSubnivesh}
+            </Alert>
           ) : (
             <>
-              <p className="small-fonts text-muted mb-3">कुल अद्वितीय उप-निवेश नाम: <strong>{uniqueSubniveshNames.length}</strong></p>
+              <p className="small-fonts text-muted mb-3">
+                कुल अद्वितीय उप-निवेश नाम:{" "}
+                <strong>{uniqueSubniveshNames.length}</strong>
+              </p>
               {uniqueSubniveshNames.map((name, idx) => (
                 <div key={name} className="pageno-row">
                   <Row className="align-items-center">
                     <Col xs={12} md={7}>
                       <div className="d-flex align-items-center">
-                        <span className="badge bg-secondary me-2">{idx + 1}</span>
+                        <span className="badge bg-secondary me-2">
+                          {idx + 1}
+                        </span>
                         <strong className="small-fonts">{name}</strong>
                       </div>
-                      <small className="text-muted d-block ms-4" style={{ fontSize: "11px" }}>{translations.subniveshName}</small>
+                      <small
+                        className="text-muted d-block ms-4"
+                        style={{ fontSize: "11px" }}
+                      >
+                        {translations.subniveshName}
+                      </small>
                     </Col>
                     <Col xs={12} md={5}>
                       <Form.Group>
-                        <FormLabel className="small-fonts mb-1">{translations.pageNoLabel}</FormLabel>
-                        <Form.Control type="text" value={pageNoInputs[name] || ""} onChange={(e) => handlePageNoInputChange(name, e.target.value)} placeholder="पेज नंबर दर्ज करें" className="small-fonts" />
+                        <FormLabel className="small-fonts mb-1">
+                          {translations.pageNoLabel}
+                        </FormLabel>
+                        <Form.Control
+                          type="text"
+                          value={pageNoInputs[name] || ""}
+                          onChange={(e) =>
+                            handlePageNoInputChange(name, e.target.value)
+                          }
+                          placeholder="पेज नंबर दर्ज करें"
+                          className="small-fonts"
+                        />
                       </Form.Group>
                     </Col>
                   </Row>
@@ -868,18 +1733,42 @@ const Billing = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowPageNoModal(false)}>{translations.closeBtn}</Button>
-          <Button variant="primary" onClick={handleSavePageNo} disabled={uniqueSubniveshNames.length === 0}>{translations.savePageNo}</Button>
+          <Button variant="secondary" onClick={() => setShowPageNoModal(false)}>
+            {translations.closeBtn}
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSavePageNo}
+            disabled={uniqueSubniveshNames.length === 0}
+          >
+            {translations.savePageNo}
+          </Button>
         </Modal.Footer>
       </Modal>
 
       {/* Error Modal */}
-      <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)} centered>
-        <Modal.Header closeButton style={{ backgroundColor: "#dc3545", color: "white" }}>
-          <Modal.Title><FaFileExcel className="me-2" />{translations.error}</Modal.Title>
+      <Modal
+        show={showErrorModal}
+        onHide={() => setShowErrorModal(false)}
+        centered
+      >
+        <Modal.Header
+          closeButton
+          style={{ backgroundColor: "#dc3545", color: "white" }}
+        >
+          <Modal.Title>
+            <FaFileExcel className="me-2" />
+            {translations.error}
+          </Modal.Title>
         </Modal.Header>
-        <Modal.Body><p style={{ whiteSpace: "pre-wrap" }}>{submitError}</p></Modal.Body>
-        <Modal.Footer><Button variant="secondary" onClick={() => setShowErrorModal(false)}>{translations.closeBtn}</Button></Modal.Footer>
+        <Modal.Body>
+          <p style={{ whiteSpace: "pre-wrap" }}>{submitError}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowErrorModal(false)}>
+            {translations.closeBtn}
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

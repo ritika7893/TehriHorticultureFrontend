@@ -25,9 +25,9 @@ import LeftNav from "./LeftNav";
 
 // API URLs
 const COMPONENT_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/component-list/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/component-list/";
 const SCHEME_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/scheme-list/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/scheme-list/";
 
 // Hindi translations
 const translations = {
@@ -71,17 +71,22 @@ const translations = {
 };
 
 // Reusable Column Selection Component
-const ColumnSelection = ({ columns, selectedColumns, setSelectedColumns, title }) => {
+const ColumnSelection = ({
+  columns,
+  selectedColumns,
+  setSelectedColumns,
+  title,
+}) => {
   const handleColumnToggle = (columnKey) => {
     if (selectedColumns.includes(columnKey)) {
-      setSelectedColumns(selectedColumns.filter(col => col !== columnKey));
+      setSelectedColumns(selectedColumns.filter((col) => col !== columnKey));
     } else {
       setSelectedColumns([...selectedColumns, columnKey]);
     }
   };
 
   const handleSelectAll = () => {
-    setSelectedColumns(columns.map(col => col.key));
+    setSelectedColumns(columns.map((col) => col.key));
   };
 
   const handleDeselectAll = () => {
@@ -93,10 +98,19 @@ const ColumnSelection = ({ columns, selectedColumns, setSelectedColumns, title }
       <div className="d-flex justify-content-between align-items-center mb-2">
         <h6 className="small-fonts mb-0">{title}</h6>
         <div>
-          <Button variant="outline-secondary" size="sm" onClick={handleSelectAll} className="me-2">
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={handleSelectAll}
+            className="me-2"
+          >
             सभी चुनें
           </Button>
-          <Button variant="outline-secondary" size="sm" onClick={handleDeselectAll}>
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={handleDeselectAll}
+          >
             सभी अचयनित करें
           </Button>
         </div>
@@ -104,7 +118,7 @@ const ColumnSelection = ({ columns, selectedColumns, setSelectedColumns, title }
       <Row>
         <Col>
           <div className="d-flex flex-wrap">
-            {columns.map(col => (
+            {columns.map((col) => (
               <Form.Check
                 key={col.key}
                 type="checkbox"
@@ -124,65 +138,70 @@ const ColumnSelection = ({ columns, selectedColumns, setSelectedColumns, title }
 
 // Column definitions for expandable tables
 const componentDetailColumns = [
-  { key: 'bill_id', label: 'बिल आईडी' },
-  { key: 'center_name', label: 'केंद्र' },
-  { key: 'component', label: 'घटक' },
-  { key: 'scheme_name', label: 'योजना' },
-  { key: 'unit', label: 'इकाई' },
-  { key: 'allocated_quantity', label: 'आवंटित मात्रा ' },
-  { key: 'updated_quantity', label: 'बिकी मात्रा' },
-  { key: 'rate', label: 'दर' },
-  { key: 'source_of_receipt', label: 'स्रोत' },
-  { key: 'allocated_value', label: 'आवंटित मूल्य' }
+  { key: "bill_id", label: "बिल आईडी" },
+  { key: "center_name", label: "केंद्र" },
+  { key: "component", label: "घटक" },
+  { key: "scheme_name", label: "योजना" },
+  { key: "unit", label: "इकाई" },
+  { key: "allocated_quantity", label: "आवंटित मात्रा " },
+  { key: "updated_quantity", label: "बिकी मात्रा" },
+  { key: "rate", label: "दर" },
+  { key: "source_of_receipt", label: "स्रोत" },
+  { key: "allocated_value", label: "आवंटित मूल्य" },
 ];
 
 const schemeDetailColumns = [
-  { key: 'bill_id', label: 'बिल आईडी' },
-  { key: 'center_name', label: 'केंद्र' },
-  { key: 'component', label: 'घटक' },
-  { key: 'scheme_name', label: 'योजना' },
-  { key: 'investment_name', label: 'निवेश' },
-  { key: 'allocated_quantity', label: 'आवंटित मात्रा ' },
-  { key: 'updated_quantity', label: 'बिकी मात्रा' },
-  { key: 'rate', label: 'दर' },
-  { key: 'source_of_receipt', label: 'स्रोत' },
-  { key: 'allocated_value', label: 'आवंटित मूल्य' }
+  { key: "bill_id", label: "बिल आईडी" },
+  { key: "center_name", label: "केंद्र" },
+  { key: "component", label: "घटक" },
+  { key: "scheme_name", label: "योजना" },
+  { key: "investment_name", label: "निवेश" },
+  { key: "allocated_quantity", label: "आवंटित मात्रा " },
+  { key: "updated_quantity", label: "बिकी मात्रा" },
+  { key: "rate", label: "दर" },
+  { key: "source_of_receipt", label: "स्रोत" },
+  { key: "allocated_value", label: "आवंटित मूल्य" },
 ];
 
 const investmentDetailColumns = [
-  { key: 'bill_id', label: 'बिल आईडी' },
-  { key: 'center_name', label: 'केंद्र' },
-  { key: 'component', label: 'घटक' },
-  { key: 'scheme_name', label: 'योजना' },
-  { key: 'unit', label: 'इकाई' },
-  { key: 'allocated_quantity', label: 'आवंटित मात्रा ' },
-  { key: 'updated_quantity', label: 'बिकी मात्रा' },
-  { key: 'rate', label: 'दर' },
-  { key: 'source_of_receipt', label: 'स्रोत' },
-  { key: 'allocated_value', label: 'आवंटित मूल्य' }
+  { key: "bill_id", label: "बिल आईडी" },
+  { key: "center_name", label: "केंद्र" },
+  { key: "component", label: "घटक" },
+  { key: "scheme_name", label: "योजना" },
+  { key: "unit", label: "इकाई" },
+  { key: "allocated_quantity", label: "आवंटित मात्रा " },
+  { key: "updated_quantity", label: "बिकी मात्रा" },
+  { key: "rate", label: "दर" },
+  { key: "source_of_receipt", label: "स्रोत" },
+  { key: "allocated_value", label: "आवंटित मूल्य" },
 ];
 
 const unitDetailColumns = [
-  { key: 'bill_id', label: 'बिल आईडी' },
-  { key: 'center_name', label: 'केंद्र' },
-  { key: 'component', label: 'घटक' },
-  { key: 'scheme_name', label: 'योजना' },
-  { key: 'investment_name', label: 'निवेश' },
-  { key: 'allocated_quantity', label: 'आवंटित मात्रा ' },
-  { key: 'updated_quantity', label: 'बिकी मात्रा' },
-  { key: 'rate', label: 'दर' },
-  { key: 'source_of_receipt', label: 'स्रोत' },
-  { key: 'allocated_value', label: 'आवंटित मूल्य' }
+  { key: "bill_id", label: "बिल आईडी" },
+  { key: "center_name", label: "केंद्र" },
+  { key: "component", label: "घटक" },
+  { key: "scheme_name", label: "योजना" },
+  { key: "investment_name", label: "निवेश" },
+  { key: "allocated_quantity", label: "आवंटित मात्रा " },
+  { key: "updated_quantity", label: "बिकी मात्रा" },
+  { key: "rate", label: "दर" },
+  { key: "source_of_receipt", label: "स्रोत" },
+  { key: "allocated_value", label: "आवंटित मूल्य" },
 ];
 
-const summableColumns = ['allocated_quantity', 'updated_quantity', 'rate', 'allocated_value'];
+const summableColumns = [
+  "allocated_quantity",
+  "updated_quantity",
+  "rate",
+  "allocated_value",
+];
 
 // Helper to calculate allocated_value for totals
 const calculateAllocatedValueTotal = (rows) => {
   return rows.reduce((sum, row) => {
     const qty = parseFloat(row.allocated_quantity) || 0;
     const rate = parseFloat(row.rate) || 0;
-    return sum + (qty * rate);
+    return sum + qty * rate;
   }, 0);
 };
 
@@ -242,16 +261,63 @@ const AddEditComponent = () => {
   const [expandedInvestmentsMap, setExpandedInvestmentsMap] = useState({});
   const [expandedUnitsMap, setExpandedUnitsMap] = useState({});
   // Search filters for expanded views
-  const [componentSearch, setComponentSearch] = useState('');
-  const [schemeSearch, setSchemeSearch] = useState('');
-  const [investmentSearch, setInvestmentSearch] = useState('');
-  const [unitSearch, setUnitSearch] = useState('');
+  const [componentSearch, setComponentSearch] = useState("");
+  const [schemeSearch, setSchemeSearch] = useState("");
+  const [investmentSearch, setInvestmentSearch] = useState("");
+  const [unitSearch, setUnitSearch] = useState("");
 
   // Column selection states for expandable tables
-  const [componentDetailSelectedColumns, setComponentDetailSelectedColumns] = useState(['bill_id', 'center_name', 'component', 'scheme_name', 'unit', 'allocated_quantity', 'updated_quantity', 'rate', 'source_of_receipt', 'allocated_value']);
-  const [schemeDetailSelectedColumns, setSchemeDetailSelectedColumns] = useState(['bill_id', 'center_name', 'component', 'scheme_name', 'investment_name', 'allocated_quantity', 'updated_quantity', 'rate', 'source_of_receipt', 'allocated_value']);
-  const [investmentDetailSelectedColumns, setInvestmentDetailSelectedColumns] = useState(['bill_id', 'center_name', 'component', 'scheme_name', 'unit', 'allocated_quantity', 'updated_quantity', 'rate', 'source_of_receipt', 'allocated_value']);
-  const [unitDetailSelectedColumns, setUnitDetailSelectedColumns] = useState(['bill_id', 'center_name', 'component', 'scheme_name', 'investment_name', 'allocated_quantity', 'updated_quantity', 'rate', 'source_of_receipt', 'allocated_value']);
+  const [componentDetailSelectedColumns, setComponentDetailSelectedColumns] =
+    useState([
+      "bill_id",
+      "center_name",
+      "component",
+      "scheme_name",
+      "unit",
+      "allocated_quantity",
+      "updated_quantity",
+      "rate",
+      "source_of_receipt",
+      "allocated_value",
+    ]);
+  const [schemeDetailSelectedColumns, setSchemeDetailSelectedColumns] =
+    useState([
+      "bill_id",
+      "center_name",
+      "component",
+      "scheme_name",
+      "investment_name",
+      "allocated_quantity",
+      "updated_quantity",
+      "rate",
+      "source_of_receipt",
+      "allocated_value",
+    ]);
+  const [investmentDetailSelectedColumns, setInvestmentDetailSelectedColumns] =
+    useState([
+      "bill_id",
+      "center_name",
+      "component",
+      "scheme_name",
+      "unit",
+      "allocated_quantity",
+      "updated_quantity",
+      "rate",
+      "source_of_receipt",
+      "allocated_value",
+    ]);
+  const [unitDetailSelectedColumns, setUnitDetailSelectedColumns] = useState([
+    "bill_id",
+    "center_name",
+    "component",
+    "scheme_name",
+    "investment_name",
+    "allocated_quantity",
+    "updated_quantity",
+    "rate",
+    "source_of_receipt",
+    "allocated_value",
+  ]);
 
   // State for active tab
   const [activeTab, setActiveTab] = useState("components");
@@ -315,7 +381,9 @@ const AddEditComponent = () => {
   const fetchBillingItems = async () => {
     setBillingItemsLoading(true);
     try {
-      const resp = await axios.get("https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/");
+      const resp = await axios.get(
+        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
+      );
       setBillingItems(resp.data || []);
 
       // Extract unique values from billing-items API for consistency
@@ -334,10 +402,12 @@ const AddEditComponent = () => {
       // Update states with billing-items data
       setInvestments(Array.from(uniqueInvestments));
       setUnits(Array.from(uniqueUnits));
-      setSchemes(Array.from(uniqueSchemes).map(name => ({ scheme_name: name })));
+      setSchemes(
+        Array.from(uniqueSchemes).map((name) => ({ scheme_name: name })),
+      );
     } catch (err) {
       // ignore silently, billing details are optional
-      console.error('Failed to fetch billing-items:', err);
+      console.error("Failed to fetch billing-items:", err);
     } finally {
       setBillingItemsLoading(false);
     }
@@ -345,9 +415,9 @@ const AddEditComponent = () => {
 
   // Format currency helper
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('hi-IN', {
-      style: 'currency',
-      currency: 'INR',
+    return new Intl.NumberFormat("hi-IN", {
+      style: "currency",
+      currency: "INR",
     }).format(amount || 0);
   };
 
@@ -561,7 +631,7 @@ const AddEditComponent = () => {
     }
     if (key === "investments") {
       return components.filter(
-        (c) => (c.investment_name || "").toString() === value
+        (c) => (c.investment_name || "").toString() === value,
       );
     }
     if (key === "units") {
@@ -611,7 +681,7 @@ const AddEditComponent = () => {
               (c) =>
                 `<td>${
                   (c.accessor ? c.accessor(item, idx) : item[c.key || c]) || ""
-                }</td>`
+                }</td>`,
             )
             .join("");
           return `<tr><td>${idx + 1}</td>${cells}</tr>`;
@@ -660,23 +730,38 @@ const AddEditComponent = () => {
       // Prepare data for Excel export based on selected columns (using Hindi headers)
       const excelData = rows.map((item) => {
         const row = {};
-        selectedColumns.forEach(col => {
-          const colDef = columns.find(c => c.key === col);
+        selectedColumns.forEach((col) => {
+          const colDef = columns.find((c) => c.key === col);
           const header = colDef ? colDef.label : col; // Use Hindi label
           const accessor = (item) => {
-            switch(col) {
-              case 'bill_id': return item.bill_id;
-              case 'center_name': return item.center_name;
-              case 'component': return item.component;
-              case 'scheme_name': return item.scheme_name;
-              case 'investment_name': return item.investment_name;
-              case 'unit': return item.unit;
-              case 'allocated_quantity': return (parseFloat(item.allocated_quantity) || 0).toFixed(2);
-              case 'updated_quantity': return (parseFloat(item.updated_quantity) || 0).toFixed(2);
-              case 'rate': return (parseFloat(item.rate) || 0).toFixed(2);
-              case 'source_of_receipt': return item.source_of_receipt;
-              case 'allocated_value': return formatCurrency((parseFloat(item.allocated_quantity) || 0) * (parseFloat(item.rate) || 0));
-              default: return '';
+            switch (col) {
+              case "bill_id":
+                return item.bill_id;
+              case "center_name":
+                return item.center_name;
+              case "component":
+                return item.component;
+              case "scheme_name":
+                return item.scheme_name;
+              case "investment_name":
+                return item.investment_name;
+              case "unit":
+                return item.unit;
+              case "allocated_quantity":
+                return (parseFloat(item.allocated_quantity) || 0).toFixed(2);
+              case "updated_quantity":
+                return (parseFloat(item.updated_quantity) || 0).toFixed(2);
+              case "rate":
+                return (parseFloat(item.rate) || 0).toFixed(2);
+              case "source_of_receipt":
+                return item.source_of_receipt;
+              case "allocated_value":
+                return formatCurrency(
+                  (parseFloat(item.allocated_quantity) || 0) *
+                    (parseFloat(item.rate) || 0),
+                );
+              default:
+                return "";
             }
           };
           row[header] = accessor(item);
@@ -688,28 +773,31 @@ const AddEditComponent = () => {
       if (rows.length > 0) {
         // Calculate totals including allocated_value
         const totals = {};
-        summableColumns.forEach(col => {
-          if (col === 'allocated_value') {
+        summableColumns.forEach((col) => {
+          if (col === "allocated_value") {
             totals[col] = calculateAllocatedValueTotal(rows);
           } else {
-            totals[col] = rows.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
+            totals[col] = rows.reduce(
+              (sum, row) => sum + (parseFloat(row[col]) || 0),
+              0,
+            );
           }
         });
 
         const totalsRow = {};
-        selectedColumns.forEach(col => {
-          const colDef = columns.find(c => c.key === col);
+        selectedColumns.forEach((col) => {
+          const colDef = columns.find((c) => c.key === col);
           const header = colDef ? colDef.label : col;
-          if (col === 'bill_id') {
+          if (col === "bill_id") {
             totalsRow[header] = `कुल (${rows.length} प्रविष्टियाँ)`;
           } else if (summableColumns.includes(col)) {
-            if (col === 'allocated_value') {
+            if (col === "allocated_value") {
               totalsRow[header] = formatCurrency(totals[col]);
             } else {
               totalsRow[header] = totals[col].toFixed(2);
             }
           } else {
-            totalsRow[header] = '';
+            totalsRow[header] = "";
           }
         });
 
@@ -718,79 +806,114 @@ const AddEditComponent = () => {
 
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.json_to_sheet(excelData);
-      
+
       // Style the totals row if present
       if (rows.length > 0) {
-        const range = XLSX.utils.decode_range(ws['!ref']);
+        const range = XLSX.utils.decode_range(ws["!ref"]);
         const totalsRowNum = range.e.r; // Last row
         for (let C = range.s.c; C <= range.e.c; ++C) {
           const cellAddress = XLSX.utils.encode_cell({ r: totalsRowNum, c: C });
           if (!ws[cellAddress]) continue;
           ws[cellAddress].s = {
             font: { bold: true },
-            fill: { fgColor: { rgb: "FFFFAA00" } }
+            fill: { fgColor: { rgb: "FFFFAA00" } },
           };
         }
       }
-      
-      XLSX.utils.book_append_sheet(wb, ws, 'Details');
+
+      XLSX.utils.book_append_sheet(wb, ws, "Details");
       XLSX.writeFile(wb, `${filename}.xlsx`);
     } catch (e) {
-      console.error('Excel export failed', e);
+      console.error("Excel export failed", e);
     }
   };
 
-  const downloadDetailsPdf = (rows, filename, title, selectedColumns, columns) => {
+  const downloadDetailsPdf = (
+    rows,
+    filename,
+    title,
+    selectedColumns,
+    columns,
+  ) => {
     try {
       // Calculate totals including allocated_value
       const totals = {};
-      summableColumns.forEach(col => {
-        if (col === 'allocated_value') {
+      summableColumns.forEach((col) => {
+        if (col === "allocated_value") {
           totals[col] = calculateAllocatedValueTotal(rows);
         } else {
-          totals[col] = rows.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
+          totals[col] = rows.reduce(
+            (sum, row) => sum + (parseFloat(row[col]) || 0),
+            0,
+          );
         }
       });
 
       // Use Hindi headers from column definitions
-      const headers = selectedColumns.map(col => {
-        const colDef = columns.find(c => c.key === col);
+      const headers = selectedColumns.map((col) => {
+        const colDef = columns.find((c) => c.key === col);
         return colDef ? colDef.label : col;
       });
 
-      const rowsHtml = rows.map(r => {
-        const cells = selectedColumns.map(col => {
-          const accessor = (item) => {
-            switch(col) {
-              case 'bill_id': return item.bill_id;
-              case 'center_name': return item.center_name;
-              case 'component': return item.component;
-              case 'scheme_name': return item.scheme_name;
-              case 'investment_name': return item.investment_name;
-              case 'unit': return item.unit;
-              case 'allocated_quantity': return (parseFloat(item.allocated_quantity) || 0).toFixed(2);
-              case 'updated_quantity': return (parseFloat(item.updated_quantity) || 0).toFixed(2);
-              case 'rate': return (parseFloat(item.rate) || 0).toFixed(2);
-              case 'source_of_receipt': return item.source_of_receipt;
-              case 'allocated_value': return formatCurrency((parseFloat(item.allocated_quantity) || 0) * (parseFloat(item.rate) || 0));
-              default: return '';
-            }
-          };
-          return `<td>${accessor(r)}</td>`;
-        }).join('');
-        return `<tr>${cells}</tr>`;
-      }).join('');
+      const rowsHtml = rows
+        .map((r) => {
+          const cells = selectedColumns
+            .map((col) => {
+              const accessor = (item) => {
+                switch (col) {
+                  case "bill_id":
+                    return item.bill_id;
+                  case "center_name":
+                    return item.center_name;
+                  case "component":
+                    return item.component;
+                  case "scheme_name":
+                    return item.scheme_name;
+                  case "investment_name":
+                    return item.investment_name;
+                  case "unit":
+                    return item.unit;
+                  case "allocated_quantity":
+                    return (parseFloat(item.allocated_quantity) || 0).toFixed(
+                      2,
+                    );
+                  case "updated_quantity":
+                    return (parseFloat(item.updated_quantity) || 0).toFixed(2);
+                  case "rate":
+                    return (parseFloat(item.rate) || 0).toFixed(2);
+                  case "source_of_receipt":
+                    return item.source_of_receipt;
+                  case "allocated_value":
+                    return formatCurrency(
+                      (parseFloat(item.allocated_quantity) || 0) *
+                        (parseFloat(item.rate) || 0),
+                    );
+                  default:
+                    return "";
+                }
+              };
+              return `<td>${accessor(r)}</td>`;
+            })
+            .join("");
+          return `<tr>${cells}</tr>`;
+        })
+        .join("");
 
-      const totalsCells = selectedColumns.map(col => {
-        if (col === 'bill_id') {
-          return `<td><strong>कुल (${rows.length} प्रविष्टियाँ)</strong></td>`;
-        } else if (summableColumns.includes(col)) {
-          const value = col === 'allocated_value' ? formatCurrency(totals[col]) : totals[col].toFixed(2);
-          return `<td><strong>${value}</strong></td>`;
-        } else {
-          return `<td></td>`;
-        }
-      }).join('');
+      const totalsCells = selectedColumns
+        .map((col) => {
+          if (col === "bill_id") {
+            return `<td><strong>कुल (${rows.length} प्रविष्टियाँ)</strong></td>`;
+          } else if (summableColumns.includes(col)) {
+            const value =
+              col === "allocated_value"
+                ? formatCurrency(totals[col])
+                : totals[col].toFixed(2);
+            return `<td><strong>${value}</strong></td>`;
+          } else {
+            return `<td></td>`;
+          }
+        })
+        .join("");
 
       const tableHtml = `
         <html>
@@ -817,7 +940,7 @@ const AddEditComponent = () => {
           <body>
             <h2>${title}</h2>
             <table>
-              <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+              <thead><tr>${headers.map((h) => `<th>${h}</th>`).join("")}</tr></thead>
               <tbody>
                 ${rowsHtml}
                 <tr class="totals-row">${totalsCells}</tr>
@@ -827,12 +950,15 @@ const AddEditComponent = () => {
         </html>
       `;
 
-      const printWindow = window.open('', '_blank');
+      const printWindow = window.open("", "_blank");
       printWindow.document.write(tableHtml);
       printWindow.document.close();
-      setTimeout(() => { printWindow.print(); printWindow.close(); }, 500);
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close();
+      }, 500);
     } catch (e) {
-      console.error('PDF export failed', e);
+      console.error("PDF export failed", e);
     }
   };
 
@@ -881,15 +1007,21 @@ const AddEditComponent = () => {
                     activeTab === "components" ? "active-tab" : ""
                   }`}
                   onClick={() => setActiveTab("components")}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <Card.Body>
                     <div className="d-flex align-items-center">
                       <div>
-                        <p className="mb-0 text-secondary">{translations.totalComponents}</p>
-                        <h4 className="my-1 text-info">{uniqueComponents.length}</h4>
+                        <p className="mb-0 text-secondary">
+                          {translations.totalComponents}
+                        </p>
+                        <h4 className="my-1 text-info">
+                          {uniqueComponents.length}
+                        </h4>
                       </div>
-                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">📦</div>
+                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
+                        📦
+                      </div>
                     </div>
                   </Card.Body>
                 </div>
@@ -903,15 +1035,19 @@ const AddEditComponent = () => {
                     setActiveTab("schemes");
                     handleSummaryCardClick("schemes");
                   }}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="card-body">
                     <div className="d-flex align-items-center">
                       <div>
-                        <p className="mb-0 text-secondary">{translations.totalSchemes}</p>
+                        <p className="mb-0 text-secondary">
+                          {translations.totalSchemes}
+                        </p>
                         <h4 className="my-1 text-info">{schemes.length}</h4>
                       </div>
-                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">📋</div>
+                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
+                        📋
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -925,15 +1061,19 @@ const AddEditComponent = () => {
                     setActiveTab("investments");
                     handleSummaryCardClick("investments");
                   }}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="card-body">
                     <div className="d-flex align-items-center">
                       <div>
-                        <p className="mb-0 text-secondary">{translations.totalInvestments}</p>
+                        <p className="mb-0 text-secondary">
+                          {translations.totalInvestments}
+                        </p>
                         <h4 className="my-1 text-info">{investments.length}</h4>
                       </div>
-                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">💼</div>
+                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
+                        💼
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -947,15 +1087,19 @@ const AddEditComponent = () => {
                     setActiveTab("units");
                     handleSummaryCardClick("units");
                   }}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="card-body">
                     <div className="d-flex align-items-center">
                       <div>
-                        <p className="mb-0 text-secondary">{translations.totalUnits}</p>
+                        <p className="mb-0 text-secondary">
+                          {translations.totalUnits}
+                        </p>
                         <h4 className="my-1 text-info">{units.length}</h4>
                       </div>
-                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">📏</div>
+                      <div className="widgets-icons-2 rounded-circle bg-gradient-blues text-white ms-auto">
+                        📏
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -970,8 +1114,8 @@ const AddEditComponent = () => {
                     {activeCardDetails === "schemes"
                       ? translations.allSchemes
                       : activeCardDetails === "investments"
-                      ? translations.allInvestments
-                      : translations.allUnits}
+                        ? translations.allInvestments
+                        : translations.allUnits}
                   </h5>
                   <div>
                     <Button
@@ -985,7 +1129,7 @@ const AddEditComponent = () => {
                           downloadExcel(
                             list,
                             `Schemes_${new Date().toISOString().slice(0, 10)}`,
-                            [{ label: "योजना" }]
+                            [{ label: "योजना" }],
                           );
                         } else if (activeCardDetails === "investments") {
                           downloadExcel(
@@ -993,13 +1137,13 @@ const AddEditComponent = () => {
                             `Investments_${new Date()
                               .toISOString()
                               .slice(0, 10)}`,
-                            [{ label: "निवेश" }]
+                            [{ label: "निवेश" }],
                           );
                         } else {
                           downloadExcel(
                             units,
                             `Units_${new Date().toISOString().slice(0, 10)}`,
-                            [{ label: "इकाई" }]
+                            [{ label: "इकाई" }],
                           );
                         }
                       }}
@@ -1017,7 +1161,7 @@ const AddEditComponent = () => {
                             list,
                             `Schemes_${new Date().toISOString().slice(0, 10)}`,
                             "योजनाएँ",
-                            [{ label: "योजना" }]
+                            [{ label: "योजना" }],
                           );
                         } else if (activeCardDetails === "investments") {
                           downloadPdf(
@@ -1026,14 +1170,14 @@ const AddEditComponent = () => {
                               .toISOString()
                               .slice(0, 10)}`,
                             "निवेश",
-                            [{ label: "निवेश" }]
+                            [{ label: "निवेश" }],
                           );
                         } else {
                           downloadPdf(
                             units,
                             `Units_${new Date().toISOString().slice(0, 10)}`,
                             "इकाईयां",
-                            [{ label: "इकाई" }]
+                            [{ label: "इकाई" }],
                           );
                         }
                       }}
@@ -1063,8 +1207,8 @@ const AddEditComponent = () => {
                     {(activeCardDetails === "schemes"
                       ? schemes.map((s) => s.scheme_name || s)
                       : activeCardDetails === "investments"
-                      ? investments
-                      : units
+                        ? investments
+                        : units
                     )
                       .filter(Boolean)
                       .map((val, idx, arr) => {
@@ -1073,8 +1217,8 @@ const AddEditComponent = () => {
                           activeCardDetails === "schemes"
                             ? schemes.map((s) => s.scheme_name || s)
                             : activeCardDetails === "investments"
-                            ? components.map((c) => c.investment_name)
-                            : components.map((c) => c.unit)
+                              ? components.map((c) => c.investment_name)
+                              : components.map((c) => c.unit)
                         ).filter((v) => v === val).length;
                         return (
                           <React.Fragment key={val + idx}>
@@ -1099,7 +1243,7 @@ const AddEditComponent = () => {
                                         onClick={() => {
                                           const items = getDetailItemsFor(
                                             activeCardDetails,
-                                            val
+                                            val,
                                           );
                                           downloadExcel(
                                             items,
@@ -1116,7 +1260,7 @@ const AddEditComponent = () => {
                                                 key: "investment_name",
                                               },
                                               { label: "इकाई", key: "unit" },
-                                            ]
+                                            ],
                                           );
                                         }}
                                       >
@@ -1129,7 +1273,7 @@ const AddEditComponent = () => {
                                         onClick={() => {
                                           const items = getDetailItemsFor(
                                             activeCardDetails,
-                                            val
+                                            val,
                                           );
                                           downloadPdf(
                                             items,
@@ -1154,7 +1298,7 @@ const AddEditComponent = () => {
                                                 key: "unit",
                                                 accessor: (it) => it.unit,
                                               },
-                                            ]
+                                            ],
                                           );
                                         }}
                                       >
@@ -1180,7 +1324,7 @@ const AddEditComponent = () => {
                                       <tbody>
                                         {getDetailItemsFor(
                                           activeCardDetails,
-                                          val
+                                          val,
                                         ).map((it, i) => (
                                           <tr key={i}>
                                             <td>{i + 1}</td>
@@ -1346,34 +1490,54 @@ const AddEditComponent = () => {
                       {displayComponents.map((item, index) => {
                         const componentName = item.component;
                         const isExpanded = expandedComponentsMap[componentName];
-                        const componentDetails = billingItems.filter(b => b.component === componentName);
-                        const totals = componentDetails.reduce((acc, r) => {
-                          acc.allocated += parseFloat(r.allocated_quantity) || 0;
-                          acc.sold += parseFloat(r.updated_quantity) || 0;
-                          acc.allocatedValue += (parseFloat(r.allocated_quantity) || 0) * (parseFloat(r.rate) || 0);
-                          return acc;
-                        }, { allocated: 0, sold: 0, allocatedValue: 0 });
+                        const componentDetails = billingItems.filter(
+                          (b) => b.component === componentName,
+                        );
+                        const totals = componentDetails.reduce(
+                          (acc, r) => {
+                            acc.allocated +=
+                              parseFloat(r.allocated_quantity) || 0;
+                            acc.sold += parseFloat(r.updated_quantity) || 0;
+                            acc.allocatedValue +=
+                              (parseFloat(r.allocated_quantity) || 0) *
+                              (parseFloat(r.rate) || 0);
+                            return acc;
+                          },
+                          { allocated: 0, sold: 0, allocatedValue: 0 },
+                        );
 
                         return (
                           <Col key={item.id} xs={12} sm={6} md={4} lg={3}>
-                            <Card className={`component-card text-center h-100 ${isExpanded ? 'expanded' : ''}`}>
+                            <Card
+                              className={`component-card text-center h-100 ${isExpanded ? "expanded" : ""}`}
+                            >
                               <Card.Body
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => setExpandedComponentsMap(prev => ({ ...prev, [componentName]: !prev[componentName] }))}
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  setExpandedComponentsMap((prev) => ({
+                                    ...prev,
+                                    [componentName]: !prev[componentName],
+                                  }))
+                                }
                               >
                                 <Card.Title className="small-fonts">
                                   {componentName}
                                 </Card.Title>
                                 <Card.Text className="small-fonts text-muted">
-                                  {componentDetails.length} entries • {formatCurrency(totals.allocatedValue)}
+                                  {componentDetails.length} entries •{" "}
+                                  {formatCurrency(totals.allocatedValue)}
                                 </Card.Text>
                               </Card.Body>
                               {isExpanded && componentDetails.length > 0 && (
                                 <div className="card-expansion p-3 border-top">
                                   <ColumnSelection
                                     columns={componentDetailColumns}
-                                    selectedColumns={componentDetailSelectedColumns}
-                                    setSelectedColumns={setComponentDetailSelectedColumns}
+                                    selectedColumns={
+                                      componentDetailSelectedColumns
+                                    }
+                                    setSelectedColumns={
+                                      setComponentDetailSelectedColumns
+                                    }
                                     title="कॉलम चुनें"
                                   />
                                   <div className="d-flex justify-content-between align-items-center mb-2">
@@ -1381,7 +1545,14 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-success"
                                         size="sm"
-                                        onClick={() => downloadDetailsExcel(componentDetails, `${componentName}_Details_${new Date().toISOString().slice(0, 10)}`, componentDetailSelectedColumns, componentDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsExcel(
+                                            componentDetails,
+                                            `${componentName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            componentDetailSelectedColumns,
+                                            componentDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFileExcel className="me-1" />
                                         Excel
@@ -1389,7 +1560,15 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-danger"
                                         size="sm"
-                                        onClick={() => downloadDetailsPdf(componentDetails, `${componentName}_Details_${new Date().toISOString().slice(0, 10)}`, `${componentName} Details`, componentDetailSelectedColumns, componentDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsPdf(
+                                            componentDetails,
+                                            `${componentName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            `${componentName} Details`,
+                                            componentDetailSelectedColumns,
+                                            componentDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFilePdf className="me-1" />
                                         PDF
@@ -1399,88 +1578,254 @@ const AddEditComponent = () => {
                                       type="text"
                                       placeholder="Search centers, schemes..."
                                       value={componentSearch}
-                                      onChange={(e) => setComponentSearch(e.target.value)}
+                                      onChange={(e) =>
+                                        setComponentSearch(e.target.value)
+                                      }
                                       size="sm"
-                                      style={{ width: '200px' }}
+                                      style={{ width: "200px" }}
                                     />
                                   </div>
                                   {(() => {
-                                    const filteredDetails = componentDetails.filter(detail =>
-                                      !componentSearch ||
-                                      detail.center_name?.toLowerCase().includes(componentSearch.toLowerCase()) ||
-                                      detail.scheme_name?.toLowerCase().includes(componentSearch.toLowerCase()) ||
-                                      detail.investment_name?.toLowerCase().includes(componentSearch.toLowerCase()) ||
-                                      detail.source_of_receipt?.toLowerCase().includes(componentSearch.toLowerCase())
+                                    const filteredDetails =
+                                      componentDetails.filter(
+                                        (detail) =>
+                                          !componentSearch ||
+                                          detail.center_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              componentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.scheme_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              componentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.investment_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              componentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.source_of_receipt
+                                            ?.toLowerCase()
+                                            .includes(
+                                              componentSearch.toLowerCase(),
+                                            ),
+                                      );
+                                    const totals = summableColumns.reduce(
+                                      (acc, col) => {
+                                        if (col === "allocated_value") {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) => {
+                                              const qty =
+                                                parseFloat(
+                                                  row.allocated_quantity,
+                                                ) || 0;
+                                              const rate =
+                                                parseFloat(row.rate) || 0;
+                                              return sum + qty * rate;
+                                            },
+                                            0,
+                                          );
+                                        } else {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) =>
+                                              sum + (parseFloat(row[col]) || 0),
+                                            0,
+                                          );
+                                        }
+                                        return acc;
+                                      },
+                                      {},
                                     );
-                                    const totals = summableColumns.reduce((acc, col) => {
-                                      if (col === 'allocated_value') {
-                                        acc[col] = filteredDetails.reduce((sum, row) => {
-                                          const qty = parseFloat(row.allocated_quantity) || 0;
-                                          const rate = parseFloat(row.rate) || 0;
-                                          return sum + (qty * rate);
-                                        }, 0);
-                                      } else {
-                                        acc[col] = filteredDetails.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
-                                      }
-                                      return acc;
-                                    }, {});
 
                                     return (
                                       <>
-                                        <Table striped bordered hover responsive className="small-fonts">
+                                        <Table
+                                          striped
+                                          bordered
+                                          hover
+                                          responsive
+                                          className="small-fonts"
+                                        >
                                           <thead>
                                             <tr>
-                                              {componentDetailSelectedColumns.map(col => (
-                                                <th key={col}>
-                                                  {componentDetailColumns.find(c => c.key === col)?.label}
-                                                </th>
-                                              ))}
+                                              {componentDetailSelectedColumns.map(
+                                                (col) => (
+                                                  <th key={col}>
+                                                    {
+                                                      componentDetailColumns.find(
+                                                        (c) => c.key === col,
+                                                      )?.label
+                                                    }
+                                                  </th>
+                                                ),
+                                              )}
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {filteredDetails.map((detail, i) => {
-                                              const allocated = parseFloat(detail.allocated_quantity) || 0;
-                                              const sold = parseFloat(detail.updated_quantity) || 0;
-                                              const rate = parseFloat(detail.rate) || 0;
-                                              const allocatedValue = allocated * rate;
-                                              return (
-                                                <tr key={i}>
-                                                  {componentDetailSelectedColumns.map(col => {
-                                                    switch(col) {
-                                                      case 'bill_id': return <td key={col}>{detail.bill_id}</td>;
-                                                      case 'center_name': return <td key={col}>{detail.center_name}</td>;
-                                                      case 'component': return <td key={col}>{detail.component}</td>;
-                                                      case 'scheme_name': return <td key={col}>{detail.scheme_name}</td>;
-                                                      case 'unit': return <td key={col}>{detail.unit}</td>;
-                                                      case 'allocated_quantity': return <td key={col}>{allocated.toFixed(2)}</td>;
-                                                      case 'updated_quantity': return <td key={col}>{sold.toFixed(2)}</td>;
-                                                      case 'rate': return <td key={col}>{rate.toFixed(2)}</td>;
-                                                      case 'source_of_receipt': return <td key={col}>{detail.source_of_receipt}</td>;
-                                                      case 'allocated_value': return <td key={col}>{formatCurrency(allocatedValue)}</td>;
-                                                      default: return null;
-                                                    }
-                                                  })}
-                                                </tr>
-                                              );
-                                            })}
+                                            {filteredDetails.map(
+                                              (detail, i) => {
+                                                const allocated =
+                                                  parseFloat(
+                                                    detail.allocated_quantity,
+                                                  ) || 0;
+                                                const sold =
+                                                  parseFloat(
+                                                    detail.updated_quantity,
+                                                  ) || 0;
+                                                const rate =
+                                                  parseFloat(detail.rate) || 0;
+                                                const allocatedValue =
+                                                  allocated * rate;
+                                                return (
+                                                  <tr key={i}>
+                                                    {componentDetailSelectedColumns.map(
+                                                      (col) => {
+                                                        switch (col) {
+                                                          case "bill_id":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.bill_id}
+                                                              </td>
+                                                            );
+                                                          case "center_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.center_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "component":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.component
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "scheme_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.scheme_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "unit":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.unit}
+                                                              </td>
+                                                            );
+                                                          case "allocated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {allocated.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "updated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {sold.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "rate":
+                                                            return (
+                                                              <td key={col}>
+                                                                {rate.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "source_of_receipt":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.source_of_receipt
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_value":
+                                                            return (
+                                                              <td key={col}>
+                                                                {formatCurrency(
+                                                                  allocatedValue,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          default:
+                                                            return null;
+                                                        }
+                                                      },
+                                                    )}
+                                                  </tr>
+                                                );
+                                              },
+                                            )}
                                           </tbody>
                                           <tfoot>
                                             <tr className="table-totals">
-                                              {componentDetailSelectedColumns.map(col => {
-                                                const colDef = componentDetailColumns.find(c => c.key === col);
-                                                const header = colDef ? colDef.label : col;
-                                                if (col === 'bill_id') {
-                                                  return <td key={col} className="fw-bold">{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>;
-                                                } else if (summableColumns.includes(col)) {
-                                                  if (col === 'allocated_value') {
-                                                    return <td key={col} className="fw-bold">{formatCurrency(totals[col])}</td>;
+                                              {componentDetailSelectedColumns.map(
+                                                (col) => {
+                                                  const colDef =
+                                                    componentDetailColumns.find(
+                                                      (c) => c.key === col,
+                                                    );
+                                                  const header = colDef
+                                                    ? colDef.label
+                                                    : col;
+                                                  if (col === "bill_id") {
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      >{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>
+                                                    );
+                                                  } else if (
+                                                    summableColumns.includes(
+                                                      col,
+                                                    )
+                                                  ) {
+                                                    if (
+                                                      col === "allocated_value"
+                                                    ) {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {formatCurrency(
+                                                            totals[col],
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    } else {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {totals[col].toFixed(
+                                                            2,
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    }
                                                   } else {
-                                                    return <td key={col} className="fw-bold">{totals[col].toFixed(2)}</td>;
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      ></td>
+                                                    );
                                                   }
-                                                } else {
-                                                  return <td key={col} className="fw-bold"></td>;
-                                                }
-                                              })}
+                                                },
+                                              )}
                                             </tr>
                                           </tfoot>
                                         </Table>
@@ -1608,34 +1953,54 @@ const AddEditComponent = () => {
                       {displaySchemes.map((item, index) => {
                         const schemeName = item.scheme_name || item;
                         const isExpanded = expandedSchemesMap[schemeName];
-                        const schemeDetails = billingItems.filter(b => b.scheme_name === schemeName);
-                        const totals = schemeDetails.reduce((acc, r) => {
-                          acc.allocated += parseFloat(r.allocated_quantity) || 0;
-                          acc.sold += parseFloat(r.updated_quantity) || 0;
-                          acc.allocatedValue += (parseFloat(r.allocated_quantity) || 0) * (parseFloat(r.rate) || 0);
-                          return acc;
-                        }, { allocated: 0, sold: 0, allocatedValue: 0 });
+                        const schemeDetails = billingItems.filter(
+                          (b) => b.scheme_name === schemeName,
+                        );
+                        const totals = schemeDetails.reduce(
+                          (acc, r) => {
+                            acc.allocated +=
+                              parseFloat(r.allocated_quantity) || 0;
+                            acc.sold += parseFloat(r.updated_quantity) || 0;
+                            acc.allocatedValue +=
+                              (parseFloat(r.allocated_quantity) || 0) *
+                              (parseFloat(r.rate) || 0);
+                            return acc;
+                          },
+                          { allocated: 0, sold: 0, allocatedValue: 0 },
+                        );
 
                         return (
                           <Col key={item.id} xs={12} sm={6} md={4} lg={3}>
-                            <Card className={`scheme-card text-center h-100 ${isExpanded ? 'expanded' : ''}`}>
+                            <Card
+                              className={`scheme-card text-center h-100 ${isExpanded ? "expanded" : ""}`}
+                            >
                               <Card.Body
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => setExpandedSchemesMap(prev => ({ ...prev, [schemeName]: !prev[schemeName] }))}
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  setExpandedSchemesMap((prev) => ({
+                                    ...prev,
+                                    [schemeName]: !prev[schemeName],
+                                  }))
+                                }
                               >
                                 <Card.Title className="small-fonts">
                                   {schemeName}
                                 </Card.Title>
                                 <Card.Text className="small-fonts text-muted">
-                                  {schemeDetails.length} entries • {formatCurrency(totals.allocatedValue)}
+                                  {schemeDetails.length} entries •{" "}
+                                  {formatCurrency(totals.allocatedValue)}
                                 </Card.Text>
                               </Card.Body>
                               {isExpanded && schemeDetails.length > 0 && (
                                 <div className="card-expansion p-3 border-top">
                                   <ColumnSelection
                                     columns={schemeDetailColumns}
-                                    selectedColumns={schemeDetailSelectedColumns}
-                                    setSelectedColumns={setSchemeDetailSelectedColumns}
+                                    selectedColumns={
+                                      schemeDetailSelectedColumns
+                                    }
+                                    setSelectedColumns={
+                                      setSchemeDetailSelectedColumns
+                                    }
                                     title="कॉलम चुनें"
                                   />
                                   <div className="d-flex justify-content-between align-items-center mb-2">
@@ -1643,7 +2008,14 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-success"
                                         size="sm"
-                                        onClick={() => downloadDetailsExcel(schemeDetails, `${schemeName}_Details_${new Date().toISOString().slice(0, 10)}`, schemeDetailSelectedColumns, schemeDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsExcel(
+                                            schemeDetails,
+                                            `${schemeName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            schemeDetailSelectedColumns,
+                                            schemeDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFileExcel className="me-1" />
                                         Excel
@@ -1651,7 +2023,15 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-danger"
                                         size="sm"
-                                        onClick={() => downloadDetailsPdf(schemeDetails, `${schemeName}_Details_${new Date().toISOString().slice(0, 10)}`, `${schemeName} Details`, schemeDetailSelectedColumns, schemeDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsPdf(
+                                            schemeDetails,
+                                            `${schemeName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            `${schemeName} Details`,
+                                            schemeDetailSelectedColumns,
+                                            schemeDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFilePdf className="me-1" />
                                         PDF
@@ -1661,88 +2041,256 @@ const AddEditComponent = () => {
                                       type="text"
                                       placeholder="Search centers, components..."
                                       value={schemeSearch}
-                                      onChange={(e) => setSchemeSearch(e.target.value)}
+                                      onChange={(e) =>
+                                        setSchemeSearch(e.target.value)
+                                      }
                                       size="sm"
-                                      style={{ width: '200px' }}
+                                      style={{ width: "200px" }}
                                     />
                                   </div>
                                   {(() => {
-                                    const filteredDetails = schemeDetails.filter(detail =>
-                                      !schemeSearch ||
-                                      detail.center_name?.toLowerCase().includes(schemeSearch.toLowerCase()) ||
-                                      detail.component?.toLowerCase().includes(schemeSearch.toLowerCase()) ||
-                                      detail.investment_name?.toLowerCase().includes(schemeSearch.toLowerCase()) ||
-                                      detail.source_of_receipt?.toLowerCase().includes(schemeSearch.toLowerCase())
+                                    const filteredDetails =
+                                      schemeDetails.filter(
+                                        (detail) =>
+                                          !schemeSearch ||
+                                          detail.center_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              schemeSearch.toLowerCase(),
+                                            ) ||
+                                          detail.component
+                                            ?.toLowerCase()
+                                            .includes(
+                                              schemeSearch.toLowerCase(),
+                                            ) ||
+                                          detail.investment_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              schemeSearch.toLowerCase(),
+                                            ) ||
+                                          detail.source_of_receipt
+                                            ?.toLowerCase()
+                                            .includes(
+                                              schemeSearch.toLowerCase(),
+                                            ),
+                                      );
+                                    const totals = summableColumns.reduce(
+                                      (acc, col) => {
+                                        if (col === "allocated_value") {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) => {
+                                              const qty =
+                                                parseFloat(
+                                                  row.allocated_quantity,
+                                                ) || 0;
+                                              const rate =
+                                                parseFloat(row.rate) || 0;
+                                              return sum + qty * rate;
+                                            },
+                                            0,
+                                          );
+                                        } else {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) =>
+                                              sum + (parseFloat(row[col]) || 0),
+                                            0,
+                                          );
+                                        }
+                                        return acc;
+                                      },
+                                      {},
                                     );
-                                    const totals = summableColumns.reduce((acc, col) => {
-                                      if (col === 'allocated_value') {
-                                        acc[col] = filteredDetails.reduce((sum, row) => {
-                                          const qty = parseFloat(row.allocated_quantity) || 0;
-                                          const rate = parseFloat(row.rate) || 0;
-                                          return sum + (qty * rate);
-                                        }, 0);
-                                      } else {
-                                        acc[col] = filteredDetails.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
-                                      }
-                                      return acc;
-                                    }, {});
 
                                     return (
                                       <>
-                                        <Table striped bordered hover responsive className="small-fonts">
+                                        <Table
+                                          striped
+                                          bordered
+                                          hover
+                                          responsive
+                                          className="small-fonts"
+                                        >
                                           <thead>
                                             <tr>
-                                              {schemeDetailSelectedColumns.map(col => (
-                                                <th key={col}>
-                                                  {schemeDetailColumns.find(c => c.key === col)?.label}
-                                                </th>
-                                              ))}
+                                              {schemeDetailSelectedColumns.map(
+                                                (col) => (
+                                                  <th key={col}>
+                                                    {
+                                                      schemeDetailColumns.find(
+                                                        (c) => c.key === col,
+                                                      )?.label
+                                                    }
+                                                  </th>
+                                                ),
+                                              )}
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {filteredDetails.map((detail, i) => {
-                                              const allocated = parseFloat(detail.allocated_quantity) || 0;
-                                              const sold = parseFloat(detail.updated_quantity) || 0;
-                                              const rate = parseFloat(detail.rate) || 0;
-                                              const allocatedValue = allocated * rate;
-                                              return (
-                                                <tr key={i}>
-                                                  {schemeDetailSelectedColumns.map(col => {
-                                                    switch(col) {
-                                                      case 'bill_id': return <td key={col}>{detail.bill_id}</td>;
-                                                      case 'center_name': return <td key={col}>{detail.center_name}</td>;
-                                                      case 'component': return <td key={col}>{detail.component}</td>;
-                                                      case 'scheme_name': return <td key={col}>{detail.scheme_name}</td>;
-                                                      case 'investment_name': return <td key={col}>{detail.investment_name}</td>;
-                                                      case 'allocated_quantity': return <td key={col}>{allocated.toFixed(2)}</td>;
-                                                      case 'updated_quantity': return <td key={col}>{sold.toFixed(2)}</td>;
-                                                      case 'rate': return <td key={col}>{rate.toFixed(2)}</td>;
-                                                      case 'source_of_receipt': return <td key={col}>{detail.source_of_receipt}</td>;
-                                                      case 'allocated_value': return <td key={col}>{formatCurrency(allocatedValue)}</td>;
-                                                      default: return null;
-                                                    }
-                                                  })}
-                                                </tr>
-                                              );
-                                            })}
+                                            {filteredDetails.map(
+                                              (detail, i) => {
+                                                const allocated =
+                                                  parseFloat(
+                                                    detail.allocated_quantity,
+                                                  ) || 0;
+                                                const sold =
+                                                  parseFloat(
+                                                    detail.updated_quantity,
+                                                  ) || 0;
+                                                const rate =
+                                                  parseFloat(detail.rate) || 0;
+                                                const allocatedValue =
+                                                  allocated * rate;
+                                                return (
+                                                  <tr key={i}>
+                                                    {schemeDetailSelectedColumns.map(
+                                                      (col) => {
+                                                        switch (col) {
+                                                          case "bill_id":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.bill_id}
+                                                              </td>
+                                                            );
+                                                          case "center_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.center_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "component":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.component
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "scheme_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.scheme_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "investment_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.investment_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {allocated.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "updated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {sold.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "rate":
+                                                            return (
+                                                              <td key={col}>
+                                                                {rate.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "source_of_receipt":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.source_of_receipt
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_value":
+                                                            return (
+                                                              <td key={col}>
+                                                                {formatCurrency(
+                                                                  allocatedValue,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          default:
+                                                            return null;
+                                                        }
+                                                      },
+                                                    )}
+                                                  </tr>
+                                                );
+                                              },
+                                            )}
                                           </tbody>
                                           <tfoot>
                                             <tr className="table-totals">
-                                              {schemeDetailSelectedColumns.map(col => {
-                                                const colDef = schemeDetailColumns.find(c => c.key === col);
-                                                const header = colDef ? colDef.label : col;
-                                                if (col === 'bill_id') {
-                                                  return <td key={col} className="fw-bold">{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>;
-                                                } else if (summableColumns.includes(col)) {
-                                                  if (col === 'allocated_value') {
-                                                    return <td key={col} className="fw-bold">{formatCurrency(totals[col])}</td>;
+                                              {schemeDetailSelectedColumns.map(
+                                                (col) => {
+                                                  const colDef =
+                                                    schemeDetailColumns.find(
+                                                      (c) => c.key === col,
+                                                    );
+                                                  const header = colDef
+                                                    ? colDef.label
+                                                    : col;
+                                                  if (col === "bill_id") {
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      >{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>
+                                                    );
+                                                  } else if (
+                                                    summableColumns.includes(
+                                                      col,
+                                                    )
+                                                  ) {
+                                                    if (
+                                                      col === "allocated_value"
+                                                    ) {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {formatCurrency(
+                                                            totals[col],
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    } else {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {totals[col].toFixed(
+                                                            2,
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    }
                                                   } else {
-                                                    return <td key={col} className="fw-bold">{totals[col].toFixed(2)}</td>;
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      ></td>
+                                                    );
                                                   }
-                                                } else {
-                                                  return <td key={col} className="fw-bold"></td>;
-                                                }
-                                              })}
+                                                },
+                                              )}
                                             </tr>
                                           </tfoot>
                                         </Table>
@@ -1803,35 +2351,56 @@ const AddEditComponent = () => {
                     <Row className="g-3">
                       {displayInvestments.map((item, index) => {
                         const investmentName = item;
-                        const isExpanded = expandedInvestmentsMap[investmentName];
-                        const investmentDetails = billingItems.filter(b => b.investment_name === investmentName);
-                        const totals = investmentDetails.reduce((acc, r) => {
-                          acc.allocated += parseFloat(r.allocated_quantity) || 0;
-                          acc.sold += parseFloat(r.updated_quantity) || 0;
-                          acc.allocatedValue += (parseFloat(r.allocated_quantity) || 0) * (parseFloat(r.rate) || 0);
-                          return acc;
-                        }, { allocated: 0, sold: 0, allocatedValue: 0 });
+                        const isExpanded =
+                          expandedInvestmentsMap[investmentName];
+                        const investmentDetails = billingItems.filter(
+                          (b) => b.investment_name === investmentName,
+                        );
+                        const totals = investmentDetails.reduce(
+                          (acc, r) => {
+                            acc.allocated +=
+                              parseFloat(r.allocated_quantity) || 0;
+                            acc.sold += parseFloat(r.updated_quantity) || 0;
+                            acc.allocatedValue +=
+                              (parseFloat(r.allocated_quantity) || 0) *
+                              (parseFloat(r.rate) || 0);
+                            return acc;
+                          },
+                          { allocated: 0, sold: 0, allocatedValue: 0 },
+                        );
 
                         return (
                           <Col key={index} xs={12} sm={6} md={4} lg={3}>
-                            <Card className={`investment-card text-center h-100 ${isExpanded ? 'expanded' : ''}`}>
+                            <Card
+                              className={`investment-card text-center h-100 ${isExpanded ? "expanded" : ""}`}
+                            >
                               <Card.Body
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => setExpandedInvestmentsMap(prev => ({ ...prev, [investmentName]: !prev[investmentName] }))}
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  setExpandedInvestmentsMap((prev) => ({
+                                    ...prev,
+                                    [investmentName]: !prev[investmentName],
+                                  }))
+                                }
                               >
                                 <Card.Title className="small-fonts">
                                   {investmentName}
                                 </Card.Title>
                                 <Card.Text className="small-fonts text-muted">
-                                  {investmentDetails.length} entries • {formatCurrency(totals.allocatedValue)}
+                                  {investmentDetails.length} entries •{" "}
+                                  {formatCurrency(totals.allocatedValue)}
                                 </Card.Text>
                               </Card.Body>
                               {isExpanded && investmentDetails.length > 0 && (
                                 <div className="card-expansion p-3 border-top">
                                   <ColumnSelection
                                     columns={investmentDetailColumns}
-                                    selectedColumns={investmentDetailSelectedColumns}
-                                    setSelectedColumns={setInvestmentDetailSelectedColumns}
+                                    selectedColumns={
+                                      investmentDetailSelectedColumns
+                                    }
+                                    setSelectedColumns={
+                                      setInvestmentDetailSelectedColumns
+                                    }
                                     title="कॉलम चुनें"
                                   />
                                   <div className="d-flex justify-content-between align-items-center mb-2">
@@ -1839,7 +2408,14 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-success"
                                         size="sm"
-                                        onClick={() => downloadDetailsExcel(investmentDetails, `${investmentName}_Details_${new Date().toISOString().slice(0, 10)}`, investmentDetailSelectedColumns, investmentDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsExcel(
+                                            investmentDetails,
+                                            `${investmentName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            investmentDetailSelectedColumns,
+                                            investmentDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFileExcel className="me-1" />
                                         Excel
@@ -1847,7 +2423,15 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-danger"
                                         size="sm"
-                                        onClick={() => downloadDetailsPdf(investmentDetails, `${investmentName}_Details_${new Date().toISOString().slice(0, 10)}`, `${investmentName} Details`, investmentDetailSelectedColumns, investmentDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsPdf(
+                                            investmentDetails,
+                                            `${investmentName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            `${investmentName} Details`,
+                                            investmentDetailSelectedColumns,
+                                            investmentDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFilePdf className="me-1" />
                                         PDF
@@ -1857,88 +2441,254 @@ const AddEditComponent = () => {
                                       type="text"
                                       placeholder="Search centers, schemes..."
                                       value={investmentSearch}
-                                      onChange={(e) => setInvestmentSearch(e.target.value)}
+                                      onChange={(e) =>
+                                        setInvestmentSearch(e.target.value)
+                                      }
                                       size="sm"
-                                      style={{ width: '200px' }}
+                                      style={{ width: "200px" }}
                                     />
                                   </div>
                                   {(() => {
-                                    const filteredDetails = investmentDetails.filter(detail =>
-                                      !investmentSearch ||
-                                      detail.center_name?.toLowerCase().includes(investmentSearch.toLowerCase()) ||
-                                      detail.scheme_name?.toLowerCase().includes(investmentSearch.toLowerCase()) ||
-                                      detail.component?.toLowerCase().includes(investmentSearch.toLowerCase()) ||
-                                      detail.source_of_receipt?.toLowerCase().includes(investmentSearch.toLowerCase())
+                                    const filteredDetails =
+                                      investmentDetails.filter(
+                                        (detail) =>
+                                          !investmentSearch ||
+                                          detail.center_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              investmentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.scheme_name
+                                            ?.toLowerCase()
+                                            .includes(
+                                              investmentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.component
+                                            ?.toLowerCase()
+                                            .includes(
+                                              investmentSearch.toLowerCase(),
+                                            ) ||
+                                          detail.source_of_receipt
+                                            ?.toLowerCase()
+                                            .includes(
+                                              investmentSearch.toLowerCase(),
+                                            ),
+                                      );
+                                    const totals = summableColumns.reduce(
+                                      (acc, col) => {
+                                        if (col === "allocated_value") {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) => {
+                                              const qty =
+                                                parseFloat(
+                                                  row.allocated_quantity,
+                                                ) || 0;
+                                              const rate =
+                                                parseFloat(row.rate) || 0;
+                                              return sum + qty * rate;
+                                            },
+                                            0,
+                                          );
+                                        } else {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) =>
+                                              sum + (parseFloat(row[col]) || 0),
+                                            0,
+                                          );
+                                        }
+                                        return acc;
+                                      },
+                                      {},
                                     );
-                                    const totals = summableColumns.reduce((acc, col) => {
-                                      if (col === 'allocated_value') {
-                                        acc[col] = filteredDetails.reduce((sum, row) => {
-                                          const qty = parseFloat(row.allocated_quantity) || 0;
-                                          const rate = parseFloat(row.rate) || 0;
-                                          return sum + (qty * rate);
-                                        }, 0);
-                                      } else {
-                                        acc[col] = filteredDetails.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
-                                      }
-                                      return acc;
-                                    }, {});
 
                                     return (
                                       <>
-                                        <Table striped bordered hover responsive className="small-fonts">
+                                        <Table
+                                          striped
+                                          bordered
+                                          hover
+                                          responsive
+                                          className="small-fonts"
+                                        >
                                           <thead>
                                             <tr>
-                                              {investmentDetailSelectedColumns.map(col => (
-                                                <th key={col}>
-                                                  {investmentDetailColumns.find(c => c.key === col)?.label}
-                                                </th>
-                                              ))}
+                                              {investmentDetailSelectedColumns.map(
+                                                (col) => (
+                                                  <th key={col}>
+                                                    {
+                                                      investmentDetailColumns.find(
+                                                        (c) => c.key === col,
+                                                      )?.label
+                                                    }
+                                                  </th>
+                                                ),
+                                              )}
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {filteredDetails.map((detail, i) => {
-                                              const allocated = parseFloat(detail.allocated_quantity) || 0;
-                                              const sold = parseFloat(detail.updated_quantity) || 0;
-                                              const rate = parseFloat(detail.rate) || 0;
-                                              const allocatedValue = allocated * rate;
-                                              return (
-                                                <tr key={i}>
-                                                  {investmentDetailSelectedColumns.map(col => {
-                                                    switch(col) {
-                                                      case 'bill_id': return <td key={col}>{detail.bill_id}</td>;
-                                                      case 'center_name': return <td key={col}>{detail.center_name}</td>;
-                                                      case 'component': return <td key={col}>{detail.component}</td>;
-                                                      case 'scheme_name': return <td key={col}>{detail.scheme_name}</td>;
-                                                      case 'unit': return <td key={col}>{detail.unit}</td>;
-                                                      case 'allocated_quantity': return <td key={col}>{allocated.toFixed(2)}</td>;
-                                                      case 'updated_quantity': return <td key={col}>{sold.toFixed(2)}</td>;
-                                                      case 'rate': return <td key={col}>{rate.toFixed(2)}</td>;
-                                                      case 'source_of_receipt': return <td key={col}>{detail.source_of_receipt}</td>;
-                                                      case 'allocated_value': return <td key={col}>{formatCurrency(allocatedValue)}</td>;
-                                                      default: return null;
-                                                    }
-                                                  })}
-                                                </tr>
-                                              );
-                                            })}
+                                            {filteredDetails.map(
+                                              (detail, i) => {
+                                                const allocated =
+                                                  parseFloat(
+                                                    detail.allocated_quantity,
+                                                  ) || 0;
+                                                const sold =
+                                                  parseFloat(
+                                                    detail.updated_quantity,
+                                                  ) || 0;
+                                                const rate =
+                                                  parseFloat(detail.rate) || 0;
+                                                const allocatedValue =
+                                                  allocated * rate;
+                                                return (
+                                                  <tr key={i}>
+                                                    {investmentDetailSelectedColumns.map(
+                                                      (col) => {
+                                                        switch (col) {
+                                                          case "bill_id":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.bill_id}
+                                                              </td>
+                                                            );
+                                                          case "center_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.center_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "component":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.component
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "scheme_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.scheme_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "unit":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.unit}
+                                                              </td>
+                                                            );
+                                                          case "allocated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {allocated.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "updated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {sold.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "rate":
+                                                            return (
+                                                              <td key={col}>
+                                                                {rate.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "source_of_receipt":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.source_of_receipt
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_value":
+                                                            return (
+                                                              <td key={col}>
+                                                                {formatCurrency(
+                                                                  allocatedValue,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          default:
+                                                            return null;
+                                                        }
+                                                      },
+                                                    )}
+                                                  </tr>
+                                                );
+                                              },
+                                            )}
                                           </tbody>
                                           <tfoot>
                                             <tr className="table-totals">
-                                              {investmentDetailSelectedColumns.map(col => {
-                                                const colDef = investmentDetailColumns.find(c => c.key === col);
-                                                const header = colDef ? colDef.label : col;
-                                                if (col === 'bill_id') {
-                                                  return <td key={col} className="fw-bold">{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>;
-                                                } else if (summableColumns.includes(col)) {
-                                                  if (col === 'allocated_value') {
-                                                    return <td key={col} className="fw-bold">{formatCurrency(totals[col])}</td>;
+                                              {investmentDetailSelectedColumns.map(
+                                                (col) => {
+                                                  const colDef =
+                                                    investmentDetailColumns.find(
+                                                      (c) => c.key === col,
+                                                    );
+                                                  const header = colDef
+                                                    ? colDef.label
+                                                    : col;
+                                                  if (col === "bill_id") {
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      >{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>
+                                                    );
+                                                  } else if (
+                                                    summableColumns.includes(
+                                                      col,
+                                                    )
+                                                  ) {
+                                                    if (
+                                                      col === "allocated_value"
+                                                    ) {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {formatCurrency(
+                                                            totals[col],
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    } else {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {totals[col].toFixed(
+                                                            2,
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    }
                                                   } else {
-                                                    return <td key={col} className="fw-bold">{totals[col].toFixed(2)}</td>;
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      ></td>
+                                                    );
                                                   }
-                                                } else {
-                                                  return <td key={col} className="fw-bold"></td>;
-                                                }
-                                              })}
+                                                },
+                                              )}
                                             </tr>
                                           </tfoot>
                                         </Table>
@@ -1994,26 +2744,42 @@ const AddEditComponent = () => {
                       {displayUnits.map((item, index) => {
                         const unitName = item;
                         const isExpanded = expandedUnitsMap[unitName];
-                        const unitDetails = billingItems.filter(b => b.unit === unitName);
-                        const totals = unitDetails.reduce((acc, r) => {
-                          acc.allocated += parseFloat(r.allocated_quantity) || 0;
-                          acc.sold += parseFloat(r.updated_quantity) || 0;
-                          acc.allocatedValue += (parseFloat(r.allocated_quantity) || 0) * (parseFloat(r.rate) || 0);
-                          return acc;
-                        }, { allocated: 0, sold: 0, allocatedValue: 0 });
+                        const unitDetails = billingItems.filter(
+                          (b) => b.unit === unitName,
+                        );
+                        const totals = unitDetails.reduce(
+                          (acc, r) => {
+                            acc.allocated +=
+                              parseFloat(r.allocated_quantity) || 0;
+                            acc.sold += parseFloat(r.updated_quantity) || 0;
+                            acc.allocatedValue +=
+                              (parseFloat(r.allocated_quantity) || 0) *
+                              (parseFloat(r.rate) || 0);
+                            return acc;
+                          },
+                          { allocated: 0, sold: 0, allocatedValue: 0 },
+                        );
 
                         return (
                           <Col key={index} xs={12} sm={6} md={4} lg={3}>
-                            <Card className={`unit-card text-center h-100 ${isExpanded ? 'expanded' : ''}`}>
+                            <Card
+                              className={`unit-card text-center h-100 ${isExpanded ? "expanded" : ""}`}
+                            >
                               <Card.Body
-                                style={{ cursor: 'pointer' }}
-                                onClick={() => setExpandedUnitsMap(prev => ({ ...prev, [unitName]: !prev[unitName] }))}
+                                style={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  setExpandedUnitsMap((prev) => ({
+                                    ...prev,
+                                    [unitName]: !prev[unitName],
+                                  }))
+                                }
                               >
                                 <Card.Title className="small-fonts">
                                   {unitName}
                                 </Card.Title>
                                 <Card.Text className="small-fonts text-muted">
-                                  {unitDetails.length} entries • {formatCurrency(totals.allocatedValue)}
+                                  {unitDetails.length} entries •{" "}
+                                  {formatCurrency(totals.allocatedValue)}
                                 </Card.Text>
                               </Card.Body>
                               {isExpanded && unitDetails.length > 0 && (
@@ -2021,7 +2787,9 @@ const AddEditComponent = () => {
                                   <ColumnSelection
                                     columns={unitDetailColumns}
                                     selectedColumns={unitDetailSelectedColumns}
-                                    setSelectedColumns={setUnitDetailSelectedColumns}
+                                    setSelectedColumns={
+                                      setUnitDetailSelectedColumns
+                                    }
                                     title="कॉलम चुनें"
                                   />
                                   <div className="d-flex justify-content-between align-items-center mb-2">
@@ -2029,7 +2797,14 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-success"
                                         size="sm"
-                                        onClick={() => downloadDetailsExcel(unitDetails, `${unitName}_Details_${new Date().toISOString().slice(0, 10)}`, unitDetailSelectedColumns, unitDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsExcel(
+                                            unitDetails,
+                                            `${unitName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            unitDetailSelectedColumns,
+                                            unitDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFileExcel className="me-1" />
                                         Excel
@@ -2037,7 +2812,15 @@ const AddEditComponent = () => {
                                       <Button
                                         variant="outline-danger"
                                         size="sm"
-                                        onClick={() => downloadDetailsPdf(unitDetails, `${unitName}_Details_${new Date().toISOString().slice(0, 10)}`, `${unitName} Details`, unitDetailSelectedColumns, unitDetailColumns)}
+                                        onClick={() =>
+                                          downloadDetailsPdf(
+                                            unitDetails,
+                                            `${unitName}_Details_${new Date().toISOString().slice(0, 10)}`,
+                                            `${unitName} Details`,
+                                            unitDetailSelectedColumns,
+                                            unitDetailColumns,
+                                          )
+                                        }
                                       >
                                         <FaFilePdf className="me-1" />
                                         PDF
@@ -2047,89 +2830,250 @@ const AddEditComponent = () => {
                                       type="text"
                                       placeholder="Search centers, schemes..."
                                       value={unitSearch}
-                                      onChange={(e) => setUnitSearch(e.target.value)}
+                                      onChange={(e) =>
+                                        setUnitSearch(e.target.value)
+                                      }
                                       size="sm"
-                                      style={{ width: '200px' }}
+                                      style={{ width: "200px" }}
                                     />
                                   </div>
                                   {(() => {
-                                    const filteredDetails = unitDetails.filter(detail =>
-                                      !unitSearch ||
-                                      detail.center_name?.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                                      detail.scheme_name?.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                                      detail.component?.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                                      detail.investment_name?.toLowerCase().includes(unitSearch.toLowerCase()) ||
-                                      detail.source_of_receipt?.toLowerCase().includes(unitSearch.toLowerCase())
+                                    const filteredDetails = unitDetails.filter(
+                                      (detail) =>
+                                        !unitSearch ||
+                                        detail.center_name
+                                          ?.toLowerCase()
+                                          .includes(unitSearch.toLowerCase()) ||
+                                        detail.scheme_name
+                                          ?.toLowerCase()
+                                          .includes(unitSearch.toLowerCase()) ||
+                                        detail.component
+                                          ?.toLowerCase()
+                                          .includes(unitSearch.toLowerCase()) ||
+                                        detail.investment_name
+                                          ?.toLowerCase()
+                                          .includes(unitSearch.toLowerCase()) ||
+                                        detail.source_of_receipt
+                                          ?.toLowerCase()
+                                          .includes(unitSearch.toLowerCase()),
                                     );
-                                    const totals = summableColumns.reduce((acc, col) => {
-                                      if (col === 'allocated_value') {
-                                        acc[col] = filteredDetails.reduce((sum, row) => {
-                                          const qty = parseFloat(row.allocated_quantity) || 0;
-                                          const rate = parseFloat(row.rate) || 0;
-                                          return sum + (qty * rate);
-                                        }, 0);
-                                      } else {
-                                        acc[col] = filteredDetails.reduce((sum, row) => sum + (parseFloat(row[col]) || 0), 0);
-                                      }
-                                      return acc;
-                                    }, {});
+                                    const totals = summableColumns.reduce(
+                                      (acc, col) => {
+                                        if (col === "allocated_value") {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) => {
+                                              const qty =
+                                                parseFloat(
+                                                  row.allocated_quantity,
+                                                ) || 0;
+                                              const rate =
+                                                parseFloat(row.rate) || 0;
+                                              return sum + qty * rate;
+                                            },
+                                            0,
+                                          );
+                                        } else {
+                                          acc[col] = filteredDetails.reduce(
+                                            (sum, row) =>
+                                              sum + (parseFloat(row[col]) || 0),
+                                            0,
+                                          );
+                                        }
+                                        return acc;
+                                      },
+                                      {},
+                                    );
 
                                     return (
                                       <>
-                                        <Table striped bordered hover responsive className="small-fonts">
+                                        <Table
+                                          striped
+                                          bordered
+                                          hover
+                                          responsive
+                                          className="small-fonts"
+                                        >
                                           <thead>
                                             <tr>
-                                              {unitDetailSelectedColumns.map(col => (
-                                                <th key={col}>
-                                                  {unitDetailColumns.find(c => c.key === col)?.label}
-                                                </th>
-                                              ))}
+                                              {unitDetailSelectedColumns.map(
+                                                (col) => (
+                                                  <th key={col}>
+                                                    {
+                                                      unitDetailColumns.find(
+                                                        (c) => c.key === col,
+                                                      )?.label
+                                                    }
+                                                  </th>
+                                                ),
+                                              )}
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {filteredDetails.map((detail, i) => {
-                                              const allocated = parseFloat(detail.allocated_quantity) || 0;
-                                              const sold = parseFloat(detail.updated_quantity) || 0;
-                                              const rate = parseFloat(detail.rate) || 0;
-                                              const allocatedValue = allocated * rate;
-                                              return (
-                                                <tr key={i}>
-                                                  {unitDetailSelectedColumns.map(col => {
-                                                    switch(col) {
-                                                      case 'bill_id': return <td key={col}>{detail.bill_id}</td>;
-                                                      case 'center_name': return <td key={col}>{detail.center_name}</td>;
-                                                      case 'component': return <td key={col}>{detail.component}</td>;
-                                                      case 'scheme_name': return <td key={col}>{detail.scheme_name}</td>;
-                                                      case 'investment_name': return <td key={col}>{detail.investment_name}</td>;
-                                                      case 'allocated_quantity': return <td key={col}>{allocated.toFixed(2)}</td>;
-                                                      case 'updated_quantity': return <td key={col}>{sold.toFixed(2)}</td>;
-                                                      case 'rate': return <td key={col}>{rate.toFixed(2)}</td>;
-                                                      case 'source_of_receipt': return <td key={col}>{detail.source_of_receipt}</td>;
-                                                      case 'allocated_value': return <td key={col}>{formatCurrency(allocatedValue)}</td>;
-                                                      default: return null;
-                                                    }
-                                                  })}
-                                                </tr>
-                                              );
-                                            })}
+                                            {filteredDetails.map(
+                                              (detail, i) => {
+                                                const allocated =
+                                                  parseFloat(
+                                                    detail.allocated_quantity,
+                                                  ) || 0;
+                                                const sold =
+                                                  parseFloat(
+                                                    detail.updated_quantity,
+                                                  ) || 0;
+                                                const rate =
+                                                  parseFloat(detail.rate) || 0;
+                                                const allocatedValue =
+                                                  allocated * rate;
+                                                return (
+                                                  <tr key={i}>
+                                                    {unitDetailSelectedColumns.map(
+                                                      (col) => {
+                                                        switch (col) {
+                                                          case "bill_id":
+                                                            return (
+                                                              <td key={col}>
+                                                                {detail.bill_id}
+                                                              </td>
+                                                            );
+                                                          case "center_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.center_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "component":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.component
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "scheme_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.scheme_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "investment_name":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.investment_name
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {allocated.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "updated_quantity":
+                                                            return (
+                                                              <td key={col}>
+                                                                {sold.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "rate":
+                                                            return (
+                                                              <td key={col}>
+                                                                {rate.toFixed(
+                                                                  2,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          case "source_of_receipt":
+                                                            return (
+                                                              <td key={col}>
+                                                                {
+                                                                  detail.source_of_receipt
+                                                                }
+                                                              </td>
+                                                            );
+                                                          case "allocated_value":
+                                                            return (
+                                                              <td key={col}>
+                                                                {formatCurrency(
+                                                                  allocatedValue,
+                                                                )}
+                                                              </td>
+                                                            );
+                                                          default:
+                                                            return null;
+                                                        }
+                                                      },
+                                                    )}
+                                                  </tr>
+                                                );
+                                              },
+                                            )}
                                           </tbody>
                                           <tfoot>
                                             <tr className="table-totals">
-                                              {unitDetailSelectedColumns.map(col => {
-                                                const colDef = unitDetailColumns.find(c => c.key === col);
-                                                const header = colDef ? colDef.label : col;
-                                                if (col === 'bill_id') {
-                                                  return <td key={col} className="fw-bold">{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>;
-                                                } else if (summableColumns.includes(col)) {
-                                                  if (col === 'allocated_value') {
-                                                    return <td key={col} className="fw-bold">{formatCurrency(totals[col])}</td>;
+                                              {unitDetailSelectedColumns.map(
+                                                (col) => {
+                                                  const colDef =
+                                                    unitDetailColumns.find(
+                                                      (c) => c.key === col,
+                                                    );
+                                                  const header = colDef
+                                                    ? colDef.label
+                                                    : col;
+                                                  if (col === "bill_id") {
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      >{`कुल (${filteredDetails.length} प्रविष्टियाँ)`}</td>
+                                                    );
+                                                  } else if (
+                                                    summableColumns.includes(
+                                                      col,
+                                                    )
+                                                  ) {
+                                                    if (
+                                                      col === "allocated_value"
+                                                    ) {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {formatCurrency(
+                                                            totals[col],
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    } else {
+                                                      return (
+                                                        <td
+                                                          key={col}
+                                                          className="fw-bold"
+                                                        >
+                                                          {totals[col].toFixed(
+                                                            2,
+                                                          )}
+                                                        </td>
+                                                      );
+                                                    }
                                                   } else {
-                                                    return <td key={col} className="fw-bold">{totals[col].toFixed(2)}</td>;
+                                                    return (
+                                                      <td
+                                                        key={col}
+                                                        className="fw-bold"
+                                                      ></td>
+                                                    );
                                                   }
-                                                } else {
-                                                  return <td key={col} className="fw-bold"></td>;
-                                                }
-                                              })}
+                                                },
+                                              )}
                                             </tr>
                                           </tfoot>
                                         </Table>

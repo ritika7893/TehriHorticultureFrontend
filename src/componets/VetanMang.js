@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import {
   Container,
   Row,
@@ -9,23 +9,45 @@ import {
   Button,
   Alert,
   Spinner,
-} from 'react-bootstrap';
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/vetan.css";
 
-const API_URL = 'https://mahadevaaya.com/govbillingsystem/backend/api/salary-attendance-reports/';
+const API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/salary-attendance-reports/";
 
 // Default headers for the dynamic table (Text Headings)
 const TABLE_HEADERS = [
-  "क्र.", "नाव", "पदनाव", "वर्ग", "दिनांक (शुरू)", "दिनांक (अंत)",
-  "छुट्टी (शुरू)", "छुट्टी (अंत)", "उपस्थिति", "अवैतनिक",
-  "कुल दिन", "शेष", "वित्तीय वर्ष", "टिप्पणी / कार्य विवरण"
+  "क्र.",
+  "नाव",
+  "पदनाव",
+  "वर्ग",
+  "दिनांक (शुरू)",
+  "दिनांक (अंत)",
+  "छुट्टी (शुरू)",
+  "छुट्टी (अंत)",
+  "उपस्थिति",
+  "अवैतनिक",
+  "कुल दिन",
+  "शेष",
+  "वित्तीय वर्ष",
+  "टिप्पणी / कार्य विवरण",
 ];
 
 // Marathi Month Options for Dropdown
 const MONTH_OPTIONS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // Financial Year Options
@@ -33,40 +55,51 @@ const FINANCIAL_YEAR_OPTIONS = ["2024-25", "2025-26", "2026-27", "2027-28"];
 
 // Column widths for print/preview (14 columns)
 const COL_WIDTHS = [
-  '3%',   // 0  क्र.
-  '7%',   // 1  नाव
-  '7%',   // 2  पदनाव
-  '4%',   // 3  वर्ग
-  '6%',   // 4  दिनांक (शुरू)
-  '6%',   // 5  दिनांक (अंत)
-  '6%',   // 6  छुट्टी (शुरू)
-  '6%',   // 7  छुट्टी (अंत)
-  '5%',   // 8  उपस्थिति
-  '5%',   // 9  अवैतनिक
-  '4%',   // 10 कुल दिन
-  '4%',   // 11 शेष
-  '7%',   // 12 वित्तीय वर्ष
-  '30%'   // 13 टिप्पणी / कार्य विवरण
+  "3%", // 0  क्र.
+  "7%", // 1  नाव
+  "7%", // 2  पदनाव
+  "4%", // 3  वर्ग
+  "6%", // 4  दिनांक (शुरू)
+  "6%", // 5  दिनांक (अंत)
+  "6%", // 6  छुट्टी (शुरू)
+  "6%", // 7  छुट्टी (अंत)
+  "5%", // 8  उपस्थिति
+  "5%", // 9  अवैतनिक
+  "4%", // 10 कुल दिन
+  "4%", // 11 शेष
+  "7%", // 12 वित्तीय वर्ष
+  "30%", // 13 टिप्पणी / कार्य विवरण
 ];
 
 // Helper to extract center name
 const getCenterNameFromUser = (authUser) => {
   if (!authUser) return "";
   const candidates = [
-    authUser.center_name, authUser.centerName, authUser.username, authUser.name,
-    authUser.center?.center_name, authUser.center?.name, authUser.profile?.center_name
+    authUser.center_name,
+    authUser.centerName,
+    authUser.username,
+    authUser.name,
+    authUser.center?.center_name,
+    authUser.center?.name,
+    authUser.profile?.center_name,
   ];
-  const direct = candidates.find(v => v !== null && v !== undefined && String(v).trim() !== "");
+  const direct = candidates.find(
+    (v) => v !== null && v !== undefined && String(v).trim() !== "",
+  );
   return direct ? String(direct).trim() : "";
 };
 
 // Helper to format date into Hindi readable format (e.g., 20 अगस्त, 2026)
 const formatDate = (dateString) => {
-  if (!dateString) return '';
+  if (!dateString) return "";
   try {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
-    return date.toLocaleDateString('hi-IN', { year: 'numeric', month: 'long', day: 'numeric' });
+    return date.toLocaleDateString("hi-IN", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   } catch (e) {
     return dateString;
   }
@@ -77,18 +110,18 @@ function VetanMang() {
   const centerName = getCenterNameFromUser(user);
 
   const [formData, setFormData] = useState({
-    center_name: centerName || '',
-    month: '',
-    financial_year: '2026-27',
-    letter_number: '',
-    report_date: '',
-    subject: 'वेतन मांग पत्र एवं उपस्थिति सूचना',
-    report_data: []
+    center_name: centerName || "",
+    month: "",
+    financial_year: "2026-27",
+    letter_number: "",
+    report_date: "",
+    subject: "वेतन मांग पत्र एवं उपस्थिति सूचना",
+    report_data: [],
   });
 
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState({ text: '', type: '' });
+  const [message, setMessage] = useState({ text: "", type: "" });
   const [showFormModal, setShowFormModal] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [previewReport, setPreviewReport] = useState(null);
@@ -113,12 +146,19 @@ function VetanMang() {
 
   // Reusable HTML generator for formal letter print format
   const generatePrintHTML = (report) => {
-    const tableRows = report.report_data.map(row =>
-      `<tr>${row.map(cell => `<td>${cell || ''}</td>`).join('')}</tr>`
-    ).join('');
+    const tableRows = report.report_data
+      .map(
+        (row) =>
+          `<tr>${row.map((cell) => `<td>${cell || ""}</td>`).join("")}</tr>`,
+      )
+      .join("");
 
-    const colGroup = COL_WIDTHS.map(w => `<col style="width:${w};">`).join('');
-    const yearPart = report.financial_year ? report.financial_year.split('-')[0] : '';
+    const colGroup = COL_WIDTHS.map((w) => `<col style="width:${w};">`).join(
+      "",
+    );
+    const yearPart = report.financial_year
+      ? report.financial_year.split("-")[0]
+      : "";
     const formattedDate = formatDate(report.report_date);
 
     return `
@@ -221,7 +261,7 @@ function VetanMang() {
     if (!previewReport) return;
     setShowPreviewModal(false);
     setTimeout(() => {
-      const printWindow = window.open('', '_blank');
+      const printWindow = window.open("", "_blank");
       printWindow.document.write(`
         <html>
         <head>
@@ -327,7 +367,11 @@ function VetanMang() {
 
   useEffect(() => {
     if (centerName) {
-      setFormData(prev => prev.center_name === centerName ? prev : { ...prev, center_name: centerName });
+      setFormData((prev) =>
+        prev.center_name === centerName
+          ? prev
+          : { ...prev, center_name: centerName },
+      );
     }
   }, [centerName]);
 
@@ -336,7 +380,7 @@ function VetanMang() {
     try {
       const url = `${API_URL}?center_name=${encodeURIComponent(centerName)}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) throw new Error("Network response was not ok");
 
       const result = await response.json();
@@ -345,7 +389,7 @@ function VetanMang() {
       }
     } catch (error) {
       console.error("Error fetching reports:", error);
-      setMessage({ text: 'रिपोर्ट लाने में त्रुटि हुई।', type: 'error' });
+      setMessage({ text: "रिपोर्ट लाने में त्रुटि हुई।", type: "error" });
     } finally {
       setIsLoading(false);
     }
@@ -377,10 +421,10 @@ function VetanMang() {
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include start date
           updatedReportData[rowIndex][10] = diffDays.toString();
         } else {
-          updatedReportData[rowIndex][10] = '';
+          updatedReportData[rowIndex][10] = "";
         }
       } else {
-        updatedReportData[rowIndex][10] = '';
+        updatedReportData[rowIndex][10] = "";
       }
     }
 
@@ -391,15 +435,19 @@ function VetanMang() {
       if (leaveStartStr && leaveEndStr) {
         const leaveStart = new Date(leaveStartStr);
         const leaveEnd = new Date(leaveEndStr);
-        if (!isNaN(leaveStart.getTime()) && !isNaN(leaveEnd.getTime()) && leaveEnd >= leaveStart) {
+        if (
+          !isNaN(leaveStart.getTime()) &&
+          !isNaN(leaveEnd.getTime()) &&
+          leaveEnd >= leaveStart
+        ) {
           const diffTime = Math.abs(leaveEnd - leaveStart);
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to include start date
           updatedReportData[rowIndex][11] = diffDays.toString();
         } else {
-          updatedReportData[rowIndex][11] = '';
+          updatedReportData[rowIndex][11] = "";
         }
       } else {
-        updatedReportData[rowIndex][11] = '';
+        updatedReportData[rowIndex][11] = "";
       }
     }
 
@@ -407,13 +455,18 @@ function VetanMang() {
   };
 
   const addRow = () => {
-    const newRow = Array(14).fill('');
+    const newRow = Array(14).fill("");
     newRow[0] = formData.report_data.length + 1; // Auto increment क्र.
-    setFormData({ ...formData, report_data: [...formData.report_data, newRow] });
+    setFormData({
+      ...formData,
+      report_data: [...formData.report_data, newRow],
+    });
   };
 
   const removeRow = (rowIndex) => {
-    const updatedReportData = formData.report_data.filter((_, index) => index !== rowIndex);
+    const updatedReportData = formData.report_data.filter(
+      (_, index) => index !== rowIndex,
+    );
     // Re-number क्र. column after deletion
     updatedReportData.forEach((row, index) => {
       row[0] = index + 1;
@@ -424,32 +477,35 @@ function VetanMang() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage({ text: '', type: '' });
+    setMessage({ text: "", type: "" });
 
-    const cleanedReportData = formData.report_data.filter(row =>
-      row.some(cell => cell && String(cell).trim() !== '')
+    const cleanedReportData = formData.report_data.filter((row) =>
+      row.some((cell) => cell && String(cell).trim() !== ""),
     );
 
     const payload = { ...formData, report_data: cleanedReportData };
 
     try {
       const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
       if (result.success) {
-        setMessage({ text: 'वेतन मांग पत्र सफलतापूर्वक सहेजा गया।', type: 'success' });
+        setMessage({
+          text: "वेतन मांग पत्र सफलतापूर्वक सहेजा गया।",
+          type: "success",
+        });
         setFormData({
-          center_name: centerName || '',
-          month: '',
-          financial_year: '2026-27',
-          letter_number: '',
-          report_date: '',
-          subject: 'वेतन मांग पत्र एवं उपस्थिति सूचना',
-          report_data: []
+          center_name: centerName || "",
+          month: "",
+          financial_year: "2026-27",
+          letter_number: "",
+          report_date: "",
+          subject: "वेतन मांग पत्र एवं उपस्थिति सूचना",
+          report_data: [],
         });
         fetchReports();
       } else {
@@ -457,7 +513,10 @@ function VetanMang() {
       }
     } catch (error) {
       console.error("Error posting report:", error);
-      setMessage({ text: 'सबमिशन में त्रुटि हुई। कृपया पुनः प्रयास करें।', type: 'error' });
+      setMessage({
+        text: "सबमिशन में त्रुटि हुई। कृपया पुनः प्रयास करें।",
+        type: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -466,34 +525,37 @@ function VetanMang() {
   // Share all reports data
   const handleShareAll = async () => {
     if (!reports.length) {
-      alert('कोई रिपोर्ट उपलब्ध नहीं है।');
+      alert("कोई रिपोर्ट उपलब्ध नहीं है।");
       return;
     }
 
-    const shareText = reports.map((report, idx) =>
-      `${idx + 1}. केंद्र: ${report.center_name} | माह: ${report.month} | वर्ष: ${report.financial_year} | दिनांक: ${report.report_date} | विषय: ${report.subject}\n` +
-      `   पत्र संख्या: ${report.letter_number}\n` +
-      `   डेटा:\n${report.report_data.map(row => `   ${row.join(' | ')}`).join('\n')}`
-    ).join('\n\n');
+    const shareText = reports
+      .map(
+        (report, idx) =>
+          `${idx + 1}. केंद्र: ${report.center_name} | माह: ${report.month} | वर्ष: ${report.financial_year} | दिनांक: ${report.report_date} | विषय: ${report.subject}\n` +
+          `   पत्र संख्या: ${report.letter_number}\n` +
+          `   डेटा:\n${report.report_data.map((row) => `   ${row.join(" | ")}`).join("\n")}`,
+      )
+      .join("\n\n");
 
     const fullText = `वेतन मांग पत्र एवं उपस्थिति सूचना\nकुल रिपोर्ट: ${reports.length}\n\n${shareText}`;
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'वेतन मांग पत्र रिपोर्ट',
-          text: fullText
+          title: "वेतन मांग पत्र रिपोर्ट",
+          text: fullText,
         });
       } catch (error) {
-        console.log('Sharing failed', error);
+        console.log("Sharing failed", error);
       }
     } else {
       try {
         await navigator.clipboard.writeText(fullText);
-        alert('सभी रिपोर्ट का विवरण क्लिपबोर्ड पर कॉपी कर दिया गया है!');
+        alert("सभी रिपोर्ट का विवरण क्लिपबोर्ड पर कॉपी कर दिया गया है!");
       } catch (error) {
-        console.error('Copy failed', error);
-        alert('शेयर करने में त्रुटि हुई।');
+        console.error("Copy failed", error);
+        alert("शेयर करने में त्रुटि हुई।");
       }
     }
   };
@@ -501,7 +563,7 @@ function VetanMang() {
   // ===== PRINT ALL REPORTS =====
   const handlePrintAll = () => {
     if (!reports.length) {
-      alert('कोई रिपोर्ट उपलब्ध नहीं है।');
+      alert("कोई रिपोर्ट उपलब्ध नहीं है।");
       return;
     }
 
@@ -512,7 +574,7 @@ function VetanMang() {
       (report.report_data || []).forEach((row) => {
         const safeRow = Array.isArray(row) ? [...row] : [];
 
-        while (safeRow.length < 14) safeRow.push('');
+        while (safeRow.length < 14) safeRow.push("");
         if (safeRow.length > 14) safeRow.length = 14;
 
         allRows.push(safeRow);
@@ -520,28 +582,36 @@ function VetanMang() {
     });
 
     if (!allRows.length) {
-      alert('प्रिंट करने के लिए कोई कर्मचारी डेटा उपलब्ध नहीं है।');
+      alert("प्रिंट करने के लिए कोई कर्मचारी डेटा उपलब्ध नहीं है।");
       return;
     }
 
-    const tableRows = allRows.map((row) => `
+    const tableRows = allRows
+      .map(
+        (row) => `
       <tr>
-        ${row.map((cell) => `
-          <td>${cell === null || cell === undefined ? '' : String(cell)}</td>
-        `).join('')}
+        ${row
+          .map(
+            (cell) => `
+          <td>${cell === null || cell === undefined ? "" : String(cell)}</td>
+        `,
+          )
+          .join("")}
       </tr>
-    `).join('');
+    `,
+      )
+      .join("");
 
     const yearPart = firstReport.financial_year
-      ? firstReport.financial_year.split('-')[0]
-      : '';
+      ? firstReport.financial_year.split("-")[0]
+      : "";
 
     const formattedDate = formatDate(firstReport.report_date);
 
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
 
     if (!printWindow) {
-      alert('प्रिंट विंडो नहीं खुल सकी। कृपया browser pop-up अनुमति दें।');
+      alert("प्रिंट विंडो नहीं खुल सकी। कृपया browser pop-up अनुमति दें।");
       return;
     }
 
@@ -655,16 +725,16 @@ function VetanMang() {
 
           <div class="doc-header">
             <h1>उद्यान एवं खाद्य प्रसंस्करण विभाग, उत्तराखण्ड</h1>
-            <h2>कार्यालय — प्रभारी, उद्यान सचल दल केन्द्र ${firstReport.center_name || ''}</h2>
-            <h3>विकासखण्ड ${firstReport.center_name || ''}, जनपद पौड़ी गढ़वाल (उत्तराखण्ड)</h3>
+            <h2>कार्यालय — प्रभारी, उद्यान सचल दल केन्द्र ${firstReport.center_name || ""}</h2>
+            <h3>विकासखण्ड ${firstReport.center_name || ""}, जनपद पौड़ी गढ़वाल (उत्तराखण्ड)</h3>
           </div>
 
           <div class="ref-date">
             <span>
               <strong>पत्रांक:</strong>
-              ${firstReport.letter_number || ''}
+              ${firstReport.letter_number || ""}
               / वेतन मांग पत्र एवं उपस्थिति सूचना /
-              वर्ष ${firstReport.financial_year || ''}
+              वर्ष ${firstReport.financial_year || ""}
             </span>
             <span>
               <strong>दिनांक:</strong> ${formattedDate}
@@ -679,7 +749,7 @@ function VetanMang() {
 
           <div class="subject">
             <strong>विषय :</strong>
-            माह ${firstReport.month || ''}, वर्ष ${firstReport.financial_year || ''}
+            माह ${firstReport.month || ""}, वर्ष ${firstReport.financial_year || ""}
             का वेतन मांग पत्र (D-4) एवं नियमित तथा उपनल प्रायोजित कार्मिकों की
             उपस्थिति सूचना प्रेषित किये जाने के सम्बन्ध में।
           </div>
@@ -687,7 +757,7 @@ function VetanMang() {
           <div class="body-text">
             महोदय,<br>
             उपरोक्त विषयक अवगत कराना है कि इस केन्द्र में कार्यरत नियमित एवं
-            उपनल प्रायोजित (कुशल-माली) कार्मिकों की माह ${firstReport.month || ''},
+            उपनल प्रायोजित (कुशल-माली) कार्मिकों की माह ${firstReport.month || ""},
             ${yearPart} की उपस्थिति सूचना एवं वेतन मांग पत्र (D-4) निम्नानुसार है,
             जो आपकी सेवा में सूचनार्थ एवं वेतन आहरण/भुगतान की आवश्यक कार्यवाही
             हेतु प्रेषित है :—
@@ -746,7 +816,7 @@ function VetanMang() {
             उपस्थिति पंजिका के अनुसार पूर्णतः सही एवं सत्य है। उपरोक्त कार्मिकों
             द्वारा उल्लिखित अवधि में अपने पदीय दायित्वों का निर्वहन किया गया है
             तथा किसी भी कार्मिक द्वारा अनाधिकृत रूप से अनुपस्थिति/अवकाश का
-            उपभोग नहीं किया गया है। तदनुसार माह ${firstReport.month || ''},
+            उपभोग नहीं किया गया है। तदनुसार माह ${firstReport.month || ""},
             ${yearPart} का वेतन आहरण किये जाने की कृपा करें।
           </div>
 
@@ -754,7 +824,7 @@ function VetanMang() {
             भवदीय,<br><br><br>
             ( हस्ताक्षर )<br>
             प्रभारी<br>
-            उद्यान सचल दल केन्द्र, ${firstReport.center_name || ''}<br>
+            उद्यान सचल दल केन्द्र, ${firstReport.center_name || ""}<br>
             जनपद पौड़ी गढ़वाल
           </div>
 
@@ -762,9 +832,9 @@ function VetanMang() {
             <div class="ref-date">
               <span>
                 <strong>पत्रांक:</strong>
-                ${firstReport.letter_number || ''}-24 /
+                ${firstReport.letter_number || ""}-24 /
                 वेतन मांग पत्र एवं उपस्थिति सूचना /
-                वर्ष ${firstReport.financial_year || ''}
+                वर्ष ${firstReport.financial_year || ""}
               </span>
               <span>
                 <strong>दिनांक:</strong> ${formattedDate}
@@ -793,16 +863,18 @@ function VetanMang() {
   };
 
   return (
-    <Container fluid className="px-3" style={{ paddingTop: '89px' }}>
+    <Container fluid className="px-3" style={{ paddingTop: "89px" }}>
       <Row className="mb-3">
         <Col>
           <div
             className="p-3 rounded shadow-sm"
-            style={{ backgroundColor: '#1a5276', color: 'white' }}
+            style={{ backgroundColor: "#1a5276", color: "white" }}
           >
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <h5 className="mb-0 fw-bold">वेतन मांग पत्र एवं उपस्थिति सूचना</h5>
+                <h5 className="mb-0 fw-bold">
+                  वेतन मांग पत्र एवं उपस्थिति सूचना
+                </h5>
                 <small className="opacity-75">{centerName}</small>
               </div>
               <Button
@@ -821,7 +893,7 @@ function VetanMang() {
       {message.text && showFormModal === false && (
         <Row className="mb-3">
           <Col>
-            <Alert variant={message.type === 'success' ? 'success' : 'danger'}>
+            <Alert variant={message.type === "success" ? "success" : "danger"}>
               {message.text}
             </Alert>
           </Col>
@@ -833,24 +905,36 @@ function VetanMang() {
           <div className="vm-modal vm-add-report-modal">
             <div className="vm-modal-header">
               <h2>नई रिपोर्ट दर्ज करें (Add New Report)</h2>
-              <button type="button" className="vm-modal-close" onClick={closeAddModal}>×</button>
+              <button
+                type="button"
+                className="vm-modal-close"
+                onClick={closeAddModal}
+              >
+                ×
+              </button>
             </div>
 
             {message.text && (
-              <div className={`vm-alert ${message.type}`}>
-                {message.text}
-              </div>
+              <div className={`vm-alert ${message.type}`}>{message.text}</div>
             )}
 
             <form onSubmit={handleSubmit}>
               <div className="vm-grid-2">
                 <div className="vm-input-group">
                   <label>केंद्र का नाम (Center Name)</label>
-                  <input type="text" name="center_name" value={formData.center_name} readOnly className="vm-readonly-input" />
+                  <input
+                    type="text"
+                    name="center_name"
+                    value={formData.center_name}
+                    readOnly
+                    className="vm-readonly-input"
+                  />
                 </div>
 
                 <div className="vm-input-group">
-                  <label>माह (Month) <span className="vm-required">*</span></label>
+                  <label>
+                    माह (Month) <span className="vm-required">*</span>
+                  </label>
                   <select
                     name="month"
                     value={formData.month}
@@ -860,13 +944,18 @@ function VetanMang() {
                   >
                     <option value="">-- माह निवडा --</option>
                     {MONTH_OPTIONS.map((month, idx) => (
-                      <option key={idx} value={month}>{month}</option>
+                      <option key={idx} value={month}>
+                        {month}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 <div className="vm-input-group">
-                  <label>वित्तीय वर्ष (Financial Year) <span className="vm-required">*</span></label>
+                  <label>
+                    वित्तीय वर्ष (Financial Year){" "}
+                    <span className="vm-required">*</span>
+                  </label>
                   <select
                     name="financial_year"
                     value={formData.financial_year}
@@ -875,46 +964,86 @@ function VetanMang() {
                     className="vm-select-input"
                   >
                     {FINANCIAL_YEAR_OPTIONS.map((year, idx) => (
-                      <option key={idx} value={year}>{year}</option>
+                      <option key={idx} value={year}>
+                        {year}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 <div className="vm-input-group">
-                  <label>पत्र संख्या (Letter Number) <span className="vm-required">*</span></label>
-                  <input type="text" name="letter_number" value={formData.letter_number} onChange={handleInputChange} required />
+                  <label>
+                    पत्र संख्या (Letter Number){" "}
+                    <span className="vm-required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="letter_number"
+                    value={formData.letter_number}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
 
                 <div className="vm-input-group">
-                  <label>रिपोर्ट दिनांक (Report Date) <span className="vm-required">*</span></label>
-                  <input type="date" name="report_date" value={formData.report_date} onChange={handleInputChange} required />
+                  <label>
+                    रिपोर्ट दिनांक (Report Date){" "}
+                    <span className="vm-required">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    name="report_date"
+                    value={formData.report_date}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
 
                 <div className="vm-input-group vm-full-width">
-                  <label>विषय (Subject) <span className="vm-required">*</span></label>
-                  <input type="text" name="subject" value={formData.subject} onChange={handleInputChange} required />
+                  <label>
+                    विषय (Subject) <span className="vm-required">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
               </div>
 
               <div className="vm-table-container">
                 <div className="vm-table-header-bar">
                   <h3>कर्मचारी विवरण (Employee Details)</h3>
-                  <button type="button" className="vm-btn vm-btn-secondary" onClick={addRow}>+ पंक्ति जोड़ें (Add Row)</button>
+                  <button
+                    type="button"
+                    className="vm-btn vm-btn-secondary"
+                    onClick={addRow}
+                  >
+                    + पंक्ति जोड़ें (Add Row)
+                  </button>
                 </div>
 
                 <div className="vm-table-scroll">
                   <table className="vm-data-table">
                     <thead>
                       <tr>
-                        {TABLE_HEADERS.map((header, idx) => <th key={idx}>{header}</th>)}
+                        {TABLE_HEADERS.map((header, idx) => (
+                          <th key={idx}>{header}</th>
+                        ))}
                         <th className="vm-action-col">कार्य (Action)</th>
                       </tr>
                     </thead>
                     <tbody>
                       {formData.report_data.length === 0 ? (
                         <tr>
-                          <td colSpan={TABLE_HEADERS.length + 1} className="vm-empty-row">
-                            कृपया डेटा जोड़ने के लिए "पंक्ति जोड़ें" पर क्लिक करें
+                          <td
+                            colSpan={TABLE_HEADERS.length + 1}
+                            className="vm-empty-row"
+                          >
+                            कृपया डेटा जोड़ने के लिए "पंक्ति जोड़ें" पर क्लिक
+                            करें
                           </td>
                         </tr>
                       ) : (
@@ -929,19 +1058,33 @@ function VetanMang() {
                                       type="text"
                                       value={cell}
                                       readOnly
-                                      style={{ backgroundColor: '#f8f9fa', fontWeight: 'bold' }}
+                                      style={{
+                                        backgroundColor: "#f8f9fa",
+                                        fontWeight: "bold",
+                                      }}
                                     />
                                   </td>
                                 );
                               }
                               // Date inputs for दिनांक (शुरू), दिनांक (अंत), छुट्टी (शुरू), छुट्टी (अंत)
-                              else if (cIdx === 4 || cIdx === 5 || cIdx === 6 || cIdx === 7) {
+                              else if (
+                                cIdx === 4 ||
+                                cIdx === 5 ||
+                                cIdx === 6 ||
+                                cIdx === 7
+                              ) {
                                 return (
                                   <td key={cIdx}>
                                     <input
                                       type="date"
                                       value={cell}
-                                      onChange={(e) => handleReportDataChange(rIdx, cIdx, e.target.value)}
+                                      onChange={(e) =>
+                                        handleReportDataChange(
+                                          rIdx,
+                                          cIdx,
+                                          e.target.value,
+                                        )
+                                      }
                                     />
                                   </td>
                                 );
@@ -954,7 +1097,7 @@ function VetanMang() {
                                       type="text"
                                       value={cell}
                                       readOnly
-                                      style={{ backgroundColor: '#e9ecef' }}
+                                      style={{ backgroundColor: "#e9ecef" }}
                                     />
                                   </td>
                                 );
@@ -966,14 +1109,24 @@ function VetanMang() {
                                     <input
                                       type="text"
                                       value={cell}
-                                      onChange={(e) => handleReportDataChange(rIdx, cIdx, e.target.value)}
+                                      onChange={(e) =>
+                                        handleReportDataChange(
+                                          rIdx,
+                                          cIdx,
+                                          e.target.value,
+                                        )
+                                      }
                                     />
                                   </td>
                                 );
                               }
                             })}
                             <td className="vm-action-col">
-                              <button type="button" className="vm-btn-danger" onClick={() => removeRow(rIdx)}>
+                              <button
+                                type="button"
+                                className="vm-btn-danger"
+                                onClick={() => removeRow(rIdx)}
+                              >
                                 हटाएं
                               </button>
                             </td>
@@ -986,11 +1139,21 @@ function VetanMang() {
               </div>
 
               <div className="vm-form-actions">
-                <button type="button" className="vm-btn vm-btn-cancel" onClick={closeAddModal}>
+                <button
+                  type="button"
+                  className="vm-btn vm-btn-cancel"
+                  onClick={closeAddModal}
+                >
                   रद्द करें
                 </button>
-                <button type="submit" className="vm-btn vm-btn-primary" disabled={isLoading}>
-                  {isLoading ? 'सहेजा जा रहा है...' : 'रिपोर्ट सहेजें (Save Report)'}
+                <button
+                  type="submit"
+                  className="vm-btn vm-btn-primary"
+                  disabled={isLoading}
+                >
+                  {isLoading
+                    ? "सहेजा जा रहा है..."
+                    : "रिपोर्ट सहेजें (Save Report)"}
                 </button>
               </div>
             </form>
@@ -1004,11 +1167,13 @@ function VetanMang() {
           <Card className="border-0 shadow-sm">
             <Card.Header
               className="py-2"
-              style={{ backgroundColor: '#0d9488', color: 'white' }}
+              style={{ backgroundColor: "#0d9488", color: "white" }}
             >
               <div className="d-flex justify-content-between align-items-center">
                 <div>
-                  <span className="fw-bold">सहेजी गई रिपोर्ट्स (Saved Reports)</span>
+                  <span className="fw-bold">
+                    सहेजी गई रिपोर्ट्स (Saved Reports)
+                  </span>
                 </div>
                 <div className="d-flex align-items-center gap-2">
                   <Button
@@ -1018,9 +1183,9 @@ function VetanMang() {
                     disabled={isLoading}
                     className="fw-bold"
                   >
-                    {isLoading ? 'लोड हो रहा है...' : 'रिफ्रेश करें'}
+                    {isLoading ? "लोड हो रहा है..." : "रिफ्रेश करें"}
                   </Button>
-                
+
                   <Button
                     variant="secondary"
                     size="sm"
@@ -1036,7 +1201,7 @@ function VetanMang() {
             <Card.Body className="p-0">
               {isLoading ? (
                 <div className="text-center py-4">
-                  <Spinner animation="border" style={{ color: '#0d9488' }} />
+                  <Spinner animation="border" style={{ color: "#0d9488" }} />
                 </div>
               ) : reports.length === 0 ? (
                 <div className="text-center py-4 text-muted">
@@ -1044,29 +1209,49 @@ function VetanMang() {
                 </div>
               ) : (
                 <div className="table-responsive">
-                  <Table bordered striped hover responsive className="mb-0 table-sm">
+                  <Table
+                    bordered
+                    striped
+                    hover
+                    responsive
+                    className="mb-0 table-sm"
+                  >
                     <thead className="table-light">
                       <tr>
-                        <th className="text-center" style={{ width: '50px' }}>क्र.</th>
+                        <th className="text-center" style={{ width: "50px" }}>
+                          क्र.
+                        </th>
                         <th>केंद्र</th>
                         <th>माह</th>
                         <th>वित्तीय वर्ष</th>
                         <th>रिपोर्ट दिनांक</th>
-                        {TABLE_HEADERS.map((header, idx) => <th key={idx}>{header}</th>)}
+                        {TABLE_HEADERS.map((header, idx) => (
+                          <th key={idx}>{header}</th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
                       {reports.map((report) =>
                         report.report_data.map((row, rIdx) => (
                           <tr key={`${report.id}-${rIdx}`}>
-                            <td className="text-center text-muted">{rIdx + 1}</td>
-                            <td className="text-nowrap">{report.center_name}</td>
+                            <td className="text-center text-muted">
+                              {rIdx + 1}
+                            </td>
+                            <td className="text-nowrap">
+                              {report.center_name}
+                            </td>
                             <td className="text-nowrap">{report.month}</td>
-                            <td className="text-nowrap">{report.financial_year}</td>
-                            <td className="text-nowrap">{report.report_date}</td>
-                            {row.map((cell, cIdx) => <td key={cIdx}>{cell}</td>)}
+                            <td className="text-nowrap">
+                              {report.financial_year}
+                            </td>
+                            <td className="text-nowrap">
+                              {report.report_date}
+                            </td>
+                            {row.map((cell, cIdx) => (
+                              <td key={cIdx}>{cell}</td>
+                            ))}
                           </tr>
-                        ))
+                        )),
                       )}
                     </tbody>
                   </Table>
@@ -1083,7 +1268,13 @@ function VetanMang() {
           <div className="vm-modal">
             <div className="vm-modal-header">
               <h2>रिपोर्ट प्रिव्यू - {previewReport.center_name}</h2>
-              <button type="button" className="vm-modal-close" onClick={closePreviewModal}>×</button>
+              <button
+                type="button"
+                className="vm-modal-close"
+                onClick={closePreviewModal}
+              >
+                ×
+              </button>
             </div>
             <div className="vm-preview-content">
               <div className="vm-preview-header">
@@ -1092,44 +1283,59 @@ function VetanMang() {
               </div>
               <div className="vm-preview-meta">
                 <div className="vm-preview-meta-row">
-                  <span><strong>केंद्र:</strong> {previewReport.center_name}</span>
-                  <span><strong>माह:</strong> {previewReport.month}</span>
+                  <span>
+                    <strong>केंद्र:</strong> {previewReport.center_name}
+                  </span>
+                  <span>
+                    <strong>माह:</strong> {previewReport.month}
+                  </span>
                 </div>
                 <div className="vm-preview-meta-row">
-                  <span><strong>वित्तीय वर्ष:</strong> {previewReport.financial_year}</span>
-                  <span><strong>पत्र संख्या:</strong> {previewReport.letter_number}</span>
+                  <span>
+                    <strong>वित्तीय वर्ष:</strong>{" "}
+                    {previewReport.financial_year}
+                  </span>
+                  <span>
+                    <strong>पत्र संख्या:</strong> {previewReport.letter_number}
+                  </span>
                 </div>
                 <div className="vm-preview-meta-row">
-                  <span><strong>रिपोर्ट दिनांक:</strong> {previewReport.report_date}</span>
+                  <span>
+                    <strong>रिपोर्ट दिनांक:</strong> {previewReport.report_date}
+                  </span>
                 </div>
               </div>
               <div className="vm-preview-table-wrapper">
                 <table className="vm-preview-table">
                   <colgroup>
-                    <col style={{ width: '3%' }} />
-                    <col style={{ width: '7%' }} />
-                    <col style={{ width: '7%' }} />
-                    <col style={{ width: '4%' }} />
-                    <col style={{ width: '6%' }} />
-                    <col style={{ width: '6%' }} />
-                    <col style={{ width: '6%' }} />
-                    <col style={{ width: '6%' }} />
-                    <col style={{ width: '5%' }} />
-                    <col style={{ width: '5%' }} />
-                    <col style={{ width: '4%' }} />
-                    <col style={{ width: '4%' }} />
-                    <col style={{ width: '7%' }} />
-                    <col style={{ width: '30%' }} />
+                    <col style={{ width: "3%" }} />
+                    <col style={{ width: "7%" }} />
+                    <col style={{ width: "7%" }} />
+                    <col style={{ width: "4%" }} />
+                    <col style={{ width: "6%" }} />
+                    <col style={{ width: "6%" }} />
+                    <col style={{ width: "6%" }} />
+                    <col style={{ width: "6%" }} />
+                    <col style={{ width: "5%" }} />
+                    <col style={{ width: "5%" }} />
+                    <col style={{ width: "4%" }} />
+                    <col style={{ width: "4%" }} />
+                    <col style={{ width: "7%" }} />
+                    <col style={{ width: "30%" }} />
                   </colgroup>
                   <thead>
                     <tr>
-                      {TABLE_HEADERS.map((header, idx) => <th key={idx}>{header}</th>)}
+                      {TABLE_HEADERS.map((header, idx) => (
+                        <th key={idx}>{header}</th>
+                      ))}
                     </tr>
                   </thead>
                   <tbody>
                     {previewReport.report_data.map((row, rIdx) => (
                       <tr key={rIdx}>
-                        {row.map((cell, cIdx) => <td key={cIdx}>{cell}</td>)}
+                        {row.map((cell, cIdx) => (
+                          <td key={cIdx}>{cell}</td>
+                        ))}
                       </tr>
                     ))}
                   </tbody>
@@ -1137,10 +1343,18 @@ function VetanMang() {
               </div>
             </div>
             <div className="vm-form-actions">
-              <button type="button" className="vm-btn vm-btn-cancel" onClick={closePreviewModal}>
+              <button
+                type="button"
+                className="vm-btn vm-btn-cancel"
+                onClick={closePreviewModal}
+              >
                 बंद करें
               </button>
-              <button type="button" className="vm-btn vm-btn-primary" onClick={handlePrintPreview}>
+              <button
+                type="button"
+                className="vm-btn vm-btn-primary"
+                onClick={handlePrintPreview}
+              >
                 प्रिंट करें
               </button>
             </div>

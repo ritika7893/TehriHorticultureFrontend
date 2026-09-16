@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import ExcelJS from "exceljs";
 import "./MonthReport.css";
 const API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/month-reports/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-reports/";
 
 /*
   Excel file is intentionally NOT fetched from /media directly.
@@ -12,7 +12,8 @@ const API_URL =
   Example:
     /api/month-reports/8/file/
 */
-const MEDIA_BASE_URL ="https://mahadevaaya.com/govbillingsystem/backend";
+const MEDIA_BASE_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 
 const months = [
@@ -45,8 +46,7 @@ const financialYears = [
   "2020-21",
 ];
 
-const uid = () =>
-  `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 
 const getMonthName = (value) =>
   months.find((m) => m.value === String(value))?.label || "";
@@ -88,11 +88,7 @@ const getFillColor = (cell) => {
 
   if (!fill || fill.type === "none") return null;
 
-  return (
-    normalizeColor(fill.fgColor) ||
-    normalizeColor(fill.bgColor) ||
-    null
-  );
+  return normalizeColor(fill.fgColor) || normalizeColor(fill.bgColor) || null;
 };
 
 const getBorderStyle = (side) => {
@@ -111,8 +107,7 @@ const getBorderStyle = (side) => {
   return styles[side.style] || "1px solid";
 };
 
-const getBorderColor = (side) =>
-  normalizeColor(side?.color) || "#b7b7b7";
+const getBorderColor = (side) => normalizeColor(side?.color) || "#b7b7b7";
 
 const excelValueToText = (value) => {
   if (value === null || value === undefined) {
@@ -206,20 +201,27 @@ const formatEditorNumber = (value, cell) => {
   });
 };
 
-const formulaHasMeaningfulInput = (workbook, worksheet, formula, visited = new Set()) => {
+const formulaHasMeaningfulInput = (
+  workbook,
+  worksheet,
+  formula,
+  visited = new Set(),
+) => {
   if (!workbook || !worksheet || typeof formula !== "string") return false;
 
   const expression = formula.replace(/^=/, "");
   const references = [];
 
   // Capture normal/range references, including references to another sheet.
-  const rangePattern = /(?:(?:'([^']+)'|([A-Za-z0-9\u0900-\u097F _📊-]+))!)?\$?([A-Z]{1,3})\$?(\d+):\$?([A-Z]{1,3})\$?(\d+)/gi;
+  const rangePattern =
+    /(?:(?:'([^']+)'|([A-Za-z0-9\u0900-\u097F _📊-]+))!)?\$?([A-Z]{1,3})\$?(\d+):\$?([A-Z]{1,3})\$?(\d+)/gi;
   let match;
   while ((match = rangePattern.exec(expression))) {
     references.push(match[0]);
   }
 
-  const singlePattern = /(?:(?:'([^']+)'|([A-Za-z0-9\u0900-\u097F _📊-]+))!)?\$?([A-Z]{1,3})\$?(\d+)/gi;
+  const singlePattern =
+    /(?:(?:'([^']+)'|([A-Za-z0-9\u0900-\u097F _📊-]+))!)?\$?([A-Z]{1,3})\$?(\d+)/gi;
   while ((match = singlePattern.exec(expression))) {
     // Do not add a single-cell match when it is already part of a range.
     const full = match[0];
@@ -250,7 +252,15 @@ const formulaHasMeaningfulInput = (workbook, worksheet, formula, visited = new S
 
           if (raw && typeof raw === "object" && raw.formula !== undefined) {
             const key = `${target.name}!${refCell.address}`;
-            if (!visited.has(key) && formulaHasMeaningfulInput(workbook, target, raw.formula, new Set([...visited, key]))) {
+            if (
+              !visited.has(key) &&
+              formulaHasMeaningfulInput(
+                workbook,
+                target,
+                raw.formula,
+                new Set([...visited, key]),
+              )
+            ) {
               return true;
             }
           } else {
@@ -272,7 +282,15 @@ const formulaHasMeaningfulInput = (workbook, worksheet, formula, visited = new S
 
     if (raw && typeof raw === "object" && raw.formula !== undefined) {
       const key = `${target.name}!${refCell.address}`;
-      if (!visited.has(key) && formulaHasMeaningfulInput(workbook, target, raw.formula, new Set([...visited, key]))) {
+      if (
+        !visited.has(key) &&
+        formulaHasMeaningfulInput(
+          workbook,
+          target,
+          raw.formula,
+          new Set([...visited, key]),
+        )
+      ) {
         return true;
       }
     } else {
@@ -293,13 +311,21 @@ const getCellDisplayText = (cell, workbook = null, worksheet = null) => {
 
   // Formula cells must be evaluated from the current workbook so edited input
   // values immediately update their displayed totals.
-  if (workbook && worksheet && typeof raw === "object" && raw.formula !== undefined) {
+  if (
+    workbook &&
+    worksheet &&
+    typeof raw === "object" &&
+    raw.formula !== undefined
+  ) {
     const value = evaluateCellValue(workbook, worksheet, cell);
 
     // Hide zero results when the formula has no meaningful source value.
     // This keeps unused formula cells visually blank while retaining 0.00 for
     // real calculations/totals where the referenced cells contain data.
-    if (value === 0 && !formulaHasMeaningfulInput(workbook, worksheet, raw.formula)) {
+    if (
+      value === 0 &&
+      !formulaHasMeaningfulInput(workbook, worksheet, raw.formula)
+    ) {
       return "";
     }
 
@@ -368,9 +394,7 @@ const parseSheetCellReference = (token, activeWorksheet) => {
   const trimmed = normalizeFormulaText(token).replace(/^=/, "");
 
   // Quoted sheet-qualified reference: '📝 DATA ENTRY'!F8
-  const qualified = trimmed.match(
-    /^'(.*?)'!\$?([A-Z]{1,3})\$?(\d+)$/i
-  );
+  const qualified = trimmed.match(/^'(.*?)'!\$?([A-Z]{1,3})\$?(\d+)$/i);
   if (qualified) {
     return {
       worksheetName: qualified[1],
@@ -379,9 +403,7 @@ const parseSheetCellReference = (token, activeWorksheet) => {
   }
 
   // Unquoted sheet-qualified reference: DATA ENTRY!F8
-  const qualifiedPlain = trimmed.match(
-    /^([^!]+)!\$?([A-Z]{1,3})\$?(\d+)$/i
-  );
+  const qualifiedPlain = trimmed.match(/^([^!]+)!\$?([A-Z]{1,3})\$?(\d+)$/i);
   if (qualifiedPlain) {
     return {
       worksheetName: qualifiedPlain[1],
@@ -404,7 +426,7 @@ const parseSheetCellReference = (token, activeWorksheet) => {
 const parseFormulaRange = (token, activeWorksheet) => {
   const trimmed = normalizeFormulaText(token).replace(/^=/, "");
   const match = trimmed.match(
-    /^(?:'(.*?)'|([^!]+))?!?\$?([A-Z]{1,3})\$?(\d+):\$?([A-Z]{1,3})\$?(\d+)$/i
+    /^(?:'(.*?)'|([^!]+))?!?\$?([A-Z]{1,3})\$?(\d+):\$?([A-Z]{1,3})\$?(\d+)$/i,
   );
 
   if (!match) return null;
@@ -471,17 +493,30 @@ const splitComparison = (expression) => {
     if (depth !== 0) continue;
 
     const two = expression.slice(i, i + 2);
-    if ([">=", "<=", "<>"] .includes(two)) {
-      return [expression.slice(0, i).trim(), two, expression.slice(i + 2).trim()];
+    if ([">=", "<=", "<>"].includes(two)) {
+      return [
+        expression.slice(0, i).trim(),
+        two,
+        expression.slice(i + 2).trim(),
+      ];
     }
     if (["=", ">", "<"].includes(ch)) {
-      return [expression.slice(0, i).trim(), ch, expression.slice(i + 1).trim()];
+      return [
+        expression.slice(0, i).trim(),
+        ch,
+        expression.slice(i + 1).trim(),
+      ];
     }
   }
   return null;
 };
 
-const getRangeValues = (workbook, activeWorksheet, token, visited = new Set()) => {
+const getRangeValues = (
+  workbook,
+  activeWorksheet,
+  token,
+  visited = new Set(),
+) => {
   const range = parseFormulaRange(token, activeWorksheet);
   if (!range) return null;
 
@@ -497,7 +532,7 @@ const getRangeValues = (workbook, activeWorksheet, token, visited = new Set()) =
   for (let r = minRow; r <= maxRow; r += 1) {
     for (let c = minCol; c <= maxCol; c += 1) {
       values.push(
-        evaluateCellValue(workbook, target, target.getCell(r, c), visited)
+        evaluateCellValue(workbook, target, target.getCell(r, c), visited),
       );
     }
   }
@@ -509,7 +544,12 @@ const evaluateFunction = (workbook, activeWorksheet, name, args, visited) => {
   const fn = String(name).toUpperCase();
 
   if (fn === "IF") {
-    const condition = evaluateFormulaValue(workbook, activeWorksheet, args[0] || "", visited);
+    const condition = evaluateFormulaValue(
+      workbook,
+      activeWorksheet,
+      args[0] || "",
+      visited,
+    );
     const result = condition ? args[1] : args[2];
     return result === undefined
       ? ""
@@ -520,83 +560,118 @@ const evaluateFunction = (workbook, activeWorksheet, name, args, visited) => {
     const values = [];
 
     for (const arg of args) {
-      const rangeValues = getRangeValues(workbook, activeWorksheet, arg, visited);
+      const rangeValues = getRangeValues(
+        workbook,
+        activeWorksheet,
+        arg,
+        visited,
+      );
       if (rangeValues) {
         values.push(...rangeValues);
       } else {
         values.push(
-          evaluateFormulaValue(workbook, activeWorksheet, arg, visited)
+          evaluateFormulaValue(workbook, activeWorksheet, arg, visited),
         );
       }
     }
 
-    if (fn === "COUNTA") return values.filter((v) => !formulaValueIsBlank(v)).length;
-    if (fn === "COUNT") return values.filter((v) => Number.isFinite(Number(v))).length;
+    if (fn === "COUNTA")
+      return values.filter((v) => !formulaValueIsBlank(v)).length;
+    if (fn === "COUNT")
+      return values.filter((v) => Number.isFinite(Number(v))).length;
 
     const numbers = values
       .map(toFormulaNumber)
       .filter((v) => Number.isFinite(v));
 
     if (fn === "SUM") return numbers.reduce((a, b) => a + b, 0);
-    if (fn === "AVERAGE") return numbers.length ? numbers.reduce((a, b) => a + b, 0) / numbers.length : 0;
+    if (fn === "AVERAGE")
+      return numbers.length
+        ? numbers.reduce((a, b) => a + b, 0) / numbers.length
+        : 0;
     if (fn === "MIN") return numbers.length ? Math.min(...numbers) : 0;
     if (fn === "MAX") return numbers.length ? Math.max(...numbers) : 0;
   }
 
   if (fn === "ROUND" || fn === "ROUNDUP" || fn === "ROUNDDOWN") {
     const number = toFormulaNumber(
-      evaluateFormulaValue(workbook, activeWorksheet, args[0] || "0", visited)
+      evaluateFormulaValue(workbook, activeWorksheet, args[0] || "0", visited),
     );
     const digits = Math.trunc(
       toFormulaNumber(
-        evaluateFormulaValue(workbook, activeWorksheet, args[1] || "0", visited)
-      )
+        evaluateFormulaValue(
+          workbook,
+          activeWorksheet,
+          args[1] || "0",
+          visited,
+        ),
+      ),
     );
     const factor = Math.pow(10, digits);
 
     if (fn === "ROUND") return Math.round(number * factor) / factor;
-    if (fn === "ROUNDUP") return Math.sign(number) * Math.ceil(Math.abs(number) * factor) / factor;
-    return Math.sign(number) * Math.floor(Math.abs(number) * factor) / factor;
+    if (fn === "ROUNDUP")
+      return (
+        (Math.sign(number) * Math.ceil(Math.abs(number) * factor)) / factor
+      );
+    return (Math.sign(number) * Math.floor(Math.abs(number) * factor)) / factor;
   }
 
   if (fn === "ABS") {
     return Math.abs(
-      toFormulaNumber(evaluateFormulaValue(workbook, activeWorksheet, args[0] || "0", visited))
+      toFormulaNumber(
+        evaluateFormulaValue(
+          workbook,
+          activeWorksheet,
+          args[0] || "0",
+          visited,
+        ),
+      ),
     );
   }
 
   if (fn === "AND") {
     return args.every((arg) =>
-      Boolean(evaluateFormulaValue(workbook, activeWorksheet, arg, visited))
+      Boolean(evaluateFormulaValue(workbook, activeWorksheet, arg, visited)),
     );
   }
 
   if (fn === "OR") {
     return args.some((arg) =>
-      Boolean(evaluateFormulaValue(workbook, activeWorksheet, arg, visited))
+      Boolean(evaluateFormulaValue(workbook, activeWorksheet, arg, visited)),
     );
   }
 
   if (fn === "NOT") {
     return !Boolean(
-      evaluateFormulaValue(workbook, activeWorksheet, args[0] || "", visited)
+      evaluateFormulaValue(workbook, activeWorksheet, args[0] || "", visited),
     );
   }
 
   if (fn === "SUBTOTAL") {
     const functionNumber = Math.trunc(
       toFormulaNumber(
-        evaluateFormulaValue(workbook, activeWorksheet, args[0] || "9", visited)
-      )
+        evaluateFormulaValue(
+          workbook,
+          activeWorksheet,
+          args[0] || "9",
+          visited,
+        ),
+      ),
     );
     const values = [];
 
     for (const arg of args.slice(1)) {
-      const rangeValues = getRangeValues(workbook, activeWorksheet, arg, visited);
+      const rangeValues = getRangeValues(
+        workbook,
+        activeWorksheet,
+        arg,
+        visited,
+      );
       values.push(
         ...(rangeValues || [
           evaluateFormulaValue(workbook, activeWorksheet, arg, visited),
-        ])
+        ]),
       );
     }
 
@@ -620,28 +695,57 @@ const evaluateFunction = (workbook, activeWorksheet, name, args, visited) => {
     // Supports the common MPR pattern where a criteria/range is used to
     // select rows and a sum range contains the amount.
     if (fn === "SUMIF") {
-      const criteriaValues = getRangeValues(workbook, activeWorksheet, args[0], visited) || [];
-      const criteria = evaluateFormulaValue(workbook, activeWorksheet, args[1] || "", visited);
-      const sumValues = getRangeValues(workbook, activeWorksheet, args[2] || args[0], visited) || [];
+      const criteriaValues =
+        getRangeValues(workbook, activeWorksheet, args[0], visited) || [];
+      const criteria = evaluateFormulaValue(
+        workbook,
+        activeWorksheet,
+        args[1] || "",
+        visited,
+      );
+      const sumValues =
+        getRangeValues(
+          workbook,
+          activeWorksheet,
+          args[2] || args[0],
+          visited,
+        ) || [];
       let total = 0;
       criteriaValues.forEach((value, index) => {
-        if (compareFormulaValues(value, criteria, "=")) total += toFormulaNumber(sumValues[index]);
+        if (compareFormulaValues(value, criteria, "="))
+          total += toFormulaNumber(sumValues[index]);
       });
       return total;
     }
 
-    const sumValues = getRangeValues(workbook, activeWorksheet, args[args.length - 1], visited) || [];
+    const sumValues =
+      getRangeValues(
+        workbook,
+        activeWorksheet,
+        args[args.length - 1],
+        visited,
+      ) || [];
     let total = 0;
     const pairs = Math.floor((args.length - 1) / 2);
     const criteriaRanges = [];
     for (let i = 0; i < pairs; i += 1) {
       criteriaRanges.push({
-        values: getRangeValues(workbook, activeWorksheet, args[i * 2], visited) || [],
-        criteria: evaluateFormulaValue(workbook, activeWorksheet, args[i * 2 + 1], visited),
+        values:
+          getRangeValues(workbook, activeWorksheet, args[i * 2], visited) || [],
+        criteria: evaluateFormulaValue(
+          workbook,
+          activeWorksheet,
+          args[i * 2 + 1],
+          visited,
+        ),
       });
     }
     for (let index = 0; index < sumValues.length; index += 1) {
-      if (criteriaRanges.every((pair) => compareFormulaValues(pair.values[index], pair.criteria, "="))) {
+      if (
+        criteriaRanges.every((pair) =>
+          compareFormulaValues(pair.values[index], pair.criteria, "="),
+        )
+      ) {
         total += toFormulaNumber(sumValues[index]);
       }
     }
@@ -655,16 +759,21 @@ const evaluateFormulaValue = (
   workbook,
   activeWorksheet,
   formula,
-  visited = new Set()
+  visited = new Set(),
 ) => {
-  if (!workbook || !activeWorksheet || typeof formula !== "string") return undefined;
+  if (!workbook || !activeWorksheet || typeof formula !== "string")
+    return undefined;
 
   let expression = normalizeFormulaText(formula);
   if (expression.startsWith("=")) expression = expression.slice(1).trim();
   if (!expression) return "";
 
   // Excel string literal.
-  if (expression.length >= 2 && expression.startsWith('"') && expression.endsWith('"')) {
+  if (
+    expression.length >= 2 &&
+    expression.startsWith('"') &&
+    expression.endsWith('"')
+  ) {
     return expression.slice(1, -1).replace(/""/g, '"');
   }
 
@@ -680,8 +789,18 @@ const evaluateFormulaValue = (
   // Comparisons are evaluated before arithmetic/function output.
   const comparison = splitComparison(expression);
   if (comparison) {
-    const left = evaluateFormulaValue(workbook, activeWorksheet, comparison[0], visited);
-    const right = evaluateFormulaValue(workbook, activeWorksheet, comparison[2], visited);
+    const left = evaluateFormulaValue(
+      workbook,
+      activeWorksheet,
+      comparison[0],
+      visited,
+    );
+    const right = evaluateFormulaValue(
+      workbook,
+      activeWorksheet,
+      comparison[2],
+      visited,
+    );
     return compareFormulaValues(left, right, comparison[1]);
   }
 
@@ -689,7 +808,9 @@ const evaluateFormulaValue = (
   const concatParts = splitFormulaParts(expression, "&");
   if (concatParts.length > 1) {
     return concatParts
-      .map((part) => evaluateFormulaValue(workbook, activeWorksheet, part, visited))
+      .map((part) =>
+        evaluateFormulaValue(workbook, activeWorksheet, part, visited),
+      )
       .map((value) => String(value ?? ""))
       .join("");
   }
@@ -698,7 +819,13 @@ const evaluateFormulaValue = (
   const fnMatch = expression.match(/^([A-Z_][A-Z0-9_.]*)\((.*)\)$/i);
   if (fnMatch) {
     const args = splitFormulaParts(fnMatch[2], ",");
-    return evaluateFunction(workbook, activeWorksheet, fnMatch[1], args, visited);
+    return evaluateFunction(
+      workbook,
+      activeWorksheet,
+      fnMatch[1],
+      args,
+      visited,
+    );
   }
 
   // Parenthesized expression.
@@ -707,7 +834,7 @@ const evaluateFormulaValue = (
       workbook,
       activeWorksheet,
       expression.slice(1, -1),
-      visited
+      visited,
     );
   }
 
@@ -720,7 +847,7 @@ const evaluateFormulaValue = (
       workbook,
       target,
       target.getCell(reference.address),
-      visited
+      visited,
     );
   }
 
@@ -755,7 +882,9 @@ const evaluateFormulaValue = (
         values.push(token);
         continue;
       }
-      values.push(evaluateFormulaValue(workbook, activeWorksheet, token, visited));
+      values.push(
+        evaluateFormulaValue(workbook, activeWorksheet, token, visited),
+      );
     }
 
     // Multiplication/division first.
@@ -763,7 +892,11 @@ const evaluateFormulaValue = (
       if (values[i] === "*" || values[i] === "/") {
         const left = toFormulaNumber(values[i - 1]);
         const right = toFormulaNumber(values[i + 1]);
-        values.splice(i - 1, 3, values[i] === "*" ? left * right : right === 0 ? 0 : left / right);
+        values.splice(
+          i - 1,
+          3,
+          values[i] === "*" ? left * right : right === 0 ? 0 : left / right,
+        );
         i -= 2;
       }
     }
@@ -800,11 +933,12 @@ const evaluateCellValue = (workbook, worksheet, cell, visited = new Set()) => {
       workbook,
       worksheet,
       `=${value.formula}`,
-      nextVisited
+      nextVisited,
     );
 
     if (calculated !== undefined) return calculated;
-    if (value.result !== undefined && value.result !== null) return value.result;
+    if (value.result !== undefined && value.result !== null)
+      return value.result;
     return "";
   }
 
@@ -824,15 +958,25 @@ const setCalculatedCellValue = (cell, result) => {
 const findMprWorksheet = (workbook) =>
   workbook?.getWorksheet("📊 MPR REPORT") ||
   workbook?.worksheets?.find((ws) =>
-    String(ws.name || "").toLowerCase().includes("mpr report")
+    String(ws.name || "")
+      .toLowerCase()
+      .includes("mpr report"),
   ) ||
   null;
 
 const findRowContaining = (worksheet, matcher, startRow = 1) => {
-  for (let rowNumber = startRow; rowNumber <= worksheet.rowCount; rowNumber += 1) {
-    for (let colNumber = 1; colNumber <= worksheet.columnCount; colNumber += 1) {
+  for (
+    let rowNumber = startRow;
+    rowNumber <= worksheet.rowCount;
+    rowNumber += 1
+  ) {
+    for (
+      let colNumber = 1;
+      colNumber <= worksheet.columnCount;
+      colNumber += 1
+    ) {
       const value = normalizeFormulaText(
-        excelValueToText(worksheet.getCell(rowNumber, colNumber).value)
+        excelValueToText(worksheet.getCell(rowNumber, colNumber).value),
       ).toLowerCase();
 
       if (matcher(value)) return rowNumber;
@@ -848,11 +992,14 @@ const refreshMprStructuredTotals = (workbook) => {
 
   const headerRow = findRowContaining(
     worksheet,
-    (value) => value.includes("मद का नाम") || value === "item" || value.includes("item name")
+    (value) =>
+      value.includes("मद का नाम") ||
+      value === "item" ||
+      value.includes("item name"),
   );
   const totalRow = findRowContaining(
     worksheet,
-    (value) => value.includes("ग्रैण्ड योग") || value.includes("grand total")
+    (value) => value.includes("ग्रैण्ड योग") || value.includes("grand total"),
   );
 
   if (!headerRow || !totalRow || totalRow <= headerRow + 1) return;
@@ -869,7 +1016,11 @@ const refreshMprStructuredTotals = (workbook) => {
     let total = 0;
     for (let rowNumber = dataStartRow; rowNumber < totalRow; rowNumber += 1) {
       total += toFormulaNumber(
-        evaluateCellValue(workbook, worksheet, worksheet.getCell(rowNumber, colNumber))
+        evaluateCellValue(
+          workbook,
+          worksheet,
+          worksheet.getCell(rowNumber, colNumber),
+        ),
       );
     }
 
@@ -879,7 +1030,11 @@ const refreshMprStructuredTotals = (workbook) => {
     for (let rowNumber = dataStartRow; rowNumber < totalRow; rowNumber += 1) {
       const sourceCell = worksheet.getCell(rowNumber, colNumber);
       const sourceValue = sourceCell.value;
-      if (sourceValue !== null && sourceValue !== undefined && sourceValue !== "") {
+      if (
+        sourceValue !== null &&
+        sourceValue !== undefined &&
+        sourceValue !== ""
+      ) {
         hasSourceValue = true;
         break;
       }
@@ -893,8 +1048,10 @@ const refreshMprStructuredTotals = (workbook) => {
 
   const summaryTitleRow = findRowContaining(
     worksheet,
-    (value) => value.includes("योजना-वार वित्तीय सारांश") || value.includes("scheme-wise financial summary"),
-    totalRow + 1
+    (value) =>
+      value.includes("योजना-वार वित्तीय सारांश") ||
+      value.includes("scheme-wise financial summary"),
+    totalRow + 1,
   );
   if (!summaryTitleRow) return;
 
@@ -907,12 +1064,12 @@ const refreshMprStructuredTotals = (workbook) => {
 
   for (let colNumber = 4; colNumber <= worksheet.columnCount; colNumber += 1) {
     const groupText = normalizeFormulaText(
-      excelValueToText(worksheet.getCell(groupHeaderRow, colNumber).value)
+      excelValueToText(worksheet.getCell(groupHeaderRow, colNumber).value),
     ).toLowerCase();
     if (groupText) currentGroup = groupText;
 
     const subHeaderText = normalizeFormulaText(
-      excelValueToText(worksheet.getCell(subHeaderRow, colNumber).value)
+      excelValueToText(worksheet.getCell(subHeaderRow, colNumber).value),
     ).toLowerCase();
     if (currentGroup && subHeaderText.includes("वित्तीय")) {
       financialColumns.set(currentGroup, colNumber);
@@ -921,25 +1078,25 @@ const refreshMprStructuredTotals = (workbook) => {
 
   for (let colNumber = 1; colNumber <= worksheet.columnCount; colNumber += 1) {
     const summaryName = normalizeFormulaText(
-      excelValueToText(worksheet.getCell(summaryHeaderRow, colNumber).value)
+      excelValueToText(worksheet.getCell(summaryHeaderRow, colNumber).value),
     ).toLowerCase();
     if (!summaryName) continue;
 
     const matchingGroup = [...financialColumns.keys()].find(
       (group) =>
         summaryName.includes(group) ||
-        group.includes(summaryName.replace(/\(total\)/g, "").trim())
+        group.includes(summaryName.replace(/\(total\)/g, "").trim()),
     );
     const financialColumn = matchingGroup
       ? financialColumns.get(matchingGroup)
       : summaryName.includes("कुल") || summaryName.includes("total")
-      ? worksheet.columnCount
-      : null;
+        ? worksheet.columnCount
+        : null;
 
     if (financialColumn && totalValues[financialColumn] !== null) {
       setCalculatedCellValue(
         worksheet.getCell(summaryValueRow, colNumber),
-        totalValues[financialColumn]
+        totalValues[financialColumn],
       );
     }
   }
@@ -956,7 +1113,11 @@ const recalculateWorkbookFormulas = (workbook) => {
       ws.eachRow((row) => {
         row.eachCell((cell) => {
           const value = cell.value;
-          if (value && typeof value === "object" && value.formula !== undefined) {
+          if (
+            value &&
+            typeof value === "object" &&
+            value.formula !== undefined
+          ) {
             const result = evaluateCellValue(workbook, ws, cell);
             if (result !== undefined) {
               cell.value = {
@@ -988,11 +1149,7 @@ const cellToText = (cell, workbook = null, worksheet = null) => {
   }
 
   if (workbook && worksheet) {
-    const value = evaluateCellValue(
-      workbook,
-      worksheet,
-      cell
-    );
+    const value = evaluateCellValue(workbook, worksheet, cell);
 
     return excelValueToText(value);
   }
@@ -1005,11 +1162,7 @@ const cellToRawValue = (cell) => {
 
   const value = cell.value;
 
-  if (
-    value &&
-    typeof value === "object" &&
-    value.formula !== undefined
-  ) {
+  if (value && typeof value === "object" && value.formula !== undefined) {
     return `=${value.formula}`;
   }
 
@@ -1032,36 +1185,33 @@ const getCellStyle = (cell, isSelected = false) => {
     fontWeight: font.bold ? 700 : 400,
     fontStyle: font.italic ? "italic" : "normal",
     textDecoration:
-      [
-        font.underline ? "underline" : "",
-        font.strike ? "line-through" : "",
-      ]
+      [font.underline ? "underline" : "", font.strike ? "line-through" : ""]
         .filter(Boolean)
         .join(" ") || "none",
     textAlign:
       alignment.horizontal === "center"
         ? "center"
         : alignment.horizontal === "right"
-        ? "right"
-        : "left",
+          ? "right"
+          : "left",
     verticalAlign:
       alignment.vertical === "top"
         ? "top"
         : alignment.vertical === "bottom"
-        ? "bottom"
-        : "middle",
+          ? "bottom"
+          : "middle",
     whiteSpace: "pre-wrap",
     borderTop: `${getBorderStyle(cell.border?.top)} ${getBorderColor(
-      cell.border?.top
+      cell.border?.top,
     )}`,
     borderRight: `${getBorderStyle(cell.border?.right)} ${getBorderColor(
-      cell.border?.right
+      cell.border?.right,
     )}`,
     borderBottom: `${getBorderStyle(
-      cell.border?.bottom
+      cell.border?.bottom,
     )} ${getBorderColor(cell.border?.bottom)}`,
     borderLeft: `${getBorderStyle(cell.border?.left)} ${getBorderColor(
-      cell.border?.left
+      cell.border?.left,
     )}`,
     padding: "3px 5px",
     outline: isSelected ? "2px solid #217346" : "none",
@@ -1117,15 +1267,10 @@ const createMergeMap = (worksheet) => {
     if (!merge) return;
 
     for (let row = merge.startRow; row <= merge.endRow; row += 1) {
-      for (
-        let col = merge.startCol;
-        col <= merge.endCol;
-        col += 1
-      ) {
+      for (let col = merge.startCol; col <= merge.endCol; col += 1) {
         map.set(`${row}:${col}`, {
           ...merge,
-          isMaster:
-            row === merge.startRow && col === merge.startCol,
+          isMaster: row === merge.startRow && col === merge.startCol,
           rowSpan: merge.endRow - merge.startRow + 1,
           colSpan: merge.endCol - merge.startCol + 1,
         });
@@ -1197,9 +1342,7 @@ const getMediaUrl = (path) => {
   }
 
   // Relative media path
-  return `${MEDIA_BASE_URL}${
-    path.startsWith("/") ? "" : "/"
-  }${path}`;
+  return `${MEDIA_BASE_URL}${path.startsWith("/") ? "" : "/"}${path}`;
 };
 
 const normalizeApiReport = (item) => ({
@@ -1207,7 +1350,10 @@ const normalizeApiReport = (item) => ({
   month: String(item.month ?? ""),
   financialYear: item.financial_year ?? "",
   monthReport: item.month_report ?? "",
-  fileName: String(item.month_report || "").split("/").pop() || "MPR.xlsx",
+  fileName:
+    String(item.month_report || "")
+      .split("/")
+      .pop() || "MPR.xlsx",
   fileSize: Number(item.file_size || item.size || 0),
   createdAt: item.created_at || "",
   updatedAt: item.updated_at || item.created_at || "",
@@ -1219,10 +1365,10 @@ const getReportsFromResponse = (data) => {
   const list = Array.isArray(data)
     ? data
     : Array.isArray(data?.results)
-    ? data.results
-    : data
-    ? [data]
-    : [];
+      ? data.results
+      : data
+        ? [data]
+        : [];
 
   return list.map(normalizeApiReport);
 };
@@ -1241,7 +1387,7 @@ const fetchReportFile = async (report) => {
       GET /api/month-reports/{id}/file/
 
     Example:
-      https://mahadevaaya.com/govbillingsystem/backend/api/month-reports/8/file/
+      https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-reports/8/file/
   */
   const fileUrl = `${API_URL}${report.id}/`;
 
@@ -1260,11 +1406,7 @@ const fetchReportFile = async (report) => {
 
     try {
       const data = await response.json();
-      message =
-        data?.error ||
-        data?.detail ||
-        data?.message ||
-        message;
+      message = data?.error || data?.detail || data?.message || message;
     } catch {
       // Server did not return JSON.
     }
@@ -1276,12 +1418,11 @@ const fetchReportFile = async (report) => {
 
   if (!blob || blob.size === 0) {
     throw new Error(
-      "The Django file API returned an empty Excel file (0 KB). Check the actual file on the server."
+      "The Django file API returned an empty Excel file (0 KB). Check the actual file on the server.",
     );
   }
 
-  const contentType =
-    response.headers.get("content-type") || "";
+  const contentType = response.headers.get("content-type") || "";
 
   if (
     contentType.includes("text/html") ||
@@ -1290,20 +1431,14 @@ const fetchReportFile = async (report) => {
     const text = await blob.text();
 
     throw new Error(
-      text ||
-        "The Django file API did not return an Excel workbook."
+      text || "The Django file API did not return an Excel workbook.",
     );
   }
 
-  return new File(
-    [blob],
-    report.fileName || "MPR.xlsx",
-    {
-      type:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      lastModified: Date.now(),
-    }
-  );
+  return new File([blob], report.fileName || "MPR.xlsx", {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    lastModified: Date.now(),
+  });
 };
 
 const uploadReport = async ({ month, financialYear, file }) => {
@@ -1329,10 +1464,10 @@ const updateReportFile = async ({ id, month, financialYear, file }) => {
 
   /*
     PUT endpoint:
-    https://mahadevaaya.com/govbillingsystem/backend/api/month-reports/{id}/
+    https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-reports/{id}/
 
     Example for report ID 8:
-    https://mahadevaaya.com/govbillingsystem/backend/api/month-reports/8/
+    https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-reports/8/
 
     Do not manually set Content-Type. The browser creates the
     multipart/form-data boundary automatically.
@@ -1341,11 +1476,7 @@ const updateReportFile = async ({ id, month, financialYear, file }) => {
 
   formData.append("month", String(month ?? ""));
   formData.append("financial_year", String(financialYear ?? ""));
-  formData.append(
-    "month_report",
-    file,
-    file.name || "MPR.xlsx"
-  );
+  formData.append("month_report", file, file.name || "MPR.xlsx");
 
   return apiFetch(`${API_URL}${id}/`, {
     method: "PUT",
@@ -1366,7 +1497,7 @@ const workbookFromFile = async (file) => {
 
   if (!file.size) {
     throw new Error(
-      "The Excel file is empty (0 bytes). Check the file stored on the Django server."
+      "The Excel file is empty (0 bytes). Check the file stored on the Django server.",
     );
   }
 
@@ -1379,7 +1510,7 @@ const workbookFromFile = async (file) => {
     console.error("ExcelJS workbook load error:", error);
 
     throw new Error(
-      "The server returned a file, but it is not a valid .xlsx workbook."
+      "The server returned a file, but it is not a valid .xlsx workbook.",
     );
   }
 
@@ -1430,11 +1561,15 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
     return (
       book.getWorksheet("📝 DATA ENTRY") ||
       book.worksheets.find((ws) =>
-        String(ws.name || "").toLowerCase().includes("data entry")
+        String(ws.name || "")
+          .toLowerCase()
+          .includes("data entry"),
       ) ||
       book.getWorksheet("📊 MPR REPORT") ||
       book.worksheets.find((ws) =>
-        String(ws.name || "").toLowerCase().includes("mpr report")
+        String(ws.name || "")
+          .toLowerCase()
+          .includes("mpr report"),
       ) ||
       book.worksheets[0] ||
       null
@@ -1489,7 +1624,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
         const initialWorksheet = getInitialWorksheet(book);
 
         if (!initialWorksheet) {
-          throw new Error("The selected Excel file does not contain any worksheet.");
+          throw new Error(
+            "The selected Excel file does not contain any worksheet.",
+          );
         }
 
         if (!cancelled) {
@@ -1520,7 +1657,7 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
   const colCount = Math.max(worksheet?.columnCount || 1, 1);
   const mergeMap = useMemo(
     () => (worksheet ? createMergeMap(worksheet) : new Map()),
-    [worksheet]
+    [worksheet],
   );
 
   const selectCell = (row, col) => {
@@ -1566,9 +1703,7 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
       cell.value = null;
     } else if (trimmed.startsWith("=")) {
       cell.value = { formula: trimmed.slice(1) };
-    } else if (
-      /^-?(?:\d+(?:\.\d*)?|\.\d+)$/.test(trimmed.replace(/,/g, ""))
-    ) {
+    } else if (/^-?(?:\d+(?:\.\d*)?|\.\d+)$/.test(trimmed.replace(/,/g, ""))) {
       cell.value = Number(trimmed.replace(/,/g, ""));
     } else {
       cell.value = nextValue;
@@ -1595,7 +1730,7 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
 
     setDirty(true);
     setStatus(
-      `${columnLetter(col)}${row} updated — all dependent formulas recalculated`
+      `${columnLetter(col)}${row} updated — all dependent formulas recalculated`,
     );
   };
 
@@ -1672,7 +1807,7 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
         new Blob([buffer], {
           type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         }),
-        report.fileName
+        report.fileName,
       );
     } catch (err) {
       setError("Unable to download the Excel file.");
@@ -1687,7 +1822,11 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
             <div className="excel-logo">X</div>
             <div className="excel-document-name">
               <strong>{report.fileName}</strong>
-              <span>{dirty ? "Unsaved changes" : `Excel workbook — ${activeSheetName || "Ready"}`}</span>
+              <span>
+                {dirty
+                  ? "Unsaved changes"
+                  : `Excel workbook — ${activeSheetName || "Ready"}`}
+              </span>
             </div>
           </div>
 
@@ -1712,7 +1851,13 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
               type="button"
               className="excel-close-button"
               onClick={() => {
-                if (dirty && !window.confirm("You have unsaved changes. Close without saving?")) return;
+                if (
+                  dirty &&
+                  !window.confirm(
+                    "You have unsaved changes. Close without saving?",
+                  )
+                )
+                  return;
                 onClose();
               }}
             >
@@ -1723,13 +1868,17 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
 
         <div className="excel-ribbon">
           <div className="excel-ribbon-group">
-            <button type="button" onClick={() => formulaRef.current?.focus()}>fx</button>
+            <button type="button" onClick={() => formulaRef.current?.focus()}>
+              fx
+            </button>
             <span className="excel-ribbon-label">Formula</span>
           </div>
           <div className="excel-ribbon-divider" />
           <div className="excel-ribbon-info">
             <span>
-              {selectedCell ? `${columnLetter(selectedCell.col)}${selectedCell.row}` : "Select a cell"}
+              {selectedCell
+                ? `${columnLetter(selectedCell.col)}${selectedCell.row}`
+                : "Select a cell"}
             </span>
             <span>📄 {activeSheetName || worksheet?.name || "Sheet"}</span>
           </div>
@@ -1738,7 +1887,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
 
         <div className="excel-formula-row">
           <div className="excel-name-box">
-            {selectedCell ? `${columnLetter(selectedCell.col)}${selectedCell.row}` : ""}
+            {selectedCell
+              ? `${columnLetter(selectedCell.col)}${selectedCell.row}`
+              : ""}
           </div>
           <div className="excel-formula-label">fx</div>
           <input
@@ -1759,7 +1910,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
         {error && (
           <div className="excel-editor-error">
             <span>{error}</span>
-            <button type="button" onClick={() => setError("")}>×</button>
+            <button type="button" onClick={() => setError("")}>
+              ×
+            </button>
           </div>
         )}
 
@@ -1767,7 +1920,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
           <div className="excel-editor-loading">
             <div className="excel-spinner" />
             <h3>Opening Excel Workbook...</h3>
-            <p>Loading DATA ENTRY, formulas, MPR REPORT and dashboard sheets.</p>
+            <p>
+              Loading DATA ENTRY, formulas, MPR REPORT and dashboard sheets.
+            </p>
           </div>
         ) : (
           <div className="excel-workspace">
@@ -1794,7 +1949,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                         <th
                           key={i + 1}
                           className="excel-column-header"
-                          style={{ display: column.hidden ? "none" : "table-cell" }}
+                          style={{
+                            display: column.hidden ? "none" : "table-cell",
+                          }}
                         >
                           {columnLetter(i + 1)}
                         </th>
@@ -1821,7 +1978,9 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                         {Array.from({ length: colCount }, (_, c) => {
                           const colNumber = c + 1;
                           const cell = worksheet.getCell(rowNumber, colNumber);
-                          const merge = mergeMap.get(`${rowNumber}:${colNumber}`);
+                          const merge = mergeMap.get(
+                            `${rowNumber}:${colNumber}`,
+                          );
 
                           if (merge && !merge.isMaster) return null;
 
@@ -1835,9 +1994,18 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                               rowSpan={merge?.rowSpan || 1}
                               colSpan={merge?.colSpan || 1}
                               style={getCellStyle(cell, selected)}
-                              className={selected ? "excel-edit-cell selected" : "excel-edit-cell"}
+                              className={
+                                selected
+                                  ? "excel-edit-cell selected"
+                                  : "excel-edit-cell"
+                              }
                               onClick={() => selectCell(rowNumber, colNumber)}
-                              contentEditable={!(typeof cell.value === "object" && cell.value?.formula !== undefined)}
+                              contentEditable={
+                                !(
+                                  typeof cell.value === "object" &&
+                                  cell.value?.formula !== undefined
+                                )
+                              }
                               suppressContentEditableWarning
                               spellCheck={false}
                               onFocus={() => selectCell(rowNumber, colNumber)}
@@ -1851,7 +2019,7 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                                   commitValue(
                                     rowNumber,
                                     colNumber,
-                                    event.currentTarget.textContent || ""
+                                    event.currentTarget.textContent || "",
                                   );
                                 }
                               }}
@@ -1859,12 +2027,18 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                                 if (event.key === "Enter") {
                                   event.preventDefault();
                                   event.currentTarget.blur();
-                                  setTimeout(() => selectCell(rowNumber + 1, colNumber), 0);
+                                  setTimeout(
+                                    () => selectCell(rowNumber + 1, colNumber),
+                                    0,
+                                  );
                                 }
                                 if (event.key === "Tab") {
                                   event.preventDefault();
                                   event.currentTarget.blur();
-                                  setTimeout(() => selectCell(rowNumber, colNumber + 1), 0);
+                                  setTimeout(
+                                    () => selectCell(rowNumber, colNumber + 1),
+                                    0,
+                                  );
                                 }
                               }}
                             >
@@ -1897,10 +2071,10 @@ const ExcelEditor = ({ report, onClose, onSaved }) => {
                       {String(sheet.name).includes("DATA ENTRY")
                         ? "📝 DATA ENTRY"
                         : String(sheet.name).includes("MPR REPORT")
-                        ? "📊 MPR REPORT"
-                        : String(sheet.name).includes("DASHBOARD")
-                        ? "📈 DASHBOARD"
-                        : sheet.name}
+                          ? "📊 MPR REPORT"
+                          : String(sheet.name).includes("DASHBOARD")
+                            ? "📈 DASHBOARD"
+                            : sheet.name}
                     </button>
                   );
                 })}
@@ -1935,7 +2109,9 @@ const DashboardTab = ({
       }
       return (
         book.worksheets.find((ws) =>
-          String(ws.name || "").toLowerCase().includes(containsText)
+          String(ws.name || "")
+            .toLowerCase()
+            .includes(containsText),
         ) || null
       );
     };
@@ -2011,7 +2187,7 @@ const DashboardTab = ({
             value.includes("मद का नाम") ||
             value === "item" ||
             value.includes("item name") ||
-            value.includes("activity")
+            value.includes("activity"),
         );
 
         if (hasItemHeader) {
@@ -2136,7 +2312,9 @@ const DashboardTab = ({
         if (!name) continue;
 
         const allocated = safeNumber(sheet.getCell(row, allocatedCol).value);
-        const expenditure = safeNumber(sheet.getCell(row, expenditureCol).value);
+        const expenditure = safeNumber(
+          sheet.getCell(row, expenditureCol).value,
+        );
         const remaining = safeNumber(sheet.getCell(row, remainingCol).value);
 
         if (isTotalName(name)) {
@@ -2165,13 +2343,13 @@ const DashboardTab = ({
       const mprSheet = findSheet(
         book,
         ["📊 MPR REPORT", "MPR REPORT"],
-        "mpr report"
+        "mpr report",
       );
 
       const dataSheet = findSheet(
         book,
         ["📝 DATA ENTRY", "DATA ENTRY"],
-        "data entry"
+        "data entry",
       );
 
       const sheet = mprSheet || dataSheet;
@@ -2219,7 +2397,11 @@ const DashboardTab = ({
         const beneficiaryCol = hasBeneficiaries
           ? (() => {
               for (let col = 1; col <= sheet.columnCount; col += 1) {
-                for (let row = 1; row <= Math.min(sheet.rowCount, 15); row += 1) {
+                for (
+                  let row = 1;
+                  row <= Math.min(sheet.rowCount, 15);
+                  row += 1
+                ) {
                   const cellText = normalized(sheet.getCell(row, col).value);
                   if (
                     cellText.includes("लाभार्थी") ||
@@ -2247,11 +2429,7 @@ const DashboardTab = ({
           });
         }
 
-        for (
-          let row = header.dataStartRow;
-          row <= sheet.rowCount;
-          row += 1
-        ) {
+        for (let row = header.dataStartRow; row <= sheet.rowCount; row += 1) {
           const serialText = normalized(sheet.getCell(row, serialColumn).value);
           const itemText = normalized(sheet.getCell(row, itemColumn).value);
 
@@ -2267,7 +2445,7 @@ const DashboardTab = ({
           const itemName = text(sheet.getCell(row, itemColumn).value);
           const hasRowData = Array.from(
             { length: sheet.columnCount },
-            (_, index) => text(sheet.getCell(row, index + 1).value)
+            (_, index) => text(sheet.getCell(row, index + 1).value),
           ).some(Boolean);
 
           if (!hasRowData || !itemName) continue;
@@ -2278,20 +2456,20 @@ const DashboardTab = ({
 
             if (entry) {
               entry.value += safeNumber(
-                sheet.getCell(row, group.financialCol).value
+                sheet.getCell(row, group.financialCol).value,
               );
             }
           }
 
           if (totalsGroup) {
             total += safeNumber(
-              sheet.getCell(row, totalsGroup.financialCol).value
+              sheet.getCell(row, totalsGroup.financialCol).value,
             );
           }
 
           if (beneficiaryCol) {
             beneficiaries += safeNumber(
-              sheet.getCell(row, beneficiaryCol).value
+              sheet.getCell(row, beneficiaryCol).value,
             );
           }
         }
@@ -2301,13 +2479,15 @@ const DashboardTab = ({
         if (!totalFound) {
           total = [...schemeMap.values()].reduce(
             (sum, item) => sum + item.value,
-            0
+            0,
           );
         }
 
         schemes.push(
           ...[...schemeMap.values()].map((item) => {
-            const summaryItem = financialSummary.items.get(normalized(item.name));
+            const summaryItem = financialSummary.items.get(
+              normalized(item.name),
+            );
 
             return {
               ...item,
@@ -2315,7 +2495,7 @@ const DashboardTab = ({
               remaining: summaryItem?.remaining ?? 0,
               sourceFile: sourceReport?.fileName || "",
             };
-          })
+          }),
         );
       }
 
@@ -2341,7 +2521,7 @@ const DashboardTab = ({
         if (aggregateAll) {
           if (!reports.length) {
             throw new Error(
-              "No MPR Excel reports are available for the overall dashboard."
+              "No MPR Excel reports are available for the overall dashboard.",
             );
           }
 
@@ -2350,7 +2530,7 @@ const DashboardTab = ({
               const file = await fetchReportFile(item);
               const book = await workbookFromFile(file);
               return parseWorkbook(book, item);
-            })
+            }),
           );
 
           parsedReports = results;
@@ -2422,7 +2602,7 @@ const DashboardTab = ({
         if (!cancelled) {
           setError(
             err?.message ||
-              "Unable to create dashboard from the selected Excel report(s)."
+              "Unable to create dashboard from the selected Excel report(s).",
           );
           setDashboard(null);
         }
@@ -2509,14 +2689,14 @@ const DashboardTab = ({
   const chartSchemes = dashboard.schemes.filter((item) => item.value > 0);
   const maxSchemeValue = Math.max(
     ...chartSchemes.map((item) => Number(item.value || 0)),
-    1
+    1,
   );
 
   // SVG pie chart geometry. No chart package is required, so existing dependencies
   // and the rest of the application remain untouched.
   const pieTotal = chartSchemes.reduce(
     (sum, item) => sum + Number(item.value || 0),
-    0
+    0,
   );
 
   const pieColors = [
@@ -2626,7 +2806,6 @@ const DashboardTab = ({
           </div>
 
           {/* Professional chart row: exactly 6/6 on desktop. */}
-       
 
           <div className="mpr-dashboard-table-card">
             <div className="mpr-dashboard-table-title">
@@ -2696,7 +2875,7 @@ const DashboardTab = ({
               </table>
             </div>
           </div>
-             <div className="mpr-dashboard-chart-grid">
+          <div className="mpr-dashboard-chart-grid">
             <section className="mpr-dashboard-chart-card">
               <div className="mpr-dashboard-chart-header">
                 <div>
@@ -2716,12 +2895,7 @@ const DashboardTab = ({
                     role="img"
                     aria-label="Scheme-wise financial distribution pie chart"
                   >
-                    <circle
-                      cx="110"
-                      cy="110"
-                      r="84"
-                      fill="#f8fafc"
-                    />
+                    <circle cx="110" cy="110" r="84" fill="#f8fafc" />
 
                     {pieSlices.map((slice, index) => (
                       <path
@@ -2731,7 +2905,7 @@ const DashboardTab = ({
                           110,
                           84,
                           slice.startAngle,
-                          slice.endAngle
+                          slice.endAngle,
                         )}
                         fill={slice.color}
                         stroke="#ffffff"
@@ -2739,12 +2913,7 @@ const DashboardTab = ({
                       />
                     ))}
 
-                    <circle
-                      cx="110"
-                      cy="110"
-                      r="53"
-                      fill="#ffffff"
-                    />
+                    <circle cx="110" cy="110" r="53" fill="#ffffff" />
 
                     <text
                       x="110"
@@ -2761,7 +2930,7 @@ const DashboardTab = ({
                       textAnchor="middle"
                       className="mpr-dashboard-pie-label"
                     >
-                      ₹ 
+                      ₹
                     </text>
                   </svg>
                 </div>
@@ -2779,9 +2948,7 @@ const DashboardTab = ({
                       <span className="mpr-dashboard-legend-name">
                         {slice.name}
                       </span>
-                      <strong>
-                        {(slice.share * 100).toFixed(1)}%
-                      </strong>
+                      <strong>{(slice.share * 100).toFixed(1)}%</strong>
                     </div>
                   ))}
                 </div>
@@ -2802,7 +2969,7 @@ const DashboardTab = ({
                   const value = Number(scheme.value || 0);
                   const width = Math.max(
                     value > 0 ? (value / maxSchemeValue) * 100 : 0,
-                    value > 0 ? 3 : 0
+                    value > 0 ? 3 : 0,
                   );
 
                   return (
@@ -2810,7 +2977,10 @@ const DashboardTab = ({
                       className="mpr-dashboard-bar-row"
                       key={`${scheme.name}-bar-${index}`}
                     >
-                      <div className="mpr-dashboard-bar-label" title={scheme.name}>
+                      <div
+                        className="mpr-dashboard-bar-label"
+                        title={scheme.name}
+                      >
                         {scheme.name}
                       </div>
 
@@ -2910,7 +3080,7 @@ const MonthReport = () => {
           setSelectedWorkbook(null);
           setError(
             err?.message ||
-              "Unable to read the selected Excel file for Dashboard."
+              "Unable to read the selected Excel file for Dashboard.",
           );
         }
       } finally {
@@ -2929,14 +3099,16 @@ const MonthReport = () => {
       reports.filter(
         (item) =>
           (!monthFilter || String(item.month) === String(monthFilter)) &&
-          (!yearFilter || String(item.financialYear) === String(yearFilter))
+          (!yearFilter || String(item.financialYear) === String(yearFilter)),
       ),
-    [reports, monthFilter, yearFilter]
+    [reports, monthFilter, yearFilter],
   );
 
   const uniqueYears = useMemo(
-    () => [...new Set(reports.map((item) => item.financialYear).filter(Boolean))],
-    [reports]
+    () => [
+      ...new Set(reports.map((item) => item.financialYear).filter(Boolean)),
+    ],
+    [reports],
   );
 
   // The MPR Report tab must show ALL uploaded reports in exactly the same
@@ -3068,7 +3240,9 @@ const MonthReport = () => {
       resetForm();
     } catch (err) {
       console.error("Upload MPR error:", err);
-      setError(err?.message || "The selected Excel file could not be uploaded.");
+      setError(
+        err?.message || "The selected Excel file could not be uploaded.",
+      );
     } finally {
       setLoading(false);
     }
@@ -3090,11 +3264,13 @@ const MonthReport = () => {
   const handleEditorSaved = async (updatedReport) => {
     setReports((previous) =>
       previous.map((item) =>
-        item.id === updatedReport.id ? updatedReport : item
-      )
+        item.id === updatedReport.id ? updatedReport : item,
+      ),
     );
     setSelectedReport(updatedReport);
-    setSuccess(`${updatedReport.fileName} was replaced with the edited Excel file.`);
+    setSuccess(
+      `${updatedReport.fileName} was replaced with the edited Excel file.`,
+    );
 
     try {
       const file = updatedReport.file || (await fetchReportFile(updatedReport));
@@ -3106,7 +3282,10 @@ const MonthReport = () => {
   };
 
   const deleteReport = async (id) => {
-    if (!window.confirm("क्या आप इस MPR Excel report को delete करना चाहते हैं?")) return;
+    if (
+      !window.confirm("क्या आप इस MPR Excel report को delete करना चाहते हैं?")
+    )
+      return;
 
     try {
       setError("");
@@ -3233,14 +3412,18 @@ const MonthReport = () => {
         {success && (
           <div className="mpr-alert mpr-success">
             {success}
-            <button type="button" onClick={() => setSuccess("")}>×</button>
+            <button type="button" onClick={() => setSuccess("")}>
+              ×
+            </button>
           </div>
         )}
 
         {error && !showModal && !showEditor && (
           <div className="mpr-alert mpr-error">
             {error}
-            <button type="button" onClick={() => setError("")}>×</button>
+            <button type="button" onClick={() => setError("")}>
+              ×
+            </button>
           </div>
         )}
 
@@ -3249,14 +3432,20 @@ const MonthReport = () => {
             <div className="mpr-main-tabs">
               <button
                 type="button"
-                className={activeTab === "dashboard" ? "mpr-main-tab active" : "mpr-main-tab"}
+                className={
+                  activeTab === "dashboard"
+                    ? "mpr-main-tab active"
+                    : "mpr-main-tab"
+                }
                 onClick={() => setActiveTab("dashboard")}
               >
                 📈 Dashboard
               </button>
               <button
                 type="button"
-                className={activeTab === "mpr" ? "mpr-main-tab active" : "mpr-main-tab"}
+                className={
+                  activeTab === "mpr" ? "mpr-main-tab active" : "mpr-main-tab"
+                }
                 onClick={() => setActiveTab("mpr")}
               >
                 📊 MPR Report
@@ -3264,17 +3453,27 @@ const MonthReport = () => {
             </div>
 
             <div className="mpr-file-filters">
-              <select value={monthFilter} onChange={(e) => setMonthFilter(e.target.value)}>
+              <select
+                value={monthFilter}
+                onChange={(e) => setMonthFilter(e.target.value)}
+              >
                 <option value="">Select Month</option>
                 {months.map((item) => (
-                  <option key={item.value} value={item.value}>{item.label}</option>
+                  <option key={item.value} value={item.value}>
+                    {item.label}
+                  </option>
                 ))}
               </select>
 
-              <select value={yearFilter} onChange={(e) => setYearFilter(e.target.value)}>
+              <select
+                value={yearFilter}
+                onChange={(e) => setYearFilter(e.target.value)}
+              >
                 <option value="">Select Financial Year</option>
                 {uniqueYears.map((year) => (
-                  <option key={year} value={year}>{year}</option>
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
                 ))}
               </select>
 
@@ -3286,7 +3485,8 @@ const MonthReport = () => {
                 <option value="">Select MPR Excel File</option>
                 {filteredReports.map((item) => (
                   <option key={item.id} value={item.id}>
-                    {getMonthName(item.month)} — {item.financialYear} — {item.fileName}
+                    {getMonthName(item.month)} — {item.financialYear} —{" "}
+                    {item.fileName}
                   </option>
                 ))}
               </select>
@@ -3316,7 +3516,9 @@ const MonthReport = () => {
                 <div className="mpr-empty">
                   <div className="mpr-empty-icon">📈</div>
                   <h4>No MPR Report Found</h4>
-                  <p>No Excel report matches the selected Month / Financial Year.</p>
+                  <p>
+                    No Excel report matches the selected Month / Financial Year.
+                  </p>
                 </div>
               ) : (
                 <DashboardTab
@@ -3339,7 +3541,11 @@ const MonthReport = () => {
                   <div className="mpr-empty-icon">📊</div>
                   <h4>No MPR Reports Uploaded</h4>
                   <p>Upload an .xlsx workbook to create the MPR report.</p>
-                  <button type="button" className="mpr-empty-btn" onClick={openAdd}>
+                  <button
+                    type="button"
+                    className="mpr-empty-btn"
+                    onClick={openAdd}
+                  >
                     + Upload Excel Report
                   </button>
                 </div>
@@ -3359,7 +3565,11 @@ const MonthReport = () => {
                     {filteredReports.map((item, index) => (
                       <tr key={item.id}>
                         <td>{index + 1}</td>
-                        <td><span className="mpr-month-badge">{getMonthName(item.month)}</span></td>
+                        <td>
+                          <span className="mpr-month-badge">
+                            {getMonthName(item.month)}
+                          </span>
+                        </td>
                         <td>{item.financialYear}</td>
                         <td>
                           <div className="mpr-file-cell">
@@ -3370,13 +3580,25 @@ const MonthReport = () => {
                             </div>
                           </div>
                         </td>
-                        <td>{new Date(item.updatedAt || item.createdAt).toLocaleString("en-IN")}</td>
+                        <td>
+                          {new Date(
+                            item.updatedAt || item.createdAt,
+                          ).toLocaleString("en-IN")}
+                        </td>
                         <td>
                           <div className="mpr-actions">
-                            <button type="button" className="mpr-view-btn" onClick={() => openReport(item)}>
+                            <button
+                              type="button"
+                              className="mpr-view-btn"
+                              onClick={() => openReport(item)}
+                            >
                               👁 View / Edit
                             </button>
-                            <button type="button" className="mpr-delete-btn" onClick={() => deleteReport(item.id)}>
+                            <button
+                              type="button"
+                              className="mpr-delete-btn"
+                              onClick={() => deleteReport(item.id)}
+                            >
                               Delete
                             </button>
                           </div>
@@ -3399,39 +3621,82 @@ const MonthReport = () => {
                 <h3>Add MPR Report</h3>
                 <p>Select the month, financial year and Excel file.</p>
               </div>
-              <button type="button" className="mpr-close-btn" onClick={closeModal}>×</button>
+              <button
+                type="button"
+                className="mpr-close-btn"
+                onClick={closeModal}
+              >
+                ×
+              </button>
             </div>
 
             <form onSubmit={saveNewReport}>
               <div className="mpr-modal-body">
                 <div className="mpr-form-group">
-                  <label>Month <span>*</span></label>
-                  <select value={month} onChange={(e) => setMonth(e.target.value)}>
+                  <label>
+                    Month <span>*</span>
+                  </label>
+                  <select
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                  >
                     <option value="">Select Month</option>
-                    {months.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
+                    {months.map((item) => (
+                      <option key={item.value} value={item.value}>
+                        {item.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="mpr-form-group">
-                  <label>Financial Year <span>*</span></label>
-                  <select value={financialYear} onChange={(e) => setFinancialYear(e.target.value)}>
+                  <label>
+                    Financial Year <span>*</span>
+                  </label>
+                  <select
+                    value={financialYear}
+                    onChange={(e) => setFinancialYear(e.target.value)}
+                  >
                     <option value="">Select Financial Year</option>
-                    {financialYears.map((year) => <option key={year} value={year}>{year}</option>)}
+                    {financialYears.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="mpr-form-group">
-                  <label>Excel File <span>*</span></label>
-                  <input ref={fileInputRef} type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={handleFileChange} />
-                  {selectedFile && <small>{selectedFile.name} · {formatSize(selectedFile.size)}</small>}
+                  <label>
+                    Excel File <span>*</span>
+                  </label>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    onChange={handleFileChange}
+                  />
+                  {selectedFile && (
+                    <small>
+                      {selectedFile.name} · {formatSize(selectedFile.size)}
+                    </small>
+                  )}
                 </div>
 
                 {error && <div className="mpr-modal-error">{error}</div>}
               </div>
 
               <div className="mpr-modal-footer">
-                <button type="button" className="mpr-cancel-btn" onClick={closeModal}>Cancel</button>
-                <button type="submit" className="mpr-submit-btn">Upload & Save</button>
+                <button
+                  type="button"
+                  className="mpr-cancel-btn"
+                  onClick={closeModal}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="mpr-submit-btn">
+                  Upload & Save
+                </button>
               </div>
             </form>
           </div>

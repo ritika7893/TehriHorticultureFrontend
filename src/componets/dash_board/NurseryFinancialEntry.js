@@ -37,7 +37,7 @@ import {
 
 // API URL
 const NURSERY_FINANCIAL_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/nursery-financial/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/nursery-financial/";
 
 // Utility function to round numbers to 2 decimal places
 const roundTo2Decimals = (value) => {

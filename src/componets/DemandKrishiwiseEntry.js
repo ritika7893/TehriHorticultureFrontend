@@ -8,7 +8,7 @@ import {
   Button,
   Form,
   Row,
-  Col
+  Col,
 } from "react-bootstrap";
 import axios from "axios";
 import DemandNavigation from "./DemandNavigation";
@@ -21,7 +21,7 @@ import { convertToDisplayFormat } from "../utils/dateUtils";
 
 // API URL
 const BENEFICIARIES_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/beneficiaries-registration/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
 
 // Available columns for table (excluding sno which is always shown)
 const beneficiariesTableColumns = [
@@ -94,9 +94,9 @@ const getFinancialYearDates = () => {
   const today = new Date();
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
-  
+
   let fromDate, toDate;
-  
+
   // If current month is April (3) or later, FY is current year April to next year March
   // If current month is before April (Jan-Mar), FY is previous year April to current year March
   if (currentMonth >= 3) {
@@ -106,16 +106,16 @@ const getFinancialYearDates = () => {
     fromDate = new Date(currentYear - 1, 3, 1); // April 1 of previous year
     toDate = new Date(currentYear, 2, 31); // March 31 of current year
   }
-  
+
   return {
-    fromDate: fromDate.toISOString().split('T')[0],
-    toDate: toDate.toISOString().split('T')[0],
+    fromDate: fromDate.toISOString().split("T")[0],
+    toDate: toDate.toISOString().split("T")[0],
   };
 };
 
 const DemandKrishiwiseEntry = () => {
   const { centerData } = useCenter();
-  
+
   // Reusable Column Selection Component
   const ColumnSelection = ({
     columns,
@@ -183,9 +183,9 @@ const DemandKrishiwiseEntry = () => {
   };
 
   const [selectedColumns, setSelectedColumns] = useState(
-    beneficiariesTableColumns.map((col) => col.key)
+    beneficiariesTableColumns.map((col) => col.key),
   );
-  
+
   const [beneficiaries, setBeneficiaries] = useState([]);
   const [filteredBeneficiaries, setFilteredBeneficiaries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -195,11 +195,11 @@ const DemandKrishiwiseEntry = () => {
     vidhan_sabha_name: "",
     vikas_khand_name: "",
   });
-  
+
   // State for filters
   const [dateRange, setDateRange] = useState({
     fromDate: "",
-    toDate: ""
+    toDate: "",
   });
   const [selectedSchemes, setSelectedSchemes] = useState([]);
   const [selectedSuppliedItems, setSelectedSuppliedItems] = useState([]);
@@ -210,7 +210,7 @@ const DemandKrishiwiseEntry = () => {
   const [suppliedItemOptions, setSuppliedItemOptions] = useState([]);
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [tableVisible, setTableVisible] = useState(false);
-  
+
   // State for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -226,28 +226,32 @@ const DemandKrishiwiseEntry = () => {
           ? response.data.data
           : response.data;
       const items = Array.isArray(data) ? data : [];
-      
+
       console.log("Fetched beneficiaries:", items);
       console.log("Center data from context:", centerData);
-      
+
       // Check all center names in API response
-      const allCenterNames = items.map(item => item.center_name);
+      const allCenterNames = items.map((item) => item.center_name);
       console.log("All center names in API response:", allCenterNames);
-      
+
       // Filter items by center name client-side with robust comparison
-      const filteredItems = items.filter(item => {
-        const apiCenterName = item.center_name ? item.center_name.trim().normalize('NFKD') : '';
-        const contextCenterName = centerData.centerName ? centerData.centerName.trim().normalize('NFKD') : '';
-        
+      const filteredItems = items.filter((item) => {
+        const apiCenterName = item.center_name
+          ? item.center_name.trim().normalize("NFKD")
+          : "";
+        const contextCenterName = centerData.centerName
+          ? centerData.centerName.trim().normalize("NFKD")
+          : "";
+
         console.log("Comparing:", apiCenterName, "vs", contextCenterName);
-        
+
         return apiCenterName === contextCenterName;
       });
-      
+
       console.log("Filtered beneficiaries:", filteredItems);
-      
+
       setBeneficiaries(filteredItems);
-      
+
       // Set center details from first item
       if (filteredItems.length > 0) {
         const firstItem = filteredItems[0];
@@ -257,11 +261,17 @@ const DemandKrishiwiseEntry = () => {
           vikas_khand_name: firstItem.vikas_khand_name,
         });
       }
-      
+
       // Extract unique scheme, supplied item, and category options
-      const schemes = [...new Set(filteredItems.map(item => item.scheme_name))].filter(Boolean);
-      const suppliedItems = [...new Set(filteredItems.map(item => item.supplied_item_name))].filter(Boolean);
-      const categories = [...new Set(filteredItems.map(item => item.category))].filter(Boolean);
+      const schemes = [
+        ...new Set(filteredItems.map((item) => item.scheme_name)),
+      ].filter(Boolean);
+      const suppliedItems = [
+        ...new Set(filteredItems.map((item) => item.supplied_item_name)),
+      ].filter(Boolean);
+      const categories = [
+        ...new Set(filteredItems.map((item) => item.category)),
+      ].filter(Boolean);
       setSchemeOptions(schemes);
       setSuppliedItemOptions(suppliedItems);
       setCategoryOptions(categories);
@@ -278,21 +288,31 @@ const DemandKrishiwiseEntry = () => {
     const { fromDate, toDate } = getFinancialYearDates();
     setDateRange({
       fromDate,
-      toDate
+      toDate,
     });
     fetchBeneficiaries();
   }, []);
 
   // Auto-apply financial year filter when data is loaded
   useEffect(() => {
-    if (beneficiaries.length > 0 && dateRange.fromDate && dateRange.toDate && !tableVisible) {
+    if (
+      beneficiaries.length > 0 &&
+      dateRange.fromDate &&
+      dateRange.toDate &&
+      !tableVisible
+    ) {
       applyDateRangeFilter();
     }
   }, [beneficiaries]);
 
   // Re-apply date range filter when date range changes while table is visible
   useEffect(() => {
-    if (tableVisible && beneficiaries.length > 0 && dateRange.fromDate && dateRange.toDate) {
+    if (
+      tableVisible &&
+      beneficiaries.length > 0 &&
+      dateRange.fromDate &&
+      dateRange.toDate
+    ) {
       applyDateRangeFilter();
     }
   }, [dateRange.fromDate, dateRange.toDate, tableVisible]);
@@ -300,9 +320,9 @@ const DemandKrishiwiseEntry = () => {
   // Handle date range change
   const handleDateRangeChange = (e) => {
     const { name, value } = e.target;
-    setDateRange(prev => ({
+    setDateRange((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -317,7 +337,7 @@ const DemandKrishiwiseEntry = () => {
     const endDate = new Date(dateRange.toDate);
     endDate.setHours(23, 59, 59, 999);
 
-    const filtered = beneficiaries.filter(item => {
+    const filtered = beneficiaries.filter((item) => {
       if (!item.beneficiary_reg_date) return false;
       const itemDate = new Date(item.beneficiary_reg_date);
       return itemDate >= startDate && itemDate <= endDate;
@@ -327,9 +347,15 @@ const DemandKrishiwiseEntry = () => {
     setTableVisible(true);
 
     // Update scheme, supplied item, and category options based on date range
-    const schemes = [...new Set(filtered.map(item => item.scheme_name))].filter(Boolean);
-    const suppliedItems = [...new Set(filtered.map(item => item.supplied_item_name))].filter(Boolean);
-    const categories = [...new Set(filtered.map(item => item.category))].filter(Boolean);
+    const schemes = [
+      ...new Set(filtered.map((item) => item.scheme_name)),
+    ].filter(Boolean);
+    const suppliedItems = [
+      ...new Set(filtered.map((item) => item.supplied_item_name)),
+    ].filter(Boolean);
+    const categories = [
+      ...new Set(filtered.map((item) => item.category)),
+    ].filter(Boolean);
     setSchemeOptions(schemes);
     setSuppliedItemOptions(suppliedItems);
     setCategoryOptions(categories);
@@ -342,13 +368,13 @@ const DemandKrishiwiseEntry = () => {
 
   // Handle scheme change (react-select)
   const handleSchemeChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map(opt => opt.value);
+    const selectedValues = selectedOptions.map((opt) => opt.value);
     setSelectedSchemes(selectedValues);
   };
 
   // Handle supplied item change (react-select)
   const handleSuppliedItemChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map(opt => opt.value);
+    const selectedValues = selectedOptions.map((opt) => opt.value);
     setSelectedSuppliedItems(selectedValues);
   };
 
@@ -359,7 +385,7 @@ const DemandKrishiwiseEntry = () => {
 
   // Handle category change (react-select)
   const handleCategoryChange = (selectedOptions) => {
-    const selectedValues = selectedOptions.map(opt => opt.value);
+    const selectedValues = selectedOptions.map((opt) => opt.value);
     setSelectedCategories(selectedValues);
   };
 
@@ -373,23 +399,31 @@ const DemandKrishiwiseEntry = () => {
     let data = filteredBeneficiaries;
 
     if (selectedSchemes.length > 0) {
-      data = data.filter(item => selectedSchemes.includes(item.scheme_name));
+      data = data.filter((item) => selectedSchemes.includes(item.scheme_name));
     }
 
     if (selectedSuppliedItems.length > 0) {
-      data = data.filter(item => selectedSuppliedItems.includes(item.supplied_item_name));
+      data = data.filter((item) =>
+        selectedSuppliedItems.includes(item.supplied_item_name),
+      );
     }
 
     if (farmerName) {
-      data = data.filter(item => item.farmer_name.toLowerCase().includes(farmerName.toLowerCase()));
+      data = data.filter((item) =>
+        item.farmer_name.toLowerCase().includes(farmerName.toLowerCase()),
+      );
     }
 
     if (selectedCategories.length > 0) {
-      data = data.filter(item => selectedCategories.includes(item.category));
+      data = data.filter((item) => selectedCategories.includes(item.category));
     }
 
     if (aadhaarNumber) {
-      data = data.filter(item => item.aadhaar_number && item.aadhaar_number.toString().includes(aadhaarNumber));
+      data = data.filter(
+        (item) =>
+          item.aadhaar_number &&
+          item.aadhaar_number.toString().includes(aadhaarNumber),
+      );
     }
 
     return data;
@@ -416,7 +450,7 @@ const DemandKrishiwiseEntry = () => {
         selectedColumns.forEach((col) => {
           row[columnMapping[col].header] = columnMapping[col].accessor(
             item,
-            index
+            index,
           );
         });
         return row;
@@ -425,8 +459,15 @@ const DemandKrishiwiseEntry = () => {
       const totalRow = {};
       totalRow["क्र.सं."] = "कुल";
       selectedColumns.forEach((col) => {
-        if (col === "scheme_name" || col === "unit" || col === "supplied_item_name" || col === "category") {
-          const uniqueValues = new Set(data.map(item => columnMapping[col].accessor(item, 0)));
+        if (
+          col === "scheme_name" ||
+          col === "unit" ||
+          col === "supplied_item_name" ||
+          col === "category"
+        ) {
+          const uniqueValues = new Set(
+            data.map((item) => columnMapping[col].accessor(item, 0)),
+          );
           totalRow[columnMapping[col].header] = uniqueValues.size;
         } else if (col === "quantity" || col === "amount") {
           const sum = data.reduce((total, item) => {
@@ -459,18 +500,18 @@ const DemandKrishiwiseEntry = () => {
     filename,
     columnMapping,
     selectedColumns,
-    title
+    title,
   ) => {
     try {
       const headers = `<th>क्र.सं.</th>${selectedColumns
         .map((col) => `<th>${columnMapping[col].header}</th>`)
         .join("")}`;
-      
+
       const rows = data
         .map((item, index) => {
           const cells = `<td>${index + 1}</td>${selectedColumns
             .map(
-              (col) => `<td>${columnMapping[col].accessor(item, index)}</td>`
+              (col) => `<td>${columnMapping[col].accessor(item, index)}</td>`,
             )
             .join("")}`;
           return `<tr>${cells}</tr>`;
@@ -479,12 +520,20 @@ const DemandKrishiwiseEntry = () => {
 
       const totalCells = `<td><strong>कुल</strong></td>${selectedColumns
         .map((col) => {
-          if (col === "scheme_name" || col === "unit" || col === "supplied_item_name" || col === "category") {
-            const uniqueValues = new Set(data.map(item => columnMapping[col].accessor(item, 0)));
+          if (
+            col === "scheme_name" ||
+            col === "unit" ||
+            col === "supplied_item_name" ||
+            col === "category"
+          ) {
+            const uniqueValues = new Set(
+              data.map((item) => columnMapping[col].accessor(item, 0)),
+            );
             return `<td><strong>${uniqueValues.size}</strong></td>`;
           } else if (col === "quantity" || col === "amount") {
             const sum = data.reduce((total, item) => {
-              const value = parseFloat(columnMapping[col].accessor(item, 0)) || 0;
+              const value =
+                parseFloat(columnMapping[col].accessor(item, 0)) || 0;
               return total + value;
             }, 0);
             return `<td><strong>${sum.toFixed(2)}</strong></td>`;
@@ -592,7 +641,7 @@ const DemandKrishiwiseEntry = () => {
 
     if (startPage > 1) {
       items.push(
-        <Pagination.First key="first" onClick={() => setCurrentPage(1)} />
+        <Pagination.First key="first" onClick={() => setCurrentPage(1)} />,
       );
       items.push(<Pagination.Ellipsis key="ellipsis1" />);
     }
@@ -605,14 +654,17 @@ const DemandKrishiwiseEntry = () => {
           onClick={() => setCurrentPage(i)}
         >
           {i}
-        </Pagination.Item>
+        </Pagination.Item>,
       );
     }
 
     if (endPage < totalPages) {
       items.push(<Pagination.Ellipsis key="ellipsis2" />);
       items.push(
-        <Pagination.Last key="last" onClick={() => setCurrentPage(totalPages)} />
+        <Pagination.Last
+          key="last"
+          onClick={() => setCurrentPage(totalPages)}
+        />,
       );
     }
 
@@ -620,28 +672,28 @@ const DemandKrishiwiseEntry = () => {
   };
 
   return (
-    <Container fluid className="px-3" style={{ paddingTop: '60px' }}>
+    <Container fluid className="px-3" style={{ paddingTop: "60px" }}>
       <div className="mb-3">
         <DemandNavigation />
       </div>
       <h4 className="mb-4">{centerData.centerName} - कृषिवाइज एंट्री</h4>
-      
+
       {apiError && <Alert variant="danger">{apiError}</Alert>}
-      
+
       {isLoading && (
         <div className="text-center py-5">
           <Spinner animation="border" variant="primary" />
           <p className="mt-2">डेटा लोड हो रहा है...</p>
         </div>
       )}
-      
+
       {/* No data message when no beneficiaries available for the center */}
       {!isLoading && beneficiaries.length === 0 && (
         <Alert variant="info" className="text-center">
           इस केंद्र के लिए कोई कृषि एंट्री डेटा उपलब्ध नहीं है।
         </Alert>
       )}
-      
+
       {!isLoading && beneficiaries.length > 0 && (
         <div className="mb-4">
           <h5>सेंटर विवरण:</h5>
@@ -737,8 +789,13 @@ const DemandKrishiwiseEntry = () => {
                   <Form.Label>योजना का नाम</Form.Label>
                   <Select
                     isMulti
-                    value={schemeOptions.filter(opt => selectedSchemes.includes(opt)).map(opt => ({ value: opt, label: opt }))}
-                    options={schemeOptions.map(opt => ({ value: opt, label: opt }))}
+                    value={schemeOptions
+                      .filter((opt) => selectedSchemes.includes(opt))
+                      .map((opt) => ({ value: opt, label: opt }))}
+                    options={schemeOptions.map((opt) => ({
+                      value: opt,
+                      label: opt,
+                    }))}
                     onChange={handleSchemeChange}
                     placeholder="योजना का नाम चुनें"
                     className="mb-2"
@@ -750,8 +807,13 @@ const DemandKrishiwiseEntry = () => {
                   <Form.Label>आपूर्ति की गई वस्तु का नाम</Form.Label>
                   <Select
                     isMulti
-                    value={suppliedItemOptions.filter(opt => selectedSuppliedItems.includes(opt)).map(opt => ({ value: opt, label: opt }))}
-                    options={suppliedItemOptions.map(opt => ({ value: opt, label: opt }))}
+                    value={suppliedItemOptions
+                      .filter((opt) => selectedSuppliedItems.includes(opt))
+                      .map((opt) => ({ value: opt, label: opt }))}
+                    options={suppliedItemOptions.map((opt) => ({
+                      value: opt,
+                      label: opt,
+                    }))}
                     onChange={handleSuppliedItemChange}
                     placeholder="आपूर्ति की गई वस्तु का नाम चुनें"
                     className="mb-2"
@@ -763,8 +825,13 @@ const DemandKrishiwiseEntry = () => {
                   <Form.Label>श्रेणी</Form.Label>
                   <Select
                     isMulti
-                    value={categoryOptions.filter(opt => selectedCategories.includes(opt)).map(opt => ({ value: opt, label: opt }))}
-                    options={categoryOptions.map(opt => ({ value: opt, label: opt }))}
+                    value={categoryOptions
+                      .filter((opt) => selectedCategories.includes(opt))
+                      .map((opt) => ({ value: opt, label: opt }))}
+                    options={categoryOptions.map((opt) => ({
+                      value: opt,
+                      label: opt,
+                    }))}
                     onChange={handleCategoryChange}
                     placeholder="श्रेणी चुनें"
                     className="mb-2"
@@ -808,72 +875,103 @@ const DemandKrishiwiseEntry = () => {
           <div className="mb-3 d-flex gap-2">
             <Button
               variant="success"
-              onClick={() => downloadExcel(filteredData, "KrishiwiseEntry", beneficiariesTableColumnMapping, selectedColumns)}
+              onClick={() =>
+                downloadExcel(
+                  filteredData,
+                  "KrishiwiseEntry",
+                  beneficiariesTableColumnMapping,
+                  selectedColumns,
+                )
+              }
               className="d-flex align-items-center gap-2"
             >
               <FaFileExcel /> Excel डाउनलोड करें
             </Button>
             <Button
               variant="danger"
-              onClick={() => downloadPdf(filteredData, "KrishiwiseEntry", beneficiariesTableColumnMapping, selectedColumns, `${centerData.centerName} - कृषिवाइज एंट्री`)}
+              onClick={() =>
+                downloadPdf(
+                  filteredData,
+                  "KrishiwiseEntry",
+                  beneficiariesTableColumnMapping,
+                  selectedColumns,
+                  `${centerData.centerName} - कृषिवाइज एंट्री`,
+                )
+              }
               className="d-flex align-items-center gap-2"
             >
               <FaFilePdf /> PDF डाउनलोड करें
             </Button>
           </div>
-          
+
           <Table striped bordered hover className="registration-form">
             <thead className="table-light">
               <tr>
                 <th>क्र.सं.</th>
-                {beneficiariesTableColumns.filter(col => selectedColumns.includes(col.key)).map((col) => (
-                  <th key={col.key}>{col.label}</th>
-                ))}
+                {beneficiariesTableColumns
+                  .filter((col) => selectedColumns.includes(col.key))
+                  .map((col) => (
+                    <th key={col.key}>{col.label}</th>
+                  ))}
               </tr>
             </thead>
             <tbody className="tbl-body">
               {currentItems.map((item, index) => (
                 <tr key={item.id || index}>
-                  <td>
-                    {indexOfFirstItem + index + 1}
-                  </td>
-                  {beneficiariesTableColumns.filter(col => selectedColumns.includes(col.key)).map((col) => (
-                    <td key={col.key}>
-                      {beneficiariesTableColumnMapping[col.key].accessor(item, index)}
-                    </td>
-                  ))}
+                  <td>{indexOfFirstItem + index + 1}</td>
+                  {beneficiariesTableColumns
+                    .filter((col) => selectedColumns.includes(col.key))
+                    .map((col) => (
+                      <td key={col.key}>
+                        {beneficiariesTableColumnMapping[col.key].accessor(
+                          item,
+                          index,
+                        )}
+                      </td>
+                    ))}
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr className="table-total-row">
-                <td><strong>कुल</strong></td>
-                {beneficiariesTableColumns.filter(col => selectedColumns.includes(col.key)).map((col) => {
-                  if (col.key === "quantity" || col.key === "amount") {
-                    const sum = filteredData.reduce((acc, item) => {
-                      const value = parseFloat(item[col.key]) || 0;
-                      return acc + value;
-                    }, 0);
-                    return (
-                      <td key={col.key}>
-                        <strong>{sum.toFixed(2)}</strong>
-                      </td>
-                    );
-                  } else if (col.key === "scheme_name" || col.key === "unit" || col.key === "supplied_item_name" || col.key === "category") {
-                    const uniqueValues = new Set(filteredData.map(item => item[col.key])).size;
-                    return (
-                      <td key={col.key}>
-                        <strong>{uniqueValues}</strong>
-                      </td>
-                    );
-                  } else {
-                    return <td key={col.key}></td>;
-                  }
-                })}
+                <td>
+                  <strong>कुल</strong>
+                </td>
+                {beneficiariesTableColumns
+                  .filter((col) => selectedColumns.includes(col.key))
+                  .map((col) => {
+                    if (col.key === "quantity" || col.key === "amount") {
+                      const sum = filteredData.reduce((acc, item) => {
+                        const value = parseFloat(item[col.key]) || 0;
+                        return acc + value;
+                      }, 0);
+                      return (
+                        <td key={col.key}>
+                          <strong>{sum.toFixed(2)}</strong>
+                        </td>
+                      );
+                    } else if (
+                      col.key === "scheme_name" ||
+                      col.key === "unit" ||
+                      col.key === "supplied_item_name" ||
+                      col.key === "category"
+                    ) {
+                      const uniqueValues = new Set(
+                        filteredData.map((item) => item[col.key]),
+                      ).size;
+                      return (
+                        <td key={col.key}>
+                          <strong>{uniqueValues}</strong>
+                        </td>
+                      );
+                    } else {
+                      return <td key={col.key}></td>;
+                    }
+                  })}
               </tr>
             </tfoot>
           </Table>
-          
+
           {/* Pagination controls */}
           {filteredData.length > itemsPerPage && (
             <div className="mt-3">

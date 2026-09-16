@@ -33,9 +33,9 @@ import DashBoardHeader from "./DashBoardHeader";
 
 // API URLs
 const NURSERY_PHYSICAL_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/nursery-physical/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/nursery-physical/";
 const NURSERY_PHYSICAL_RECIPIENTS_API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/nursery-physical-recipients/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/nursery-physical-recipients/";
 
 // Utility function to round numbers to 2 decimal places
 const roundTo2Decimals = (value) => {

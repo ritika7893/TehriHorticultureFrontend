@@ -28,12 +28,16 @@ import {
 
 import "./LibrarySystem.css";
 
-const API_BASE_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/library";
-const MEDIA_BASE_URL = "https://mahadevaaya.com/govbillingsystem/backend";
+const API_BASE_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/library";
+const MEDIA_BASE_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
 
 // Kendra / center-links APIs
-const CENTER_LINKS_API_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/center-links";
-const CENTERS_API_URL = "https://mahadevaaya.com/govbillingsystem/backend/api/centres";
+const CENTER_LINKS_API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/center-links";
+const CENTERS_API_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/centres";
 const CENTER_LIBRARY_SHARE_URL = "https://dhokotdwar.in/LibrarySystem";
 
 const LibrarySystem = () => {
@@ -100,7 +104,9 @@ const LibrarySystem = () => {
   // TOKEN & AXIOS CONFIG
   // =====================================================
   const getToken = () => {
-    return localStorage.getItem("access_token") || localStorage.getItem("token");
+    return (
+      localStorage.getItem("access_token") || localStorage.getItem("token")
+    );
   };
 
   const getHeaders = () => {
@@ -184,7 +190,7 @@ const LibrarySystem = () => {
         // Keep active categories for the normal category screen.
         // Do not mutate the API objects so their IDs remain available.
         const activeCategories = categoryList.filter((category) =>
-          toBoolean(category?.is_active)
+          toBoolean(category?.is_active),
         );
 
         setCategories(activeCategories);
@@ -196,7 +202,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to load library categories."
+          "Unable to load library categories.",
       );
       setCategories([]);
     } finally {
@@ -229,20 +235,23 @@ const LibrarySystem = () => {
        * from both requests; the Map below removes duplicates.
        */
       const requests = [
-        axios.get(`${API_BASE_URL}/documents/?category=${encodeURIComponent(id)}`, {
-          headers: getHeaders(),
-        }),
         axios.get(
-          `${API_BASE_URL}/documents/?category=${encodeURIComponent(
-            id
-          )}&is_active=true`,
-          { headers: getHeaders() }
+          `${API_BASE_URL}/documents/?category=${encodeURIComponent(id)}`,
+          {
+            headers: getHeaders(),
+          },
         ),
         axios.get(
           `${API_BASE_URL}/documents/?category=${encodeURIComponent(
-            id
+            id,
+          )}&is_active=true`,
+          { headers: getHeaders() },
+        ),
+        axios.get(
+          `${API_BASE_URL}/documents/?category=${encodeURIComponent(
+            id,
           )}&is_active=false`,
-          { headers: getHeaders() }
+          { headers: getHeaders() },
         ),
       ];
 
@@ -278,10 +287,7 @@ const LibrarySystem = () => {
        */
       const categoryDocuments = allDocs.filter((doc) => {
         const docCategoryId = getDocumentCategoryId(doc);
-        return (
-          docCategoryId === null ||
-          String(docCategoryId) === String(id)
-        );
+        return docCategoryId === null || String(docCategoryId) === String(id);
       });
 
       setDocuments(categoryDocuments);
@@ -290,7 +296,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to load documents/bills."
+          "Unable to load documents/bills.",
       );
       setDocuments([]);
     } finally {
@@ -306,8 +312,7 @@ const LibrarySystem = () => {
 
     const newStatus = !toBoolean(document.is_active);
     const categoryId =
-      getDocumentCategoryId(document) ??
-      getCategoryId(selectedCategory);
+      getDocumentCategoryId(document) ?? getCategoryId(selectedCategory);
 
     try {
       setStatusUpdatingId(document.id);
@@ -330,7 +335,7 @@ const LibrarySystem = () => {
             ...getHeaders(),
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       if (isApiSuccess(response) || response?.data?.data) {
@@ -349,17 +354,15 @@ const LibrarySystem = () => {
                   ...item,
                   ...(returnedDocument || {}),
                   is_active: toBoolean(
-                    returnedDocument?.is_active ?? newStatus
+                    returnedDocument?.is_active ?? newStatus,
                   ),
                 }
-              : item
-          )
+              : item,
+          ),
         );
 
         alert(
-          `Document status updated to ${
-            newStatus ? "Active" : "Inactive"
-          }.`
+          `Document status updated to ${newStatus ? "Active" : "Inactive"}.`,
         );
 
         // Re-fetch so the UI always matches the server.
@@ -369,7 +372,7 @@ const LibrarySystem = () => {
         await fetchCategories();
       } else {
         throw new Error(
-          response?.data?.message || "Status update was not successful."
+          response?.data?.message || "Status update was not successful.",
         );
       }
     } catch (error) {
@@ -377,7 +380,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to update document status."
+          "Unable to update document status.",
       );
     } finally {
       setStatusUpdatingId(null);
@@ -403,7 +406,12 @@ const LibrarySystem = () => {
       center?.kendra_name ??
       center?.title ??
       center?.label ??
-      String(center?.id ?? center?.center_id ?? center?.kendra_id ?? `केंद्र ${index + 1}`),
+      String(
+        center?.id ??
+          center?.center_id ??
+          center?.kendra_id ??
+          `केंद्र ${index + 1}`,
+      ),
   });
 
   const getRequirementCenters = (requirement) => {
@@ -435,7 +443,7 @@ const LibrarySystem = () => {
       .map((item) =>
         typeof item === "string"
           ? item
-          : item?.name || item?.center_name || item?.kendra_name || ""
+          : item?.name || item?.center_name || item?.kendra_name || "",
       )
       .filter(Boolean)
       .join(", ");
@@ -464,7 +472,7 @@ const LibrarySystem = () => {
         file.file ||
         file.document_url ||
         file.path ||
-        file.file_path
+        file.file_path,
     );
   };
 
@@ -479,7 +487,9 @@ const LibrarySystem = () => {
       file.name ||
       file.title ||
       file.filename ||
-      String(file.file_url || file.url || file.file || "").split("/").pop() ||
+      String(file.file_url || file.url || file.file || "")
+        .split("/")
+        .pop() ||
       "Uploaded File"
     );
   };
@@ -511,7 +521,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to load Kendra list."
+          "Unable to load Kendra list.",
       );
     } finally {
       setCentersLoading(false);
@@ -529,8 +539,8 @@ const LibrarySystem = () => {
       const list = Array.isArray(response?.data?.data)
         ? response.data.data
         : Array.isArray(response?.data)
-        ? response.data
-        : [];
+          ? response.data
+          : [];
 
       setRequirements(list);
     } catch (error) {
@@ -539,7 +549,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to load center links."
+          "Unable to load center links.",
       );
     } finally {
       setRequirementLoading(false);
@@ -569,14 +579,12 @@ const LibrarySystem = () => {
         `${CENTER_LINKS_API_URL}/${requirement.id}/`,
         {
           headers: getHeaders(),
-        }
+        },
       );
 
       const data = response?.data?.data || response?.data || requirement;
 
-      const names = Array.isArray(data?.center_names)
-        ? data.center_names
-        : [];
+      const names = Array.isArray(data?.center_names) ? data.center_names : [];
 
       setRequirementForm({
         center_names: names,
@@ -595,7 +603,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to load request details."
+          "Unable to load request details.",
       );
     }
   };
@@ -689,7 +697,7 @@ const LibrarySystem = () => {
                 ...getHeaders(),
                 "Content-Type": "application/json",
               },
-            }
+            },
           )
         : await axios.post(`${CENTER_LINKS_API_URL}/`, payload, {
             headers: {
@@ -702,18 +710,18 @@ const LibrarySystem = () => {
         isApiSuccess(response) ||
         response?.data?.data ||
         response?.data?.id ||
-        response?.status >= 200 && response?.status < 300
+        (response?.status >= 200 && response?.status < 300)
       ) {
         alert(
           editingRequirement
             ? "Center link updated successfully."
-            : "Center link created successfully."
+            : "Center link created successfully.",
         );
         closeRequirementModal();
         await fetchRequirements();
       } else {
         throw new Error(
-          response?.data?.message || "Request was not successful."
+          response?.data?.message || "Request was not successful.",
         );
       }
     } catch (error) {
@@ -721,7 +729,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          `Unable to ${editingRequirement ? "update" : "create"} center link.`
+          `Unable to ${editingRequirement ? "update" : "create"} center link.`,
       );
     } finally {
       setRequirementSubmitting(false);
@@ -732,7 +740,7 @@ const LibrarySystem = () => {
     if (!id || requirementDeletingId === id) return;
 
     const confirmed = window.confirm(
-      "Are you sure you want to delete this center link?"
+      "Are you sure you want to delete this center link?",
     );
 
     if (!confirmed) return;
@@ -746,7 +754,7 @@ const LibrarySystem = () => {
 
       if (
         isApiSuccess(response) ||
-        response?.status >= 200 && response?.status < 300
+        (response?.status >= 200 && response?.status < 300)
       ) {
         alert("Center link deleted successfully.");
         if (selectedRequirement?.id === id) {
@@ -755,7 +763,7 @@ const LibrarySystem = () => {
         await fetchRequirements();
       } else {
         throw new Error(
-          response?.data?.message || "Delete request was not successful."
+          response?.data?.message || "Delete request was not successful.",
         );
       }
     } catch (error) {
@@ -763,7 +771,7 @@ const LibrarySystem = () => {
       alert(
         error.response?.data?.message ||
           error.response?.data?.detail ||
-          "Unable to delete center link."
+          "Unable to delete center link.",
       );
     } finally {
       setRequirementDeletingId(null);
@@ -782,7 +790,7 @@ const LibrarySystem = () => {
         `${CENTER_LINKS_API_URL}/${requirement.id}/`,
         {
           headers: getHeaders(),
-        }
+        },
       );
 
       const data = response?.data?.data || response?.data || requirement;
@@ -852,7 +860,7 @@ const LibrarySystem = () => {
   const shareOnTelegram = (requirement) => {
     const message = buildShareMessage(requirement);
     const url = `https://t.me/share/url?url=${encodeURIComponent(
-      getShareUrl(requirement)
+      getShareUrl(requirement),
     )}&text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
@@ -866,7 +874,7 @@ const LibrarySystem = () => {
     }`;
 
     window.location.href = `mailto:?subject=${encodeURIComponent(
-      subject
+      subject,
     )}&body=${encodeURIComponent(message)}`;
   };
 
@@ -968,12 +976,16 @@ const LibrarySystem = () => {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/categories/`, categoryForm, {
-        headers: {
-          ...getHeaders(),
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        `${API_BASE_URL}/categories/`,
+        categoryForm,
+        {
+          headers: {
+            ...getHeaders(),
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
 
       if (response.data.status) {
         alert("Category created successfully.");
@@ -1022,12 +1034,16 @@ const LibrarySystem = () => {
       formData.append("file", documentForm.file);
       formData.append("is_active", "true");
 
-      const response = await axios.post(`${API_BASE_URL}/documents/`, formData, {
-        headers: {
-          ...getHeaders(),
-          "Content-Type": "multipart/form-data",
+      const response = await axios.post(
+        `${API_BASE_URL}/documents/`,
+        formData,
+        {
+          headers: {
+            ...getHeaders(),
+            "Content-Type": "multipart/form-data",
+          },
         },
-      });
+      );
 
       if (response.data.status) {
         alert("Document uploaded successfully.");
@@ -1047,7 +1063,7 @@ const LibrarySystem = () => {
   // =====================================================
   const handleDeleteDocument = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this document?"
+      "Are you sure you want to delete this document?",
     );
     if (!confirmDelete) return;
 
@@ -1114,7 +1130,7 @@ const LibrarySystem = () => {
 
       formData.append(
         "is_active",
-        toBoolean(editingDocument.is_active) ? "true" : "false"
+        toBoolean(editingDocument.is_active) ? "true" : "false",
       );
 
       const response = await axios.put(
@@ -1125,7 +1141,7 @@ const LibrarySystem = () => {
             ...getHeaders(),
             "Content-Type": "multipart/form-data",
           },
-        }
+        },
       );
 
       if (response.data.status) {
@@ -1150,7 +1166,8 @@ const LibrarySystem = () => {
     const extension = fileUrl.split(".").pop().toLowerCase();
 
     if (extension === "pdf") return <FaFilePdf />;
-    if (["jpg", "jpeg", "png", "webp"].includes(extension)) return <FaFileImage />;
+    if (["jpg", "jpeg", "png", "webp"].includes(extension))
+      return <FaFileImage />;
     if (["doc", "docx"].includes(extension)) return <FaFileWord />;
     if (["xls", "xlsx", "csv"].includes(extension)) return <FaFileExcel />;
 
@@ -1169,13 +1186,13 @@ const LibrarySystem = () => {
   const filteredCategories = categories.filter((category) =>
     String(category?.name || "")
       .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+      .includes(searchTerm.toLowerCase()),
   );
 
   const filteredDocuments = documents.filter((document) =>
     String(document?.title || "")
       .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+      .includes(searchTerm.toLowerCase()),
   );
 
   // =====================================================
@@ -1192,7 +1209,9 @@ const LibrarySystem = () => {
             </button>
           )}
           <div>
-            <h1>{selectedCategory ? selectedCategory.name : "Document Library"}</h1>
+            <h1>
+              {selectedCategory ? selectedCategory.name : "Document Library"}
+            </h1>
             <p>
               {selectedCategory
                 ? "Manage documents in this category"
@@ -1202,26 +1221,39 @@ const LibrarySystem = () => {
         </div>
 
         {activeTab === "categories" && !selectedCategory && (
-          <button className="library-primary-btn" onClick={() => setShowCategoryModal(true)}>
+          <button
+            className="library-primary-btn"
+            onClick={() => setShowCategoryModal(true)}
+          >
             <FaPlus /> Add Category
           </button>
         )}
 
         {activeTab === "categories" && selectedCategory && (
-          <button className="library-primary-btn" onClick={() => setShowUploadModal(true)}>
+          <button
+            className="library-primary-btn"
+            onClick={() => setShowUploadModal(true)}
+          >
             <FaUpload /> Upload Document
           </button>
         )}
 
         {activeTab === "requirements" && (
-          <button className="library-primary-btn" onClick={openRequirementModal}>
+          <button
+            className="library-primary-btn"
+            onClick={openRequirementModal}
+          >
             <FaPlus /> Add Request
           </button>
         )}
       </div>
 
       {/* MAIN TABS */}
-      <div className="library-main-tabs" role="tablist" aria-label="Library sections">
+      <div
+        className="library-main-tabs"
+        role="tablist"
+        aria-label="Library sections"
+      >
         <button
           type="button"
           role="tab"
@@ -1253,7 +1285,11 @@ const LibrarySystem = () => {
             <FaSearch />
             <input
               type="text"
-              placeholder={selectedCategory ? "Search documents..." : "Search categories..."}
+              placeholder={
+                selectedCategory
+                  ? "Search documents..."
+                  : "Search categories..."
+              }
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -1283,12 +1319,16 @@ const LibrarySystem = () => {
                       </div>
                       <div className="library-category-content">
                         <h3>{category.name}</h3>
-                        <p>{category.description || "No description available"}</p>
+                        <p>
+                          {category.description || "No description available"}
+                        </p>
                       </div>
                       <div className="library-category-footer">
                         <span>
                           {category.document_count || 0}{" "}
-                          {category.document_count === 1 ? "Document" : "Documents"}
+                          {category.document_count === 1
+                            ? "Document"
+                            : "Documents"}
                         </span>
                         <span>{formatDate(category.created_at)}</span>
                       </div>
@@ -1309,7 +1349,10 @@ const LibrarySystem = () => {
                   <FaFileAlt />
                   <h3>No Documents Found</h3>
                   <p>Upload a document to this category.</p>
-                  <button className="library-primary-btn" onClick={() => setShowUploadModal(true)}>
+                  <button
+                    className="library-primary-btn"
+                    onClick={() => setShowUploadModal(true)}
+                  >
                     <FaUpload /> Upload Document
                   </button>
                 </div>
@@ -1325,17 +1368,29 @@ const LibrarySystem = () => {
                       </div>
 
                       <div className="library-document-info">
-                        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                        >
                           <h3>{document.title}</h3>
-                          <span className={`status-badge ${document.is_active ? "active" : "inactive"}`}>
+                          <span
+                            className={`status-badge ${document.is_active ? "active" : "inactive"}`}
+                          >
                             {document.is_active ? "Active" : "Inactive"}
                           </span>
                         </div>
 
-                        <p>{document.description || "No description available"}</p>
+                        <p>
+                          {document.description || "No description available"}
+                        </p>
 
                         <div className="library-document-meta">
-                          <span>Uploaded by: {document.uploaded_by_name || "Admin"}</span>
+                          <span>
+                            Uploaded by: {document.uploaded_by_name || "Admin"}
+                          </span>
                           <span>{formatDate(document.created_at)}</span>
                         </div>
                       </div>
@@ -1343,12 +1398,18 @@ const LibrarySystem = () => {
                       <div className="library-document-actions">
                         <button
                           className={`library-icon-btn status ${document.is_active ? "active" : "inactive"}`}
-                          title={document.is_active ? "Set Inactive" : "Set Active"}
+                          title={
+                            document.is_active ? "Set Inactive" : "Set Active"
+                          }
                           onClick={() => handleToggleStatus(document)}
                           disabled={statusUpdatingId === document.id}
                           aria-busy={statusUpdatingId === document.id}
                         >
-                          {document.is_active ? <FaToggleOn /> : <FaToggleOff />}
+                          {document.is_active ? (
+                            <FaToggleOn />
+                          ) : (
+                            <FaToggleOff />
+                          )}
                         </button>
 
                         <button
@@ -1404,7 +1465,8 @@ const LibrarySystem = () => {
             <div>
               <h2>केंद्रों के लिए आवश्यकताएँ</h2>
               <p>
-                Admin द्वारा चयनित केंद्रों को भेजी गई file requirements यहाँ दिखाई जाएँगी।
+                Admin द्वारा चयनित केंद्रों को भेजी गई file requirements यहाँ
+                दिखाई जाएँगी।
               </p>
             </div>
           </div>
@@ -1416,10 +1478,13 @@ const LibrarySystem = () => {
               <FaClipboardList />
               <h3>अभी कोई Request उपलब्ध नहीं है</h3>
               <p>
-                <strong>Add Request</strong> पर क्लिक करके चयनित केंद्रों से file
-                upload करने की requirement भेजें।
+                <strong>Add Request</strong> पर क्लिक करके चयनित केंद्रों से
+                file upload करने की requirement भेजें।
               </p>
-              <button className="library-primary-btn" onClick={openRequirementModal}>
+              <button
+                className="library-primary-btn"
+                onClick={openRequirementModal}
+              >
                 <FaPlus /> Add Request
               </button>
             </div>
@@ -1477,32 +1542,28 @@ const LibrarySystem = () => {
                             type="button"
                             className="library-icon-btn edit"
                             title="Edit"
-                            onClick={() => openEditRequirementModal(requirement)}
+                            onClick={() =>
+                              openEditRequirementModal(requirement)
+                            }
                           >
                             <FaEdit />
                           </button>
                           <button
-
                             type="button"
-
                             className="library-icon-btn share"
-
                             title="Share Request"
-
                             onClick={() => openShareRequirement(requirement)}
-
                           >
-
                             <FaShareAlt />
-
                           </button>
-
 
                           <button
                             type="button"
                             className="library-icon-btn delete"
                             title="Delete"
-                            onClick={() => handleDeleteRequirement(requirement.id)}
+                            onClick={() =>
+                              handleDeleteRequirement(requirement.id)
+                            }
                             disabled={requirementDeletingId === requirement.id}
                           >
                             <FaTrash />
@@ -1576,10 +1637,10 @@ const LibrarySystem = () => {
                       {centersLoading
                         ? "Loading Kendras..."
                         : requirementForm.center_names.length === 0
-                        ? "Select Kendra Name"
-                        : `${requirementForm.center_names.length} Kendra${
-                            requirementForm.center_names.length > 1 ? "s" : ""
-                          } selected`}
+                          ? "Select Kendra Name"
+                          : `${requirementForm.center_names.length} Kendra${
+                              requirementForm.center_names.length > 1 ? "s" : ""
+                            } selected`}
                     </span>
                     <span style={{ fontSize: "12px" }}>▼</span>
                   </button>
@@ -1657,9 +1718,8 @@ const LibrarySystem = () => {
                         </div>
                       ) : (
                         centers.map((center) => {
-                          const isSelected = requirementForm.center_names.includes(
-                            center.name
-                          );
+                          const isSelected =
+                            requirementForm.center_names.includes(center.name);
 
                           return (
                             <label
@@ -1677,7 +1737,9 @@ const LibrarySystem = () => {
                               <input
                                 type="checkbox"
                                 checked={isSelected}
-                                onChange={() => toggleKendraSelection(center.name)}
+                                onChange={() =>
+                                  toggleKendraSelection(center.name)
+                                }
                                 disabled={requirementSubmitting}
                               />
                               <span>{center.name}</span>
@@ -1772,8 +1834,8 @@ const LibrarySystem = () => {
                       ? "Updating..."
                       : "Saving..."
                     : editingRequirement
-                    ? "Update Request"
-                    : "Add Request"}
+                      ? "Update Request"
+                      : "Add Request"}
                 </button>
               </div>
             </form>
@@ -1799,7 +1861,9 @@ const LibrarySystem = () => {
               <div className="library-share-preview">
                 <div className="library-share-preview-row">
                   <span>Selected Kendra(s)</span>
-                  <strong>{getRequirementCenterNames(shareRequirement) || "—"}</strong>
+                  <strong>
+                    {getRequirementCenterNames(shareRequirement) || "—"}
+                  </strong>
                 </div>
 
                 <div className="library-share-preview-row">
@@ -1890,53 +1954,56 @@ const LibrarySystem = () => {
       )}
 
       {/* KENDRA REQUIREMENT VIEW */}
-      {showRequirementView && selectedRequirement && activeTab === "requirements" && (
-        <div className="library-modal-overlay">
-          <div className="library-preview-modal library-requirement-view-modal">
-            <div className="library-modal-header">
-              <div>
-                <h2>Center Link Details</h2>
-                <p>
-                  Kendra: {getRequirementCenterNames(selectedRequirement) || "—"}
-                </p>
-              </div>
-              <button type="button" onClick={closeRequirementView}>
-                <FaTimes />
-              </button>
-            </div>
-
-            <div className="library-requirement-view-content">
-              <div className="library-requirement-detail-card">
-                <span>Kendra Name</span>
-                <strong>
-                  {getRequirementCenterNames(selectedRequirement) || "—"}
-                </strong>
+      {showRequirementView &&
+        selectedRequirement &&
+        activeTab === "requirements" && (
+          <div className="library-modal-overlay">
+            <div className="library-preview-modal library-requirement-view-modal">
+              <div className="library-modal-header">
+                <div>
+                  <h2>Center Link Details</h2>
+                  <p>
+                    Kendra:{" "}
+                    {getRequirementCenterNames(selectedRequirement) || "—"}
+                  </p>
+                </div>
+                <button type="button" onClick={closeRequirementView}>
+                  <FaTimes />
+                </button>
               </div>
 
-              <div className="library-requirement-detail-card">
-                <span>Link</span>
-                {selectedRequirement.link ? (
-                  <a
-                    href={selectedRequirement.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="library-requirement-link"
-                  >
-                    {selectedRequirement.link}
-                  </a>
-                ) : (
-                  <strong>—</strong>
-                )}
-              </div>
+              <div className="library-requirement-view-content">
+                <div className="library-requirement-detail-card">
+                  <span>Kendra Name</span>
+                  <strong>
+                    {getRequirementCenterNames(selectedRequirement) || "—"}
+                  </strong>
+                </div>
 
-              <div className="library-requirement-detail-card">
-                <span>Description</span>
-                <strong>{selectedRequirement.description || "—"}</strong>
+                <div className="library-requirement-detail-card">
+                  <span>Link</span>
+                  {selectedRequirement.link ? (
+                    <a
+                      href={selectedRequirement.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="library-requirement-link"
+                    >
+                      {selectedRequirement.link}
+                    </a>
+                  ) : (
+                    <strong>—</strong>
+                  )}
+                </div>
+
+                <div className="library-requirement-detail-card">
+                  <span>Description</span>
+                  <strong>{selectedRequirement.description || "—"}</strong>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* CATEGORY MODAL */}
       {showCategoryModal && (
@@ -1950,7 +2017,9 @@ const LibrarySystem = () => {
             </div>
             <form onSubmit={handleCreateCategory}>
               <div className="library-form-group">
-                <label>Category Name<span>*</span></label>
+                <label>
+                  Category Name<span>*</span>
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -1970,7 +2039,11 @@ const LibrarySystem = () => {
                 />
               </div>
               <div className="library-modal-footer">
-                <button type="button" className="library-cancel-btn" onClick={() => setShowCategoryModal(false)}>
+                <button
+                  type="button"
+                  className="library-cancel-btn"
+                  onClick={() => setShowCategoryModal(false)}
+                >
                   Cancel
                 </button>
                 <button type="submit" className="library-primary-btn">
@@ -1989,7 +2062,9 @@ const LibrarySystem = () => {
             <div className="library-modal-header">
               <div>
                 <h2>Upload Document</h2>
-                <p>Category: <strong>{selectedCategory?.name}</strong></p>
+                <p>
+                  Category: <strong>{selectedCategory?.name}</strong>
+                </p>
               </div>
               <button onClick={() => setShowUploadModal(false)}>
                 <FaTimes />
@@ -1997,7 +2072,9 @@ const LibrarySystem = () => {
             </div>
             <form onSubmit={handleUploadDocument}>
               <div className="library-form-group">
-                <label>Document Title<span>*</span></label>
+                <label>
+                  Document Title<span>*</span>
+                </label>
                 <input
                   type="text"
                   name="title"
@@ -2017,7 +2094,9 @@ const LibrarySystem = () => {
                 />
               </div>
               <div className="library-form-group">
-                <label>Select Document<span>*</span></label>
+                <label>
+                  Select Document<span>*</span>
+                </label>
                 <div className="library-file-upload">
                   <FaUpload />
                   <input
@@ -2027,12 +2106,18 @@ const LibrarySystem = () => {
                     onChange={handleDocumentChange}
                   />
                   {documentForm.file && (
-                    <p>Selected: <strong>{documentForm.file.name}</strong></p>
+                    <p>
+                      Selected: <strong>{documentForm.file.name}</strong>
+                    </p>
                   )}
                 </div>
               </div>
               <div className="library-modal-footer">
-                <button type="button" className="library-cancel-btn" onClick={() => setShowUploadModal(false)}>
+                <button
+                  type="button"
+                  className="library-cancel-btn"
+                  onClick={() => setShowUploadModal(false)}
+                >
                   Cancel
                 </button>
                 <button type="submit" className="library-primary-btn">
@@ -2051,7 +2136,9 @@ const LibrarySystem = () => {
             <div className="library-modal-header">
               <div>
                 <h2>Edit Document</h2>
-                <p>Category: <strong>{selectedCategory?.name}</strong></p>
+                <p>
+                  Category: <strong>{selectedCategory?.name}</strong>
+                </p>
               </div>
               <button onClick={handleCloseEditModal}>
                 <FaTimes />
@@ -2059,7 +2146,9 @@ const LibrarySystem = () => {
             </div>
             <form onSubmit={handleUpdateDocument}>
               <div className="library-form-group">
-                <label>Document Title<span>*</span></label>
+                <label>
+                  Document Title<span>*</span>
+                </label>
                 <input
                   type="text"
                   name="title"
@@ -2089,12 +2178,18 @@ const LibrarySystem = () => {
                     onChange={handleEditChange}
                   />
                   {editForm.file && (
-                    <p>Selected: <strong>{editForm.file.name}</strong></p>
+                    <p>
+                      Selected: <strong>{editForm.file.name}</strong>
+                    </p>
                   )}
                 </div>
               </div>
               <div className="library-modal-footer">
-                <button type="button" className="library-cancel-btn" onClick={handleCloseEditModal}>
+                <button
+                  type="button"
+                  className="library-cancel-btn"
+                  onClick={handleCloseEditModal}
+                >
                   Cancel
                 </button>
                 <button type="submit" className="library-primary-btn">
@@ -2127,7 +2222,7 @@ const LibrarySystem = () => {
                   className="library-pdf-viewer"
                 />
               ) : [".jpg", ".jpeg", ".png", ".webp"].some((ext) =>
-                  previewDocument.file_url?.toLowerCase().endsWith(ext)
+                  previewDocument.file_url?.toLowerCase().endsWith(ext),
                 ) ? (
                 <img
                   src={previewDocument.file_url}

@@ -5,10 +5,10 @@ import "../../assets/css/dashboard.css";
 import "../../assets/css/LeftNav.css";
 import { FaAngleUp, FaAngleDown } from "react-icons/fa";
 
-const LeftNav = ({ 
-  onApply = () => {}, 
-  options = {}, 
-  setShowMainCards = () => {} 
+const LeftNav = ({
+  onApply = () => {},
+  options = {},
+  setShowMainCards = () => {},
 }) => {
   const [filters, setFilters] = useState({
     vidhanSabha: [],
@@ -45,10 +45,10 @@ const LeftNav = ({
   //   setError(null);
   //   try {
   //     const response = await axios.get(
-  //       "https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/"
+  //       "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/"
   //     );
   //     setApiData(response.data);
-      
+
   //     // Extract unique values for each filter from API data
   //     const uniqueValues = {
   //       vidhanSabha: [...new Set(response.data.map(item => item.vidhan_sabha_name).filter(Boolean))],
@@ -59,7 +59,7 @@ const LeftNav = ({
   //       component: [...new Set(response.data.map(item => item.component).filter(Boolean))],
   //       investment: [...new Set(response.data.map(item => item.investment_name).filter(Boolean))],
   //     };
-      
+
   //     setFilterOptions(uniqueValues);
   //   } catch (err) {
   //     setError("Failed to fetch data from API");
@@ -87,27 +87,31 @@ const LeftNav = ({
 
   const handleChange = (e) => {
     const { name } = e.target;
-    const values = Array.from(e.target.selectedOptions).map(option => option.value);
+    const values = Array.from(e.target.selectedOptions).map(
+      (option) => option.value,
+    );
 
-    setFilters(prev => ({
+    setFilters((prev) => ({
       ...prev,
-      [name]: values
+      [name]: values,
     }));
 
     // Check if any filters are applied
     const newFilters = { ...filters, [name]: values };
-    const hasActiveFilters = Object.values(newFilters).some(filterArray => filterArray.length > 0);
+    const hasActiveFilters = Object.values(newFilters).some(
+      (filterArray) => filterArray.length > 0,
+    );
     setHasFilters(hasActiveFilters);
-    
+
     // Hide main dashboard cards if any filter is applied
     setShowMainCards(!hasActiveFilters);
   };
 
   // Function to toggle a specific section
   const toggleSection = (section) => {
-    setOpenSections(prev => ({
+    setOpenSections((prev) => ({
       ...prev,
-      [section]: !prev[section]
+      [section]: !prev[section],
     }));
   };
 
@@ -117,64 +121,62 @@ const LeftNav = ({
 
     // Apply filters in sequence
     if (filters.vidhanSabha.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.vidhanSabha.includes(item.vidhan_sabha_name)
+      filteredData = filteredData.filter((item) =>
+        filters.vidhanSabha.includes(item.vidhan_sabha_name),
       );
     }
 
     if (filters.vikasKhand.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.vikasKhand.includes(item.vikas_khand_name)
+      filteredData = filteredData.filter((item) =>
+        filters.vikasKhand.includes(item.vikas_khand_name),
       );
     }
 
     if (filters.center.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.center.includes(item.center_name)
+      filteredData = filteredData.filter((item) =>
+        filters.center.includes(item.center_name),
       );
     }
 
     if (filters.scheme.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.scheme.includes(item.scheme_name)
+      filteredData = filteredData.filter((item) =>
+        filters.scheme.includes(item.scheme_name),
       );
     }
 
     if (filters.source.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.source.includes(item.source_of_receipt)
+      filteredData = filteredData.filter((item) =>
+        filters.source.includes(item.source_of_receipt),
       );
     }
 
     if (filters.component.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.component.includes(item.component)
+      filteredData = filteredData.filter((item) =>
+        filters.component.includes(item.component),
       );
     }
 
     if (filters.investment.length > 0) {
-      filteredData = filteredData.filter(item => 
-        filters.investment.includes(item.investment_name)
+      filteredData = filteredData.filter((item) =>
+        filters.investment.includes(item.investment_name),
       );
     }
 
-
-
     // Send filtered data to parent component only if onApply is provided
-    if (typeof onApply === 'function') {
+    if (typeof onApply === "function") {
       onApply({
         filters,
         filteredData,
         totalData: apiData,
-        recordCount: filteredData.length
+        recordCount: filteredData.length,
       });
     } else {
       // Fallback: log the filtered data for debugging
-      console.log('Filtered Data:', {
+      console.log("Filtered Data:", {
         filters,
         filteredData,
         totalData: apiData,
-        recordCount: filteredData.length
+        recordCount: filteredData.length,
       });
     }
   };
@@ -190,7 +192,7 @@ const LeftNav = ({
       investment: [],
     });
     setHasFilters(false);
-    
+
     // Show main dashboard cards when filters are cleared
     setShowMainCards(true);
   };
@@ -199,7 +201,10 @@ const LeftNav = ({
     return (
       <Card className="filter-sidebar shadow-sm">
         <Card.Body>
-          <div className="d-flex justify-content-center align-items-center" style={{ height: '200px' }}>
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "200px" }}
+          >
             <Spinner animation="border" />
             <span className="ms-2">Loading filters...</span>
           </div>
@@ -214,9 +219,9 @@ const LeftNav = ({
         <Card.Body>
           <div className="alert alert-danger">
             {error}
-            <Button 
-              variant="outline-danger" 
-              size="sm" 
+            <Button
+              variant="outline-danger"
+              size="sm"
               className="ms-2"
               // onClick={fetchApiData}
             >
@@ -247,7 +252,7 @@ const LeftNav = ({
 
     //     {/* VIDHAN SABHA COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('vidhanSabha')}
     //         style={{ cursor: 'pointer' }}
@@ -276,7 +281,7 @@ const LeftNav = ({
 
     //     {/* VIKAS KHAND COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('vikasKhand')}
     //         style={{ cursor: 'pointer' }}
@@ -305,7 +310,7 @@ const LeftNav = ({
 
     //     {/* CENTER COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('center')}
     //         style={{ cursor: 'pointer' }}
@@ -334,7 +339,7 @@ const LeftNav = ({
 
     //     {/* SCHEME COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('scheme')}
     //         style={{ cursor: 'pointer' }}
@@ -363,7 +368,7 @@ const LeftNav = ({
 
     //     {/* SOURCE COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('source')}
     //         style={{ cursor: 'pointer' }}
@@ -392,7 +397,7 @@ const LeftNav = ({
 
     //     {/* COMPONENT COLLAPSIBLE SECTION */}
     //     <Card className="mb-3 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('component')}
     //         style={{ cursor: 'pointer' }}
@@ -421,7 +426,7 @@ const LeftNav = ({
 
     //     {/* INVESTMENT COLLAPSIBLE SECTION */}
     //     <Card className="mb-4 filter-section-card">
-    //       <Card.Header 
+    //       <Card.Header
     //         className="d-flex justify-content-between align-items-center card-header-main"
     //         onClick={() => toggleSection('investment')}
     //         style={{ cursor: 'pointer' }}
@@ -447,8 +452,6 @@ const LeftNav = ({
     //         </Card.Body>
     //       </Collapse>
     //     </Card>
-
-
 
     //     <Button
     //       variant="primary"

@@ -38,7 +38,7 @@ import Chart from "chart.js/auto";
 import { HierarchicalTable, HierarchicalTableRows } from "../HierarchicalTable";
 
 const API_URL =
-  "https://mahadevaaya.com/govbillingsystem/backend/api/billing-items/";
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 
 // Hindi translations for form
 const translations = {
@@ -89,19 +89,49 @@ const tableColumnOrder = [
 // Column definitions
 const columnDefs = {
   center_name: { label: translations.centerName, key: "center_name" },
-  vidhan_sabha_name: { label: translations.vidhanSabhaName, key: "vidhan_sabha_name" },
-  vikas_khand_name: { label: translations.vikasKhandName, key: "vikas_khand_name" },
+  vidhan_sabha_name: {
+    label: translations.vidhanSabhaName,
+    key: "vidhan_sabha_name",
+  },
+  vikas_khand_name: {
+    label: translations.vikasKhandName,
+    key: "vikas_khand_name",
+  },
   scheme_name: { label: translations.schemeName, key: "scheme_name" },
-  source_of_receipt: { label: translations.sourceOfReceipt, key: "source_of_receipt" },
-  investment_name: { label: translations.investmentName, key: "investment_name" },
-  sub_investment_name: { label: translations.subInvestmentName, key: "sub_investment_name" },
+  source_of_receipt: {
+    label: translations.sourceOfReceipt,
+    key: "source_of_receipt",
+  },
+  investment_name: {
+    label: translations.investmentName,
+    key: "investment_name",
+  },
+  sub_investment_name: {
+    label: translations.subInvestmentName,
+    key: "sub_investment_name",
+  },
   unit: { label: translations.unit, key: "unit" },
-  allocated_quantity: { label: translations.allocatedQuantity, key: "allocated_quantity" },
+  allocated_quantity: {
+    label: translations.allocatedQuantity,
+    key: "allocated_quantity",
+  },
   rate: { label: translations.rate, key: "rate" },
-  farmer_selling_rate: { label: translations.farmerSellingRate, key: "farmer_selling_rate" },
-  farmer_subsidy_rate: { label: translations.farmerSubsidyRate, key: "farmer_subsidy_rate" },
-  amount_of_farmer_share: { label: translations.amountOfFarmerShare, key: "amount_of_farmer_share" },
-  amount_of_subsidy: { label: translations.amountOfSubsidy, key: "amount_of_subsidy" },
+  farmer_selling_rate: {
+    label: translations.farmerSellingRate,
+    key: "farmer_selling_rate",
+  },
+  farmer_subsidy_rate: {
+    label: translations.farmerSubsidyRate,
+    key: "farmer_subsidy_rate",
+  },
+  amount_of_farmer_share: {
+    label: translations.amountOfFarmerShare,
+    key: "amount_of_farmer_share",
+  },
+  amount_of_subsidy: {
+    label: translations.amountOfSubsidy,
+    key: "amount_of_subsidy",
+  },
   total_amount: { label: translations.totalAmount, key: "total_amount" },
   anudan_name: { label: translations.anudanName, key: "anudan_name" },
   remark: { label: translations.remark, key: "remark" },
@@ -2119,9 +2149,7 @@ const MainDashboard = () => {
           anudan_name: [
             ...new Set(data.map((item) => item.anudan_name).filter(Boolean)),
           ],
-          remark: [
-            ...new Set(data.map((item) => item.remark).filter(Boolean)),
-          ],
+          remark: [...new Set(data.map((item) => item.remark).filter(Boolean))],
         };
 
         setTableData(data);
@@ -2542,9 +2570,13 @@ const MainDashboard = () => {
         (selected("unit").length === 0 ||
           selected("unit").includes(item.unit)) &&
         (selected("farmer_selling_rate").length === 0 ||
-          selected("farmer_selling_rate").map(String).includes(String(item.farmer_selling_rate))) &&
+          selected("farmer_selling_rate")
+            .map(String)
+            .includes(String(item.farmer_selling_rate))) &&
         (selected("farmer_subsidy_rate").length === 0 ||
-          selected("farmer_subsidy_rate").map(String).includes(String(item.farmer_subsidy_rate))) &&
+          selected("farmer_subsidy_rate")
+            .map(String)
+            .includes(String(item.farmer_subsidy_rate))) &&
         (selected("anudan_name").length === 0 ||
           selected("anudan_name").includes(item.anudan_name)) &&
         (selected("remark").length === 0 ||
@@ -2764,7 +2796,10 @@ const MainDashboard = () => {
       .reduce((sum, row) => sum + (parseFloat(row["कृषक अंश (रु0)"]) || 0), 0)
       .toFixed(2);
     totalRow["अनुदान राशि (रु0)"] = summaryData
-      .reduce((sum, row) => sum + (parseFloat(row["अनुदान राशि (रु0)"]) || 0), 0)
+      .reduce(
+        (sum, row) => sum + (parseFloat(row["अनुदान राशि (रु0)"]) || 0),
+        0,
+      )
       .toFixed(2);
     totalRow["कुल राशि"] = summaryData
       .reduce((sum, row) => sum + (parseFloat(row["कुल राशि"]) || 0), 0)
@@ -2946,7 +2981,10 @@ const MainDashboard = () => {
       .reduce((sum, row) => sum + (parseFloat(row["कृषक अंश (रु0)"]) || 0), 0)
       .toFixed(2);
     totalRow["अनुदान राशि (रु0)"] = rows
-      .reduce((sum, row) => sum + (parseFloat(row["अनुदान राशि (रु0)"]) || 0), 0)
+      .reduce(
+        (sum, row) => sum + (parseFloat(row["अनुदान राशि (रु0)"]) || 0),
+        0,
+      )
       .toFixed(2);
     totalRow["कुल राशि"] = rows
       .reduce((sum, row) => sum + (parseFloat(row["कुल राशि"]) || 0), 0)
@@ -3560,16 +3598,16 @@ const MainDashboard = () => {
             totals[label] = "";
           } else if (numericTotalColumns.has(col)) {
             totals[label] = filteredTableData
-              .reduce(
-                (sum, item) => sum + (parseFloat(item[col]) || 0),
-                0,
-              )
+              .reduce((sum, item) => sum + (parseFloat(item[col]) || 0), 0)
               .toFixed(2);
           } else {
             totals[label] = new Set(
               filteredTableData
                 .map((item) => item[col])
-                .filter((value) => value !== null && value !== undefined && value !== ""),
+                .filter(
+                  (value) =>
+                    value !== null && value !== undefined && value !== "",
+                ),
             ).size;
           }
         });
@@ -3584,7 +3622,6 @@ const MainDashboard = () => {
         columns: allColumns,
         totals,
       };
-
     } else if (view === "detail" && !showDetailed) {
       // Summary table view - Export with breakdown format matching the table display
       const baseData =
@@ -3804,7 +3841,8 @@ const MainDashboard = () => {
 
       // Add monetary columns with grand total only for totals
       totalRow["आवंटित मात्रा "] = grandTotals.allocated_quantity.toFixed(2);
-      totalRow["कृषक अंश (रु0)"] = grandTotals.amount_of_farmer_share.toFixed(2);
+      totalRow["कृषक अंश (रु0)"] =
+        grandTotals.amount_of_farmer_share.toFixed(2);
       totalRow["अनुदान राशि (रु0)"] = grandTotals.amount_of_subsidy.toFixed(2);
       totalRow["कुल राशि"] = grandTotals.total_amount.toFixed(2);
 
@@ -4216,7 +4254,10 @@ const MainDashboard = () => {
             .toFixed(2);
         } else {
           totals[col] = filteredTableData
-            .reduce((sum, row) => sum + parseFloat(row["कृषक अंश (रु0)"] || 0), 0)
+            .reduce(
+              (sum, row) => sum + parseFloat(row["कृषक अंश (रु0)"] || 0),
+              0,
+            )
             .toFixed(2);
         }
       } else if (col === "अनुदान राशि (रु0)") {
@@ -7218,8 +7259,7 @@ const MainDashboard = () => {
           h === "क्रय योजना"
         )
           return { wch: 25 };
-        if (h === "मद" || h === "उप-मद" || h === "इकाई")
-          return { wch: 20 };
+        if (h === "मद" || h === "उप-मद" || h === "इकाई") return { wch: 20 };
         return { wch: 18 };
       });
       ws["!cols"] = colWidths;
@@ -8946,14 +8986,17 @@ const MainDashboard = () => {
                       "investment_name",
                       "sub_investment_name",
                       "unit",
-                                                  "anudan_name",
-                                  ].map((filterKey) => (
+                      "anudan_name",
+                    ].map((filterKey) => (
                       <Col lg={3} md={4} sm={6} key={filterKey}>
                         <Form.Group className="mb-2">
                           <Form.Label className="form-label fw-bold">
                             {columnDefs[filterKey]?.label || filterKey}
                           </Form.Label>
-                          <div className="dropdown" style={{ position: "relative" }}>
+                          <div
+                            className="dropdown"
+                            style={{ position: "relative" }}
+                          >
                             <button
                               className="btn btn-secondary dropdown-toggle drop-option-custom w-100"
                               type="button"
@@ -9019,10 +9062,7 @@ const MainDashboard = () => {
                                         (v) => String(v) === String(option),
                                       )}
                                       onChange={() =>
-                                        handleCheckboxChange(
-                                          filterKey,
-                                          option,
-                                        )
+                                        handleCheckboxChange(filterKey, option)
                                       }
                                     />
                                   </div>
@@ -12413,7 +12453,7 @@ const MainDashboard = () => {
                                                         </th>
                                                         <th>क्रय योजना</th>
                                                         <th className="text-end">
-                                                          आवंटित मात्रा 
+                                                          आवंटित मात्रा
                                                         </th>
                                                         <th className="text-end">
                                                           {rashiOptions.find(
@@ -12645,7 +12685,7 @@ const MainDashboard = () => {
                                                                     "80px",
                                                                 }}
                                                               >
-                                                                आवंटित मात्रा 
+                                                                आवंटित मात्रा
                                                               </th>
                                                               <th
                                                                 key={
@@ -12675,7 +12715,7 @@ const MainDashboard = () => {
                                                             minWidth: "80px",
                                                           }}
                                                         >
-                                                          आवंटित मात्रा 
+                                                          आवंटित मात्रा
                                                         </th>
                                                         <th
                                                           className="text-end"
@@ -13045,7 +13085,7 @@ const MainDashboard = () => {
                                                                     "80px",
                                                                 }}
                                                               >
-                                                                आवंटित मात्रा 
+                                                                आवंटित मात्रा
                                                               </th>
                                                               <th
                                                                 key={
@@ -13075,7 +13115,7 @@ const MainDashboard = () => {
                                                             minWidth: "80px",
                                                           }}
                                                         >
-                                                          आवंटित मात्रा 
+                                                          आवंटित मात्रा
                                                         </th>
                                                         <th
                                                           className="text-end"
@@ -14049,7 +14089,7 @@ const MainDashboard = () => {
                                                           ),
                                                         )}
                                                         <th rowSpan="3">
-                                                          आवंटित मात्रा 
+                                                          आवंटित मात्रा
                                                         </th>
                                                         <th rowSpan="3">
                                                           कृषक धनराशि
@@ -14151,7 +14191,7 @@ const MainDashboard = () => {
                                                           ),
                                                         )}
                                                         <th rowSpan="2">
-                                                          आवंटित मात्रा 
+                                                          आवंटित मात्रा
                                                         </th>
                                                         <th rowSpan="2">
                                                           कृषक धनराशि
@@ -14539,7 +14579,8 @@ const MainDashboard = () => {
                                                         ) &&
                                                         col !==
                                                           "आवंटित मात्रा " &&
-                                                        col !== "कृषक अंश (रु0)" &&
+                                                        col !==
+                                                          "कृषक अंश (रु0)" &&
                                                         col !==
                                                           "अनुदान राशि (रु0)",
                                                     );
@@ -16387,6 +16428,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             group.unit
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       )}
@@ -16430,6 +16472,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             sub.matra
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       </div>
@@ -16603,6 +16646,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             u
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       ) : null;
@@ -16620,6 +16664,7 @@ const MainDashboard = () => {
                                                                                     {
                                                                                       item.matra
                                                                                     }
+
                                                                                     )
                                                                                   </span>
                                                                                 </div>
@@ -17578,6 +17623,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             group.unit
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       )}
@@ -17621,6 +17667,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             sub.matra
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       </div>
@@ -17797,6 +17844,7 @@ const MainDashboard = () => {
                                                                                           {
                                                                                             item.unit
                                                                                           }
+
                                                                                           )
                                                                                         </span>
                                                                                       )}
@@ -17813,6 +17861,7 @@ const MainDashboard = () => {
                                                                                     {
                                                                                       item.matra
                                                                                     }
+
                                                                                     )
                                                                                   </span>
                                                                                 </div>
@@ -18151,155 +18200,158 @@ const MainDashboard = () => {
                           </div>
                           <Row>
                             {tableColumnOrder
-                               .filter((key) => key !== "bill_date")
-                               .map((key) => ({
-                                 key,
-                                 label: columnDefs[key].label,
-                               }))
-                               .map((col) => {
-                              // Get base data
-                              const baseData =
-                                view === "main"
-                                  ? filteredTableData &&
-                                    filteredTableData.length > 0
-                                    ? filteredTableData
-                                    : tableData
-                                  : tableData;
+                              .filter((key) => key !== "bill_date")
+                              .map((key) => ({
+                                key,
+                                label: columnDefs[key].label,
+                              }))
+                              .map((col) => {
+                                // Get base data
+                                const baseData =
+                                  view === "main"
+                                    ? filteredTableData &&
+                                      filteredTableData.length > 0
+                                      ? filteredTableData
+                                      : tableData
+                                    : tableData;
 
-                              // Apply OTHER graph filters (excluding current column) to get cascaded data
-                              const cascadedData = baseData.filter((item) => {
-                                for (const [
-                                  filterKey,
-                                  selectedValues,
-                                ] of Object.entries(graphFilters)) {
-                                  // Skip the current column's filter to show all available options
-                                  if (filterKey === col.key) continue;
-                                  if (
-                                    selectedValues &&
-                                    selectedValues.length > 0
-                                  ) {
+                                // Apply OTHER graph filters (excluding current column) to get cascaded data
+                                const cascadedData = baseData.filter((item) => {
+                                  for (const [
+                                    filterKey,
+                                    selectedValues,
+                                  ] of Object.entries(graphFilters)) {
+                                    // Skip the current column's filter to show all available options
+                                    if (filterKey === col.key) continue;
                                     if (
-                                      !selectedValues.includes(item[filterKey])
+                                      selectedValues &&
+                                      selectedValues.length > 0
                                     ) {
-                                      return false;
+                                      if (
+                                        !selectedValues.includes(
+                                          item[filterKey],
+                                        )
+                                      ) {
+                                        return false;
+                                      }
                                     }
                                   }
-                                }
-                                return true;
-                              });
+                                  return true;
+                                });
 
-                              // Get unique values from cascaded data
-                              const allValues = getUniqueColumnValues(
-                                cascadedData,
-                                col.key,
-                              );
-                              const selectedValues =
-                                graphFilters[col.key] || [];
-                              const isFilterActive = selectedValues.length > 0;
+                                // Get unique values from cascaded data
+                                const allValues = getUniqueColumnValues(
+                                  cascadedData,
+                                  col.key,
+                                );
+                                const selectedValues =
+                                  graphFilters[col.key] || [];
+                                const isFilterActive =
+                                  selectedValues.length > 0;
 
-                              return (
-                                <Col
-                                  key={col.key}
-                                  lg={3}
-                                  md={4}
-                                  sm={6}
-                                  className="mb-2"
-                                >
-                                  <Form.Group>
-                                    <Form.Label className="form-label small mb-1">
-                                      {col.label}{" "}
-                                      {isFilterActive && (
-                                        <span className="badge bg-primary">
-                                          {selectedValues.length}
-                                        </span>
-                                      )}
-                                    </Form.Label>
-                                    <div className="dropdown">
-                                      <button
-                                        className={`btn ${isFilterActive ? "btn-primary" : "btn-outline-secondary"} dropdown-toggle w-100`}
-                                        type="button"
-                                        style={{ fontSize: "12px" }}
-                                        onClick={() =>
-                                          toggleGraphFilterDropdown(col.key)
-                                        }
-                                      >
-                                        {selectedValues.length > 0
-                                          ? `${selectedValues.length} चयनित`
-                                          : "सभी"}
-                                      </button>
-                                      {graphFilterDropdowns[col.key] && (
-                                        <div
-                                          className="dropdown-menu show"
-                                          style={{
-                                            position: "absolute",
-                                            top: "100%",
-                                            zIndex: 1050,
-                                            maxHeight: "250px",
-                                            overflowY: "auto",
-                                            minWidth: "200px",
-                                          }}
+                                return (
+                                  <Col
+                                    key={col.key}
+                                    lg={3}
+                                    md={4}
+                                    sm={6}
+                                    className="mb-2"
+                                  >
+                                    <Form.Group>
+                                      <Form.Label className="form-label small mb-1">
+                                        {col.label}{" "}
+                                        {isFilterActive && (
+                                          <span className="badge bg-primary">
+                                            {selectedValues.length}
+                                          </span>
+                                        )}
+                                      </Form.Label>
+                                      <div className="dropdown">
+                                        <button
+                                          className={`btn ${isFilterActive ? "btn-primary" : "btn-outline-secondary"} dropdown-toggle w-100`}
+                                          type="button"
+                                          style={{ fontSize: "12px" }}
+                                          onClick={() =>
+                                            toggleGraphFilterDropdown(col.key)
+                                          }
                                         >
-                                          <div className="dropdown-item">
-                                            <FormCheck
-                                              className="check-box"
-                                              type="checkbox"
-                                              id={`graph_select_all_${col.key}`}
-                                              label={
-                                                selectedValues.length ===
-                                                  allValues.length &&
-                                                allValues.length > 0
-                                                  ? "सभी हटाएं"
-                                                  : "सभी चुनें"
-                                              }
-                                              checked={
-                                                selectedValues.length ===
-                                                  allValues.length &&
-                                                allValues.length > 0
-                                              }
-                                              onChange={() =>
-                                                handleGraphFilterSelectAll(
-                                                  col.key,
-                                                  allValues,
-                                                )
-                                              }
-                                            />
-                                          </div>
-                                          <div className="dropdown-divider"></div>
-                                          {allValues.length > 0 ? (
-                                            allValues.map((val) => (
-                                              <div
-                                                key={val}
-                                                className="dropdown-item"
-                                              >
-                                                <FormCheck
-                                                  className="check-box"
-                                                  type="checkbox"
-                                                  id={`graph_${col.key}_${val}`}
-                                                  label={val}
-                                                  checked={selectedValues.includes(
-                                                    val,
-                                                  )}
-                                                  onChange={() =>
-                                                    handleGraphFilterChange(
-                                                      col.key,
-                                                      val,
-                                                    )
-                                                  }
-                                                />
-                                              </div>
-                                            ))
-                                          ) : (
-                                            <div className="dropdown-item text-muted">
-                                              कोई डेटा उपलब्ध नहीं
+                                          {selectedValues.length > 0
+                                            ? `${selectedValues.length} चयनित`
+                                            : "सभी"}
+                                        </button>
+                                        {graphFilterDropdowns[col.key] && (
+                                          <div
+                                            className="dropdown-menu show"
+                                            style={{
+                                              position: "absolute",
+                                              top: "100%",
+                                              zIndex: 1050,
+                                              maxHeight: "250px",
+                                              overflowY: "auto",
+                                              minWidth: "200px",
+                                            }}
+                                          >
+                                            <div className="dropdown-item">
+                                              <FormCheck
+                                                className="check-box"
+                                                type="checkbox"
+                                                id={`graph_select_all_${col.key}`}
+                                                label={
+                                                  selectedValues.length ===
+                                                    allValues.length &&
+                                                  allValues.length > 0
+                                                    ? "सभी हटाएं"
+                                                    : "सभी चुनें"
+                                                }
+                                                checked={
+                                                  selectedValues.length ===
+                                                    allValues.length &&
+                                                  allValues.length > 0
+                                                }
+                                                onChange={() =>
+                                                  handleGraphFilterSelectAll(
+                                                    col.key,
+                                                    allValues,
+                                                  )
+                                                }
+                                              />
                                             </div>
-                                          )}
-                                        </div>
-                                      )}
-                                    </div>
-                                  </Form.Group>
-                                </Col>
-                              );
-                            })}
+                                            <div className="dropdown-divider"></div>
+                                            {allValues.length > 0 ? (
+                                              allValues.map((val) => (
+                                                <div
+                                                  key={val}
+                                                  className="dropdown-item"
+                                                >
+                                                  <FormCheck
+                                                    className="check-box"
+                                                    type="checkbox"
+                                                    id={`graph_${col.key}_${val}`}
+                                                    label={val}
+                                                    checked={selectedValues.includes(
+                                                      val,
+                                                    )}
+                                                    onChange={() =>
+                                                      handleGraphFilterChange(
+                                                        col.key,
+                                                        val,
+                                                      )
+                                                    }
+                                                  />
+                                                </div>
+                                              ))
+                                            ) : (
+                                              <div className="dropdown-item text-muted">
+                                                कोई डेटा उपलब्ध नहीं
+                                              </div>
+                                            )}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </Form.Group>
+                                  </Col>
+                                );
+                              })}
                           </Row>
                         </div>
 
@@ -18353,22 +18405,22 @@ const MainDashboard = () => {
                           >
                             {/* Show all available columns, mark selected ones from main table */}
                             {tableColumnOrder
-                               .filter((key) => key !== "bill_date")
-                               .map((key) => ({
-                                 key,
-                                 label: columnDefs[key].label,
-                               }))
-                               .map((col) => {
-                              const isSelected =
-                                tableColumnFilters.main &&
-                                tableColumnFilters.main.includes(col.key);
-                              return (
-                                <option key={col.key} value={col.key}>
-                                  {isSelected ? "✓ " : ""}
-                                  {col.label}
-                                </option>
-                              );
-                            })}
+                              .filter((key) => key !== "bill_date")
+                              .map((key) => ({
+                                key,
+                                label: columnDefs[key].label,
+                              }))
+                              .map((col) => {
+                                const isSelected =
+                                  tableColumnFilters.main &&
+                                  tableColumnFilters.main.includes(col.key);
+                                return (
+                                  <option key={col.key} value={col.key}>
+                                    {isSelected ? "✓ " : ""}
+                                    {col.label}
+                                  </option>
+                                );
+                              })}
                           </Form.Select>
                         </div>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -9,14 +9,15 @@ import {
   Form,
   Alert,
   Spinner,
-} from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useCenter } from './all_login/CenterContext';
-import { useAuth } from '../context/AuthContext';
-import { RiAddLine } from 'react-icons/ri';
-import DemandNavigation from './DemandNavigation';
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useCenter } from "./all_login/CenterContext";
+import { useAuth } from "../context/AuthContext";
+import { RiAddLine } from "react-icons/ri";
+import DemandNavigation from "./DemandNavigation";
 
-const API_BASE = 'https://mahadevaaya.com/govbillingsystem/backend/api';
+const API_BASE =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api";
 
 const DemandGenerate = () => {
   const navigate = useNavigate();
@@ -27,34 +28,34 @@ const DemandGenerate = () => {
   const [centerDemands, setCenterDemands] = useState([]);
   const [loading, setLoading] = useState(false);
   const [centerLoading, setCenterLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   // State for inline editing
   const [editingId, setEditingId] = useState(null);
-  const [editingQuantity, setEditingQuantity] = useState('');
+  const [editingQuantity, setEditingQuantity] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [validationError, setValidationError] = useState('');
+  const [validationError, setValidationError] = useState("");
   const [editingDemandByCenter, setEditingDemandByCenter] = useState(null);
 
   /* 🔐 Auth check */
   useEffect(() => {
     if (!centerData.isLoggedIn) {
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     }
   }, [centerData.isLoggedIn, navigate]);
 
   /* 📥 GET demand-generation */
   const fetchDemands = async () => {
     setLoading(true);
-    setError('');
+    setError("");
     try {
       const res = await fetch(`${API_BASE}/demand-generation/`);
       if (!res.ok) throw new Error();
       const data = await res.json();
       setDemands(data);
     } catch {
-      setError('डिमांड लाने में त्रुटि');
+      setError("डिमांड लाने में त्रुटि");
     } finally {
       setLoading(false);
     }
@@ -69,7 +70,7 @@ const DemandGenerate = () => {
       const data = await res.json();
       setCenterDemands(data);
     } catch {
-      console.error('सेंटर डिमांड लाने में त्रुटि');
+      console.error("सेंटर डिमांड लाने में त्रुटि");
     } finally {
       setCenterLoading(false);
     }
@@ -87,31 +88,31 @@ const DemandGenerate = () => {
 
     if (value > maxQty) {
       setValidationError(
-        `मांगी गई मात्रा (${value}) DHO, कोटद्वार का कुल लक्ष्य (${maxQty}) से अधिक नहीं हो सकती`
+        `मांगी गई मात्रा (${value}) DHO, कोटद्वार का कुल लक्ष्य (${maxQty}) से अधिक नहीं हो सकती`,
       );
       return;
     }
-    setValidationError('');
+    setValidationError("");
     setEditingQuantity(e.target.value);
   };
 
   /* 📤 POST demand-by-center */
   const handleSaveDemand = async (demandId, allocatedQuantity) => {
     if (!editingQuantity || parseFloat(editingQuantity) <= 0) {
-      setValidationError('कृपया सही मात्रा दर्ज करें');
+      setValidationError("कृपया सही मात्रा दर्ज करें");
       return;
     }
     if (parseFloat(editingQuantity) > parseFloat(allocatedQuantity)) {
       setValidationError(
-        `मांगी गई मात्रा DHO, कोटद्वार का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`
+        `मांगी गई मात्रा DHO, कोटद्वार का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`,
       );
       return;
     }
 
     setIsSubmitting(true);
-    setError('');
-    setSuccess('');
-    setValidationError('');
+    setError("");
+    setSuccess("");
+    setValidationError("");
 
     const payload = {
       demand_id: demandId,
@@ -121,19 +122,19 @@ const DemandGenerate = () => {
 
     try {
       const res = await fetch(`${API_BASE}/demand-by-center/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error();
 
-      setSuccess('डिमांड सफलतापूर्वक सेव की गई');
+      setSuccess("डिमांड सफलतापूर्वक सेव की गई");
       setEditingId(null);
-      setEditingQuantity('');
+      setEditingQuantity("");
       await fetchCenterDemands();
-      setTimeout(() => setSuccess(''), 3000);
+      setTimeout(() => setSuccess(""), 3000);
     } catch {
-      setError('डिमांड सेव करने में त्रुटि');
+      setError("डिमांड सेव करने में त्रुटि");
     } finally {
       setIsSubmitting(false);
     }
@@ -142,24 +143,24 @@ const DemandGenerate = () => {
   /* 📤 PUT demand-by-center - Edit existing demand */
   const handleEditDemand = async (demandByCenterId, allocatedQuantity) => {
     if (!demandByCenterId) {
-      setValidationError('रिकॉर्ड नहीं मिला');
+      setValidationError("रिकॉर्ड नहीं मिला");
       return;
     }
     if (!editingQuantity || parseFloat(editingQuantity) <= 0) {
-      setValidationError('कृपया सही मात्रा दर्ज करें');
+      setValidationError("कृपया सही मात्रा दर्ज करें");
       return;
     }
     if (parseFloat(editingQuantity) > parseFloat(allocatedQuantity)) {
       setValidationError(
-        `मांगी गई मात्रा DHO, कोटद्वार का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`
+        `मांगी गई मात्रा DHO, कोटद्वार का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`,
       );
       return;
     }
 
     setIsSubmitting(true);
-    setError('');
-    setSuccess('');
-    setValidationError('');
+    setError("");
+    setSuccess("");
+    setValidationError("");
 
     const payload = {
       id: demandByCenterId,
@@ -168,19 +169,19 @@ const DemandGenerate = () => {
 
     try {
       const res = await fetch(`${API_BASE}/demand-by-center/`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error();
 
-      setSuccess('डिमांड सफलतापूर्वक अपडेट की गई');
+      setSuccess("डिमांड सफलतापूर्वक अपडेट की गई");
       setEditingDemandByCenter(null);
-      setEditingQuantity('');
+      setEditingQuantity("");
       await fetchCenterDemands();
-      setTimeout(() => setSuccess(''), 3000);
+      setTimeout(() => setSuccess(""), 3000);
     } catch {
-      setError('डिमांड अपडेट करने में त्रुटि');
+      setError("डिमांड अपडेट करने में त्रुटि");
     } finally {
       setIsSubmitting(false);
     }
@@ -190,13 +191,14 @@ const DemandGenerate = () => {
   const handleLogout = () => {
     clearCenter();
     logout();
-    navigate('/', { replace: true });
+    navigate("/", { replace: true });
   };
 
   // Get the full demand-by-center record
   const getDemandByCenterRecord = (demandId) => {
     return centerDemands.find(
-      (cd) => cd.demand_id === demandId && cd.center_name === centerData.centerName
+      (cd) =>
+        cd.demand_id === demandId && cd.center_name === centerData.centerName,
     );
   };
 
@@ -209,31 +211,31 @@ const DemandGenerate = () => {
   // Start editing a NEW demand
   const startEditing = (demandId) => {
     setEditingId(demandId);
-    setEditingQuantity('');
-    setValidationError('');
+    setEditingQuantity("");
+    setValidationError("");
   };
 
   // Start editing an EXISTING demand-by-center record
   const startEditingDemandByCenter = (record) => {
     if (!record) return;
-    
+
     // Prevent editing if 3 days have passed
     if (isEditingDisabled(record.created_at)) {
-      setValidationError('3 दिन के बाद संपादन अक्षम है।');
-      setTimeout(() => setValidationError(''), 3000);
+      setValidationError("3 दिन के बाद संपादन अक्षम है।");
+      setTimeout(() => setValidationError(""), 3000);
       return;
     }
 
     setEditingDemandByCenter(record.id);
-    setEditingQuantity(record.demanded_quantity || '');
-    setValidationError('');
+    setEditingQuantity(record.demanded_quantity || "");
+    setValidationError("");
   };
 
   // Cancel editing
   const cancelEditing = () => {
     setEditingId(null);
-    setEditingQuantity('');
-    setValidationError('');
+    setEditingQuantity("");
+    setValidationError("");
     setEditingDemandByCenter(null);
   };
 
@@ -280,7 +282,9 @@ const DemandGenerate = () => {
               type="number"
               step="0.01"
               value={editingQuantity}
-              onChange={(e) => handleDemandedQuantityChange(e, d.allocated_quantity)}
+              onChange={(e) =>
+                handleDemandedQuantityChange(e, d.allocated_quantity)
+              }
               placeholder="मात्रा"
               className="me-2"
               isInvalid={!!validationError}
@@ -289,12 +293,18 @@ const DemandGenerate = () => {
             />
             <Button
               size="sm"
-              onClick={() => handleSaveDemand(d.demand_id, d.allocated_quantity)}
+              onClick={() =>
+                handleSaveDemand(d.demand_id, d.allocated_quantity)
+              }
               disabled={isSubmitting || !!validationError}
-              style={{ backgroundColor: '#0d9488', borderColor: '#0d9488' }}
+              style={{ backgroundColor: "#0d9488", borderColor: "#0d9488" }}
             >
-              {isSubmitting ? <Spinner animation="border" size="sm" /> : (
-                <>सबमिट <RiAddLine /></>
+              {isSubmitting ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                <>
+                  सबमिट <RiAddLine />
+                </>
               )}
             </Button>
             <Button
@@ -326,20 +336,22 @@ const DemandGenerate = () => {
             type="number"
             step="0.01"
             value={editingQuantity}
-            onChange={(e) => handleDemandedQuantityChange(e, d.allocated_quantity)}
+            onChange={(e) =>
+              handleDemandedQuantityChange(e, d.allocated_quantity)
+            }
             placeholder="मात्रा"
             isInvalid={!!validationError}
             max={d.allocated_quantity}
             size="sm"
-            style={{ width: '100px' }}
+            style={{ width: "100px" }}
           />
           <Button
             size="sm"
             onClick={() => handleEditDemand(recordId, d.allocated_quantity)}
             disabled={isSubmitting || !!validationError}
-            style={{ backgroundColor: '#10b981', borderColor: '#10b981' }}
+            style={{ backgroundColor: "#10b981", borderColor: "#10b981" }}
           >
-            {isSubmitting ? <Spinner animation="border" size="sm" /> : '✓'}
+            {isSubmitting ? <Spinner animation="border" size="sm" /> : "✓"}
           </Button>
           <Button variant="secondary" size="sm" onClick={cancelEditing}>
             ✕
@@ -363,18 +375,22 @@ const DemandGenerate = () => {
               size="sm"
               variant="outline-secondary"
               onClick={() => startEditingDemandByCenter(record)}
-              title={editingDisabled ? '3 दिन के बाद संपादन अक्षम है' : 'संपादित करें'}
+              title={
+                editingDisabled
+                  ? "3 दिन के बाद संपादन अक्षम है"
+                  : "संपादित करें"
+              }
               disabled={editingDisabled}
             >
               ✎
             </Button>
           </div>
           {editingDisabled ? (
-            <div className="text-danger small" style={{ fontSize: '0.7rem' }}>
+            <div className="text-danger small" style={{ fontSize: "0.7rem" }}>
               3 दिन के बाद संपादन अक्षम है
             </div>
           ) : (
-            <div className="text-muted small" style={{ fontSize: '0.7rem' }}>
+            <div className="text-muted small" style={{ fontSize: "0.7rem" }}>
               आप 3 दिन के भीतर संपादित कर सकते हैं
             </div>
           )}
@@ -389,7 +405,7 @@ const DemandGenerate = () => {
         <Button
           size="sm"
           onClick={() => startEditing(d.demand_id)}
-          style={{ backgroundColor: '#0d9488', borderColor: '#0d9488' }}
+          style={{ backgroundColor: "#0d9488", borderColor: "#0d9488" }}
         >
           <RiAddLine />
         </Button>
@@ -402,7 +418,9 @@ const DemandGenerate = () => {
     const demandedQty = getDemandedQuantity(d.demand_id);
     const isEditing = editingId === d.demand_id;
     const tempAmount =
-      isEditing && editingQuantity ? calculateDemandedAmount(d.rate, editingQuantity) : null;
+      isEditing && editingQuantity
+        ? calculateDemandedAmount(d.rate, editingQuantity)
+        : null;
 
     if (isEditing && tempAmount) {
       return <span className="text-primary fw-bold">₹{tempAmount}</span>;
@@ -418,7 +436,7 @@ const DemandGenerate = () => {
   };
 
   return (
-    <Container fluid className="px-3" style={{ paddingTop: '60px' }}>
+    <Container fluid className="px-3" style={{ paddingTop: "60px" }}>
       <div className="mb-3">
         <DemandNavigation />
       </div>
@@ -427,7 +445,7 @@ const DemandGenerate = () => {
         <Col>
           <div
             className="p-3 rounded shadow-sm"
-            style={{ backgroundColor: '#2a4682', color: 'white' }}
+            style={{ backgroundColor: "#2a4682", color: "white" }}
           >
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -448,7 +466,7 @@ const DemandGenerate = () => {
           <Card className="border-0 shadow-sm">
             <Card.Header
               className="py-2"
-              style={{ backgroundColor: '#0d9488', color: 'white' }}
+              style={{ backgroundColor: "#0d9488", color: "white" }}
             >
               <div className="d-flex justify-content-between align-items-center">
                 <span className="fw-bold">सभी डिमांड</span>
@@ -460,18 +478,28 @@ const DemandGenerate = () => {
             <Card.Body className="p-0">
               {loading ? (
                 <div className="text-center py-4">
-                  <Spinner animation="border" style={{ color: '#0d9488' }} />
+                  <Spinner animation="border" style={{ color: "#0d9488" }} />
                 </div>
               ) : (
                 <div className="table-responsive">
-                  <Table bordered striped hover responsive className="mb-0 table-sm">
+                  <Table
+                    bordered
+                    striped
+                    hover
+                    responsive
+                    className="mb-0 table-sm"
+                  >
                     <thead className="table-light">
                       <tr>
-                        <th className="text-center" style={{ width: '50px' }}>क्र.सं.</th>
+                        <th className="text-center" style={{ width: "50px" }}>
+                          क्र.सं.
+                        </th>
                         <th>उप-मद का नाम</th>
                         <th className="text-nowrap">इकाई</th>
                         <th className="text-nowrap">कुल लक्ष्य</th>
-                        <th className="text-nowrap">कृषक विक्रय दर / अनुदान दर</th>
+                        <th className="text-nowrap">
+                          कृषक विक्रय दर / अनुदान दर
+                        </th>
                         <th className="text-nowrap">राशि</th>
                         <th className="text-nowrap">योजना का नाम</th>
                         <th className="text-nowrap">मांगी गई मात्रा</th>
@@ -482,29 +510,45 @@ const DemandGenerate = () => {
                       {demands.length > 0 ? (
                         demands.map((d, index) => (
                           <tr key={d.id}>
-                            <td className="text-center text-muted">{index + 1}</td>
-                            <td className="text-nowrap">{d.sub_investment_name}</td>
+                            <td className="text-center text-muted">
+                              {index + 1}
+                            </td>
+                            <td className="text-nowrap">
+                              {d.sub_investment_name}
+                            </td>
                             <td>
                               <span
                                 className="badge"
-                                style={{ backgroundColor: '#6b7280', color: 'white' }}
+                                style={{
+                                  backgroundColor: "#6b7280",
+                                  color: "white",
+                                }}
                               >
-                                {d.unit || 'नग'}
+                                {d.unit || "नग"}
                               </span>
                             </td>
-                            <td className="text-nowrap">{d.allocated_quantity}</td>
+                            <td className="text-nowrap">
+                              {d.allocated_quantity}
+                            </td>
                             <td className="text-nowrap">₹{d.rate}</td>
                             <td className="text-nowrap">₹{d.amount}</td>
-                            <td className="text-nowrap">{d.scheme_name || '-'}</td>
-                            <td style={{ minWidth: '180px' }}>
+                            <td className="text-nowrap">
+                              {d.scheme_name || "-"}
+                            </td>
+                            <td style={{ minWidth: "180px" }}>
                               {renderDemandedQuantityCell(d)}
                             </td>
-                            <td className="text-nowrap">{renderAmountCell(d)}</td>
+                            <td className="text-nowrap">
+                              {renderAmountCell(d)}
+                            </td>
                           </tr>
                         ))
                       ) : (
                         <tr>
-                          <td colSpan="9" className="text-center py-4 text-muted">
+                          <td
+                            colSpan="9"
+                            className="text-center py-4 text-muted"
+                          >
                             कोई डाटा नहीं
                           </td>
                         </tr>

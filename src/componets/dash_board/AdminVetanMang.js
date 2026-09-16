@@ -1,27 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Spinner, Alert, Row, Col, Card, Form, Button, Modal } from 'react-bootstrap';
-import DashBoardHeader from './DashBoardHeader';
-import LeftNav from './LeftNav';
-import Footer from '../footer/Footer';
-import { FaClipboardList, FaPlus, FaEdit, FaTrashAlt, FaSave, FaTimes, FaCalendarAlt, FaEye, FaPrint } from 'react-icons/fa';
-import '../../assets/css/dashboard.css';
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Spinner,
+  Alert,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Modal,
+} from "react-bootstrap";
+import DashBoardHeader from "./DashBoardHeader";
+import LeftNav from "./LeftNav";
+import Footer from "../footer/Footer";
+import {
+  FaClipboardList,
+  FaPlus,
+  FaEdit,
+  FaTrashAlt,
+  FaSave,
+  FaTimes,
+  FaCalendarAlt,
+  FaEye,
+  FaPrint,
+} from "react-icons/fa";
+import "../../assets/css/dashboard.css";
 
-const API_BASE_URL = 'https://mahadevaaya.com/govbillingsystem/backend/api/salary-attendance-reports/';
+const API_BASE_URL =
+  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/salary-attendance-reports/";
 
 // 12 Months List (January to December)
 const MONTH_OPTIONS = [
-  "जनवरी (January)", 
-  "फरवरी (February)", 
-  "मार्च (March)", 
-  "अप्रैल (April)", 
-  "मई (May)", 
-  "जून (June)", 
-  "जुलाई (July)", 
-  "अगस्त (August)", 
-  "सितम्बर (September)", 
-  "अक्टूबर (October)", 
-  "नवंबर (November)", 
-  "दिसंबर (December)"
+  "जनवरी (January)",
+  "फरवरी (February)",
+  "मार्च (March)",
+  "अप्रैल (April)",
+  "मई (May)",
+  "जून (June)",
+  "जुलाई (July)",
+  "अगस्त (August)",
+  "सितम्बर (September)",
+  "अक्टूबर (October)",
+  "नवंबर (November)",
+  "दिसंबर (December)",
 ];
 
 const FINANCIAL_YEAR_OPTIONS = ["2024-25", "2025-26", "2026-27", "2027-28"];
@@ -30,30 +51,30 @@ const AdminVetanMang = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
-  
+
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const [showModal, setShowModal] = useState(false);
   const [editingReport, setEditingReport] = useState(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [previewReport, setPreviewReport] = useState(null);
 
   // Filter States
-  const [filterCenterName, setFilterCenterName] = useState('');
-  const [filterMonth, setFilterMonth] = useState('');
-  const [filterFinancialYear, setFilterFinancialYear] = useState('');
-  
+  const [filterCenterName, setFilterCenterName] = useState("");
+  const [filterMonth, setFilterMonth] = useState("");
+  const [filterFinancialYear, setFilterFinancialYear] = useState("");
+
   // Default empty form data
   const initialFormData = {
-    center_name: '',
-    month: '',
-    financial_year: '',
-    letter_number: '',
-    report_date: '',
-    subject: '',
-    report_data: []
+    center_name: "",
+    month: "",
+    financial_year: "",
+    letter_number: "",
+    report_date: "",
+    subject: "",
+    report_data: [],
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -84,25 +105,25 @@ const AdminVetanMang = () => {
   };
 
   const formatPreviewDate = (dateValue) => {
-    if (!dateValue) return '';
+    if (!dateValue) return "";
     try {
       const d = new Date(dateValue);
       return Number.isNaN(d.getTime())
         ? String(dateValue)
-        : d.toLocaleDateString('hi-IN');
+        : d.toLocaleDateString("hi-IN");
     } catch {
       return String(dateValue);
     }
   };
 
   const escapePreviewHtml = (value) => {
-    if (value === null || value === undefined) return '';
+    if (value === null || value === undefined) return "";
     return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   };
 
   const getPreviewRows = (report) => {
@@ -113,11 +134,11 @@ const AdminVetanMang = () => {
     return sourceRows.map((sourceRow, rowIndex) => {
       const row = Array.isArray(sourceRow) ? [...sourceRow] : [];
 
-      while (row.length < 14) row.push('');
+      while (row.length < 14) row.push("");
       if (row.length > 14) row.length = 14;
 
       // Use the actual employee row number only when serial is absent.
-      if (row[0] === null || row[0] === undefined || row[0] === '') {
+      if (row[0] === null || row[0] === undefined || row[0] === "") {
         row[0] = rowIndex + 1;
       }
 
@@ -126,21 +147,25 @@ const AdminVetanMang = () => {
   };
 
   const buildSelectedReportPreview = (report) => {
-    if (!report) return '';
+    if (!report) return "";
 
-    const centerName = escapePreviewHtml(report.center_name || '');
-    const month = escapePreviewHtml(report.month || '');
-    const financialYear = escapePreviewHtml(report.financial_year || '');
-    const letterNumber = escapePreviewHtml(report.letter_number || '');
+    const centerName = escapePreviewHtml(report.center_name || "");
+    const month = escapePreviewHtml(report.month || "");
+    const financialYear = escapePreviewHtml(report.financial_year || "");
+    const letterNumber = escapePreviewHtml(report.letter_number || "");
     const reportDate = escapePreviewHtml(formatPreviewDate(report.report_date));
-    const yearPart = financialYear ? financialYear.split('-')[0] : '';
+    const yearPart = financialYear ? financialYear.split("-")[0] : "";
     const rows = getPreviewRows(report);
 
-    const tableRows = rows.map((row) => `
+    const tableRows = rows
+      .map(
+        (row) => `
       <tr>
-        ${row.map((cell) => `<td>${escapePreviewHtml(cell)}</td>`).join('')}
+        ${row.map((cell) => `<td>${escapePreviewHtml(cell)}</td>`).join("")}
       </tr>
-    `).join('');
+    `,
+      )
+      .join("");
 
     return `
       <div class="vm-print-document">
@@ -229,11 +254,14 @@ const AdminVetanMang = () => {
           </thead>
 
           <tbody>
-            ${tableRows || `
+            ${
+              tableRows ||
+              `
               <tr>
                 <td colspan="14">कोई कर्मचारी डेटा उपलब्ध नहीं है।</td>
               </tr>
-            `}
+            `
+            }
           </tbody>
         </table>
 
@@ -274,10 +302,10 @@ const AdminVetanMang = () => {
   const handlePrintSelectedReport = () => {
     if (!previewReport) return;
 
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open("", "_blank");
 
     if (!printWindow) {
-      alert('प्रिंट विंडो नहीं खुल सकी। कृपया browser pop-up अनुमति दें।');
+      alert("प्रिंट विंडो नहीं खुल सकी। कृपया browser pop-up अनुमति दें।");
       return;
     }
 
@@ -286,7 +314,7 @@ const AdminVetanMang = () => {
       <html lang="hi">
       <head>
         <meta charset="UTF-8">
-        <title>वेतन मांग पत्र - ${escapePreviewHtml(previewReport.center_name || '')}</title>
+        <title>वेतन मांग पत्र - ${escapePreviewHtml(previewReport.center_name || "")}</title>
         <style>
           * { box-sizing: border-box; }
 
@@ -443,8 +471,9 @@ const AdminVetanMang = () => {
         headers: { Accept: "application/json" },
       });
 
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      
+      if (!response.ok)
+        throw new Error(`HTTP error! Status: ${response.status}`);
+
       const responseData = await response.json();
       setReports(Array.isArray(responseData.data) ? responseData.data : []);
     } catch (err) {
@@ -459,26 +488,31 @@ const AdminVetanMang = () => {
   }, []);
 
   // Filtered Reports Logic
-  const filteredReports = reports.filter(report => {
-    const matchesCenter = filterCenterName 
-      ? (report.center_name && report.center_name.toLowerCase().includes(filterCenterName.toLowerCase())) 
+  const filteredReports = reports.filter((report) => {
+    const matchesCenter = filterCenterName
+      ? report.center_name &&
+        report.center_name
+          .toLowerCase()
+          .includes(filterCenterName.toLowerCase())
       : true;
     const matchesMonth = filterMonth ? report.month === filterMonth : true;
-    const matchesYear = filterFinancialYear ? report.financial_year === filterFinancialYear : true;
-    
+    const matchesYear = filterFinancialYear
+      ? report.financial_year === filterFinancialYear
+      : true;
+
     return matchesCenter && matchesMonth && matchesYear;
   });
 
   const clearFilters = () => {
-    setFilterCenterName('');
-    setFilterMonth('');
-    setFilterFinancialYear('');
+    setFilterCenterName("");
+    setFilterMonth("");
+    setFilterFinancialYear("");
   };
 
   // Handle standard input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Handle 2D Array report_data changes
@@ -486,20 +520,20 @@ const AdminVetanMang = () => {
     const newData = [...formData.report_data];
     if (!newData[rowIndex]) newData[rowIndex] = [];
     newData[rowIndex][colIndex] = value;
-    setFormData(prev => ({ ...prev, report_data: newData }));
+    setFormData((prev) => ({ ...prev, report_data: newData }));
   };
 
   const addReportRow = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      report_data: [...prev.report_data, Array(14).fill('')]
+      report_data: [...prev.report_data, Array(14).fill("")],
     }));
   };
 
   const removeReportRow = (rowIndex) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      report_data: prev.report_data.filter((_, index) => index !== rowIndex)
+      report_data: prev.report_data.filter((_, index) => index !== rowIndex),
     }));
   };
 
@@ -508,13 +542,13 @@ const AdminVetanMang = () => {
     if (report) {
       setEditingReport(report);
       setFormData({
-        center_name: report.center_name || '',
-        month: report.month || '',
-        financial_year: report.financial_year || '',
-        letter_number: report.letter_number || '',
-        report_date: report.report_date || '',
-        subject: report.subject || '',
-        report_data: report.report_data || []
+        center_name: report.center_name || "",
+        month: report.month || "",
+        financial_year: report.financial_year || "",
+        letter_number: report.letter_number || "",
+        report_date: report.report_date || "",
+        subject: report.subject || "",
+        report_data: report.report_data || [],
       });
     } else {
       setEditingReport(null);
@@ -525,50 +559,65 @@ const AdminVetanMang = () => {
 
   // Save (POST / PUT)
   const handleSaveReport = async () => {
-    const method = editingReport ? 'PUT' : 'POST';
-    const url = editingReport ? `${API_BASE_URL}${editingReport.id}/` : API_BASE_URL;
+    const method = editingReport ? "PUT" : "POST";
+    const url = editingReport
+      ? `${API_BASE_URL}${editingReport.id}/`
+      : API_BASE_URL;
 
     try {
       const response = await fetch(url, {
         method: method,
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error('Failed to save data');
-      
+      if (!response.ok) throw new Error("Failed to save data");
+
       setShowModal(false);
-      fetchReports(); 
+      fetchReports();
     } catch (err) {
-      alert('डेटा सेव करने में त्रुटि हुई।');
+      alert("डेटा सेव करने में त्रुटि हुई।");
     }
   };
 
   // Delete (DELETE)
   const handleDeleteReport = async (id) => {
-    if (!window.confirm('क्या आप वाकई इस रिपोर्ट को हटाना चाहते हैं?')) return;
+    if (!window.confirm("क्या आप वाकई इस रिपोर्ट को हटाना चाहते हैं?")) return;
 
     try {
       const response = await fetch(`${API_BASE_URL}${id}/`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: { Accept: "application/json" },
       });
 
-      if (!response.ok && response.status !== 204) throw new Error('Failed to delete');
-      
-      fetchReports(); 
+      if (!response.ok && response.status !== 204)
+        throw new Error("Failed to delete");
+
+      fetchReports();
     } catch (err) {
-      alert('डिलीट करने में त्रुटि हुई।');
+      alert("डिलीट करने में त्रुटि हुई।");
     }
   };
 
   // Table Headers for report_data
   const reportColumns = [
-    "क्र.सं.", "नाम", "पदनाम", "वेतन प्रकार", "प्रारंभ तिथि", "तिथि तक", "पुनः प्रारंभ", "पुनः तिथि तक", 
-    "छुट्टी", "विशेष कारण", "उपस्थिति", "विशेष कारण", "कुल", "कार्य विवरण"
+    "क्र.सं.",
+    "नाम",
+    "पदनाम",
+    "वेतन प्रकार",
+    "प्रारंभ तिथि",
+    "तिथि तक",
+    "पुनः प्रारंभ",
+    "पुनः तिथि तक",
+    "छुट्टी",
+    "विशेष कारण",
+    "उपस्थिति",
+    "विशेष कारण",
+    "कुल",
+    "कार्य विवरण",
   ];
 
   return (
@@ -582,14 +631,21 @@ const AdminVetanMang = () => {
         />
 
         <div className="main-content professional-main-content">
-          <DashBoardHeader sidebarOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+          <DashBoardHeader
+            sidebarOpen={sidebarOpen}
+            toggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          />
 
-          <Container fluid className="dashboard-body bg-home professional-dashboard-body">
-            
+          <Container
+            fluid
+            className="dashboard-body bg-home professional-dashboard-body"
+          >
             {/* Welcome Section */}
             <div className="home-welcome-section professional-welcome d-flex justify-content-between text-center mb-4">
               <h1 className="home-title">वेतन मांग एवं उपस्थिति प्रबंधन</h1>
-              <p className="home-subtitle">DHO कोटद्वार उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है</p>
+              <p className="home-subtitle">
+                DHO कोटद्वार उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है
+              </p>
             </div>
 
             {/* Header and Filters */}
@@ -599,10 +655,16 @@ const AdminVetanMang = () => {
                   <Col md={12} className="mb-2">
                     <div className="d-flex align-items-center">
                       <FaClipboardList className="text-primary me-2" />
-                      <span className="report-title" style={{ fontSize: '0.9rem', fontWeight: '600' }}>
+                      <span
+                        className="report-title"
+                        style={{ fontSize: "0.9rem", fontWeight: "600" }}
+                      >
                         वेतन मांग पत्र एवं उपस्थिति सूचना
                       </span>
-                      <span className="badge bg-info ms-2" style={{ fontSize: '0.7rem' }}>
+                      <span
+                        className="badge bg-info ms-2"
+                        style={{ fontSize: "0.7rem" }}
+                      >
                         {filteredReports.length} रिपोर्ट्स
                       </span>
                     </div>
@@ -626,7 +688,9 @@ const AdminVetanMang = () => {
                     >
                       <option value="">सभी महीने</option>
                       {MONTH_OPTIONS.map((month, idx) => (
-                        <option key={idx} value={month}>{month}</option>
+                        <option key={idx} value={month}>
+                          {month}
+                        </option>
                       ))}
                     </Form.Select>
                   </Col>
@@ -638,12 +702,24 @@ const AdminVetanMang = () => {
                     >
                       <option value="">सभी वित्तीय वर्ष</option>
                       {FINANCIAL_YEAR_OPTIONS.map((year, idx) => (
-                        <option key={idx} value={year}>{year}</option>
+                        <option key={idx} value={year}>
+                          {year}
+                        </option>
                       ))}
                     </Form.Select>
                   </Col>
-                  <Col md={2} sm={6} xs={12} className="d-flex justify-content-md-end">
-                    <Button variant="outline-danger" size="sm" onClick={clearFilters} style={{ width: '100%' }}>
+                  <Col
+                    md={2}
+                    sm={6}
+                    xs={12}
+                    className="d-flex justify-content-md-end"
+                  >
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={clearFilters}
+                      style={{ width: "100%" }}
+                    >
                       <FaTimes className="me-1" /> साफ करें
                     </Button>
                   </Col>
@@ -663,23 +739,49 @@ const AdminVetanMang = () => {
               <Alert variant="danger" className="text-center">
                 {error}
                 <div className="mt-2">
-                  <button className="btn btn-outline-danger btn-sm" onClick={fetchReports}>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={fetchReports}
+                  >
                     पुनः प्रयास करें
                   </button>
                 </div>
               </Alert>
             ) : (
-              
               /* Dynamic Report Section & Table */
-              <section className="dynamic-report-section" style={{ marginTop: "0", paddingTop: "0" }}>
-                <div className="dynamic-report-heading" style={{ marginTop: "0", marginBottom: "8px", paddingTop: "4px", paddingBottom: "4px" }}>
-                  <h4 style={{ margin: 0 }}><FaClipboardList className="me-2" />सभी वेतन एवं उपस्थिति रिपोर्ट्स</h4>
+              <section
+                className="dynamic-report-section"
+                style={{ marginTop: "0", paddingTop: "0" }}
+              >
+                <div
+                  className="dynamic-report-heading"
+                  style={{
+                    marginTop: "0",
+                    marginBottom: "8px",
+                    paddingTop: "4px",
+                    paddingBottom: "4px",
+                  }}
+                >
+                  <h4 style={{ margin: 0 }}>
+                    <FaClipboardList className="me-2" />
+                    सभी वेतन एवं उपस्थिति रिपोर्ट्स
+                  </h4>
                 </div>
 
                 <div className="dynamic-report-content professional-report-content">
                   <div className="dynamic-report-panel">
-                    <div className="dynamic-report-table-scroll" style={{ width: '100%', overflowX: 'auto' }}>
-                      <table className="dynamic-report-table" style={{ width: '100%', minWidth: '900px', tableLayout: 'auto' }}>
+                    <div
+                      className="dynamic-report-table-scroll"
+                      style={{ width: "100%", overflowX: "auto" }}
+                    >
+                      <table
+                        className="dynamic-report-table"
+                        style={{
+                          width: "100%",
+                          minWidth: "900px",
+                          tableLayout: "auto",
+                        }}
+                      >
                         <thead>
                           <tr>
                             <th>क्रम संख्या</th>
@@ -693,44 +795,68 @@ const AdminVetanMang = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {filteredReports.length > 0 ? filteredReports.map((report, index) => (
-                            <tr key={report.id}>
-                              <td>{index + 1}</td>
-                              <td>{report.center_name}</td>
-                              <td>{report.month}</td>
-                              <td>{report.financial_year}</td>
-                              <td style={{ maxWidth: '250px', whiteSpace: 'normal' }}>{report.letter_number}</td>
-                              <td>
-                                <FaCalendarAlt className="me-1" />
-                                {report.report_date ? new Date(report.report_date).toLocaleDateString('hi-IN') : '-'}
-                              </td>
-                              <td style={{ maxWidth: '300px', whiteSpace: 'normal' }}>{report.subject}</td>
-                              <td>
-                                <div className="d-flex gap-2">
-                                  <Button
-                                    variant="info"
-                                    size="sm"
-                                    title="देखें / प्रिंट प्रीव्यू"
-                                    onClick={() => handleOpenPreview(report)}
-                                  >
-                                    <FaEye className="me-1" /> देखें
-                                  </Button>
+                          {filteredReports.length > 0 ? (
+                            filteredReports.map((report, index) => (
+                              <tr key={report.id}>
+                                <td>{index + 1}</td>
+                                <td>{report.center_name}</td>
+                                <td>{report.month}</td>
+                                <td>{report.financial_year}</td>
+                                <td
+                                  style={{
+                                    maxWidth: "250px",
+                                    whiteSpace: "normal",
+                                  }}
+                                >
+                                  {report.letter_number}
+                                </td>
+                                <td>
+                                  <FaCalendarAlt className="me-1" />
+                                  {report.report_date
+                                    ? new Date(
+                                        report.report_date,
+                                      ).toLocaleDateString("hi-IN")
+                                    : "-"}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: "300px",
+                                    whiteSpace: "normal",
+                                  }}
+                                >
+                                  {report.subject}
+                                </td>
+                                <td>
+                                  <div className="d-flex gap-2">
+                                    <Button
+                                      variant="info"
+                                      size="sm"
+                                      title="देखें / प्रिंट प्रीव्यू"
+                                      onClick={() => handleOpenPreview(report)}
+                                    >
+                                      <FaEye className="me-1" /> देखें
+                                    </Button>
 
-                                  <Button
-                                    variant="warning"
-                                    size="sm"
-                                    title="एडिट करें"
-                                    onClick={() => handleOpenModal(report)}
-                                  >
-                                    <FaEdit />
-                                  </Button>
-                                </div>
-                              </td>
-                            </tr>
-                          )) : (
+                                    <Button
+                                      variant="warning"
+                                      size="sm"
+                                      title="एडिट करें"
+                                      onClick={() => handleOpenModal(report)}
+                                    >
+                                      <FaEdit />
+                                    </Button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
                             <tr>
-                              <td colSpan="8" className="dynamic-report-empty text-center p-4">
-                                कोई डेटा नहीं मिला। कृपया फिल्टर बदलें या नई रिपोर्ट जोड़ें।
+                              <td
+                                colSpan="8"
+                                className="dynamic-report-empty text-center p-4"
+                              >
+                                कोई डेटा नहीं मिला। कृपया फिल्टर बदलें या नई
+                                रिपोर्ट जोड़ें।
                               </td>
                             </tr>
                           )}
@@ -744,7 +870,7 @@ const AdminVetanMang = () => {
           </Container>
         </div>
       </div>
-      
+
       <Footer />
 
       {/* Selected Report Print Preview Modal */}
@@ -758,43 +884,43 @@ const AdminVetanMang = () => {
         <Modal.Header
           closeButton
           style={{
-            backgroundColor: '#194e8b',
-            color: 'white',
-            padding: '10px 16px'
+            backgroundColor: "#194e8b",
+            color: "white",
+            padding: "10px 16px",
           }}
         >
-          <Modal.Title style={{ fontSize: '1rem' }}>
+          <Modal.Title style={{ fontSize: "1rem" }}>
             <FaEye className="me-2" />
             प्रिंट प्रीव्यू
             {previewReport?.center_name
               ? ` — ${previewReport.center_name}`
-              : ''}
+              : ""}
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body
           style={{
-            background: '#525659',
-            padding: '18px',
-            overflow: 'auto'
+            background: "#525659",
+            padding: "18px",
+            overflow: "auto",
           }}
         >
           {previewReport ? (
             <div
               style={{
-                width: '100%',
-                maxWidth: '1500px',
-                minWidth: isMobile ? '1050px' : '0',
-                margin: '0 auto',
-                background: '#fff',
-                boxShadow: '0 2px 12px rgba(0,0,0,.35)',
-                padding: isMobile ? '18px' : '30px',
-                overflowX: 'auto'
+                width: "100%",
+                maxWidth: "1500px",
+                minWidth: isMobile ? "1050px" : "0",
+                margin: "0 auto",
+                background: "#fff",
+                boxShadow: "0 2px 12px rgba(0,0,0,.35)",
+                padding: isMobile ? "18px" : "30px",
+                overflowX: "auto",
               }}
             >
               <div
                 dangerouslySetInnerHTML={{
-                  __html: buildSelectedReportPreview(previewReport)
+                  __html: buildSelectedReportPreview(previewReport),
                 }}
               />
             </div>
@@ -807,15 +933,15 @@ const AdminVetanMang = () => {
 
         <Modal.Footer
           style={{
-            background: '#fff',
-            padding: '8px 16px',
-            justifyContent: 'space-between'
+            background: "#fff",
+            padding: "8px 16px",
+            justifyContent: "space-between",
           }}
         >
-          <div style={{ fontSize: '0.85rem', color: '#555' }}>
+          <div style={{ fontSize: "0.85rem", color: "#555" }}>
             केंद्र:
             <strong className="ms-1">
-              {previewReport?.center_name || '-'}
+              {previewReport?.center_name || "-"}
             </strong>
           </div>
 
@@ -841,19 +967,32 @@ const AdminVetanMang = () => {
       </Modal>
 
       {/* Add/Edit Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="xl" centered scrollable>
-        <Modal.Header closeButton style={{ backgroundColor: '#194e8b', color: 'white' }}>
-          <Modal.Title style={{ fontSize: '1rem' }}>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        size="xl"
+        centered
+        scrollable
+      >
+        <Modal.Header
+          closeButton
+          style={{ backgroundColor: "#194e8b", color: "white" }}
+        >
+          <Modal.Title style={{ fontSize: "1rem" }}>
             <FaClipboardList className="me-2" />
-            {editingReport ? 'रिपोर्ट एडिट करें' : 'नई वेतन/उपस्थिति रिपोर्ट जोड़ें'}
+            {editingReport
+              ? "रिपोर्ट एडिट करें"
+              : "नई वेतन/उपस्थिति रिपोर्ट जोड़ें"}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+        <Modal.Body style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <Form>
             <Row className="g-3">
               <Col md={6}>
                 <Form.Group>
-                  <Form.Label className="filter-label-sm">केंद्र का नाम</Form.Label>
+                  <Form.Label className="filter-label-sm">
+                    केंद्र का नाम
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="center_name"
@@ -873,28 +1012,36 @@ const AdminVetanMang = () => {
                   >
                     <option value="">-- माह चुनें --</option>
                     {MONTH_OPTIONS.map((month, idx) => (
-                      <option key={idx} value={month}>{month}</option>
+                      <option key={idx} value={month}>
+                        {month}
+                      </option>
                     ))}
                   </Form.Select>
                 </Form.Group>
               </Col>
               <Col md={3}>
                 <Form.Group>
-                  <Form.Label className="filter-label-sm">वित्तीय वर्ष</Form.Label>
+                  <Form.Label className="filter-label-sm">
+                    वित्तीय वर्ष
+                  </Form.Label>
                   <Form.Select
                     name="financial_year"
                     value={formData.financial_year}
                     onChange={handleInputChange}
                   >
                     {FINANCIAL_YEAR_OPTIONS.map((year, idx) => (
-                      <option key={idx} value={year}>{year}</option>
+                      <option key={idx} value={year}>
+                        {year}
+                      </option>
                     ))}
                   </Form.Select>
                 </Form.Group>
               </Col>
               <Col md={12}>
                 <Form.Group>
-                  <Form.Label className="filter-label-sm">पत्र संख्या</Form.Label>
+                  <Form.Label className="filter-label-sm">
+                    पत्र संख्या
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="letter_number"
@@ -905,7 +1052,9 @@ const AdminVetanMang = () => {
               </Col>
               <Col md={6}>
                 <Form.Group>
-                  <Form.Label className="filter-label-sm">रिपोर्ट तिथि</Form.Label>
+                  <Form.Label className="filter-label-sm">
+                    रिपोर्ट तिथि
+                  </Form.Label>
                   <Form.Control
                     type="date"
                     name="report_date"
@@ -931,18 +1080,28 @@ const AdminVetanMang = () => {
               {/* 2D Array Data Table Editor */}
               <Col md={12} className="mt-4">
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                  <h6 className="dynamic-report-subtitle m-0">कर्मचारी उपस्थिति विवरण (report_data)</h6>
+                  <h6 className="dynamic-report-subtitle m-0">
+                    कर्मचारी उपस्थिति विवरण (report_data)
+                  </h6>
                   <Button variant="success" size="sm" onClick={addReportRow}>
                     <FaPlus className="me-1" /> पंक्ति जोड़ें
                   </Button>
                 </div>
-                
-                <div className="dynamic-report-table-scroll matrix-scroll" style={{ width: '100%', overflowX: 'auto' }}>
-                  <table className="dynamic-report-table matrix-table" style={{ minWidth: '1800px', tableLayout: 'auto' }}>
+
+                <div
+                  className="dynamic-report-table-scroll matrix-scroll"
+                  style={{ width: "100%", overflowX: "auto" }}
+                >
+                  <table
+                    className="dynamic-report-table matrix-table"
+                    style={{ minWidth: "1800px", tableLayout: "auto" }}
+                  >
                     <thead>
                       <tr>
                         {reportColumns.map((col, idx) => (
-                          <th key={idx} style={{ minWidth: '120px' }}>{col}</th>
+                          <th key={idx} style={{ minWidth: "120px" }}>
+                            {col}
+                          </th>
                         ))}
                         <th>हटाएं</th>
                       </tr>
@@ -956,14 +1115,24 @@ const AdminVetanMang = () => {
                                 <Form.Control
                                   type="text"
                                   size="sm"
-                                  value={row[colIndex] || ''}
-                                  onChange={(e) => handleReportDataChange(rowIndex, colIndex, e.target.value)}
-                                  style={{ minWidth: '100px' }}
+                                  value={row[colIndex] || ""}
+                                  onChange={(e) =>
+                                    handleReportDataChange(
+                                      rowIndex,
+                                      colIndex,
+                                      e.target.value,
+                                    )
+                                  }
+                                  style={{ minWidth: "100px" }}
                                 />
                               </td>
                             ))}
                             <td>
-                              <Button variant="outline-danger" size="sm" onClick={() => removeReportRow(rowIndex)}>
+                              <Button
+                                variant="outline-danger"
+                                size="sm"
+                                onClick={() => removeReportRow(rowIndex)}
+                              >
                                 <FaTimes />
                               </Button>
                             </td>
@@ -971,8 +1140,12 @@ const AdminVetanMang = () => {
                         ))
                       ) : (
                         <tr>
-                          <td colSpan={reportColumns.length + 1} className="dynamic-report-empty text-center">
-                            कोई कर्मचारी डेटा नहीं। कृपया "पंक्ति जोड़ें" पर क्लिक करें।
+                          <td
+                            colSpan={reportColumns.length + 1}
+                            className="dynamic-report-empty text-center"
+                          >
+                            कोई कर्मचारी डेटा नहीं। कृपया "पंक्ति जोड़ें" पर
+                            क्लिक करें।
                           </td>
                         </tr>
                       )}
@@ -984,17 +1157,22 @@ const AdminVetanMang = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" size="sm" onClick={() => setShowModal(false)}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setShowModal(false)}
+          >
             <FaTimes className="me-1" /> बंद करें
           </Button>
           <Button variant="primary" size="sm" onClick={handleSaveReport}>
-            <FaSave className="me-1" /> {editingReport ? 'अपडेट करें' : 'सेव करें'}
+            <FaSave className="me-1" />{" "}
+            {editingReport ? "अपडेट करें" : "सेव करें"}
           </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
-}; 
+};
 
 const vmPreviewStyleText = `
   .vm-print-preview-modal .modal-dialog {
@@ -1105,9 +1283,12 @@ const vmPreviewStyleText = `
   }
 `;
 
-if (typeof document !== 'undefined' && !document.getElementById('vm-preview-styles')) {
-  const style = document.createElement('style');
-  style.id = 'vm-preview-styles';
+if (
+  typeof document !== "undefined" &&
+  !document.getElementById("vm-preview-styles")
+) {
+  const style = document.createElement("style");
+  style.id = "vm-preview-styles";
   style.textContent = vmPreviewStyleText;
   document.head.appendChild(style);
 }
