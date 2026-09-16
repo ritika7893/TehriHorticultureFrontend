@@ -22,7 +22,14 @@ function DashBoardHeader() {
   };
 
   // Helper arrays to check if a dropdown child is currently active
-  const dataEntryRoutes = ["/Registration", "/KrishiRegistration", "/NurseryFinancialEntry", "/NurseryPhysicalEntry", "/UdyanBill", "/KishanBeej"];
+  const dataEntryRoutes = [
+    "/Registration",
+    "/KrishiRegistration",
+    "/NurseryFinancialEntry",
+    "/NurseryPhysicalEntry",
+    "/UdyanBill",
+    "/KishanBeej",
+  ];
   const billRoutes = ["/Billing", "/AllBills"];
 
   return (
@@ -31,7 +38,7 @@ function DashBoardHeader() {
         <Navbar.Brand as={Link} to="/Dashboard">
           <div className="dash-img d-flex justify-content-between mx-2">
             <img src={UKSasan} className="img-fluid" alt="UK Sasan" />
-            <p>DHO Kotdwar</p>
+            <p>Tehri</p>
           </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -41,7 +48,7 @@ function DashBoardHeader() {
             <Nav.Link as={NavLink} to="/MonthReport">
               MPR रिपोर्ट
             </Nav.Link>
- <Nav.Link as={NavLink} to="/Dashboard">
+            <Nav.Link as={NavLink} to="/Dashboard">
               MIS रिपोर्ट
             </Nav.Link>
             <Nav.Link as={NavLink} to="/AdminVetanMang">
@@ -52,42 +59,59 @@ function DashBoardHeader() {
               मासिक उपस्थिति
             </Nav.Link>
             <Nav.Link as={NavLink} to="/AdminKishanAavedan">
-            किसान आवेदन
+              किसान आवेदन
             </Nav.Link>
-
 
             <Nav.Link as={NavLink} to="/MainDashboard">
               डैशबोर्ड
             </Nav.Link>
 
-            <NavDropdown 
-              title="डेटा एंट्री" 
-              id="basic-nav-dropdown" 
+            <NavDropdown
+              title="डेटा एंट्री"
+              id="basic-nav-dropdown"
               active={dataEntryRoutes.includes(location.pathname)}
             >
-              <NavDropdown.Item as={Link} to="/Registration">केंद्रवार एंट्री</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/KrishiRegistration">कृषक डेटा एंट्री</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/NurseryFinancialEntry">नर्सरी वित्तीय प्रविष्टि</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/NurseryPhysicalEntry">नर्सरी भौतिक प्रविष्टि</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/UdyanBill">उद्यान बिल</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/KishanBeej">किसान बीज</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/Registration">
+                केंद्रवार एंट्री
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/KrishiRegistration">
+                कृषक डेटा एंट्री
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/NurseryFinancialEntry">
+                नर्सरी वित्तीय प्रविष्टि
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/NurseryPhysicalEntry">
+                नर्सरी भौतिक प्रविष्टि
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/UdyanBill">
+                उद्यान बिल
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/KishanBeej">
+                किसान बीज
+              </NavDropdown.Item>
             </NavDropdown>
 
-            <NavDropdown 
-              title="बिल" 
-              id="bill-nav-dropdown" 
+            <NavDropdown
+              title="बिल"
+              id="bill-nav-dropdown"
               active={billRoutes.includes(location.pathname)}
             >
-              <NavDropdown.Item as={Link} to="/Billing">Billing</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/AllBills">AllBills</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/Billing">
+                Billing
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/AllBills">
+                AllBills
+              </NavDropdown.Item>
             </NavDropdown>
 
-            <NavDropdown 
-              title="डिमांड" 
-              id="demand-nav-dropdown" 
+            <NavDropdown
+              title="डिमांड"
+              id="demand-nav-dropdown"
               active={location.pathname === "/DemandView"}
             >
-              <NavDropdown.Item as={Link} to="/DemandView">डिमांड देखें</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/DemandView">
+                डिमांड देखें
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
 
