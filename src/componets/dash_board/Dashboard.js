@@ -76,8 +76,7 @@ ChartJS.register(
 // Hindi translations
 const translations = {
   home: "MIS रिपोर्ट ",
-  welcomeMessage:
-    "DHO कोटद्वार उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है",
+  welcomeMessage: "टिहरी उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है",
   selectScheme: "क्रय योजना चुनें",
   selectInvestment: "उप-मद चुनें",
   allSchemes: "सभी क्रय योजनाएं",
@@ -4513,7 +4512,7 @@ const Dashboard = () => {
       <div style="font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif; padding: 20px; color: #333;">
         <!-- Header -->
         <div style="text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 20px; page-break-inside: avoid;">
-          <h1 style="color: #000; font-size: 24px; margin: 0;">DHO कोटद्वार बिलिंग रिपोर्ट</h1>
+          <h1 style="color: #000; font-size: 24px; margin: 0;">टिहरी बिलिंग रिपोर्ट</h1>
           <p style="color: #000; font-size: 12px; margin: 5px 0 0 0;">रिपोर्ट तिथि: ${currentDate}</p>
           <p style="color: #000; font-size: 11px; margin: 3px 0 0 0;">फ़िल्टर: ${getFilterStatusText()}</p>
         </div>
@@ -5808,7 +5807,7 @@ const Dashboard = () => {
 
         <!-- Footer -->
         <div style="text-align: center; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 20px; color: #888; font-size: 9px;">
-          <p>DHO कोटद्वार बिलिंग प्रणाली | रिपोर्ट जनरेट तिथि: ${currentDate}</p>
+          <p>टिहरी बिलिंग प्रणाली | रिपोर्ट जनरेट तिथि: ${currentDate}</p>
         </div>
       </div>
     `;
@@ -5959,7 +5958,7 @@ const Dashboard = () => {
         const wb = XLSX.utils.book_new();
 
         const summaryData = [
-          ["DHO कोटद्वार बिलिंग रिपोर्ट"],
+          ["टिहरी बिलिंग रिपोर्ट"],
           [`रिपोर्ट तिथि: ${currentDate}`],
           [`फ़िल्टर: ${getFilterStatusText()}`],
           [],
@@ -6344,7 +6343,7 @@ const Dashboard = () => {
           XLSX.utils.book_append_sheet(
             wb,
             XLSX.utils.aoa_to_sheet([
-              ["DHO कोटद्वार बिलिंग रिपोर्ट"],
+              ["टिहरी बिलिंग रिपोर्ट"],
               ["कोई अतिरिक्त तालिका चयनित नहीं है।"],
             ]),
             "रिपोर्ट",
@@ -6386,7 +6385,7 @@ const Dashboard = () => {
     }
 
     const reportInfo =
-      `DHO कोटद्वार बिलिंग रिपोर्ट\n` +
+      `टिहरी बिलिंग रिपोर्ट\n` +
       `रिपोर्ट: ${shareFileName}\n` +
       `तिथि: ${new Date().toLocaleDateString("hi-IN")}\n` +
       `फ़िल्टर: ${getFilterStatusText()}`;
@@ -6411,7 +6410,7 @@ const Dashboard = () => {
 
       if (platform === "email") {
         const url =
-          `mailto:?subject=${encodeURIComponent("DHO कोटद्वार बिलिंग रिपोर्ट")}` +
+          `mailto:?subject=${encodeURIComponent("टिहरी बिलिंग रिपोर्ट")}` +
           `&body=${encodeURIComponent(
             reportInfo + "\n\nफाइल डाउनलोड करके ईमेल में अटैच करें।",
           )}`;
@@ -6471,7 +6470,7 @@ const Dashboard = () => {
         navigator.canShare({ files: [file] })
       ) {
         await navigator.share({
-          title: "DHO कोटद्वार बिलिंग रिपोर्ट",
+          title: "टिहरी बिलिंग रिपोर्ट",
           text: `रिपोर्ट शेयर की जा रही है: ${shareFileName}`,
           files: [file],
         });
@@ -6560,7 +6559,7 @@ const Dashboard = () => {
 
     // Summary Sheet
     const summaryData = [
-      ["DHO कोटद्वार बिलिंग रिपोर्ट"],
+      [" बिलिंग रिपोर्ट"],
       [`रिपोर्ट तिथि: ${currentDate}`],
       [`फ़िल्टर: ${getFilterStatusText()}`],
       [],
