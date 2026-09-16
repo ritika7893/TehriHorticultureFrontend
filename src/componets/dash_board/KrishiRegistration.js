@@ -92,7 +92,7 @@ const validKendraNames = [
   "कोड़ी",
   "कुमाल्डा",
   "कीर्तिनगर",
-  "छाम"
+  "छाम",
 ];
 
 // Updated center options with exact names from your list
@@ -143,7 +143,7 @@ const centerOptions = [
   "कोड़ी",
   "कुमाल्डा",
   "कीर्तिनगर",
-  "छाम"
+  "छाम",
 ];
 
 // Static options for form fields
@@ -390,7 +390,9 @@ const KrishiRegistration = () => {
   const [showAllDuplicatesModal, setShowAllDuplicatesModal] = useState(false);
   const [allDuplicateEntries, setAllDuplicateEntries] = useState([]);
   const [centerNameCorrections, setCenterNameCorrections] = useState([]);
-  const [centerNameCorrectionValues, setCenterNameCorrectionValues] = useState({});
+  const [centerNameCorrectionValues, setCenterNameCorrectionValues] = useState(
+    {},
+  );
   const [showCenterNameCorrectionModal, setShowCenterNameCorrectionModal] =
     useState(false);
   const fileInputRef = useRef(null);
@@ -1834,7 +1836,7 @@ const KrishiRegistration = () => {
       const today = getTodayInDisplayFormat();
       const sampleData = [
         {
-          "केंद्र का नाम": "कोटद्वार",
+          "केंद्र का नाम": "टिहरी",
           "योजना का नाम": "MGNREGA",
           "आपूर्ति की गई वस्तु का नाम": "बीज",
           "किसान का नाम": "रामेश कुमार",
@@ -2527,7 +2529,8 @@ const KrishiRegistration = () => {
     for (const option of validKendraNames) {
       const normalizedOption = normalizeKendraName(option);
       const distance = levenshteinDistance(normalizedInput, normalizedOption);
-      const maxLength = Math.max(normalizedInput.length, normalizedOption.length) || 1;
+      const maxLength =
+        Math.max(normalizedInput.length, normalizedOption.length) || 1;
       const similarity = 1 - distance / maxLength;
 
       if (
@@ -2554,7 +2557,12 @@ const KrishiRegistration = () => {
       };
     }
 
-    return { matched: false, corrected: null, exact: false, needsCorrection: false };
+    return {
+      matched: false,
+      corrected: null,
+      exact: false,
+      needsCorrection: false,
+    };
   };
 
   // Helper function to calculate Levenshtein distance
@@ -2582,7 +2590,11 @@ const KrishiRegistration = () => {
   };
 
   // Function to apply center name corrections to parsed rows
-  const applyCenterNameCorrections = (rows, corrections, selectedValues = {}) => {
+  const applyCenterNameCorrections = (
+    rows,
+    corrections,
+    selectedValues = {},
+  ) => {
     return rows.map((row) => {
       const correction = corrections.find((c) => c.rowIndex === row.rowIndex);
       if (correction) {
@@ -2640,15 +2652,18 @@ const KrishiRegistration = () => {
             return;
           }
 
-          const dataRows = jsonData.slice(1).filter((row) =>
-            Array.isArray(row) &&
-            row.some(
-              (cell) =>
-                cell !== null &&
-                cell !== undefined &&
-                String(cell).trim() !== "",
-            ),
-          );
+          const dataRows = jsonData
+            .slice(1)
+            .filter(
+              (row) =>
+                Array.isArray(row) &&
+                row.some(
+                  (cell) =>
+                    cell !== null &&
+                    cell !== undefined &&
+                    String(cell).trim() !== "",
+                ),
+            );
           const headers = jsonData[0];
 
           const headerMapping = {};
@@ -2697,11 +2712,13 @@ const KrishiRegistration = () => {
                 ),
                 center_name_needs_correction: Boolean(
                   rawCenterName &&
-                    centerNameMatch &&
-                    centerNameMatch.needsCorrection,
+                  centerNameMatch &&
+                  centerNameMatch.needsCorrection,
                 ),
                 center_name_suggested:
-                  rawCenterName && centerNameMatch && centerNameMatch.needsCorrection
+                  rawCenterName &&
+                  centerNameMatch &&
+                  centerNameMatch.needsCorrection
                     ? centerNameMatch.corrected
                     : "",
                 vidhan_sabha_name:
@@ -2888,7 +2905,8 @@ const KrishiRegistration = () => {
               const initialCorrectionValues = {};
               corrections.forEach((correction) => {
                 if (correction.corrected) {
-                  initialCorrectionValues[correction.rowIndex] = correction.corrected;
+                  initialCorrectionValues[correction.rowIndex] =
+                    correction.corrected;
                 }
               });
               setCenterNameCorrectionValues(initialCorrectionValues);
@@ -3752,17 +3770,34 @@ const KrishiRegistration = () => {
                         <strong>
                           ⚠️ {validationErrorsList.length} पंक्तियों में त्रुटि:
                         </strong>
-                        {validationErrorsList.some((err) => err.invalidCenterName) && (
+                        {validationErrorsList.some(
+                          (err) => err.invalidCenterName,
+                        ) && (
                           <div className="mt-2">
                             <strong className="text-danger">
-                              अमान्य केन्द्र नाम ({validationErrorsList.filter((err) => err.invalidCenterName).length}):
+                              अमान्य केन्द्र नाम (
+                              {
+                                validationErrorsList.filter(
+                                  (err) => err.invalidCenterName,
+                                ).length
+                              }
+                              ):
                             </strong>
-                            <div style={{ maxHeight: "120px", overflowY: "auto" }}>
+                            <div
+                              style={{ maxHeight: "120px", overflowY: "auto" }}
+                            >
                               {validationErrorsList
                                 .filter((err) => err.invalidCenterName)
                                 .map((err) => (
-                                  <div key={err.rowIndex} className="mt-1 text-danger">
-                                    पंक्ति {err.rowIndex - 1}: “{err.data?.center_name_original || err.data?.center_name || "-"}”
+                                  <div
+                                    key={err.rowIndex}
+                                    className="mt-1 text-danger"
+                                  >
+                                    पंक्ति {err.rowIndex - 1}: “
+                                    {err.data?.center_name_original ||
+                                      err.data?.center_name ||
+                                      "-"}
+                                    ”
                                   </div>
                                 ))}
                             </div>
@@ -3829,7 +3864,9 @@ const KrishiRegistration = () => {
                           onClick={handleConfirmUpload}
                           disabled={
                             validCount === 0 ||
-                            validationErrorsList.some((err) => err.invalidCenterName)
+                            validationErrorsList.some(
+                              (err) => err.invalidCenterName,
+                            )
                           }
                         >
                           {validCount > 0
@@ -3943,7 +3980,8 @@ const KrishiRegistration = () => {
                 <Modal.Body style={{ maxHeight: "70vh", overflowY: "auto" }}>
                   <Alert variant="warning" className="small-fonts">
                     <strong>
-                      सिस्टम द्वारा सुझाया गया सही नाम पहले से चुना गया है; यदि चाहें तो इसे ड्रॉपडाउन से बदल सकते हैं:
+                      सिस्टम द्वारा सुझाया गया सही नाम पहले से चुना गया है; यदि
+                      चाहें तो इसे ड्रॉपडाउन से बदल सकते हैं:
                     </strong>
                     <br />
                     इनमें से कोई भी नाम सही नहीं होने पर अपलोड नहीं होगा।
@@ -3972,7 +4010,11 @@ const KrishiRegistration = () => {
                           <td>
                             <Form.Select
                               value={
-                                centerNameCorrectionValues[correction.rowIndex] ?? correction.corrected ?? ""
+                                centerNameCorrectionValues[
+                                  correction.rowIndex
+                                ] ??
+                                correction.corrected ??
+                                ""
                               }
                               onChange={(e) => {
                                 setCenterNameCorrectionValues((prev) => ({
@@ -4004,19 +4046,24 @@ const KrishiRegistration = () => {
                         centerNameCorrectionValues,
                       );
                       const correctedRowIndices = new Set(
-                        centerNameCorrections.map((correction) => correction.rowIndex),
+                        centerNameCorrections.map(
+                          (correction) => correction.rowIndex,
+                        ),
                       );
-                      const updatedValidationErrorsList = validationErrorsList.filter(
-                        (error) => {
-                          if (!correctedRowIndices.has(error.rowIndex)) return true;
+                      const updatedValidationErrorsList =
+                        validationErrorsList.filter((error) => {
+                          if (!correctedRowIndices.has(error.rowIndex))
+                            return true;
                           const correctedRow = correctedRows.find(
                             (row) => row.rowIndex === error.rowIndex,
                           );
                           if (!correctedRow) return true;
-                          const rowErrors = validateRow(correctedRow, correctedRow.rowIndex);
+                          const rowErrors = validateRow(
+                            correctedRow,
+                            correctedRow.rowIndex,
+                          );
                           return rowErrors.length > 0;
-                        },
-                      );
+                        });
                       setValidationErrorsList(updatedValidationErrorsList);
                       setPreviewData(correctedRows);
                       setShowCenterNameCorrectionModal(false);

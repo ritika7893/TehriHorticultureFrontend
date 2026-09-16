@@ -317,7 +317,7 @@ function MonthAttendance() {
               <div>
                 <h4>मासिक उपस्थिति रिपोर्ट (Month Attendance)</h4>
                 <small className="text-muted">
-                  {centerName || "DHO कोटद्वार उद्यान विभाग"}
+                  {centerName || "DHO टिहरी उद्यान विभाग"}
                 </small>
               </div>
               <Button variant="primary" size="sm" onClick={openAddModal}>

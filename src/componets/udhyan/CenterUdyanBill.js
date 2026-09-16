@@ -930,7 +930,7 @@ export default function CenterUdyanBill() {
         <div className="a4-page">
           <div className="treasury-copy">कोषागार प्रति</div>
           <div className="document-center document-title-small">
-            कार्यालय उद्यान विशेषज्ञ, कोटद्वार गढ़वाल
+            कार्यालय उद्यान विशेषज्ञ, टिहरी गढ़वाल
           </div>
           <div className="document-center document-title">
             {bill.heading ||
@@ -1236,7 +1236,9 @@ export default function CenterUdyanBill() {
           </div>
           <div className="document-center document-line">
             फल पौध : <strong>{selectedStandard.crop_name}</strong>
-            &nbsp;&nbsp;क्षेत्रफल : <strong>{num(bill.area).toFixed(2)}</strong>{" "}
+            &nbsp;&nbsp;क्षेत्रफल : <strong>
+              {num(bill.area).toFixed(2)}
+            </strong>{" "}
             है0&nbsp;&nbsp;वर्ष : <strong>{financialYear}</strong>
           </div>
 

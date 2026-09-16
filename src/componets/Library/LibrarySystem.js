@@ -503,7 +503,7 @@ const LibrarySystem = () => {
       });
 
       // /api/centres/ returns a direct array like:
-      // [{ id: 49, name: "कोटद्वार", is_active: true }, ...]
+      // [{ id: 49, name: "टिहरी", is_active: true }, ...]
       const centerList = Array.isArray(response.data)
         ? response.data
             .filter((center) => center?.is_active === true)

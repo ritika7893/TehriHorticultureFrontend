@@ -176,7 +176,7 @@ function VetanMang() {
       <div class="to-address">
         सेवा में,<br>
         श्रीमान उद्यान विशेषज्ञ,<br>
-        कोटद्वार, जनपद पौड़ी गढ़वाल।
+        टिहरी, जनपद पौड़ी गढ़वाल।
       </div>
 
       <div class="subject">
@@ -744,7 +744,7 @@ function VetanMang() {
           <div class="to-address">
             सेवा में,<br>
             श्रीमान उद्यान विशेषज्ञ,<br>
-            कोटद्वार, जनपद पौड़ी गढ़वाल।
+            टिहरी, जनपद पौड़ी गढ़वाल।
           </div>
 
           <div class="subject">

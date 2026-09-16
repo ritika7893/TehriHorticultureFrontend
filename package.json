@@ -2,6 +2,7 @@
   "name": "projectnew",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/tehrihorticulture",
   "dependencies": {
     "@fontsource/poppins": "^5.2.7",
     "@fortawesome/fontawesome-free": "^7.1.0",

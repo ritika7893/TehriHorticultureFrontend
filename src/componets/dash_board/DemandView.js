@@ -361,7 +361,7 @@ const DemandView = () => {
     }
     if (parseFloat(editingQuantity) > parseFloat(allocatedQuantity)) {
       setEditValidationError(
-        `मांगी गई मात्रा DHO, कोटद्वार का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`,
+        `मांगी गई मात्रा DHO, टिहरी का कुल लक्ष्य (${allocatedQuantity}) से कम होनी चाहिए`,
       );
       return;
     }
@@ -462,7 +462,7 @@ const DemandView = () => {
     }
     if (value > maxQty) {
       setEditValidationError(
-        `मांगी गई मात्रा (${value}) DHO, कोटद्वार का कुल लक्ष्य (${maxQty}) से अधिक नहीं हो सकती`,
+        `मांगी गई मात्रा (${value}) DHO, टिहरी का कुल लक्ष्य (${maxQty}) से अधिक नहीं हो सकती`,
       );
       return;
     }
@@ -509,7 +509,7 @@ const DemandView = () => {
       "S.No.": index + 1,
       "उप-मद का नाम": demand.sub_investment_name,
       "योजना का नाम": demand.scheme_name,
-      "DHO, कोटद्वार का कुल लक्ष्य": demand.allocated_quantity,
+      "DHO, टिहरी का कुल लक्ष्य": demand.allocated_quantity,
       इकाई: demand.unit,
       "कृषक विक्रय दर / अनुदान दर": demand.rate,
     }));
@@ -620,7 +620,7 @@ const DemandView = () => {
       "S.No.",
       "उप-मद का नाम",
       "योजना का नाम",
-      "DHO, कोटद्वार का कुल लक्ष्य",
+      "DHO, टिहरी का कुल लक्ष्य",
       "इकाई",
       "कृषक विक्रय दर / अनुदान दर",
     ];
@@ -930,7 +930,7 @@ const DemandView = () => {
                               <th>S.No.</th>
                               <th>उप-मद का नाम</th>
                               <th>योजना का नाम</th>
-                              <th>DHO, कोटद्वार का कुल लक्ष्य</th>
+                              <th>DHO, टिहरी का कुल लक्ष्य</th>
                               <th>इकाई</th>
                               <th>कृषक विक्रय दर / अनुदान दर</th>
                               <th>कार्यवाही</th>
@@ -1388,8 +1388,7 @@ const DemandView = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>
-                DHO, कोटद्वार का कुल लक्ष्य{" "}
-                <span className="text-danger">*</span>
+                DHO, टिहरी का कुल लक्ष्य <span className="text-danger">*</span>
               </Form.Label>
               <Form.Control
                 type="number"
@@ -1496,8 +1495,7 @@ const DemandView = () => {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>
-                DHO, कोटद्वार का कुल लक्ष्य{" "}
-                <span className="text-danger">*</span>
+                DHO, टिहरी का कुल लक्ष्य <span className="text-danger">*</span>
               </Form.Label>
               <Form.Control
                 type="number"
@@ -1577,7 +1575,7 @@ const DemandView = () => {
               </Row>
               <Row className="mb-3">
                 <Col md={6}>
-                  <strong>DHO, कोटद्वार का कुल लक्ष्य:</strong>{" "}
+                  <strong>DHO, टिहरी का कुल लक्ष्य:</strong>{" "}
                   {currentDemand.allocated_quantity}
                 </Col>
                 <Col md={6}>
@@ -1622,7 +1620,7 @@ const DemandView = () => {
                 <strong>योजना का नाम:</strong> {currentDemand.scheme_name}
               </p>
               <p>
-                <strong>DHO, कोटद्वार का कुल लक्ष्य:</strong>{" "}
+                <strong>DHO, टिहरी का कुल लक्ष्य:</strong>{" "}
                 {currentDemand.allocated_quantity}
               </p>
               <p>

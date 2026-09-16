@@ -191,7 +191,7 @@ const AdminVetanMang = () => {
         <div class="vm-print-address">
           सेवा में,<br>
           श्रीमान उद्यान विशेषज्ञ,<br>
-          कोटद्वार, जनपद पौड़ी गढ़वाल।
+          टिहरी, जनपद पौड़ी गढ़वाल।
         </div>
 
         <div class="vm-print-subject">
@@ -644,7 +644,7 @@ const AdminVetanMang = () => {
             <div className="home-welcome-section professional-welcome d-flex justify-content-between text-center mb-4">
               <h1 className="home-title">वेतन मांग एवं उपस्थिति प्रबंधन</h1>
               <p className="home-subtitle">
-                DHO कोटद्वार उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है
+                DHO टिहरी उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है
               </p>
             </div>
 

@@ -45,7 +45,7 @@ const getHeaders = () => {
  * {
  *   user_id: "CENT-001",
  *   role: "center",
- *   username: "कोटद्वार",
+ *   username: "टिहरी",
  *   loginType: "demand"
  * }
  *
@@ -56,7 +56,7 @@ const getCenterNameFromUser = (user) => {
   if (!user) return "";
 
   // Your AuthContext stores the center login as:
-  // { user_id: "CENT-001", role: "center", username: "कोटद्वार", loginType: "demand" }
+  // { user_id: "CENT-001", role: "center", username: "टिहरी", loginType: "demand" }
   // Therefore username is the exact center name used by the API.
   if (user.username !== null && user.username !== undefined) {
     const username = String(user.username).trim();
@@ -344,7 +344,7 @@ const GetViewLibrary = () => {
    *   data: [
    *     {
    *       id: 2,
-   *       center_names: ["कोटद्वार", ...],
+   *       center_names: ["टिहरी", ...],
    *       link: "...",
    *       description: "..."
    *     }

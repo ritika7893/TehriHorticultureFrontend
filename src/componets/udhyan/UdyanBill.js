@@ -1706,7 +1706,7 @@ export default function UdyanBill() {
           <div className="treasury-copy">कोषागार प्रति</div>
 
           <div className="document-center document-title-small">
-            कार्यालय उद्यान विशेषज्ञ, कोटद्वार गढ़वाल
+            कार्यालय उद्यान विशेषज्ञ, टिहरी गढ़वाल
           </div>
 
           <div className="document-center document-title">
