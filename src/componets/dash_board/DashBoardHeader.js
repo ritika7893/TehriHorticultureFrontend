@@ -91,18 +91,7 @@ function DashBoardHeader() {
               </NavDropdown.Item>
             </NavDropdown>
 
-            <NavDropdown
-              title="बिल"
-              id="bill-nav-dropdown"
-              active={billRoutes.includes(location.pathname)}
-            >
-              <NavDropdown.Item as={Link} to="/Billing">
-                Billing
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/AllBills">
-                AllBills
-              </NavDropdown.Item>
-            </NavDropdown>
+          
 
             <NavDropdown
               title="डिमांड"
