@@ -1,1870 +1,3176 @@
-:root {
-  --kp-paper: #f4f6f1;
-  --kp-card: #ffffff;
-  --kp-ink: #0f1a14;
-  --kp-ink2: #4b5a52;
-  --kp-line: #d8e0d3;
-  --kp-accent: #2f5d3a;
-  --kp-accent-dark: #244a2e;
-  --kp-soft: #e6ede4;
-  --kp-warn: #9a3412;
-  --kp-shadow:
-    0 4px 14px rgba(15, 26, 20, 0.06), 0 12px 32px rgba(15, 26, 20, 0.08);
-  --kp-radius: 14px;
+/* Kisan Aavedan Portal - isolated structural CSS
+   All selectors are scoped under .kisan-html-react-root so this component
+   cannot change the parent application's body/main/table/input styles.
+*/
+.kisan-html-react-root {
+  --ink: #16281e;
+  --ink-soft: #4a5a50;
+  --paper: #eff1ec;
+  --card: #ffffff;
+  --seal: #1f5c3a;
+  --seal-dk: #16352a;
+  --rule: #c6cdc4;
+  --fill: #fff8d6;
+  --fill-line: #e0cf7a;
+  --alert: #8c2f1e;
+  --gold: #e0b23c;
+  --gov-green: #174d35;
+  --gov-green-2: #236747;
+  --gov-line: #aebbb2;
+  --gov-soft: #f3f6f3;
+  --gov-soft-2: #eaf0ec;
+  --gov-gold: #b58a2a;
+  --gov-text: #17231d;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  isolation: isolate;
+  color: var(--ink);
 }
+.kisan-html-react-root{
 
-.kisan-page {
+  --ink: #16281e;
+
+  --ink-soft: #4a5a50;
+
+  --paper: #eff1ec;
+
+  --card: #ffffff;
+
+  --seal: #1f5c3a;
+
+  --seal-dk: #16352a;
+
+  --rule: #c6cdc4;
+
+  --fill: #fff8d6;
+
+  --fill-line: #e0cf7a;
+
+  --alert: #8c2f1e;
+
+  --gold: #e0b23c;
+
+}.kisan-html-react-root *{
+
+  box-sizing: border-box;
+
+}.kisan-html-react-root .num{
+
+  font-variant-numeric: tabular-nums;
+
+}.kisan-html-react-root .shell{
+
+  display: flex;
+
   min-height: 100vh;
-  margin-top:85px;
-  background: linear-gradient(180deg, #f4f6f1 0%, #eaeedd 100%);
-  color: var(--kp-ink);
-  font-family: "Noto Sans Devanagari", "Nirmala UI", Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
 
-/* ---------- HEADER ---------- */
-.kisan-page .portal-header {
-  background: linear-gradient(
-    135deg,
-    var(--kp-accent) 0%,
-    var(--kp-accent-dark) 100%
-  );
-  color: #fff;
-  padding: 20px 28px;
-  box-shadow: 0 4px 18px rgba(15, 26, 20, 0.18);
+}.kisan-html-react-root .rail{
+
+  width: 236px;
+
+  flex: 0 0 236px;
+
+  background: var(--seal-dk);
+
+  color: #dde6df;
+
+  padding: 20px 0 100px;
+
   position: sticky;
-  top: 0;
-  z-index: 30;
-}
-.kisan-page .brand {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  color: #fff;
-}
-.kisan-page .subtitle {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-top: 4px;
-  color: #fff;
-}
 
-/* ---------- LAYOUT ---------- */
-.kisan-page .portal {
-  max-width: 1120px;
-  margin: auto;
-  padding: 28px 22px 140px;
-  width: 100%;
-}
+  top: 56px;
 
-/* ---------- INTRO ---------- */
-.kisan-page .intro {
-  text-align: center;
-  margin: 14px auto 32px;
-}
-.kisan-page .eyebrow {
-  display: block;
+  height: 100vh;
+
+  overflow: auto;
+
+}.kisan-html-react-root .rail h1{
+
+  font-size: 16px;
+
+  margin: 0 20px 4px;
+
+  color: #fff;
+
+  font-weight: 600;
+
+  line-height: 1.35;
+
+}.kisan-html-react-root .rail .sub{
+
   font-size: 12px;
-  letter-spacing: 0.12em;
-  color: var(--kp-accent);
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.kisan-page .intro h1 {
-  font-size: 36px;
-  margin: 8px 0 6px;
-  color: var(--kp-ink);
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
-.kisan-page .intro p {
-  color: var(--kp-ink2);
-  margin: 0;
-  font-size: 15px;
-}
 
-/* ---------- SCHEME CARDS ---------- */
-.kisan-page .scheme-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.kisan-page .scheme-card {
-  position: relative;
-  text-align: left;
-  border: 1px solid var(--kp-line);
-  background: var(--kp-card);
-  border-radius: var(--kp-radius);
-  padding: 26px 24px 56px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  cursor: pointer;
-  box-shadow: var(--kp-shadow);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-  font: inherit;
-  color: var(--kp-ink);
-}
-.kisan-page .scheme-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--kp-accent);
-  box-shadow:
-    0 8px 22px rgba(15, 26, 20, 0.1),
-    0 18px 40px rgba(15, 26, 20, 0.12);
-}
-.kisan-page .scheme-icon {
-  font-size: 34px;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.kisan-page .scheme-card h3 {
-  margin: 0 0 8px;
-  font-size: 20px;
-  color: var(--kp-ink);
-  font-weight: 800;
-}
-.kisan-page .scheme-card p {
-  margin: 0 0 14px;
-  color: var(--kp-ink2);
+  margin: 0 20px 22px;
+
+  color: #8fa79a;
+
+  line-height: 1.45;
+
+}.kisan-html-react-root .rail nav a{
+
+  display: block;
+
+  padding: 10px 20px;
+
+  color: #c7d6cc;
+
+  text-decoration: none;
+
   font-size: 14px;
-  line-height: 1.65;
-}
-.kisan-page .scheme-card .tags {
+
+  border-left: 3px solid transparent;
+
+  cursor: pointer;
+
+}.kisan-html-react-root .rail nav a:hover{
+
+  background: #1e4231;
+
+  color: #fff;
+
+}.kisan-html-react-root .rail nav a.on{
+
+  background: #24503c;
+
+  color: #fff;
+
+  border-left-color: var(--gold);
+
+  font-weight: 600;
+
+}.kisan-html-react-root .rail .grp{
+
+  font-size: 11.5px;
+
+  color: #7c948a;
+
+  margin: 20px 20px 6px;
+
+}.kisan-html-react-root .rail .tools{
+
+  margin: 22px 16px 0;
+
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 6px;
-}
-.kisan-page .scheme-card .tag {
-  background: var(--kp-soft);
-  color: var(--kp-accent-dark);
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
-.kisan-page .scheme-card .arrow {
-  position: absolute;
-  right: 22px;
-  bottom: 20px;
-  font-size: 22px;
-  color: var(--kp-accent);
-  font-weight: 700;
-}
 
-/* ---------- TOPLINE / PROGRESS ---------- */
-.kisan-page .topline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.kisan-page .topline b {
-  font-family: "IBM Plex Mono", "Consolas", monospace;
-  font-size: 13px;
-  margin-left: 8px;
-  color: var(--kp-ink);
-  font-weight: 700;
-}
-.kisan-page .link-btn {
-  border: 0;
-  background: none;
-  color: var(--kp-accent);
-  font-weight: 700;
-  cursor: pointer;
+}.kisan-html-react-root .rail .tools button{
+
+  flex: 1 1 46%;
+
+  background: #2b5c46;
+
+  color: #e7f0ea;
+
+  border: 1px solid #3c7358;
+
+  padding: 7px 4px;
+
   font: inherit;
-  padding: 4px 6px;
-  border-radius: 6px;
-}
-.kisan-page .link-btn:hover {
-  background: var(--kp-soft);
-}
-.kisan-page .progress {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 20px;
-  color: var(--kp-ink2);
-  font-size: 13px;
-  font-weight: 600;
-}
-.kisan-page .progressbar {
-  height: 8px;
-  background: #dde3d9;
-  border-radius: 99px;
-  flex: 1;
-  min-width: 100px;
-  overflow: hidden;
-}
-.kisan-page .progressbar i {
-  display: block;
-  height: 100%;
-  background: linear-gradient(90deg, var(--kp-accent), var(--kp-accent-dark));
-  border-radius: inherit;
-  transition: width 0.3s ease;
-}
 
-/* ---------- FORM CARD ---------- */
-.kisan-page .form-card {
-  background: var(--kp-card);
-  border: 1px solid var(--kp-line);
-  border-radius: var(--kp-radius);
-  padding: 28px;
-  box-shadow: var(--kp-shadow);
-  width: 100%;
-}
-.kisan-page .section-head {
-  border-bottom: 1px solid var(--kp-line);
-  padding-bottom: 16px;
-  margin-bottom: 22px;
-}
-.kisan-page .section-head h2 {
-  margin: 0 0 6px;
-  font-size: 24px;
-  color: var(--kp-ink);
-  font-weight: 800;
-}
-.kisan-page .section-head p {
-  margin: 4px 0 0;
-  color: var(--kp-ink2);
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.55;
-}
-
-/* ---------- FORM GRID ---------- */
-.kisan-page .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  width: 100%;
-}
-.kisan-page .field {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.kisan-page .field-error .control,
-.kisan-page .field-error .area-wrap > .control,
-.kisan-page .field-error .opts,
-.kisan-page .field-error .area-wrap {
-  border-color: #b91c1c;
-}
-.kisan-page .lbl {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--kp-ink);
-}
-.kisan-page .req {
-  color: #b91c1c;
-  margin-left: 2px;
-}
-.kisan-page .control {
-  width: 100%;
-  border: 1px solid var(--kp-line);
-  background: #fff;
-  border-radius: 10px;
-  padding: 11px 13px;
-  font: inherit;
-  font-size: 14px;
-  color: var(--kp-ink);
-  outline: none;
-  transition:
-    border-color 0.15s,
-    box-shadow 0.15s;
-  min-width: 0;
-}
-.kisan-page .control:focus {
-  border-color: var(--kp-accent);
-  box-shadow: 0 0 0 3px rgba(47, 93, 58, 0.15);
-}
-.kisan-page select.control {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3e%3cpath fill='%234b5a52' d='M6 8L0 0h12z'/%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 10px;
-  padding-right: 36px;
-}
-
-/* ---------- OPTIONS (radio/checkbox chips) ---------- */
-.kisan-page .opts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 6px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-}
-.kisan-page .opt {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--kp-line);
-  border-radius: 10px;
-  padding: 9px 13px;
-  background: #fff;
-  font-size: 13px;
-  cursor: pointer;
-  color: var(--kp-ink);
-  transition:
-    border-color 0.15s,
-    background 0.15s;
-}
-.kisan-page .opt:hover {
-  border-color: var(--kp-accent);
-}
-.kisan-page .opt input {
-  accent-color: var(--kp-accent);
-  cursor: pointer;
-}
-.kisan-page .opt:has(input:checked) {
-  border-color: var(--kp-accent);
-  background: var(--kp-soft);
-  color: var(--kp-accent-dark);
-  font-weight: 600;
-}
-
-/* ---------- HINTS / ERRORS ---------- */
-.kisan-page .hint {
-  font-size: 11.5px;
-  color: var(--kp-ink2);
-  margin-top: 6px;
-  line-height: 1.5;
-}
-.kisan-page .errmsg {
-  font-size: 11.5px;
-  color: #b91c1c;
-  margin-top: 6px;
-  font-weight: 600;
-}
-
-/* ---------- AREA (value + unit) ---------- */
-.kisan-page .area-wrap {
-  display: grid;
-  grid-template-columns: 1fr 150px;
-  gap: 8px;
-  width: 100%;
-}
-
-/* ---------- LEDGER ---------- */
-.kisan-page .ledger {
-  grid-column: 1 / -1;
-  border: 1px solid var(--kp-line);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 12px;
-  background: #fbfcfa;
-  width: 100%;
-}
-.kisan-page .lhead {
-  background: var(--kp-soft);
-  padding: 11px 14px;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--kp-accent-dark);
-  letter-spacing: 0.2px;
-}
-.kisan-page .lbody {
-  padding: 6px 14px;
-}
-.kisan-page .lrow {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 9px 0;
-  border-bottom: 1px dashed var(--kp-line);
-  font-size: 13px;
-}
-.kisan-page .lrow:last-child {
-  border-bottom: 0;
-}
-.kisan-page .lrow span {
-  color: var(--kp-ink2);
-}
-.kisan-page .lrow b {
-  color: var(--kp-ink);
-  font-weight: 700;
-  text-align: right;
-  word-break: break-word;
-}
-.kisan-page .lfoot {
-  padding: 10px 14px;
-  font-size: 11.5px;
-  color: var(--kp-ink2);
-  background: #f6f8f5;
-  line-height: 1.55;
-}
-
-/* ---------- STANDARDS ---------- */
-.kisan-page .standards {
-  grid-column: 1 / -1;
-  background: #f8faf7;
-  border: 1px solid var(--kp-line);
-  border-radius: 12px;
-  padding: 16px 18px;
-  width: 100%;
-}
-.kisan-page .standards h3 {
-  font-size: 15px;
-  margin: 0 0 10px;
-  color: var(--kp-accent-dark);
-  font-weight: 800;
-}
-.kisan-page .standards ul {
-  margin: 0;
-  padding-left: 22px;
-}
-.kisan-page .standards li {
   font-size: 12.5px;
-  line-height: 1.65;
-  margin: 6px 0;
-  color: var(--kp-ink);
-}
 
-/* ---------- DECLARATION ---------- */
-.kisan-page .declare-block {
-  grid-column: 1 / -1;
-  background: var(--kp-soft);
-  border: 1px solid var(--kp-line);
-  border-radius: 12px;
-  padding: 16px 18px;
-  margin-top: 4px;
+  border-radius: 2px;
+
+  cursor: pointer;
+
+}.kisan-html-react-root .rail .tools button:hover{
+
+  background: #39755a;
+
+}.kisan-html-react-root .rail select{
+
+  background: #2b5c46;
+
+  border: 1px solid #3c7358;
+
+  color: #fff;
+
   width: 100%;
-}
-.kisan-page .declare-block .field {
-  width: 100%;
-}
-.kisan-page .declare {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
+
+  font: inherit;
+
   font-size: 14px;
-  line-height: 1.7;
-  color: var(--kp-ink);
-  cursor: pointer;
-  width: 100%;
-}
-.kisan-page .declare input {
-  margin-top: 5px;
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  accent-color: var(--kp-accent);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.kisan-page .declare-text {
-  flex: 1;
-  min-width: 0;
-  white-space: normal;
-  word-break: normal;
-  overflow-wrap: break-word;
-}
 
-/* ---------- PHOTO ---------- */
-.kisan-page .photo-row {
+  padding: 6px 8px;
+
+  border-radius: 2px;
+
+}.kisan-html-react-root :focus-visible{
+
+  outline: 2px solid var(--gold);
+
+  outline-offset: 2px;
+
+}.kisan-html-react-root main{
+
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 26px 30px 120px;
+
+  max-width: 1180px;
+
+}.kisan-html-react-root .view{
+
+  display: none;
+
+}.kisan-html-react-root .view.on{
+
+  display: block;
+
+}.kisan-html-react-root h2.head{
+
+  font-size: 21px;
+
+  margin: 0 0 3px;
+
+  font-weight: 600;
+
+}.kisan-html-react-root p.lead{
+
+  margin: 0 0 20px;
+
+  color: var(--ink-soft);
+
+  font-size: 13.5px;
+
+  max-width: 74ch;
+
+}.kisan-html-react-root .card{
+
+  background: var(--card);
+
+  border: 1px solid var(--rule);
+
+  border-radius: 2px;
+
+  margin-bottom: 18px;
+
+}.kisan-html-react-root .card > .cap{
+
   display: flex;
+
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.kisan-page .photo-preview {
-  width: 95px;
-  height: 115px;
-  border: 1px dashed var(--kp-line);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  gap: 9px;
+
+  padding: 9px 14px;
+
+  border-bottom: 1px solid var(--rule);
+
+  background: #f4f7f3;
+
+  font-weight: 600;
+
+  font-size: 14px;
+
+}.kisan-html-react-root .cap i{
+
+  width: 9px;
+
+  height: 9px;
+
+  background: var(--seal);
+
+  display: inline-block;
+
+  flex: 0 0 9px;
+
+}.kisan-html-react-root .cap small{
+
+  margin-left: auto;
+
+  font-weight: 400;
+
+  color: var(--ink-soft);
+
+  font-size: 12px;
+
+}.kisan-html-react-root .pad{
+
+  padding: 14px;
+
+}.kisan-html-react-root .grid{
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+
+  gap: 12px 16px;
+
+}.kisan-html-react-root label.f{
+
+  display: block;
+
+  font-size: 12.5px;
+
+  color: var(--ink-soft);
+
+  margin-bottom: 3px;
+
+}.kisan-html-react-root .pad > .grid input{
+
+  width: 100%;
+
+  font: inherit;
+
+  font-size: 14px;
+
+  padding: 6px 8px;
+
+  border: 1px solid var(--fill-line);
+
+  background: var(--fill);
+
+  border-radius: 2px;
+
+  color: var(--ink);
+
+}.kisan-html-react-root table{
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+}.kisan-html-react-root th{
+
+  background: var(--seal);
+
+  color: #fff;
+
+  font-weight: 600;
+
+  font-size: 12.5px;
+
+  padding: 7px 8px;
+
+  text-align: left;
+
+  border: 1px solid var(--seal);
+
+}.kisan-html-react-root td{
+
+  border: 1px solid var(--rule);
+
+  padding: 2px;
+
+  vertical-align: middle;
+
+}.kisan-html-react-root td.n{
+
   text-align: center;
-  color: var(--kp-ink2);
-  overflow: hidden;
-  font-size: 12px;
-  background: #fafcf8;
-  flex-shrink: 0;
-}
-.kisan-page .photo-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.kisan-page .photo-row input[type="file"] {
-  font-size: 12px;
-  color: var(--kp-ink);
-  cursor: pointer;
-  min-width: 0;
-}
 
-/* ---------- DOCS ---------- */
-.kisan-page .docs {
-  grid-column: 1 / -1;
-  background: #fbfcfa;
-  border: 1px solid var(--kp-line);
-  border-radius: 12px;
-  padding: 18px 20px;
-  width: 100%;
-}
-.kisan-page .docs p {
-  color: var(--kp-ink2);
-  font-size: 13.5px;
-  margin: 0 0 12px;
-  font-weight: 600;
-}
-.kisan-page .doc {
-  display: flex;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--kp-line);
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--kp-ink);
-  cursor: pointer;
-  align-items: flex-start;
-}
-.kisan-page .doc:last-child {
-  border-bottom: 0;
-}
-.kisan-page .doc input {
-  margin-top: 3px;
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  accent-color: var(--kp-accent);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-.kisan-page .doc-text {
-  flex: 1;
-  min-width: 0;
-  white-space: normal;
-  word-break: normal;
-  overflow-wrap: break-word;
-}
-.kisan-page .doc:hover .doc-text {
-  color: var(--kp-accent-dark);
-}
-
-/* ---------- GPS BUTTON ---------- */
-.kisan-page .btn.gps {
-  grid-column: 1 / -1;
-  margin-top: 4px;
-  justify-self: start;
-  background: var(--kp-accent);
-  color: #fff;
-}
-
-/* ---------- ACTIONS BAR ---------- */
-.kisan-page .actions {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid var(--kp-line);
-  box-shadow: 0 -8px 24px rgba(15, 26, 20, 0.08);
-  padding: 12px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  z-index: 20;
-  flex-wrap: wrap;
-}
-.kisan-page .save-line {
-  font-size: 11.5px;
-  color: var(--kp-ink2);
-  font-weight: 500;
-}
-.kisan-page .action-buttons {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.kisan-page .btn {
-  border: 0;
-  background: var(--kp-accent);
-  color: #fff;
-  padding: 11px 22px;
-  border-radius: 10px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    filter 0.15s,
-    transform 0.05s;
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-}
-.kisan-page .btn:hover {
-  filter: brightness(0.94);
-}
-.kisan-page .btn:active {
-  transform: translateY(1px);
-}
-.kisan-page .btn.ghost {
-  background: #fff;
-  color: var(--kp-accent);
-  border: 1px solid var(--kp-accent);
-}
-.kisan-page .btn.ghost:hover {
-  background: var(--kp-soft);
-  filter: none;
-}
-
-/* ---------- REVIEW ---------- */
-.kisan-page .review-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  border: 1px solid var(--kp-line);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 18px;
-  width: 100%;
-}
-.kisan-page .revrow {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 12px;
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--kp-line);
-  border-right: 1px solid var(--kp-line);
-  font-size: 12.5px;
-  background: #fff;
-}
-.kisan-page .revrow:nth-child(2n) {
-  border-right: 0;
-}
-.kisan-page .revrow span {
-  color: var(--kp-ink2);
-  font-weight: 500;
-}
-.kisan-page .revrow b {
-  color: var(--kp-ink);
-  font-weight: 700;
-  word-break: break-word;
-}
-.kisan-page .docs-summary {
-  margin-top: 18px;
-  padding: 14px 16px;
-  border-radius: 10px;
-  background: var(--kp-soft);
   font-size: 13px;
-  border: 1px solid var(--kp-line);
-}
-.kisan-page .docs-summary b {
-  color: var(--kp-accent-dark);
-  font-weight: 700;
-}
-.kisan-page .docs-summary p {
-  color: var(--kp-warn);
-  margin: 6px 0 0;
+
+  color: var(--ink-soft);
+
+  padding: 4px;
+
+}.kisan-html-react-root td input{
+
+  width: 100%;
+
+  font: inherit;
+
+  font-size: 14px;
+
+  padding: 6px 8px;
+
+  border: 1px solid transparent;
+
+  background: var(--fill);
+
+  border-radius: 0;
+
+  color: var(--ink);
+
+}.kisan-html-react-root td input:hover{
+
+  border-color: var(--fill-line);
+
+}.kisan-html-react-root td input:focus{
+
+  outline: 2px solid var(--seal);
+
+  background: #fff;
+
+}.kisan-html-react-root td.calc{
+
+  text-align: right;
+
+  white-space: nowrap;
+
+  padding: 6px 9px;
+
+  font-variant-numeric: tabular-nums;
+
+  background: #f7f9f6;
+
+}.kisan-html-react-root tr.tot td{
+
+  background: #e3ebe4;
+
+  font-weight: 600;
+
+  padding: 7px 9px;
+
+}.kisan-html-react-root .rm{
+
+  background: none;
+
+  border: 0;
+
+  color: #9a8;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  line-height: 1;
+
+  padding: 2px 7px;
+
+}.kisan-html-react-root .rm:hover{
+
+  color: var(--alert);
+
+}.kisan-html-react-root .addrow{
+
+  margin: 10px 0 2px;
+
+  background: #fff;
+
+  border: 1px dashed var(--seal);
+
+  color: var(--seal);
+
+  padding: 6px 14px;
+
+  font: inherit;
+
+  font-size: 13px;
+
+  border-radius: 2px;
+
+  cursor: pointer;
+
+}.kisan-html-react-root .addrow:hover{
+
+  background: #eff5f0;
+
+}.kisan-html-react-root .strip{
+
+  position: fixed;
+
+  left: 236px;
+
+  right: 0;
+
+  bottom: 0;
+
+  background: var(--seal-dk);
+
+  color: #fff;
+
+  display: flex;
+
+  align-items: stretch;
+
+  z-index: 20;
+
+  border-top: 3px solid var(--gold);
+
+}.kisan-html-react-root .strip .cell{
+
+  padding: 9px 18px;
+
+  border-right: 1px solid #2e5a46;
+
+  min-width: 130px;
+
+}.kisan-html-react-root .strip .k{
+
+  font-size: 11.5px;
+
+  color: #9db6a8;
+
+  margin-bottom: 1px;
+
+}.kisan-html-react-root .strip .v{
+
+  font-size: 19px;
+
+  font-weight: 600;
+
+  font-variant-numeric: tabular-nums;
+
+  line-height: 1.2;
+
+}.kisan-html-react-root .strip .cell.pay .v{
+
+  color: #f4cf6a;
+
+}.kisan-html-react-root .strip .msg{
+
+  flex: 1;
+
+  padding: 9px 18px;
+
   font-size: 12.5px;
-}
 
-/* ---------- THEMES ---------- */
-.kisan-page .theme-kwi {
-  --kp-accent: #5c7a16;
-  --kp-accent-dark: #455c0f;
-  --kp-soft: #eaf0de;
-}
-.kisan-page .theme-drf {
-  --kp-accent: #a11256;
-  --kp-accent-dark: #7d0d40;
-  --kp-soft: #f6e5ee;
-}
-.kisan-page .theme-clf {
-  --kp-accent: #3b5566;
-  --kp-accent-dark: #2c4250;
-  --kp-soft: #e7edf1;
-}
+  color: #b9ccc0;
 
-/* ============================================
-   RESPONSIVE BREAKPOINTS
-   ============================================ */
+  display: flex;
 
-@media (max-width: 1024px) {
-  .kisan-page .scheme-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+  align-items: center;
 
-@media (max-width: 768px) {
-  .kisan-page .portal {
-    padding: 18px 14px 160px;
-  }
-  .kisan-page .portal-header {
-    padding: 16px 18px;
-  }
-  .kisan-page .brand {
-    font-size: 18px;
-  }
-  .kisan-page .subtitle {
-    font-size: 12px;
-  }
-  .kisan-page .intro {
-    margin: 8px auto 22px;
-  }
-  .kisan-page .intro h1 {
-    font-size: 24px;
-  }
-  .kisan-page .intro p {
-    font-size: 13.5px;
-  }
-  .kisan-page .scheme-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .kisan-page .scheme-card {
-    padding: 20px 18px 50px;
-  }
-  .kisan-page .scheme-icon {
-    font-size: 28px;
-  }
-  .kisan-page .scheme-card h3 {
-    font-size: 17px;
-  }
-  .kisan-page .scheme-card p {
-    font-size: 13px;
-  }
+  line-height: 1.4;
 
-  .kisan-page .form-grid,
-  .kisan-page .review-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-  .kisan-page .form-card {
-    padding: 18px 16px;
-  }
-  .kisan-page .section-head {
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-  }
-  .kisan-page .section-head h2 {
-    font-size: 18px;
-  }
-  .kisan-page .section-head p {
-    font-size: 12.5px;
-  }
+}.kisan-html-react-root .strip .msg.bad{
 
-  .kisan-page .ledger,
-  .kisan-page .standards,
-  .kisan-page .docs,
-  .kisan-page .declare-block,
-  .kisan-page .btn.gps {
-    grid-column: 1 / -1;
-  }
+  color: #f0b9a8;
 
-  .kisan-page .area-wrap {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-  .kisan-page .area-wrap > .control:last-child {
-    width: 100%;
-  }
+}.kisan-html-react-root .strip .go{
 
-  .kisan-page .review-grid {
-    grid-template-columns: 1fr;
-  }
-  .kisan-page .revrow {
-    grid-template-columns: 1fr;
-    gap: 4px;
-    border-right: 0;
-    padding: 10px 14px;
-  }
-  .kisan-page .revrow span {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .kisan-page .revrow b {
-    font-size: 13px;
-  }
+  border: 0;
 
-  .kisan-page .progress {
-    font-size: 12px;
-    gap: 10px;
-  }
-  .kisan-page .progressbar {
-    min-width: 80px;
-  }
+  background: var(--gold);
 
-  .kisan-page .topline {
+  color: #20301f;
+
+  font: inherit;
+
+  font-weight: 600;
+
+  font-size: 14px;
+
+  padding: 0 24px;
+
+  cursor: pointer;
+
+}.kisan-html-react-root .strip .go:hover{
+
+  background: #f0c455;
+
+}.kisan-html-react-root .doc{
+
+  background: #fff;
+
+  padding: 34px 40px;
+
+  border: 1px solid var(--rule);
+
+  font-size: 14px;
+
+}.kisan-html-react-root .doc h3{
+
+  text-align: center;
+
+  margin: 0 0 2px;
+
+  font-size: 17px;
+
+}.kisan-html-react-root .doc h4{
+
+  text-align: center;
+
+  margin: 0 0 18px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: var(--ink-soft);
+
+}.kisan-html-react-root .doc h5{
+
+  font-size: 14px;
+
+  margin: 18px 0 6px;
+
+  font-weight: 600;
+
+  border-bottom: 1px solid var(--rule);
+
+  padding-bottom: 3px;
+
+}.kisan-html-react-root .kv{
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px 30px;
+
+  margin-bottom: 6px;
+
+}.kisan-html-react-root .kv .r{
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 6px;
+
+}.kisan-html-react-root .kv .r b{
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+}.kisan-html-react-root .ln{
+
+  flex: 1;
+
+  min-width: 40px;
+
+  border: 0;
+
+  border-bottom: 1px dotted #6b7a70;
+
+  background: #fffdf0;
+
+  font: inherit;
+
+  font-size: inherit;
+
+  color: var(--ink);
+
+  padding: 1px 5px;
+
+  border-radius: 0;
+
+}.kisan-html-react-root .ln:focus{
+
+  outline: 0;
+
+  background: #fff4c4;
+
+  border-bottom: 1.5px solid var(--seal);
+
+}.kisan-html-react-root .ln.rt{
+
+  text-align: right;
+
+  font-variant-numeric: tabular-nums;
+
+}.kisan-html-react-root .ln.sm{
+
+  flex: 0 0 96px;
+
+}.kisan-html-react-root select.ln{
+
+  flex: 0 0 auto;
+
+}.kisan-html-react-root .auto{
+
+  font-weight: 600;
+
+  font-variant-numeric: tabular-nums;
+
+}.kisan-html-react-root .doc table{
+
+  margin: 8px 0;
+
+}.kisan-html-react-root .doc th{
+
+  background: #e8eee9;
+
+  color: var(--ink);
+
+  border: 1px solid #7e8c82;
+
+  font-size: 12.5px;
+
+}.kisan-html-react-root .doc td{
+
+  border: 1px solid #7e8c82;
+
+  padding: 6px 8px;
+
+  font-size: 13.5px;
+
+}.kisan-html-react-root .doc td.calc{
+
+  background: #fff;
+
+}.kisan-html-react-root .doc tr.tot td{
+
+  background: #eff3ef;
+
+}.kisan-html-react-root .doc .decl{
+
+  margin: 12px 0;
+
+  line-height: 1.75;
+
+}.kisan-html-react-root .blank{
+
+  display: inline-block;
+
+  min-width: 104px;
+
+  border-bottom: 1px solid var(--ink);
+
+  text-align: center;
+
+  font-weight: 600;
+
+  font-variant-numeric: tabular-nums;
+
+}.kisan-html-react-root .xbox{
+
+  border: 1.5px solid var(--seal);
+
+  margin: 14px 0;
+
+}.kisan-html-react-root .xbox .xh{
+
+  background: #e8eee9;
+
+  padding: 6px 12px;
+
+  font-weight: 600;
+
+  font-size: 13.5px;
+
+  border-bottom: 1px solid var(--seal);
+
+}.kisan-html-react-root .xbox table{
+
+  margin: 0;
+
+}.kisan-html-react-root .xbox td{
+
+  border: 0;
+
+  border-bottom: 1px dotted var(--rule);
+
+  padding: 6px 12px;
+
+  font-size: 13.5px;
+
+}.kisan-html-react-root .xbox tr:last-child td{
+
+  border-bottom: 0;
+
+}.kisan-html-react-root .xbox td.v{
+
+  text-align: right;
+
+  font-weight: 600;
+
+  font-variant-numeric: tabular-nums;
+
+  white-space: nowrap;
+
+  width: 180px;
+
+}.kisan-html-react-root .xbox tr.hi td{
+
+  background: #f3f7f3;
+
+  font-size: 15px;
+
+}.kisan-html-react-root .flag{
+
+  padding: 8px 12px;
+
+  font-size: 13px;
+
+  border-radius: 2px;
+
+  margin: 10px 0;
+
+}.kisan-html-react-root .flag.bad{
+
+  background: #fbf0ec;
+
+  border: 1px solid #e0beb4;
+
+  color: var(--alert);
+
+}.kisan-html-react-root .flag.ok{
+
+  background: #eef4ee;
+
+  border: 1px solid #c3d6c7;
+
+  color: var(--seal);
+
+}@media (max-width: 860px){.kisan-html-react-root .shell{
+
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+
+  }.kisan-html-react-root .rail{
+
+    width: auto;
+
+    height: auto;
+
+    position: static;
+
+    flex: 0 0 auto;
+
+    padding-bottom: 16px;
+
+  }.kisan-html-react-root .rail nav{
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+  }.kisan-html-react-root .strip{
+
+    left: 0;
+
+    flex-wrap: wrap;
+
+  }.kisan-html-react-root .strip .msg{
+
+    display: none;
+
+  }.kisan-html-react-root main{
+
+    padding: 18px 14px 150px;
+
+  }.kisan-html-react-root .kv{
+
+    grid-template-columns: 1fr;
+
+  }.kisan-html-react-root .doc{
+
+    padding: 20px 16px;
+
   }
 
-  .kisan-page .actions {
-    padding: 10px 14px;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+}.kisan-html-react-root .appdoc{
+
+  background: #fff;
+
+  border: 1px solid var(--rule);
+
+  padding: 28px 34px;
+
+  font-size: 14px;
+
+}.kisan-html-react-root .appdoc h3{
+
+  text-align: center;
+
+  margin: 0;
+
+  font-size: 19px;
+
+}.kisan-html-react-root .appdoc h4{
+
+  text-align: center;
+
+  margin: 3px 0 16px;
+
+  font-size: 14px;
+
+  color: var(--ink-soft);
+
+}.kisan-html-react-root .appdoc h5{
+
+  font-size: 14px;
+
+  margin: 16px 0 7px;
+
+  border-bottom: 1px solid var(--rule);
+
+  padding-bottom: 4px;
+
+}.kisan-html-react-root .appgrid{
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 8px 24px;
+
+}.kisan-html-react-root .appfield{
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 6px;
+
+  min-height: 28px;
+
+}.kisan-html-react-root .appfield b{
+
+  white-space: nowrap;
+
+}.kisan-html-react-root .appfield input,
+.kisan-html-react-root .appfield select{
+
+  flex: 1;
+
+  min-width: 80px;
+
+  border: 0;
+
+  border-bottom: 1px dotted #68766d;
+
+  background: #fffdf0;
+
+  padding: 3px 5px;
+
+  font: inherit;
+
+}.kisan-html-react-root .appnote{
+
+  background: #f3f7f3;
+
+  border: 1px solid #c6cdc4;
+
+  padding: 8px 10px;
+
+  margin: 8px 0;
+
+  font-size: 13px;
+
+}.kisan-html-react-root .summaryTbl{
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin: 6px 0 10px;
+
+  border: 1.5px solid var(--seal);
+
+}.kisan-html-react-root .summaryTbl td{
+
+  border-bottom: 1px dotted var(--rule);
+
+  padding: 9px 14px;
+
+  font-size: 15px;
+
+}.kisan-html-react-root .summaryTbl tr:last-child td{
+
+  border-bottom: 0;
+
+}.kisan-html-react-root .summaryTbl td:first-child{
+
+  color: var(--ink-soft);
+
+  width: 55%;
+
+}.kisan-html-react-root .summaryTbl td.sv{
+
+  text-align: right;
+
+  font-weight: 600;
+
+  font-variant-numeric: tabular-nums;
+
+}.kisan-html-react-root .summaryTbl td.sv.big{
+
+  font-size: 19px;
+
+  color: var(--seal);
+
+}.kisan-html-react-root .summaryTbl tr.hi td{
+
+  background: #f3f7f3;
+
+}.kisan-html-react-root .summaryTbl tr.hi td.sv{
+
+  font-size: 21px;
+
+}.kisan-html-react-root .appok{
+
+  background: #eef4ee;
+
+  border: 1px solid #bfd2c2;
+
+  padding: 8px 10px;
+
+  margin: 8px 0;
+
+}.kisan-html-react-root .appbad{
+
+  background: #fbf0ec;
+
+  border: 1px solid #dfbbb0;
+
+  padding: 8px 10px;
+
+  margin: 8px 0;
+
+}.kisan-html-react-root .landtable th,
+.kisan-html-react-root .landtable td{
+
+  font-size: 13px;
+
+  padding: 5px 6px;
+
+}.kisan-html-react-root .landtable input,
+.kisan-html-react-root .landtable select{
+
+  width: 100%;
+
+  border: 1px solid var(--fill-line);
+
+  background: var(--fill);
+
+  padding: 4px;
+
+  font: inherit;
+
+}.kisan-html-react-root .landtable input.landVil,
+.kisan-html-react-root .landtable input.landSelfName,
+.kisan-html-react-root .landtable input.landSelfFather{
+
+  background: #eef1ec;
+
+  color: var(--ink-soft);
+
+  border-color: var(--rule);
+
+  cursor: default;
+
+}.kisan-html-react-root .infoTable td.flabel{
+
+  width: 230px;
+
+  font-weight: 600;
+
+  background: #f4f7f3;
+
+  color: var(--ink);
+
+  vertical-align: middle;
+
+}.kisan-html-react-root .app-actions{
+
+  display: flex;
+
+  gap: 8px;
+
+  margin: 10px 0;
+
+}.kisan-html-react-root .app-actions button{
+
+  background: var(--seal);
+
+  color: #fff;
+
+  border: 0;
+
+  padding: 7px 13px;
+
+  font: inherit;
+
+  cursor: pointer;
+
+}@media print{.kisan-html-react-root .view[data-v="application"]{
+
+    display: block !important;
+
+  }.kisan-html-react-root .view[data-v="application"] h2.head,
+.kisan-html-react-root .view[data-v="application"] p.lead{
+
+    display: none !important;
+
+  }.kisan-html-react-root .appdoc{
+
+    border: 0;
+
+    padding: 0;
+
+    font-size: 9.5pt;
+
+  }.kisan-html-react-root .appdoc h3{
+
+    font-size: 13pt;
+
+  }.kisan-html-react-root .appdoc h4{
+
+    font-size: 10pt;
+
+    margin-bottom: 7px;
+
+  }.kisan-html-react-root .appdoc h5{
+
+    font-size: 10.5pt;
+
+    margin: 7px 0 3px;
+
+  }.kisan-html-react-root .appgrid{
+
+    gap: 3px 18px;
+
+  }.kisan-html-react-root .appfield{
+
+    min-height: 22px;
+
+  }.kisan-html-react-root .appnote,
+.kisan-html-react-root .appok,
+.kisan-html-react-root .appbad{
+
+    padding: 4px 7px;
+
+    margin: 4px 0;
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .landtable th,
+.kisan-html-react-root .landtable td{
+
+    font-size: 9pt;
+
+    padding: 3px 4px;
+
+  }@page{
+
+    size: A4 portrait;
+
+    margin: 12mm;
+
   }
-  .kisan-page .save-line {
+
+}@media (prefers-reduced-motion: reduce){.kisan-html-react-root *{
+
+    transition: none !important;
+
+  }
+
+}@media print{.kisan-html-react-root .rail,
+.kisan-html-react-root .strip,
+.kisan-html-react-root .noprint{
+
+    display: none !important;
+
+  }.kisan-html-react-root .shell{
+
     display: block;
-    text-align: center;
-    font-size: 11px;
-    order: 2;
+
+    min-height: 0;
+
+  }.kisan-html-react-root main{
+
+    padding: 0;
+
+    max-width: none;
+
+    display: block;
+
+  }.kisan-html-react-root .view{
+
+    display: none !important;
+
+  }.kisan-html-react-root .view[data-v="bill"]{
+
+    display: block !important;
+
+  }.kisan-html-react-root .view[data-v="application"]{
+
+    display: block !important;
+
+  }.kisan-html-react-root .view[data-v="application"]{
+
+    display: block !important;
+
+  }.kisan-html-react-root .view[data-v="bill"] h2.head,
+.kisan-html-react-root .view[data-v="bill"] p.lead{
+
+    display: none !important;
+
+  }.kisan-html-react-root{
+
+    background: #fff;
+
+    font-size: 11pt;
+
+  }.kisan-html-react-root .doc{
+
+    border: 0;
+
+    padding: 0;
+
+    font-size: 9pt;
+
+    background: #fff;
+
+  }.kisan-html-react-root .doc h3{
+
+    font-size: 12pt;
+
+    margin-bottom: 1px;
+
+  }.kisan-html-react-root .doc h4{
+
+    font-size: 9.5pt;
+
+    margin-bottom: 4px;
+
+  }.kisan-html-react-root .doc > div[style*="margin-top:22px"]{
+
+    margin-top: 10px !important;
+
+  }.kisan-html-react-root .doc > div[style*="margin-top:26px"]{
+
+    margin-top: 10px !important;
+
+  }.kisan-html-react-root .doc > div[style*="margin-top:20px"]{
+
+    margin-top: 8px !important;
+
+  }.kisan-html-react-root .doc h5{
+
+    margin: 5px 0 2px;
+
+    font-size: 10pt;
+
+  }.kisan-html-react-root .doc p{
+
+    margin: 2px 0;
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .doc table{
+
+    margin: 3px 0;
+
+  }.kisan-html-react-root .doc td,
+.kisan-html-react-root .doc th{
+
+    padding: 2px 5px;
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .doc .decl{
+
+    margin: 4px 0;
+
+    line-height: 1.3;
+
+  }.kisan-html-react-root .kv{
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 2px 22px;
+
+    margin-bottom: 2px;
+
+  }.kisan-html-react-root .xbox{
+
+    margin: 4px 0;
+
+  }.kisan-html-react-root .xbox td{
+
+    padding: 2px 10px;
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .xbox .xh{
+
+    padding: 3px 10px;
+
+    font-size: 9.5pt;
+
+  }.kisan-html-react-root .xbox tr.hi td{
+
+    font-size: 10pt;
+
+  }.kisan-html-react-root .flag{
+
+    border: 1px solid #000;
+
+    background: #fff !important;
+
+    color: #000 !important;
+
+    padding: 4px 8px;
+
+    font-size: 9pt;
+
+    margin: 4px 0;
+
+  }.kisan-html-react-root .ln{
+
+    background: transparent !important;
+
+    border-bottom: 1px dotted #000;
+
+    color: #000;
+
+    -webkit-appearance: none;
+
+    appearance: none;
+
+  }.kisan-html-react-root .ln::placeholder{
+
+    color: transparent;
+
+  }.kisan-html-react-root select.ln{
+
+    border: 0;
+
+    border-bottom: 1px dotted #000;
+
+    padding-right: 2px;
+
+  }.kisan-html-react-root input[type="date"].ln::-webkit-calendar-picker-indicator{
+
+    display: none;
+
+  }@page{
+
+    size: A4 portrait;
+
+    margin: 14mm;
+
   }
-  .kisan-page .action-buttons {
+
+}.kisan-html-react-root .serial-layout{
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+}.kisan-html-react-root .serial-section{
+
+  border: 1px solid #b8c1bb;
+
+  border-radius: 6px;
+
+  padding: 10px 12px;
+
+  background: #fff;
+
+}.kisan-html-react-root .serial-title{
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  padding-bottom: 6px;
+
+  margin-bottom: 6px;
+
+  border-bottom: 1px solid #d7ddd9;
+
+}.kisan-html-react-root .serial-section .kv{
+
+  margin-top: 0;
+
+}@media print{.kisan-html-react-root #fenceMappingApplicationTable{
+
+    display: table !important;
+
+  }.kisan-html-react-root #fenceMappingApplicationTable thead{
+
+    display: table-header-group !important;
+
+  }.kisan-html-react-root #fenceMappingApplicationTable tbody{
+
+    display: table-row-group !important;
+
+  }.kisan-html-react-root #fenceMappingApplicationTable tbody tr{
+
+    display: none !important;
+
+  }.kisan-html-react-root #fenceMappingApplicationTable tbody tr.print-selected{
+
+    display: table-row !important;
+
+  }
+
+}.kisan-html-react-root .note-box{
+
+  margin-top: 14px;
+
+  border: 1px solid #999;
+
+  padding: 10px 12px;
+
+  font-size: 12px;
+
+  line-height: 1.55;
+
+  font-weight: 400;
+
+  color: #222;
+
+  background: #fff;
+
+}.kisan-html-react-root .note-title{
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  padding-bottom: 5px;
+
+  margin-bottom: 6px;
+
+  border-bottom: 1px solid #ccc;
+
+}@media print{.kisan-html-react-root .note-box{
+
+    display: block !important;
+
+    visibility: visible !important;
+
+    page-break-inside: avoid;
+
+    break-inside: avoid;
+
+    color: #000 !important;
+
+    background: #fff !important;
+
+    border: 1px solid #777 !important;
+
+    font-weight: 400 !important;
+
+  }.kisan-html-react-root .note-box .note-title{
+
+    font-weight: 400 !important;
+
+    color: #000 !important;
+
+  }
+
+}.kisan-html-react-root /* ───── देयक प्रपत्र का नया प्रोफेशनल डिज़ाइन ───── */
+
+.bill-doc{
+
+  background: #fff;
+
+  border: 1px solid #aeb9b1;
+
+  border-radius: 4px;
+
+  padding: 28px 34px 34px;
+
+  box-shadow: 0 3px 12px rgba(22, 40, 30, 0.07);
+
+}.kisan-html-react-root .bill-header{
+
+  border: 1px solid #b9c5bd;
+
+  border-radius: 4px;
+
+  overflow: hidden;
+
+  margin-bottom: 16px;
+
+  background: #fff;
+
+}.kisan-html-react-root .bill-kicker{
+
+  padding: 6px 14px;
+
+  background: #16352a;
+
+  color: #fff;
+
+  font-size: 11px;
+
+  letter-spacing: 0.3px;
+
+  text-align: center;
+
+}.kisan-html-react-root .bill-title{
+
+  margin: 13px 16px 7px !important;
+
+  text-align: center;
+
+  font-size: 20px !important;
+
+  font-weight: 700 !important;
+
+  color: #16352a;
+
+}.kisan-html-react-root .bill-rule{
+
+  width: 76px;
+
+  height: 3px;
+
+  background: #e0b23c;
+
+  margin: 0 auto 12px;
+
+}.kisan-html-react-root .bill-meta{
+
+  display: grid;
+
+  grid-template-columns: 1.15fr 1.55fr 0.8fr;
+
+  border-top: 1px solid #d5ddd7;
+
+}.kisan-html-react-root .bill-meta > div{
+
+  padding: 8px 12px;
+
+  border-right: 1px solid #d5ddd7;
+
+  text-align: center;
+
+}.kisan-html-react-root .bill-meta > div:last-child{
+
+  border-right: 0;
+
+}.kisan-html-react-root .bill-meta span{
+
+  display: block;
+
+  font-size: 10.5px;
+
+  color: #65746b;
+
+  margin-bottom: 2px;
+
+}.kisan-html-react-root .bill-meta b{
+
+  font-size: 12.5px;
+
+  color: #16281e;
+
+}.kisan-html-react-root .bill-doc .serial-section{
+
+  border: 1px solid #c3ccc6;
+
+  border-radius: 4px;
+
+  padding: 0 14px 10px;
+
+  background: #fff;
+
+  margin-bottom: 10px;
+
+  overflow: hidden;
+
+}.kisan-html-react-root .bill-doc .serial-title{
+
+  margin: 0 -14px 9px;
+
+  padding: 7px 12px;
+
+  font-size: 13.5px;
+
+  font-weight: 600;
+
+  color: #16352a;
+
+  background: #f0f4f1;
+
+  border-bottom: 1px solid #c9d2cc;
+
+}.kisan-html-react-root .bill-doc .kv{
+
+  gap: 6px 26px;
+
+}.kisan-html-react-root .bill-doc .kv .r{
+
+  padding: 4px 0;
+
+  border-bottom: 1px dotted #d5ddd7;
+
+}.kisan-html-react-root .bill-doc .kv .r:last-child{
+
+  border-bottom: 0;
+
+}.kisan-html-react-root .bill-doc > table{
+
+  margin: 16px 0 12px;
+
+  border: 1px solid #aeb9b1;
+
+  border-radius: 4px;
+
+  overflow: hidden;
+
+}.kisan-html-react-root .bill-doc > table th{
+
+  background: #1f5c3a;
+
+  padding: 8px 6px;
+
+  font-size: 11.5px;
+
+  line-height: 1.35;
+
+}.kisan-html-react-root .bill-doc > table td{
+
+  padding: 7px 6px;
+
+  border: 1px solid #d3dbd6;
+
+  font-size: 12px;
+
+}.kisan-html-react-root .bill-doc > table .tot td{
+
+  background: #f0f4f1;
+
+  font-weight: 700;
+
+}.kisan-html-react-root .bill-doc .xbox{
+
+  border: 1px solid #aeb9b1;
+
+  border-radius: 4px;
+
+  overflow: hidden;
+
+  margin: 16px 0;
+
+}.kisan-html-react-root .bill-doc .xbox .xh{
+
+  background: #16352a;
+
+  color: #fff;
+
+  padding: 8px 12px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}.kisan-html-react-root .bill-doc .xbox td{
+
+  padding: 7px 12px;
+
+  border-bottom: 1px solid #e0e5e1;
+
+}.kisan-html-react-root .bill-doc .xbox tr.hi td{
+
+  background: #eaf2ec;
+
+  font-size: 15px;
+
+  color: #16352a;
+
+  border-top: 1px solid #b7c9bd;
+
+  border-bottom: 1px solid #b7c9bd;
+
+}.kisan-html-react-root .bill-doc .note-box{
+
+  background: #fafbfa;
+
+  border: 1px solid #bfc8c2;
+
+  border-left: 4px solid #7b8f83;
+
+  border-radius: 3px;
+
+  padding: 10px 12px;
+
+  font-size: 12px;
+
+}.kisan-html-react-root .bill-doc .decl{
+
+  background: #fafbfa;
+
+  border: 1px solid #d1d9d3;
+
+  border-radius: 3px;
+
+  padding: 10px 12px;
+
+  line-height: 1.8;
+
+}.kisan-html-react-root .bill-doc .blank{
+
+  min-width: 96px;
+
+}.kisan-html-react-root .bill-doc [data-f="date"],
+.kisan-html-react-root .bill-doc [data-f="place"],
+.kisan-html-react-root .bill-doc [data-f="officer"],
+.kisan-html-react-root .bill-doc [data-f="desig"]{
+
+  background: #fffdf0;
+
+}@media print{@page{
+
+    size: A4 portrait;
+
+    margin: 10mm;
+
+  }.kisan-html-react-root{
+
+    background: #fff !important;
+
+  }.kisan-html-react-root main{
+
+    padding: 0 !important;
+
+    max-width: none !important;
+
+  }.kisan-html-react-root .bill-doc{
+
+    border: 0 !important;
+
+    box-shadow: none !important;
+
+    padding: 0 !important;
+
+  }.kisan-html-react-root .bill-header{
+
+    margin-bottom: 10px;
+
+  }.kisan-html-react-root .bill-title{
+
+    font-size: 17px !important;
+
+  }.kisan-html-react-root .bill-doc .serial-section{
+
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+
+  }.kisan-html-react-root .bill-doc .xbox{
+
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+
+  }.kisan-html-react-root .bill-doc .decl{
+
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+
+  }.kisan-html-react-root .bill-doc .note-box{
+
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+
+  }
+
+}@media (max-width: 760px){.kisan-html-react-root .bill-meta{
+
+    grid-template-columns: 1fr;
+
+  }.kisan-html-react-root .bill-meta > div{
+
+    border-right: 0;
+
+    border-bottom: 1px solid #d5ddd7;
+
+  }.kisan-html-react-root .bill-meta > div:last-child{
+
+    border-bottom: 0;
+
+  }.kisan-html-react-root .bill-doc{
+
+    padding: 18px 14px 24px;
+
+  }
+
+}.kisan-html-react-root .bill-table-heading{
+
+  margin: 14px 0 5px;
+
+  padding: 8px 12px;
+
+  border: 1px solid #c3ccc6;
+
+  border-bottom: 0;
+
+  border-radius: 4px 4px 0 0;
+
+  background: #f0f4f1;
+
+}.kisan-html-react-root .bill-table-title{
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #16352a;
+
+}.kisan-html-react-root .bill-table-subtitle{
+
+  margin-top: 2px;
+
+  font-size: 11px;
+
+  color: #65746b;
+
+}@media print{.kisan-html-react-root .bill-table-heading{
+
+    margin-top: 8px;
+
+    padding: 6px 9px;
+
+    background: #f0f4f1 !important;
+
+    -webkit-print-color-adjust: exact;
+
+    print-color-adjust: exact;
+
+  }.kisan-html-react-root .bill-table-title{
+
+    font-size: 11.5pt;
+
+  }.kisan-html-react-root .bill-table-subtitle{
+
+    font-size: 8.5pt;
+
+  }
+
+}.kisan-html-react-root .expense-table{
+
+  table-layout: fixed;
+
+}.kisan-html-react-root .expense-table th,
+.kisan-html-react-root .expense-table td{
+
+  vertical-align: middle;
+
+}.kisan-html-react-root .expense-table td input{
+
+  height: 34px;
+
+}.kisan-html-react-root .expense-table th{
+
+  white-space: normal;
+
+  line-height: 1.25;
+
+}@media print{.kisan-html-react-root .expense-table td input{
+
+    height: auto;
+
+  }
+
+}@media print{.kisan-html-react-root .receipt-card{
+
+    box-shadow: none;
+
+    border: 1px solid #888;
+
+    padding: 16px 18px;
+
+    margin: 0 0 12px;
+
+  }.kisan-html-react-root .receipt-card:last-child{
+
+    page-break-after: auto;
+
+  }.kisan-html-react-root .receipt-title{
+
+    font-size: 16px;
+
+  }.kisan-html-react-root .receipt-subtitle{
+
+    font-size: 10.5pt;
+
+  }.kisan-html-react-root .receipt-meta{
+
+    margin-bottom: 8px;
+
+  }.kisan-html-react-root .receipt-table th,
+.kisan-html-react-root .receipt-table td{
+
+    font-size: 9pt;
+
+    padding: 4px;
+
+  }.kisan-html-react-root .receipt-text,
+.kisan-html-react-root .receipt-cert{
+
+    font-size: 9pt;
+
+    line-height: 1.45;
+
+  }.kisan-html-react-root .receipt-sign{
+
+    margin-top: 14px;
+
+  }
+
+}@media (max-width: 760px){.kisan-html-react-root .receipt-meta,
+.kisan-html-react-root .receipt-sign{
+
+    grid-template-columns: 1fr;
+
+  }.kisan-html-react-root .receipt-meta > div{
+
+    border-right: 0;
+
+    border-bottom: 1px solid #d1d9d3;
+
+  }.kisan-html-react-root .receipt-meta > div:last-child{
+
+    border-bottom: 0;
+
+  }.kisan-html-react-root .receipt-card{
+
+    padding: 18px 14px;
+
+  }
+
+}.kisan-html-react-root /* ===== STANDARD GOVERNMENT FORM DESIGN ===== */
+
+.kisan-html-react-root{
+
+  --gov-green: #174d35;
+
+  --gov-green-2: #236747;
+
+  --gov-line: #aebbb2;
+
+  --gov-soft: #f3f6f3;
+
+  --gov-soft-2: #eaf0ec;
+
+  --gov-gold: #b58a2a;
+
+  --gov-text: #17231d;
+
+}.kisan-html-react-root .appdoc,
+.kisan-html-react-root .bill-doc{
+
+  background: #fff;
+
+  color: var(--gov-text);
+
+  border: 1px solid var(--gov-line);
+
+  border-radius: 2px;
+
+  box-shadow: 0 2px 10px rgba(20, 45, 32, 0.06);
+
+  position: relative;
+
+}.kisan-html-react-root .appdoc:before,
+.kisan-html-react-root .bill-doc:before{
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  top: 0;
+
+  height: 5px;
+
+  background: var(--gov-green);
+
+}.kisan-html-react-root .appdoc{
+
+  padding: 32px 38px 36px;
+
+  font-size: 14px;
+
+}.kisan-html-react-root .appdoc h3{
+
+  font-size: 20px !important;
+
+  font-weight: 700 !important;
+
+  color: var(--gov-green) !important;
+
+  letter-spacing: 0.1px;
+
+  margin: 3px 0 2px !important;
+
+}.kisan-html-react-root .appdoc h4{
+
+  color: #2b3a32 !important;
+
+  font-size: 14px !important;
+
+  font-weight: 600 !important;
+
+  margin: 3px 0 18px !important;
+
+}.kisan-html-react-root .appdoc h5{
+
+  color: var(--gov-green);
+
+  font-size: 13.5px !important;
+
+  font-weight: 700 !important;
+
+  background: linear-gradient(to right, var(--gov-soft), #fff);
+
+  border-left: 4px solid var(--gov-green);
+
+  border-bottom: 1px solid #d2dbd5 !important;
+
+  padding: 7px 10px 7px !important;
+
+  margin: 16px 0 8px !important;
+
+}.kisan-html-react-root .appdoc .appnote{
+
+  border: 1px solid #cbd5ce !important;
+
+  background: var(--gov-soft) !important;
+
+  border-radius: 2px !important;
+
+}.kisan-html-react-root .appdoc .infoTable{
+
+  border: 1px solid var(--gov-line);
+
+}.kisan-html-react-root .appdoc .infoTable td.flabel{
+
+  background: var(--gov-soft) !important;
+
+  color: #25352c !important;
+
+  font-weight: 600 !important;
+
+  border-right: 1px solid var(--gov-line);
+
+}.kisan-html-react-root .appdoc .landtable{
+
+  border: 1px solid var(--gov-line);
+
+}.kisan-html-react-root .appdoc .landtable th{
+
+  background: var(--gov-green) !important;
+
+  color: #fff !important;
+
+  text-align: center !important;
+
+  font-weight: 600 !important;
+
+}.kisan-html-react-root .appdoc .landtable td{
+
+  background: #fff;
+
+  border-color: #cbd5ce !important;
+
+}.kisan-html-react-root .appdoc .landtable tr.tot td{
+
+  background: var(--gov-soft-2) !important;
+
+  font-weight: 700;
+
+}.kisan-html-react-root .appdoc .summaryTbl{
+
+  border: 1.5px solid var(--gov-green) !important;
+
+}.kisan-html-react-root .appdoc .summaryTbl tr.hi td{
+
+  background: var(--gov-soft-2) !important;
+
+}.kisan-html-react-root .appdoc .summaryTbl td.sv.big{
+
+  color: var(--gov-green) !important;
+
+}.kisan-html-react-root .appdoc .appok{
+
+  border-left: 4px solid var(--gov-green) !important;
+
+  background: #f0f6f1 !important;
+
+}.kisan-html-react-root .appdoc .appbad{
+
+  border-left: 4px solid #9a3d2a !important;
+
+  background: #fbf3f0 !important;
+
+}.kisan-html-react-root .appdoc .app-actions button{
+
+  border-radius: 2px;
+
+  background: var(--gov-green) !important;
+
+}.kisan-html-react-root .appdoc .app-actions button:hover{
+
+  background: var(--gov-green-2) !important;
+
+}.kisan-html-react-root .bill-doc{
+
+  padding: 30px 34px 34px;
+
+  font-size: 13.5px;
+
+}.kisan-html-react-root .bill-header{
+
+  border: 1px solid var(--gov-line) !important;
+
+  box-shadow: none !important;
+
+  background: #fff !important;
+
+}.kisan-html-react-root .bill-kicker{
+
+  background: var(--gov-green) !important;
+
+  color: #fff !important;
+
+  padding: 7px 12px !important;
+
+  font-size: 11px !important;
+
+  letter-spacing: 0.15px;
+
+}.kisan-html-react-root .bill-title{
+
+  color: var(--gov-green) !important;
+
+  font-size: 21px !important;
+
+  font-weight: 700 !important;
+
+  margin: 14px 16px 6px !important;
+
+}.kisan-html-react-root .bill-rule{
+
+  background: var(--gov-gold) !important;
+
+  height: 3px !important;
+
+}.kisan-html-react-root .bill-meta{
+
+  background: #fff !important;
+
+}.kisan-html-react-root .bill-meta > div{
+
+  padding: 8px 10px !important;
+
+  background: var(--gov-soft) !important;
+
+}.kisan-html-react-root .bill-meta span{
+
+  color: #65746b !important;
+
+}.kisan-html-react-root .bill-meta b{
+
+  color: #1e2d25 !important;
+
+}.kisan-html-react-root .bill-doc .serial-section{
+
+  border: 1px solid var(--gov-line) !important;
+
+  border-radius: 2px !important;
+
+  margin-bottom: 10px !important;
+
+}.kisan-html-react-root .bill-doc .serial-title{
+
+  background: var(--gov-soft) !important;
+
+  color: var(--gov-green) !important;
+
+  border-bottom: 1px solid #cbd5ce !important;
+
+  font-weight: 700 !important;
+
+}.kisan-html-react-root .bill-table-heading{
+
+  border-color: var(--gov-line) !important;
+
+  background: var(--gov-soft) !important;
+
+}.kisan-html-react-root .bill-table-title{
+
+  color: var(--gov-green) !important;
+
+  font-weight: 700 !important;
+
+}.kisan-html-react-root .bill-doc > table th{
+
+  background: var(--gov-green) !important;
+
+  color: #fff !important;
+
+}.kisan-html-react-root .bill-doc > table .tot td{
+
+  background: var(--gov-soft-2) !important;
+
+}.kisan-html-react-root .bill-doc .xbox{
+
+  border: 1.5px solid var(--gov-green) !important;
+
+}.kisan-html-react-root .bill-doc .xbox .xh{
+
+  background: var(--gov-green) !important;
+
+}.kisan-html-react-root .bill-doc .xbox tr.hi td{
+
+  background: var(--gov-soft-2) !important;
+
+  color: var(--gov-green) !important;
+
+}.kisan-html-react-root .bill-doc .note-box{
+
+  border-left: 4px solid #78887d !important;
+
+  background: #fafbfa !important;
+
+  color: #24342b !important;
+
+}.kisan-html-react-root .bill-doc .decl{
+
+  border: 1px solid #ccd5cf !important;
+
+  background: #fafbfa !important;
+
+}.kisan-html-react-root .bill-doc .blank{
+
+  border-bottom: 1px solid #1d2a23 !important;
+
+  min-width: 88px;
+
+}@media print{.kisan-html-react-root{
+
+    background: #fff !important;
+
+  }.kisan-html-react-root .appdoc,
+.kisan-html-react-root .bill-doc{
+
+    box-shadow: none !important;
+
+    border: 0 !important;
+
+    border-radius: 0 !important;
+
+  }.kisan-html-react-root .appdoc:before,
+.kisan-html-react-root .bill-doc:before{
+
+    display: none !important;
+
+  }.kisan-html-react-root .appdoc h5,
+.kisan-html-react-root .bill-doc .serial-section,
+.kisan-html-react-root .bill-doc .xbox,
+.kisan-html-react-root .bill-doc .note-box,
+.kisan-html-react-root .bill-doc .decl{
+
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+
+  }.kisan-html-react-root .appdoc h3{
+
+    font-size: 16px !important;
+
+  }.kisan-html-react-root .appdoc h4{
+
+    font-size: 11pt !important;
+
+  }.kisan-html-react-root .bill-title{
+
+    font-size: 16px !important;
+
+  }.kisan-html-react-root .bill-kicker{
+
+    font-size: 9pt !important;
+
+  }
+
+}@media print{.kisan-html-react-root .view{
+
+    display: none !important;
+
+  }.kisan-html-react-root .view\.print-target{
+
+    display: block !important;
+
+  }
+
+}.kisan-html-react-root /* ===== स्वचालित शपथ-पत्र ===== */
+
+.affidavit-doc{
+
+  background: #fff;
+
+  border: 1px solid #aebbb2;
+
+  border-radius: 2px;
+
+  padding: 30px 38px 34px;
+
+  margin-top: 20px;
+
+  color: #17231d;
+
+  font-size: 13.5px;
+
+  line-height: 1.8;
+
+  box-shadow: 0 2px 10px rgba(20, 45, 32, 0.05);
+
+}.kisan-html-react-root .affidavit-doc .aff-head{
+
+  text-align: center;
+
+  margin-bottom: 16px;
+
+}.kisan-html-react-root .affidavit-doc .aff-kicker{
+
+  font-size: 11px;
+
+  color: #65746b;
+
+}.kisan-html-react-root .affidavit-doc .aff-title{
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  color: #174d35;
+
+  margin: 2px 0;
+
+}.kisan-html-react-root .affidavit-doc .aff-sub{
+
+  font-size: 12px;
+
+  color: #4a5a50;
+
+}.kisan-html-react-root .affidavit-doc .aff-line{
+
+  width: 70px;
+
+  height: 2px;
+
+  background: #b58a2a;
+
+  margin: 8px auto 10px;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta{
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  border: 1px solid #cbd5ce;
+
+  background: #f5f7f5;
+
+  margin-bottom: 12px;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta > div{
+
+  padding: 7px 10px;
+
+  border-right: 1px solid #cbd5ce;
+
+  border-bottom: 1px solid #cbd5ce;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta > div:nth-child(2n){
+
+  border-right: 0;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta > div:nth-last-child(-n + 2){
+
+  border-bottom: 0;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta span{
+
+  display: block;
+
+  font-size: 10px;
+
+  color: #65746b;
+
+}.kisan-html-react-root .affidavit-doc .aff-meta b{
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+}.kisan-html-react-root .affidavit-doc .aff-intro{
+
+  margin: 7px 0 10px;
+
+}.kisan-html-react-root .affidavit-doc .aff-item{
+
+  margin: 6px 0;
+
+  text-align: justify;
+
+}.kisan-html-react-root .affidavit-doc .aff-land{
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin: 8px 0 10px;
+
+}.kisan-html-react-root .affidavit-doc .aff-land th{
+
+  background: #174d35;
+
+  color: #fff;
+
+  padding: 6px 7px;
+
+  font-size: 11px;
+
+  border: 1px solid #174d35;
+
+}.kisan-html-react-root .affidavit-doc .aff-land td{
+
+  padding: 6px 7px;
+
+  border: 1px solid #c8d2cb;
+
+  font-size: 11.5px;
+
+}.kisan-html-react-root .affidavit-doc .aff-land .right{
+
+  text-align: right;
+
+}.kisan-html-react-root .affidavit-doc .aff-decl{
+
+  margin-top: 10px;
+
+}.kisan-html-react-root .affidavit-doc .aff-sign{
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 30px;
+
+  margin-top: 20px;
+
+}.kisan-html-react-root .affidavit-doc .aff-sign .box{
+
+  min-height: 72px;
+
+}.kisan-html-react-root .affidavit-doc .aff-sign .line{
+
+  margin-top: 36px;
+
+  border-top: 1px solid #17231d;
+
+  text-align: center;
+
+  padding-top: 4px;
+
+}.kisan-html-react-root .affidavit-doc .aff-consent{
+
+  margin-top: 18px;
+
+  padding-top: 12px;
+
+  border-top: 1px solid #cbd5ce;
+
+}.kisan-html-react-root .affidavit-doc .aff-page-break{
+
+  page-break-before: always;
+
+  break-before: page;
+
+}@media print{.kisan-html-react-root .affidavit-doc{
+
+    box-shadow: none;
+
+    border: 0;
+
+    border-radius: 0;
+
+    margin-top: 0;
+
+    padding: 14px 16px 18px;
+
+    font-size: 9pt;
+
+    line-height: 1.55;
+
+  }.kisan-html-react-root .affidavit-doc .aff-title{
+
+    font-size: 15pt;
+
+  }.kisan-html-react-root .affidavit-doc .aff-sub{
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta{
+
+    margin-bottom: 7px;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta > div{
+
+    padding: 4px 6px;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta span{
+
+    font-size: 8pt;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta b{
+
+    font-size: 9pt;
+
+  }.kisan-html-react-root .affidavit-doc .aff-item{
+
+    margin: 3px 0;
+
+  }.kisan-html-react-root .affidavit-doc .aff-land{
+
+    margin: 4px 0 6px;
+
+  }.kisan-html-react-root .affidavit-doc .aff-land th,
+.kisan-html-react-root .affidavit-doc .aff-land td{
+
+    padding: 3px 4px;
+
+    font-size: 8pt;
+
+  }.kisan-html-react-root .affidavit-doc .aff-sign{
+
+    margin-top: 10px;
+
+  }
+
+}@media (max-width: 760px){.kisan-html-react-root .affidavit-doc{
+
+    padding: 20px 14px;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta,
+.kisan-html-react-root .affidavit-doc .aff-sign{
+
+    grid-template-columns: 1fr;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta > div{
+
+    border-right: 0;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta > div:nth-last-child(-n + 2){
+
+    border-bottom: 1px solid #cbd5ce;
+
+  }.kisan-html-react-root .affidavit-doc .aff-meta > div:last-child{
+
+    border-bottom: 0;
+
+  }
+
+}.kisan-html-react-root .aff-preview{
+
+  margin: 12px 0 18px;
+
+  border: 1px solid #c3ccc6;
+
+  border-radius: 4px;
+
+  background: #f7f9f7;
+
+  padding: 0;
+
+}.kisan-html-react-root .aff-preview-title{
+
+  padding: 8px 12px;
+
+  background: #eef3ef;
+
+  border-bottom: 1px solid #cbd5ce;
+
+  color: #174d35;
+
+  font-weight: 600;
+
+  font-size: 13.5px;
+
+}.kisan-html-react-root .aff-preview-grid{
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 0;
+
+}.kisan-html-react-root .aff-preview-item{
+
+  padding: 7px 11px;
+
+  border-bottom: 1px solid #d8dfda;
+
+}.kisan-html-react-root .aff-preview-item:nth-child(odd){
+
+  border-right: 1px solid #d8dfda;
+
+}.kisan-html-react-root .aff-preview-label{
+
+  font-size: 10.5px;
+
+  color: #66756c;
+
+  display: block;
+
+  margin-bottom: 1px;
+
+}.kisan-html-react-root .aff-preview-value{
+
+  font-size: 12.5px;
+
+  color: #1b2b22;
+
+}.kisan-html-react-root .aff-preview-table{
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin: 8px 0 0;
+
+}.kisan-html-react-root .aff-preview-table th{
+
+  background: #174d35;
+
+  color: #fff;
+
+  font-size: 11px;
+
+  padding: 6px;
+
+  border: 1px solid #174d35;
+
+}.kisan-html-react-root .aff-preview-table td{
+
+  font-size: 11.5px;
+
+  padding: 5px 6px;
+
+  border: 1px solid #cbd5ce;
+
+}@media (max-width: 760px){.kisan-html-react-root .aff-preview-grid{
+
+    grid-template-columns: 1fr;
+
+  }.kisan-html-react-root .aff-preview-item:nth-child(odd){
+
+    border-right: 0;
+
+  }
+
+}@media print{.kisan-html-react-root .aff-preview{
+
+    display: none !important;
+
+  }
+
+}.kisan-html-react-root .land-row-actions{
+
+  margin: 7px 0 12px;
+
+}.kisan-html-react-root .land-remove{
+
+  border: 1px solid #c9d2cc;
+
+  background: #fff;
+
+  color: #8a3a2b;
+
+  border-radius: 3px;
+
+  width: 28px;
+
+  height: 28px;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  line-height: 24px;
+
+}.kisan-html-react-root .land-remove:hover{
+
+  background: #fbf1ee;
+
+}@media print{.kisan-html-react-root .land-remove,
+.kisan-html-react-root .land-row-actions{
+
+    display: none !important;
+
+  }.kisan-html-react-root #applicationOut table.landtable th.noprint,
+.kisan-html-react-root #applicationOut table.landtable td.noprint{
+
+    display: none !important;
+
+  }
+
+}.kisan-html-react-root{
+
+  min-height: 100vh;
+
+}.kisan-html-react-root > .shell{
+
+  min-height: 100vh;
+
+}
+
+
+/* ===== Responsive isolation additions ===== */
+.kisan-html-react-root,
+.kisan-html-react-root * {
+  box-sizing: border-box;
+}
+
+.kisan-html-react-root .shell {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.kisan-html-react-root main {
+  width: 100%;
+  max-width: 1180px;
+  min-width: 0;
+  margin-top: 56px;
+}
+
+.kisan-html-react-root .card,
+.kisan-html-react-root .doc,
+.kisan-html-react-root .appdoc,
+.kisan-html-react-root .bill-doc,
+.kisan-html-react-root .affidavit-doc {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.kisan-html-react-root .pad,
+.kisan-html-react-root .doc,
+.kisan-html-react-root .appdoc,
+.kisan-html-react-root .bill-doc,
+.kisan-html-react-root .affidavit-doc {
+  overflow-x: auto;
+}
+
+.kisan-html-react-root .expense-table,
+.kisan-html-react-root .landtable,
+.kisan-html-react-root .infoTable,
+.kisan-html-react-root .summaryTbl,
+.kisan-html-react-root .bill-doc > table,
+.kisan-html-react-root .aff-land {
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .kisan-html-react-root main {
+    max-width: none;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .kisan-html-react-root .rail {
+    width: 210px;
+    flex-basis: 210px;
+  }
+
+  .kisan-html-react-root .strip {
+    left: 210px;
+  }
+
+  .kisan-html-react-root .strip .cell {
+    min-width: 112px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+@media (max-width: 860px) {
+  .kisan-html-react-root .shell {
+    flex-direction: column;
+  }
+
+  .kisan-html-react-root .rail {
     width: 100%;
-    justify-content: space-between;
-    gap: 8px;
-    order: 1;
+    flex: 0 0 auto;
+    height: auto;
+    position: relative;
+    top: auto;
+    overflow: visible;
+    padding: 14px 0 16px;
   }
-  .kisan-page .btn {
-    flex: 1;
-    padding: 12px 14px;
-    font-size: 13.5px;
-    text-align: center;
+
+  .kisan-html-react-root .rail nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .kisan-html-react-root .rail nav a {
+    flex: 1 1 140px;
+  }
+
+  .kisan-html-react-root main {
+    width: 100%;
+    padding: 18px 14px 150px;
+  }
+
+  .kisan-html-react-root .strip {
+    left: 0;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .kisan-html-react-root .strip .msg {
+    display: none;
+  }
+
+  .kisan-html-react-root .strip .cell {
+    flex: 1 1 25%;
     min-width: 0;
   }
 
-  .kisan-page .opts {
-    gap: 6px;
-  }
-  .kisan-page .opt {
-    padding: 8px 10px;
-    font-size: 12.5px;
-    flex: 1 1 auto;
-    min-width: 80px;
-    justify-content: center;
+  .kisan-html-react-root .strip .go {
+    min-height: 48px;
   }
 
-  .kisan-page .photo-row {
-    gap: 12px;
+  .kisan-html-react-root .appgrid,
+  .kisan-html-react-root .kv,
+  .kisan-html-react-root .bill-meta,
+  .kisan-html-react-root .aff-meta-grid {
+    grid-template-columns: 1fr;
   }
-  .kisan-page .photo-preview {
-    width: 80px;
-    height: 100px;
+
+  .kisan-html-react-root .appdoc,
+  .kisan-html-react-root .bill-doc,
+  .kisan-html-react-root .doc,
+  .kisan-html-react-root .affidavit-doc {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .kisan-html-react-root .rail h1 {
+    font-size: 15px;
+  }
+
+  .kisan-html-react-root .rail .sub {
+    margin-bottom: 12px;
+  }
+
+  .kisan-html-react-root .rail nav a {
+    flex: 1 1 100%;
+    padding: 9px 14px;
+  }
+
+  .kisan-html-react-root .tools {
+    width: auto;
+  }
+
+  .kisan-html-react-root .grid,
+  .kisan-html-react-root .appgrid,
+  .kisan-html-react-root .kv,
+  .kisan-html-react-root .aff-preview-grid,
+  .kisan-html-react-root .aff-sign {
+    grid-template-columns: 1fr !important;
+  }
+
+  .kisan-html-react-root .cap {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .kisan-html-react-root .cap small {
+    width: 100%;
+    margin-left: 18px;
+  }
+
+  .kisan-html-react-root .strip {
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+  }
+
+  .kisan-html-react-root .strip .cell {
+    flex: 1 1 50%;
+    padding: 7px 9px;
+  }
+
+  .kisan-html-react-root .strip .v {
+    font-size: 16px;
+  }
+
+  .kisan-html-react-root .strip .go {
+    flex: 1 1 100%;
+    min-height: 42px;
+    padding: 8px 12px;
+  }
+
+  .kisan-html-react-root .expense-table {
+    min-width: 680px;
+  }
+
+  .kisan-html-react-root .landtable {
+    min-width: 620px;
+  }
+
+  .kisan-html-react-root .bill-doc > table {
+    min-width: 680px;
   }
 }
 
 @media (max-width: 420px) {
-  .kisan-page .portal {
-    padding: 14px 10px 170px;
+  .kisan-html-react-root main {
+    padding: 12px 10px 170px;
   }
-  .kisan-page .form-card {
-    padding: 16px 12px;
-  }
-  .kisan-page .btn {
-    padding: 11px 10px;
-    font-size: 13px;
-  }
-  .kisan-page .scheme-card {
-    padding: 18px 16px 48px;
-  }
-  .kisan-page .opt {
-    font-size: 12px;
-    padding: 7px 9px;
-  }
-}
 
-/* ---------- PRINT PREVIEW / PRINT DOCUMENT ----------
-   NOTE: .print-document and its children are rendered OUTSIDE the .kisan-page
-   wrapper, so these rules must NOT be scoped under .kisan-page.
-   .print-preview-box stays inside .kisan-page, so it IS scoped.
-*/
-.kisan-page .print-preview-box {
-  margin-top: 24px;
-  padding: 18px;
-  border: 1px solid var(--kp-line);
-  border-radius: 14px;
-  background: #f3f5f1;
-}
-
-.kisan-page .print-preview-heading {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-  color: var(--kp-ink);
-}
-
-.kisan-page .print-preview-heading b {
-  display: block;
-  font-size: 16px;
-}
-
-.kisan-page .print-preview-heading span {
-  display: block;
-  margin-top: 3px;
-  color: var(--kp-ink2);
-  font-size: 12px;
-}
-
-/*
-  Instead of display: none, we move the actual print container off-screen.
-  This ensures Chromium captures its layout properly when printing.
-*/
-.print-document {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 210mm;
-  z-index: -1;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.print-document-preview {
-  position: static;
-  z-index: 1;
-  display: block;
-  overflow-x: auto;
-  padding: 4px;
-  width: 100%;
-  opacity: 1;
-}
-
-.print-page {
-  width: 210mm;
-  min-height: 297mm;
-  margin: 0 auto;
-  padding: 12mm;
-  background: #fff;
-  color: #000;
-  font-family: "Noto Sans Devanagari", "Nirmala UI", Arial, sans-serif;
-  font-size: 11.5pt;
-  line-height: 1.5;
-  box-sizing: border-box;
-}
-
-.print-top {
-  min-height: 36mm;
-  position: relative;
-}
-
-.print-app-no {
-  font-size: 10.5pt;
-  font-weight: 700;
-  padding-right: 34mm;
-}
-
-.print-photo {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 28mm;
-  height: 34mm;
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-size: 8.5pt;
-  line-height: 1.35;
-  overflow: hidden;
-}
-
-.print-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.print-title {
-  margin: 2mm 0 1mm;
-  text-align: center;
-  font-size: 17pt;
-  line-height: 1.35;
-  font-weight: 800;
-}
-
-.print-department {
-  text-align: center;
-  font-size: 11pt;
-  font-weight: 700;
-  margin-bottom: 5mm;
-}
-
-.print-section {
-  margin-top: 5mm;
-}
-
-.print-section h2 {
-  margin: 0 0 2mm;
-  padding-bottom: 1.5mm;
-  border-bottom: 1px solid #000;
-  font-size: 12.5pt;
-  line-height: 1.4;
-  font-weight: 800;
-}
-
-.print-table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-.print-table td {
-  border: 1px solid #555;
-  padding: 2.2mm 2.5mm;
-  vertical-align: top;
-  overflow-wrap: anywhere;
-}
-
-.print-table .print-key {
-  width: 36%;
-  background: #f2f2f2;
-  font-weight: 700;
-}
-
-.print-list {
-  margin: 0;
-  padding-left: 7mm;
-}
-
-.print-list li {
-  margin: 1.5mm 0;
-  line-height: 1.5;
-}
-
-.print-note {
-  margin: 2mm 0 0;
-  font-size: 9.5pt;
-  line-height: 1.5;
-}
-
-.print-check {
-  font-weight: 700;
-}
-
-.print-signatures {
-  display: flex;
-  justify-content: space-between;
-  gap: 20mm;
-  margin-top: 13mm;
-  font-size: 10.5pt;
-}
-
-.print-signatures > div {
-  width: 48%;
-}
-
-.print-signatures > div:last-child {
-  text-align: right;
-}
-
-.print-officer {
-  margin-top: 10mm;
-  padding-top: 4mm;
-  border-top: 1px solid #000;
-  font-size: 10.5pt;
-}
-
-.print-officer p {
-  margin: 2mm 0 8mm;
-}
-
-.print-avoid-break {
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-@media (max-width: 768px) {
-  .kisan-page .print-preview-box {
+  .kisan-html-react-root .pad {
     padding: 10px;
   }
 
-  .print-document-preview {
-    margin: 0 -4px;
+  .kisan-html-react-root .appdoc,
+  .kisan-html-react-root .bill-doc,
+  .kisan-html-react-root .doc,
+  .kisan-html-react-root .affidavit-doc {
+    padding: 14px 10px;
+  }
+
+  .kisan-html-react-root h2.head {
+    font-size: 18px;
+  }
+
+  .kisan-html-react-root .strip .cell .k {
+    font-size: 10px;
+  }
+
+  .kisan-html-react-root .strip .cell .v {
+    font-size: 14px;
   }
 }
-
-/* ---------- PRINT ---------- */
-@page {
-  size: A4 portrait;
-  margin: 0;
-}
-
-/* Native print for a completed application. The same DOM that is visible in
-   the "देखें" modal is printed; no iframe/cloned document is used. */
-@media print {
-  html,
-  body,
-  #root {
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    min-height: 0 !important;
-    background: #fff !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  body.printing-completed-application {
-    overflow: visible !important;
-  }
-
-  body.printing-completed-application .kisan-page {
-    display: block !important;
-    width: 100% !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .kisan-page > .portal-header,
-  body.printing-completed-application .kisan-page > .portal {
-    display: none !important;
-  }
-
-  body.printing-completed-application .application-preview-overlay {
-    position: static !important;
-    inset: auto !important;
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  body.printing-completed-application .application-preview-modal {
-    display: block !important;
-    position: static !important;
-    width: 100% !important;
-    max-width: none !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .preview-modal-head {
-    display: none !important;
-  }
-
-  body.printing-completed-application .preview-modal-body {
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .print-document-preview {
-    display: block !important;
-    position: static !important;
-    width: 210mm !important;
-    max-width: none !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .print-page {
-    display: block !important;
-    visibility: visible !important;
-    width: 210mm !important;
-    min-height: 297mm !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 12mm !important;
-    box-sizing: border-box !important;
-    background: #fff !important;
-    color: #000 !important;
-    box-shadow: none !important;
-  }
-
-  body.printing-completed-application .print-table tr {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  body.printing-completed-application .print-avoid-break {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  body.printing-completed-application .print-photo img {
-    display: block !important;
-    max-width: 100% !important;
-  }
-}
-/* ============================================================
-   CENTER APPLICATION TABS + COMPLETED APPLICATIONS
-   ============================================================ */
-.kisan-page .portal-tabs {
+/* ===== VERMICOMPOST SPECIFIC STYLES ===== */
+.kisan-html-react-root .vermi-unit-details {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6px;
-  margin: 0 auto 26px;
-  padding: 6px;
-  max-width: 1120px;
-  background: #e8eee4;
-  border: 1px solid #d2ddd0;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(15, 26, 20, .06);
+  gap: 8px 24px;
+  padding: 10px 0;
 }
-
-.kisan-page .portal-tab {
-  min-height: 54px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background: transparent;
-  color: #52635a;
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  padding: 12px 18px;
-  transition: .18s ease;
-}
-
-.kisan-page .portal-tab span {
-  margin-right: 8px;
-  font-size: 17px;
-}
-
-.kisan-page .portal-tab b {
-  display: inline-flex;
-  min-width: 25px;
-  height: 25px;
-  align-items: center;
-  justify-content: center;
-  margin-left: 9px;
-  padding: 0 7px;
-  border-radius: 99px;
-  background: #dce8dc;
-  color: #245a35;
-  font-size: 12px;
-}
-
-.kisan-page .portal-tab:hover {
-  color: #245a35;
-  background: rgba(255,255,255,.72);
-}
-
-.kisan-page .portal-tab.active {
-  background: #fff;
-  color: #214f30;
-  border-color: #d7e1d5;
-  box-shadow: 0 5px 16px rgba(15, 26, 20, .09);
-}
-
-.kisan-page .new-application-panel,
-.kisan-page .completed-panel {
-  background: var(--kp-card);
-  border: 1px solid #d7e0d5;
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 10px 30px rgba(15, 26, 20, .08), 0 2px 8px rgba(15,26,20,.04);
-}
-
-.kisan-page .panel-heading,
-.kisan-page .completed-toolbar {
+.kisan-html-react-root .vermi-unit-details .r {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 24px;
+  align-items: baseline;
+  gap: 6px;
+  padding: 5px 0;
+  border-bottom: 1px dotted #D5DDD7;
 }
-
-.kisan-page .panel-heading h2,
-.kisan-page .completed-toolbar h2 {
-  margin: 5px 0 5px;
-  font-size: 25px;
-  color: #13271b;
-  line-height: 1.25;
-}
-
-.kisan-page .panel-heading p,
-.kisan-page .completed-toolbar p {
-  margin: 0;
-  color: #5c6a62;
-}
-
-.kisan-page .completed-toolbar .btn {
-  flex-shrink: 0;
-}
-
-.kisan-page .completed-filter-row {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(250px, 340px) auto;
-  gap: 12px;
-  align-items: center;
-  padding: 16px;
-  margin-bottom: 18px;
-  background: linear-gradient(180deg, #f9fbf8, #f3f7f1);
-  border: 1px solid #d6e0d3;
-  border-radius: 14px;
-}
-
-.kisan-page .completed-filter-row label {
-  font-weight: 800;
-  color: #1d3827;
-}
-
-.kisan-page .completed-filter-row .control {
-  background: #fff;
-  border-color: #cbd8c9;
-}
-
-.kisan-page .applications-table-wrap {
-  width: 100%;
-  max-height: 62vh;
-  overflow: auto;
-  border: 1px solid #cfdacf;
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 4px 14px rgba(15,26,20,.05);
-}
-
-.kisan-page .applications-table {
-  width: 100%;
-  min-width: 1120px;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-
-.kisan-page .applications-table th {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  padding: 14px 13px;
-  background: #245a35 !important;
-  color: #fff !important;
-  border: 0;
-  border-right: 1px solid rgba(255,255,255,.14);
-  border-bottom: 2px solid #1b4629;
-  text-align: left;
-  white-space: nowrap;
-  font-size: 12.5px;
-  font-weight: 800;
-  line-height: 1.3;
-  text-shadow: none;
-}
-
-.kisan-page .applications-table th:first-child {
-  border-top-left-radius: 12px;
-}
-
-.kisan-page .applications-table th:last-child {
-  border-top-right-radius: 12px;
-  border-right: 0;
-}
-
-.kisan-page .applications-table td {
-  padding: 14px 13px;
-  border-right: 1px solid #e4e9e2;
-  border-bottom: 1px solid #e1e7df;
-  color: #203027;
-  background: #fff;
-  font-size: 12.5px;
-  vertical-align: middle;
-}
-
-.kisan-page .applications-table tbody tr:nth-child(even) td {
-  background: #fafcf9;
-}
-
-.kisan-page .applications-table tbody tr:hover td {
-  background: #f0f6ef;
-}
-
-.kisan-page .applications-table tbody tr:last-child td {
+.kisan-html-react-root .vermi-unit-details .r:last-child {
   border-bottom: 0;
 }
-
-.kisan-page .applications-table td:first-child b {
-  color: #1e5531;
-  font-weight: 850;
-}
-
-.kisan-page .applications-table .action-column {
-  position: sticky;
-  right: 0;
-  z-index: 4;
-  text-align: center;
-  min-width: 105px;
-  box-shadow: -6px 0 12px rgba(15,26,20,.06);
-}
-
-.kisan-page .applications-table th.action-column {
-  z-index: 7;
-  background: #245a35 !important;
-  color: #fff !important;
-}
-
-.kisan-page .applications-table tbody tr:nth-child(even) td.action-column {
-  background: #fafcf9;
-}
-
-.kisan-page .applications-table tbody tr:hover td.action-column {
-  background: #f0f6ef;
-}
-
-.kisan-page .status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 6px 10px;
-  border-radius: 99px;
-  background: #ecfdf4;
-  color: #166534;
-  border: 1px solid #b8ebc9;
-  font-size: 11px;
-  font-weight: 800;
+.kisan-html-react-root .vermi-unit-details b {
   white-space: nowrap;
+  font-weight: 600;
+}
+.kisan-html-react-root .vermi-unit-details .auto {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
-.kisan-page .view-btn {
-  border: 1px solid #2f6b42;
-  background: #fff;
-  color: #245a35;
-  border-radius: 9px;
-  padding: 8px 14px;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 2px 5px rgba(15,26,20,.05);
-}
-
-.kisan-page .view-btn:hover {
-  background: #eaf3e9;
-  transform: translateY(-1px);
-}
-
-.kisan-page .view-btn:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.kisan-page .empty-applications {
-  padding: 52px 20px;
-  text-align: center;
-  border: 1px dashed #cbd7c8;
-  border-radius: 14px;
-  color: #64736a;
-  background: #fbfcfa;
-}
-
-.kisan-page .applications-error {
-  padding: 12px 15px;
-  margin-bottom: 14px;
-  border: 1px solid #fecaca;
-  border-radius: 10px;
-  background: #fef2f2;
-  color: #991b1b;
+.kisan-html-react-root .vermi-crops-table th,
+.kisan-html-react-root .vermi-crops-table td {
   font-size: 13px;
-  font-weight: 700;
+  padding: 5px 6px;
 }
-
-/* ---------- COMPLETED APPLICATION PRINT PREVIEW ---------- */
-.kisan-page .application-preview-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  background: rgba(9, 20, 13, .68);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-.kisan-page .application-preview-modal {
-  width: min(1120px, 97vw);
-  height: min(94vh, 960px);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: #f0f3ef;
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: 18px;
-  box-shadow: 0 30px 90px rgba(0,0,0,.38);
-}
-
-.kisan-page .preview-modal-head {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 15px 18px;
-  border-bottom: 1px solid #d6ded4;
-  background: #fff;
-}
-
-.kisan-page .preview-heading-copy {
-  min-width: 0;
-}
-
-.kisan-page .preview-eyebrow {
-  display: block;
-  margin-bottom: 2px;
-  color: #2f6b42;
-  font-size: 10.5px;
-  font-weight: 850;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.kisan-page .preview-modal-head h2 {
-  margin: 0 0 2px;
-  font-size: 20px;
-  color: #12251a;
-  line-height: 1.25;
-}
-
-.kisan-page .preview-modal-head span:not(.preview-eyebrow) {
-  color: #617067;
-  font-size: 12px;
-}
-
-.kisan-page .preview-modal-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.kisan-page .preview-print-btn {
-  border: 0;
-  border-radius: 9px;
-  background: #245a35;
-  color: #fff;
-  padding: 9px 14px;
+.kisan-html-react-root .vermi-crops-table input {
+  width: 100%;
+  border: 1px solid var(--fill-line);
+  background: var(--fill);
+  padding: 4px;
   font: inherit;
-  font-size: 12.5px;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 0 3px 9px rgba(36,90,53,.18);
 }
 
-.kisan-page .preview-print-btn:hover {
-  background: #1c492b;
+.kisan-html-react-root .vermi-doc-list {
+  background: #f3f7f3;
+  border: 1px solid #c6cdc4;
+  padding: 10px 12px 10px 28px;
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.8;
 }
-
-.kisan-page .preview-close {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  border: 1px solid #d7dfd5;
-  border-radius: 9px;
-  background: #f4f6f3;
-  color: #26372c;
-  font-size: 25px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.kisan-page .preview-close:hover {
-  background: #e7ece5;
-}
-
-.kisan-page .preview-modal-body {
-  flex: 1;
-  overflow: auto;
-  padding: 22px;
-  background: #e9ede8;
-}
-
-.kisan-page .preview-modal-body .print-document-preview {
-  margin: 0 auto;
-  max-width: 210mm;
-}
-
-@media (max-width: 768px) {
-  .kisan-page .portal-tabs {
-    grid-template-columns: 1fr;
-  }
-
-  .kisan-page .portal-tab {
-    min-height: 48px;
-  }
-
-  .kisan-page .new-application-panel,
-  .kisan-page .completed-panel {
-    padding: 17px;
-    border-radius: 14px;
-  }
-
-  .kisan-page .panel-heading,
-  .kisan-page .completed-toolbar {
-    flex-direction: column;
-  }
-
-  .kisan-page .completed-toolbar .btn {
-    width: 100%;
-  }
-
-  .kisan-page .completed-filter-row {
-    grid-template-columns: 1fr;
-  }
-
-  .kisan-page .application-preview-overlay {
-    padding: 6px;
-  }
-
-  .kisan-page .application-preview-modal {
-    width: 100%;
-    height: 97vh;
-    border-radius: 12px;
-  }
-
-  .kisan-page .preview-modal-head {
-    padding: 12px;
-  }
-
-  .kisan-page .preview-modal-actions {
-    gap: 5px;
-  }
-
-  .kisan-page .preview-print-btn {
-    padding: 8px 10px;
-    font-size: 11.5px;
-  }
-
-  .kisan-page .preview-modal-body {
-    padding: 8px;
-  }
-}
-
-/* ---------- FINAL PREVIEW / PRINT FIXES ---------- */
-.kisan-page .application-preview-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  padding: 24px;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-}
-
-.kisan-page .application-preview-modal {
-  width: min(1120px, calc(100vw - 48px));
-  height: auto;
-  max-height: calc(100vh - 48px);
-  min-height: 0;
+.kisan-html-react-root .vermi-doc-list ol {
   margin: 0;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.kisan-page .preview-modal-head {
-  min-height: 70px;
-  box-sizing: border-box;
-}
-
-.kisan-page .preview-modal-body {
-  min-height: 0;
-  overflow: auto;
-  padding: 24px;
-  box-sizing: border-box;
-}
-
-.kisan-page .preview-modal-body .print-document-preview {
-  display: block;
-  width: 210mm;
-  max-width: 100%;
-  margin: 0 auto;
   padding: 0;
-  overflow: visible;
-  box-sizing: border-box;
+}
+.kisan-html-react-root .vermi-prabhari-box {
+  background: #f3f7f3;
+  border: 1px solid #c6cdc4;
+  padding: 10px 12px;
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.8;
 }
 
-@media (max-width: 768px) {
-  .kisan-page .application-preview-overlay {
-    padding: 10px;
-  }
-
-  .kisan-page .application-preview-modal {
-    width: 100%;
-    max-width: 100%;
-    max-height: calc(100vh - 20px);
-  }
-
-  .kisan-page .preview-modal-body {
-    padding: 10px;
-  }
-}
-
-/* ---------- FULL SCREEN COMPLETED APPLICATION MODAL ---------- */
-.kisan-page .application-preview-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  padding: 0 !important;
-  z-index: 99999 !important;
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: stretch !important;
-  overflow: hidden !important;
-  box-sizing: border-box !important;
-}
-
-.kisan-page .application-preview-modal {
-  width: 100vw !important;
-  height: 100vh !important;
-  max-width: none !important;
-  max-height: none !important;
-  min-height: 0 !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-  border: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-}
-
-.kisan-page .preview-modal-head {
-  flex: 0 0 auto !important;
-  min-height: 72px !important;
-  position: relative !important;
-  z-index: 2 !important;
-}
-
-.kisan-page .preview-modal-body {
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  overflow: auto !important;
-  padding: 24px !important;
-  box-sizing: border-box !important;
-}
-
-.kisan-page .preview-modal-body .print-document-preview {
-  display: block !important;
-  width: 210mm !important;
-  max-width: 100% !important;
-  margin: 0 auto !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  overflow: visible !important;
-}
-
-@media (max-width: 768px) {
-  .kisan-page .preview-modal-head {
-    min-height: 64px !important;
-  }
-
-  .kisan-page .preview-modal-body {
-    padding: 10px !important;
-  }
-}
-
-/* ---------- PRINT PREVIEW BLANK PAGE FIX ONLY ---------- */
 @media print {
-  body.printing-completed-application .kisan-page .application-preview-overlay {
-    position: static !important;
-    inset: auto !important;
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: visible !important;
-    z-index: auto !important;
-    background: #fff !important;
+  .kisan-html-react-root .vermi-unit-details {
+    gap: 3px 18px;
   }
-
-  body.printing-completed-application .kisan-page .application-preview-modal {
-    position: static !important;
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    max-width: none !important;
-    max-height: none !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    z-index: auto !important;
-    background: #fff !important;
+  .kisan-html-react-root .vermi-unit-details .r {
+    padding: 2px 0;
   }
-
-  body.printing-completed-application .kisan-page .preview-modal-head {
-    display: none !important;
+  .kisan-html-react-root .vermi-crops-table th,
+  .kisan-html-react-root .vermi-crops-table td {
+    font-size: 9pt;
+    padding: 3px 4px;
   }
-
-  body.printing-completed-application .kisan-page .preview-modal-body {
-    display: block !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .kisan-page .preview-modal-body .print-document-preview {
-    display: block !important;
-    position: static !important;
-    width: 210mm !important;
-    max-width: none !important;
-    height: auto !important;
-    min-height: 0 !important;
-    margin: 0 auto !important;
-    padding: 0 !important;
-    overflow: visible !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    z-index: auto !important;
-    background: #fff !important;
-  }
-
-  body.printing-completed-application .kisan-page .preview-modal-body .print-document-preview .print-page {
-    display: block !important;
-    position: relative !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    width: 210mm !important;
-    min-height: 297mm !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 12mm !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
-    background: #fff !important;
-    color: #000 !important;
-    z-index: auto !important;
+  .kisan-html-react-root .vermi-doc-list,
+  .kisan-html-react-root .vermi-prabhari-box {
+    padding: 4px 7px;
+    margin: 4px 0;
+    font-size: 9pt;
   }
 }
+/* ===== SCHEME SELECTOR BAR ===== */
+.kisan-html-react-root .scheme-selector-bar{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 20px;background:#16352a;color:#fff;
+  position:sticky;top:0;z-index:100;
+}
+.kisan-html-react-root .scheme-selector-bar label{font-weight:600;font-size:14px}
+.kisan-html-react-root .scheme-selector-bar select{
+  padding:6px 10px;border-radius:4px;border:1px solid #3c7358;
+  background:#2b5c46;color:#fff;font-size:14px;cursor:pointer;
+}
+
+/* ===== VERMI PORTAL — संपूर्ण अलग संरचना ===== */
+.kisan-html-react-root .vermi-portal{background:#eef2ef;min-height:100vh}
+.kisan-html-react-root .vermi-portal .vwrap{max-width:1250px;margin:auto;padding:20px}
+.kisan-html-react-root .vermi-portal .top{
+  background:#123f2f;color:#fff;border-radius:8px;padding:18px 22px;margin-bottom:14px;
+}
+.kisan-html-react-root .vermi-portal .top h1{margin:0;font-size:24px}
+.kisan-html-react-root .vermi-portal .top p{margin:6px 0 0}
+.kisan-html-react-root .vermi-portal .tabs{
+  display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;
+}
+.kisan-html-react-root .vermi-portal .tabs button{
+  padding:10px 18px;border:1px solid #b8c9bf;background:#fff;
+  border-radius:5px;cursor:pointer;font-weight:600;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .tabs button.on{background:#174f39;color:#fff}
+.kisan-html-react-root .vermi-portal .panel{
+  display:none;background:#fff;border:1px solid #cbd6cf;
+  border-radius:7px;padding:18px;
+}
+.kisan-html-react-root .vermi-portal .panel.on{display:block}
+.kisan-html-react-root .vermi-portal .grid2{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.kisan-html-react-root .vermi-portal .field label{
+  display:block;font-weight:600;margin-bottom:4px;
+}
+.kisan-html-react-root .vermi-portal .field input,
+.kisan-html-react-root .vermi-portal .field select{
+  width:100%;box-sizing:border-box;padding:9px;
+  border:1px solid #c9d3cc;border-radius:4px;font:inherit;
+}
+.kisan-html-react-root .vermi-portal .st{
+  font-size:18px;font-weight:700;color:#164c37;
+  border-bottom:2px solid #d9e2dd;padding-bottom:7px;margin:18px 0 12px;
+}
+.kisan-html-react-root .vermi-portal .btn{
+  padding:9px 15px;border:1px solid #9eb2a6;background:#f7faf8;
+  border-radius:4px;cursor:pointer;font:inherit;
+}
+.kisan-html-react-root .vermi-portal .primary{background:#174f39;color:#fff}
+.kisan-html-react-root .vermi-portal table{width:100%;border-collapse:collapse}
+.kisan-html-react-root .vermi-portal th{
+  background:#174f39;color:#fff;padding:9px;text-align:left;
+  font-weight:600;border:1px solid #174f39;font-size:13px;
+}
+.kisan-html-react-root .vermi-portal td{
+  border:1px solid #d5ddd8;padding:7px;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal td input,
+.kisan-html-react-root .vermi-portal td select{
+  width:100%;box-sizing:border-box;padding:7px;
+  border:1px solid #d5ddd8;font:inherit;background:#fff8d6;
+}
+.kisan-html-react-root .vermi-portal .material-cell input{min-width:220px}
+.kisan-html-react-root .vermi-portal .num{text-align:right}
+.kisan-html-react-root .vermi-portal .note{
+  margin-top:14px;padding:12px 14px;background:#f5f7f5;
+  border-left:4px solid #174f39;font-size:13px;line-height:1.6;
+}
+.kisan-html-react-root .vermi-portal .summaryTbl{
+  width:100%;border-collapse:collapse;margin:6px 0 10px;
+  border:1.5px solid #174f39;
+}
+.kisan-html-react-root .vermi-portal .summaryTbl td{
+  border:none;border-bottom:1px dotted #c6cdc4;
+  padding:9px 14px;font-size:15px;
+}
+.kisan-html-react-root .vermi-portal .summaryTbl tr:last-child td{border-bottom:0}
+.kisan-html-react-root .vermi-portal .summaryTbl td:first-child{color:#4a5a50;width:55%}
+.kisan-html-react-root .vermi-portal .summaryTbl td.sv{
+  text-align:right;font-weight:600;font-variant-numeric:tabular-nums;
+}
+.kisan-html-react-root .vermi-portal .summaryTbl td.sv.big{font-size:19px;color:#1f5c3a}
+.kisan-html-react-root .vermi-portal .summaryTbl tr.hi td{background:#f3f7f3}
+.kisan-html-react-root .vermi-portal .summaryTbl tr.hi td.sv{font-size:21px}
+.kisan-html-react-root .vermi-portal .report-box{
+  border:1px solid #444;padding:14px 16px;margin-top:10px;
+  line-height:1.7;text-align:justify;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .report-sign{
+  margin-top:24px;text-align:right;line-height:1.8;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .declaration-box{
+  line-height:1.7;text-align:justify;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .farmer-signature{
+  display:flex;justify-content:space-between;gap:30px;
+  flex-wrap:wrap;margin-top:24px;line-height:1.8;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .prabhari-box{
+  line-height:1.7;text-align:justify;font-size:14px;
+}
+.kisan-html-react-root .vermi-portal .print-head{display:none}
+
+@media print{
+  .kisan-html-react-root .scheme-selector-bar{display:none!important}
+  .kisan-html-react-root .vermi-portal .top,
+  .kisan-html-react-root .vermi-portal .tabs,
+  .kisan-html-react-root .vermi-portal .no-print{display:none!important}
+  .kisan-html-react-root .vermi-portal .vwrap{padding:0}
+  .kisan-html-react-root .vermi-portal .panel{display:none!important;border:0;padding:0}
+  .kisan-html-react-root .vermi-portal .panel.printing{display:block!important}
+  .kisan-html-react-root .vermi-portal .print-head{display:block!important;text-align:center}
+  @page{size:A4 portrait;margin:14mm}
+}
+@media(max-width:760px){
+  .kisan-html-react-root .vermi-portal .grid2{grid-template-columns:1fr}
+}
+/* ===== VERMI FORM STYLES (shell के अंदर उपयोग) ===== */
+.kisan-html-react-root .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kisan-html-react-root .field label{display:block;font-weight:600;margin-bottom:4px}
+.kisan-html-react-root .field input,.kisan-html-react-root .field select{
+  width:100%;box-sizing:border-box;padding:9px;border:1px solid #c9d3cc;border-radius:4px;font:inherit
+}
+.kisan-html-react-root .st{
+  font-size:18px;font-weight:700;color:#164c37;
+  border-bottom:2px solid #d9e2dd;padding-bottom:7px;margin:18px 0 12px
+}
+.kisan-html-react-root .btn{padding:9px 15px;border:1px solid #9eb2a6;background:#f7faf8;border-radius:4px;cursor:pointer;font:inherit}
+.kisan-html-react-root .primary{background:#174f39;color:#fff}
+.kisan-html-react-root .material-cell input{min-width:220px}
+.kisan-html-react-root .note{margin-top:14px;padding:12px 14px;background:#f5f7f5;border-left:4px solid #174f39;font-size:13px;line-height:1.6}
+.kisan-html-react-root .report-box{border:1px solid #444;padding:14px 16px;margin-top:10px;line-height:1.7;text-align:justify;font-size:14px}
+.kisan-html-react-root .report-sign{margin-top:24px;text-align:right;line-height:1.8;font-size:14px}
+.kisan-html-react-root .declaration-box{line-height:1.7;text-align:justify;font-size:14px}
+.kisan-html-react-root .farmer-signature{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-top:24px;line-height:1.8;font-size:14px}
+.kisan-html-react-root .prabhari-box{line-height:1.7;text-align:justify;font-size:14px}
+@media print{
+  .kisan-html-react-root .st{font-size:11pt;margin:7px 0 4px}
+  .kisan-html-react-root .grid2{gap:4px}
+  .kisan-html-react-root .field input,.kisan-html-react-root .field select{padding:4px;font-size:9pt}
+  .kisan-html-react-root .btn{display:none!important}
+  .kisan-html-react-root .note,.kisan-html-react-root .report-box,.kisan-html-react-root .declaration-box{font-size:9pt;padding:6px 8px}
+}
+@media(max-width:760px){.kisan-html-react-root .grid2{grid-template-columns:1fr}}
