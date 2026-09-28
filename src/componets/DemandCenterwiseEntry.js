@@ -18,7 +18,7 @@ import { FaCalendarAlt, FaFilter, FaTable } from "react-icons/fa";
 import "./DemandCenterwiseEntry.css";
 
 const BILLING_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 
 const customSelectStyles = {
   control: (provided, state) => ({

@@ -33,11 +33,11 @@ import {
 
 // API URLs
 const BENEFICIARIES_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
 const VIKAS_KHAND_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/get-vikas-khand-by-center/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/get-vikas-khand-by-center/";
 const FORM_FILTERS_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
 
 // Utility function to round numbers to 2 decimal places
 const roundTo2Decimals = (value) => {
@@ -2062,7 +2062,7 @@ const KrishiRegistration = () => {
       setIsLoading(true);
       const payload = { beneficiary_id: selectedItems };
       await axios.delete(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/",
         { data: payload },
       );
 

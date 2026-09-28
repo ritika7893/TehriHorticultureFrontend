@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./UdyanBill.css";
 
 const API_BASE =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/udyan";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/udyan";
 
 /* =========================================================
     API HELPERS
@@ -635,7 +635,7 @@ export default function UdyanBill() {
 
     try {
       const response = await apiFetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/centres/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/centres/",
       );
 
       const data = await readJsonResponse(response);

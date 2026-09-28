@@ -24,7 +24,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 // Hindi translations
 const translations = {
   home: "MIS रिपोर्ट ",
-  welcomeMessage: "DHO कोटद्वार उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है",
+  welcomeMessage: "चम्पावत उद्यान विभाग डिजिटल प्लेटफॉर्म में आपका स्वागत है",
   selectScheme: "क्रय योजना चुनें",
   selectInvestment: "उप-मद चुनें",
   allSchemes: "सभी क्रय योजनाएं",
@@ -3445,7 +3445,7 @@ const Dashboard = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch("https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/", {
+        const response = await fetch("https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/", {
           headers: {
             Accept: "application/json",
           },
@@ -3743,7 +3743,7 @@ const Dashboard = () => {
       <div style="font-family: 'Noto Sans Devanagari', 'Mangal', Arial, sans-serif; padding: 20px; color: #333;">
         <!-- Header -->
         <div style="text-align: center; border-bottom: 3px solid #000; padding-bottom: 15px; margin-bottom: 20px; page-break-inside: avoid;">
-          <h1 style="color: #000; font-size: 24px; margin: 0;">DHO कोटद्वार बिलिंग रिपोर्ट</h1>
+          <h1 style="color: #000; font-size: 24px; margin: 0;">चम्पावत बिलिंग रिपोर्ट</h1>
           <p style="color: #000; font-size: 12px; margin: 5px 0 0 0;">रिपोर्ट तिथि: ${currentDate}</p>
           <p style="color: #000; font-size: 11px; margin: 3px 0 0 0;">फ़िल्टर: ${getFilterStatusText()}</p>
         </div>
@@ -4151,7 +4151,7 @@ const Dashboard = () => {
 
         <!-- Footer -->
         <div style="text-align: center; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 20px; color: #888; font-size: 9px;">
-          <p>DHO कोटद्वार बिलिंग प्रणाली | रिपोर्ट जनरेट तिथि: ${currentDate}</p>
+          <p>चम्पावत बिलिंग प्रणाली | रिपोर्ट जनरेट तिथि: ${currentDate}</p>
         </div>
       </div>
     `;
@@ -4163,7 +4163,7 @@ const Dashboard = () => {
 
     const opt = {
       margin: [12, 10, 12, 10],
-      filename: `DHO_रिपोर्ट_${currentDate.replace(/\//g, '-')}.pdf`,
+      filename: `Champawat_रिपोर्ट_${currentDate.replace(/\//g, '-')}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
         scale: 2, 

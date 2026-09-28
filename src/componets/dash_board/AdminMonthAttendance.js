@@ -14,10 +14,10 @@ import Footer from "../footer/Footer";
 import "../../assets/css/dashboard.css";
 
 const API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-attendance-reports/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/month-attendance-reports/";
 
 const BACKEND_BASE =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend";
 
 // The API returns the Excel workbook directly from /{id}/.
 // Example: /api/month-attendance-reports/6/

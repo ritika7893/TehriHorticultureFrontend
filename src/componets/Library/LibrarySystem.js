@@ -29,15 +29,15 @@ import {
 import "./LibrarySystem.css";
 
 const API_BASE_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/library";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/library";
 const MEDIA_BASE_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend";
 
 // Kendra / center-links APIs
 const CENTER_LINKS_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/center-links";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/center-links";
 const CENTERS_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/centres";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/centres";
 const CENTER_LIBRARY_SHARE_URL = "https://dhokotdwar.in/LibrarySystem";
 
 const LibrarySystem = () => {

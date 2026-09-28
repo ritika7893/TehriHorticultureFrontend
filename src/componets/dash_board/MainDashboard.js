@@ -38,7 +38,7 @@ import Chart from "chart.js/auto";
 import { HierarchicalTable, HierarchicalTableRows } from "../HierarchicalTable";
 
 const API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 
 // Hindi translations for form
 const translations = {

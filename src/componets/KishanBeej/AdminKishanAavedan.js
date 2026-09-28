@@ -343,7 +343,7 @@ function AdminKishanAavedan() {
 
     try {
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/all-kisan-applications/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/all-kisan-applications/",
       );
 
       if (!response.ok) {

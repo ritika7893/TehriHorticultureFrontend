@@ -17,7 +17,7 @@ import { RiAddLine } from "react-icons/ri";
 import DemandNavigation from "./DemandNavigation";
 
 const API_BASE =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api";
 
 const DemandGenerate = () => {
   const navigate = useNavigate();

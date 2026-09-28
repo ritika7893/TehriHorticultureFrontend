@@ -97,7 +97,7 @@ const DemandView = () => {
 
     try {
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
       );
 
       if (!response.ok) {
@@ -166,7 +166,7 @@ const DemandView = () => {
 
     try {
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/",
       );
       if (!response.ok) {
         throw new Error("Failed to fetch demands");
@@ -205,7 +205,7 @@ const DemandView = () => {
         unit: formData.unit,
       };
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -263,7 +263,7 @@ const DemandView = () => {
         unit: formData.unit,
       };
       const response = await fetch(
-        `https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/`,
+        `https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -305,7 +305,7 @@ const DemandView = () => {
     setSuccess("");
     try {
       const response = await fetch(
-        `https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/`,
+        `https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-generation/`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -375,7 +375,7 @@ const DemandView = () => {
     };
     try {
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -421,7 +421,7 @@ const DemandView = () => {
     setSuccess("");
     try {
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/demand-by-center/",
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

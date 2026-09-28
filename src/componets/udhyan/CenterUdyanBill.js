@@ -3,7 +3,7 @@ import "./UdyanBill.css";
 import { useAuth } from "../../context/AuthContext";
 
 const API_BASE =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/udyan";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/udyan";
 
 /* =========================================================
     API HELPERS

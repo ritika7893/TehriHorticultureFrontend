@@ -23,7 +23,7 @@ import {
 import "../../assets/css/dashboard.css";
 
 const API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/month-attendance-reports/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/month-attendance-reports/";
 
 const MONTH_OPTIONS = [
   { value: "1", label: "1 (जनवरी)" },
@@ -305,7 +305,7 @@ function MonthAttendance() {
   const getFileUrl = (filePath) => {
     if (!filePath) return "#";
     if (filePath.startsWith("http")) return filePath;
-    return `https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/${filePath}`;
+    return `https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/${filePath}`;
   };
 
   return (

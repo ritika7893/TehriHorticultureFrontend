@@ -21,7 +21,7 @@ import { convertToDisplayFormat } from "../utils/dateUtils";
 
 // API URL
 const BENEFICIARIES_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/beneficiaries-registration/";
 
 // Available columns for table (excluding sno which is always shown)
 const beneficiariesTableColumns = [

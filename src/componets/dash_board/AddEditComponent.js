@@ -25,9 +25,9 @@ import LeftNav from "./LeftNav";
 
 // API URLs
 const COMPONENT_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/component-list/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/component-list/";
 const SCHEME_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/scheme-list/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/scheme-list/";
 
 // Hindi translations
 const translations = {
@@ -382,7 +382,7 @@ const AddEditComponent = () => {
     setBillingItemsLoading(true);
     try {
       const resp = await axios.get(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
       );
       setBillingItems(resp.data || []);
 

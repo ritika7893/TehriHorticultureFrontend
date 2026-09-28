@@ -32,7 +32,7 @@ const KendraPasswordReset = () => {
     const fetchKendraList = async () => {
       try {
         const response = await axios.get(
-          "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/reguser-list/",
+          "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/reguser-list/",
         );
         setKendraList(response.data);
         setFetching(false);
@@ -122,7 +122,7 @@ const KendraPasswordReset = () => {
 
     try {
       const response = await axios.put(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/center-password-change/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/center-password-change/",
         { user_id: selectedKendraId, password: newPassword },
       );
 

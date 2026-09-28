@@ -45,7 +45,7 @@ const LeftNav = ({
   //   setError(null);
   //   try {
   //     const response = await axios.get(
-  //       "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/"
+  //       "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/"
   //     );
   //     setApiData(response.data);
 

@@ -146,7 +146,7 @@ export default function Login() {
     const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.identifier);
     
     try {
-      const response = await fetch("https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/login/", {
+      const response = await fetch("https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -239,7 +239,7 @@ export default function Login() {
     setIsLoading(true);
     
     try {
-      const response = await fetch("https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/login/", {
+      const response = await fetch("https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -304,7 +304,7 @@ export default function Login() {
     setIsLoading(true);
     
     try {
-      const response = await fetch("https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/login/", {
+      const response = await fetch("https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

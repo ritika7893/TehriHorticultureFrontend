@@ -39,13 +39,13 @@ import {
 
 // API URLs
 const GET_REPORTS_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/report-billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/report-billing-items/";
 const UPDATE_REPORT_STATUS_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/update-billing-item/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/update-billing-item/";
 const UPDATE_BILLING_REPORT_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-report/update/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-report/update/";
 const BASE_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend";
 
 // Custom styles for react-select components
 const customSelectStyles = {
@@ -774,7 +774,7 @@ const AllBills = () => {
     try {
       const payload = buildReceiptZipDownloadPayload(selectedItems);
       const response = await fetch(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/download-multiple-receipts/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/download-multiple-receipts/",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

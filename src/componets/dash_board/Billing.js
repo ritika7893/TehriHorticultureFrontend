@@ -23,9 +23,9 @@ import Footer from "../footer/Footer";
 
 // API URLs
 const GET_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 const UPDATE_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/update-billing-item/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/update-billing-item/";
 
 // Custom styles for react-select
 const customSelectStyles = {

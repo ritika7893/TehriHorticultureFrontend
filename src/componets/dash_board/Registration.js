@@ -38,13 +38,13 @@ import {
 
 // API URLs
 const BILLING_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 const VIKAS_KHAND_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/get-vikas-khand-by-center/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/get-vikas-khand-by-center/";
 const FORM_FILTERS_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-form-filters/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-form-filters/";
 const CENTERS_API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/centers/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/centers/";
 
 // Utility function to round numbers to 2 decimal places
 const roundTo2Decimals = (value) => {
@@ -53,53 +53,48 @@ const roundTo2Decimals = (value) => {
 };
 
 const validKendraNames = [
-   "अखोरी",
-  "अंजनीसैंण",
-  "अच्चरीखूंट",
-  "गाजा",
-  "गर्केत",
+     "अखोरी",
   "घनसाली",
   "घुत्तू",
-  "चम्बा",
-  "जड़ीपानी",
-  "जौनपुर",
-  "टिहरी",
-  "थत्यूड़",
-  "थौलधार",
-  "देवदर्शनी",
-  "देवप्रयाग",
-  "धनोल्टी",
-  "नंदगांव",
-  "नैनबाग",
-  "नरेन्द्रनगर",
-  "न्योली",
-  "पंतवारी",
-  "पवखाल",
-  "पावकी देवी",
-  "प्रतापनगर",
-  "बौराड़ी",
-  "बाचेलीखाल",
-  "भवान",
-  "भेदियाना",
-  "भिलंगना",
-  "मरौड़ा",
-  "मुनि की रेती",
-  "म्याणी",
-  "राजाखेत",
-  "लंबगांव",
-  "लेसर",
-  "वली",
-  "श्रीकोट",
-  "सबली",
   "हुलानाखाल",
+  "पवखाल",
+  "बौराड़ी",
+  "चम्बा",
+  "गजा",
+  "जड़ीपानी",
+  "बचेलीखाल",
   "हिंडोलाखाल",
   "हिसरियाखाल",
-  "फकोट",
-  "कमांद",
-  "कोड़ी",
+  "अंजनीसैंण",
+  "नंदगांव",
+  "राजाखेत",
+  "भवान",
+  "भेदियाना",
+  "धनोल्टी",
+  "गरखेत",
   "कुमाल्डा",
+  "मरौड़ा",
+  "म्याणी",
+  "नैनबाग",
+  "पंतवारी",
+  "साबली",
+  "श्रीकोट",
+  "थत्यूड़",
+  "आच्चरीखूंट",
+  "हिसरियाखाल",
   "कीर्तिनगर",
-  "छाम"
+  "न्युली",
+  "फकोट",
+  "लेसर",
+  "मुनि की रेती",
+  "पावकी देवी",
+  "कोर्दी",
+  "लंबगांव",
+  "प्रतापनगर",
+  "छाम",
+  "देवदर्शनी",
+  "कमांद",
+  "पाली",
 ];
 
 // Static options for form fields
@@ -113,24 +108,26 @@ const unitOptions = ["बैग", "क्विंटल", "किलोग्�
 const sourceOptions = ["PWD", "PMGSY", "NREGA"];
 const schemeOptions = ["MGNREGA", "PMKSY", "DDUGJY"];
 const vikasKhandOptions = [
+  "भिलंगना",
+  "चम्बा",
+  "देवप्रयाग",
+  "जाखणीधार",
+  "जौनपुर",
+  "कीर्तिनगर",
+  "नरेन्द्रनगर",
+  "प्रतापनगर",
+  "थौलधार",
+ 
+];
+const vidhanSabhaOptions = [
   "घनसाली",
   "टिहरी",
   "देवप्रयाग",
   "धनोल्टी",
   "नरेन्द्रनगर",
   "प्रतापनगर",
- 
-];
-const vidhanSabhaOptions = [
-  "भिलंगना",
-  "चम्बा",
-  "जाखणीधार",
-  "थौलधार",
-  "देवप्रयाग",
-  "कीर्तिनगर",
-  "जौनपुर",
-  "नरेन्द्रनगर",
-  "प्रतापनगर",
+  "धनोल्टी",
+
 ];
 
 // Available columns for the table (excluding sno which is always shown)
@@ -510,106 +507,96 @@ const Registration = () => {
       } else {
         // Fallback to hardcoded options if API returns empty or invalid data
         setCenterOptions([
-          "अखोरी",
-  "अंजनीसैंण",
-  "अच्चरीखूंट",
-  "गाजा",
-  "गर्केत",
+            "अखोरी",
   "घनसाली",
   "घुत्तू",
-  "चम्बा",
-  "जड़ीपानी",
-  "जौनपुर",
-  "टिहरी",
-  "थत्यूड़",
-  "थौलधार",
-  "देवदर्शनी",
-  "देवप्रयाग",
-  "धनोल्टी",
-  "नंदगांव",
-  "नैनबाग",
-  "नरेन्द्रनगर",
-  "न्योली",
-  "पंतवारी",
-  "पवखाल",
-  "पावकी देवी",
-  "प्रतापनगर",
-  "बौराड़ी",
-  "बाचेलीखाल",
-  "भवान",
-  "भेदियाना",
-  "भिलंगना",
-  "मरौड़ा",
-  "मुनि की रेती",
-  "म्याणी",
-  "राजाखेत",
-  "लंबगांव",
-  "लेसर",
-  "वली",
-  "श्रीकोट",
-  "सबली",
   "हुलानाखाल",
+  "पवखाल",
+  "बौराड़ी",
+  "चम्बा",
+  "गजा",
+  "जड़ीपानी",
+  "बचेलीखाल",
   "हिंडोलाखाल",
   "हिसरियाखाल",
-  "फकोट",
-  "कमांद",
-  "कोड़ी",
+  "अंजनीसैंण",
+  "नंदगांव",
+  "राजाखेत",
+  "भवान",
+  "भेदियाना",
+  "धनोल्टी",
+  "गरखेत",
   "कुमाल्डा",
+  "मरौड़ा",
+  "म्याणी",
+  "नैनबाग",
+  "पंतवारी",
+  "साबली",
+  "श्रीकोट",
+  "थत्यूड़",
+  "आच्चरीखूंट",
+  "हिसरियाखाल",
   "कीर्तिनगर",
-  "छाम"
+  "न्युली",
+  "फकोट",
+  "लेसर",
+  "मुनि की रेती",
+  "पावकी देवी",
+  "कोर्दी",
+  "लंबगांव",
+  "प्रतापनगर",
+  "छाम",
+  "देवदर्शनी",
+  "कमांद",
+  "पाली",
         ]);
       }
     } catch (error) {
       console.error("Error fetching center options:", error);
       // Fallback to hardcoded options if API fails
       setCenterOptions([
-           "अखोरी",
-  "अंजनीसैंण",
-  "अच्चरीखूंट",
-  "गाजा",
-  "गर्केत",
+            "अखोरी",
   "घनसाली",
   "घुत्तू",
-  "चम्बा",
-  "जड़ीपानी",
-  "जौनपुर",
-  "टिहरी",
-  "थत्यूड़",
-  "थौलधार",
-  "देवदर्शनी",
-  "देवप्रयाग",
-  "धनोल्टी",
-  "नंदगांव",
-  "नैनबाग",
-  "नरेन्द्रनगर",
-  "न्योली",
-  "पंतवारी",
-  "पवखाल",
-  "पावकी देवी",
-  "प्रतापनगर",
-  "बौराड़ी",
-  "बाचेलीखाल",
-  "भवान",
-  "भेदियाना",
-  "भिलंगना",
-  "मरौड़ा",
-  "मुनि की रेती",
-  "म्याणी",
-  "राजाखेत",
-  "लंबगांव",
-  "लेसर",
-  "वली",
-  "श्रीकोट",
-  "सबली",
   "हुलानाखाल",
+  "पवखाल",
+  "बौराड़ी",
+  "चम्बा",
+  "गजा",
+  "जड़ीपानी",
+  "बचेलीखाल",
   "हिंडोलाखाल",
   "हिसरियाखाल",
-  "फकोट",
-  "कमांद",
-  "कोड़ी",
+  "अंजनीसैंण",
+  "नंदगांव",
+  "राजाखेत",
+  "भवान",
+  "भेदियाना",
+  "धनोल्टी",
+  "गरखेत",
   "कुमाल्डा",
+  "मरौड़ा",
+  "म्याणी",
+  "नैनबाग",
+  "पंतवारी",
+  "साबली",
+  "श्रीकोट",
+  "थत्यूड़",
+  "आच्चरीखूंट",
+  "हिसरियाखाल",
   "कीर्तिनगर",
-  "छाम"
+  "न्युली",
+  "फकोट",
+  "लेसर",
+  "मुनि की रेती",
+  "पावकी देवी",
+  "कोर्दी",
+  "लंबगांव",
+  "प्रतापनगर",
+  "छाम",
+  "देवदर्शनी",
+  "कमांद",
+  "पाली",
       ]);
     }
   };
@@ -884,77 +871,122 @@ const Registration = () => {
     fetchCenterOptions();
   }, []);
 
-  // Populate filter options from all billing items
+  // Populate filter options from date-filtered billing items
   useEffect(() => {
-    if (allBillingItems.length > 0) {
-      setFilterOptions({
-        center_name: [
-          ...new Set(
-            allBillingItems.map((item) => item.center_name).filter(Boolean),
-          ),
-        ],
-        investment_name: [
-          ...new Set(
-            allBillingItems.map((item) => item.investment_name).filter(Boolean),
-          ),
-        ],
-        sub_investment_name: [
-          ...new Set(
-            allBillingItems
-              .map((item) => item.sub_investment_name)
-              .filter(Boolean),
-          ),
-        ],
-        unit: [
-          ...new Set(allBillingItems.map((item) => item.unit).filter(Boolean)),
-        ],
-        source_of_receipt: [
-          ...new Set(
-            allBillingItems
-              .map((item) => item.source_of_receipt)
-              .filter(Boolean),
-          ),
-        ],
-        scheme_name: [
-          ...new Set(
-            allBillingItems.map((item) => item.scheme_name).filter(Boolean),
-          ),
-        ],
-        vikas_khand_name: [
-          ...new Set(
-            allBillingItems
-              .map((item) => item.vikas_khand_name)
-              .filter(Boolean),
-          ),
-        ],
-        vidhan_sabha_name: [
-          ...new Set(
-            allBillingItems
-              .map((item) => item.vidhan_sabha_name)
-              .filter(Boolean),
-          ),
-        ],
-        anudan_name: [
-          ...new Set(
-            allBillingItems
-              .map((item) => item.anudan_name)
-              .filter(Boolean),
-          ),
-        ],
-      });
+    // Compute date-only filtered items (excludes dropdown filters so dropdowns still populate)
+    let dateFilteredItems = allBillingItems;
 
-      // Extract unique created_at dates for the new date filter
-      const createdAtDates = allBillingItems
-        .map((item) =>
-          item.created_at
-            ? new Date(item.created_at).toISOString().split("T")[0]
-            : null,
-        )
-        .filter(Boolean);
-      const uniqueDates = [...new Set(createdAtDates)].sort().reverse();
-      setUniqueCreatedAtDates(uniqueDates);
+    // Apply date range filters (start_date / end_date on bill_date)
+    if (filters.start_date || filters.end_date) {
+      dateFilteredItems = dateFilteredItems.filter((item) => {
+        if (!item.bill_date) return false;
+        const itemDate = new Date(item.bill_date);
+        const startDate = filters.start_date
+          ? new Date(filters.start_date)
+          : null;
+        const endDate = filters.end_date
+          ? new Date(filters.end_date)
+          : null;
+        if (endDate) endDate.setHours(23, 59, 59, 999);
+        if (startDate && itemDate < startDate) return false;
+        if (endDate && itemDate > endDate) return false;
+        return true;
+      });
     }
-  }, [allBillingItems]);
+
+    // Apply created_at single-date filter
+    if (createdAtFilter.selectedDate || createdAtFilter.manualDate) {
+      const filterDate =
+        createdAtFilter.selectedDate || createdAtFilter.manualDate;
+      dateFilteredItems = dateFilteredItems.filter((item) => {
+        if (!item.created_at) return false;
+        const itemDate = new Date(item.created_at)
+          .toISOString()
+          .split("T")[0];
+        return itemDate === filterDate;
+      });
+    }
+
+    setFilterOptions({
+      center_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.center_name)
+            .filter(Boolean),
+        ),
+      ],
+      investment_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.investment_name)
+            .filter(Boolean),
+        ),
+      ],
+      sub_investment_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.sub_investment_name)
+            .filter(Boolean),
+        ),
+      ],
+      unit: [
+        ...new Set(
+          dateFilteredItems.map((item) => item.unit).filter(Boolean),
+        ),
+      ],
+      source_of_receipt: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.source_of_receipt)
+            .filter(Boolean),
+        ),
+      ],
+      scheme_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.scheme_name)
+            .filter(Boolean),
+        ),
+      ],
+      vikas_khand_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.vikas_khand_name)
+            .filter(Boolean),
+        ),
+      ],
+      vidhan_sabha_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.vidhan_sabha_name)
+            .filter(Boolean),
+        ),
+      ],
+      anudan_name: [
+        ...new Set(
+          dateFilteredItems
+            .map((item) => item.anudan_name)
+            .filter(Boolean),
+        ),
+      ],
+    });
+
+    // Extract unique created_at dates from date-filtered items
+    const createdAtDates = dateFilteredItems
+      .map((item) =>
+        item.created_at
+          ? new Date(item.created_at).toISOString().split("T")[0]
+          : null,
+      )
+      .filter(Boolean);
+    const uniqueDates = [...new Set(createdAtDates)].sort().reverse();
+    setUniqueCreatedAtDates(uniqueDates);
+  }, [
+    allBillingItems,
+    filters.start_date,
+    filters.end_date,
+    createdAtFilter,
+  ]);
 
   // Apply local filtering when filters change
   useEffect(() => {
@@ -1513,7 +1545,7 @@ const Registration = () => {
       setIsLoading(true);
       const payload = { bill_id: selectedItems };
       await axios.delete(
-        "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
+        "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/",
         { data: payload },
       );
 

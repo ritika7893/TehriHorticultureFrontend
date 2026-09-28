@@ -25,9 +25,9 @@ import LeftNav from "./LeftNav";
 
 // API URLs
 const YEARLY_DATA_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/billing-items/";
 const MONTHLY_DATA_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/report-billing-items/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/report-billing-items/";
 
 // Helper function to format numbers as currency
 const formatCurrency = (amount) => {
@@ -1361,7 +1361,7 @@ const MPR = () => {
   // View receipt file
   const viewReceipt = (receiptPath) => {
     if (receiptPath) {
-      const fullUrl = `https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend${receiptPath}`;
+      const fullUrl = `https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend${receiptPath}`;
       window.open(fullUrl, "_blank");
     }
   };

@@ -14,7 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/vetan.css";
 
 const API_URL =
-  "https://mahadevaaya.com/tehrihorticulture/tehrihorticulture_backend/api/salary-attendance-reports/";
+  "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api/salary-attendance-reports/";
 
 // Default headers for the dynamic table (Text Headings)
 const TABLE_HEADERS = [
