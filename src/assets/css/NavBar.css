@@ -142,7 +142,7 @@ img.logo-wecd {
     }
 
     .awc-mob-responsive {
-        padding: var(--gov-space-150)var(--gov-space-150) var(--gov-space-150) var(--gov-space-150) !important;
+        padding: var(--gov-space-150) var(--gov-space-150) !important;
     }
 
 }

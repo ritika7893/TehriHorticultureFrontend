@@ -358,7 +358,7 @@ export default function Login() {
     <div className="login-page">
       <Container>
         <Row className="justify-content-center align-items-center">
-          <Col md={10} lg={8} xl={6} className="mt-5">
+          <Col md={10} lg={8} xl={6} className="mt-2">
             <div className="login-container shadow-lg">
               <Row className="g-0">
                 <Col md={6} className="login-image d-none d-md-block">
