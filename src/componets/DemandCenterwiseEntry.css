@@ -595,6 +595,11 @@
   .demand-center-report-page {
     padding: 55px 8px 16px;
   }
+   .dynamic-report-filter-wrap {
+  position: relative;
+  min-width: 145px;
+  flex: 1 1 0px  !important;
+}
   .demand-center-header {
     padding: 11px 12px;
   }
@@ -634,6 +639,7 @@
   .dynamic-report-filter-wrap {
     min-width: 100%;
   }
+ 
   .report-tab-date-filter .row > div {
     width: 100%;
   }

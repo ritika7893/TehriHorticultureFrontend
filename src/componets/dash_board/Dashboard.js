@@ -128,6 +128,131 @@ const customSelectStyles = {
 };
 
 // ============================================================================
+// Floating (portal) panel
+// Every report filter dropdown is rendered into document.body with fixed
+// viewport coordinates. Inside the report tree the menus were being clipped by
+// the scroll wrappers / table containers and were painted underneath the fixed
+// top navbar (z-index 1030), which is why they appeared not to open on mobile.
+// The portal removes all of those stacking/clipping problems.
+// ============================================================================
+const FloatingPanel = ({ open, anchorRef, onClose, className = '', children }) => {
+  const panelRef = useRef(null);
+  const [pos, setPos] = useState(null);
+
+  useEffect(() => {
+    if (!open) {
+      setPos(null);
+      return undefined;
+    }
+
+    const reposition = () => {
+      const anchor = anchorRef.current;
+      if (!anchor || typeof anchor.getBoundingClientRect !== 'function') return;
+
+      const rect = anchor.getBoundingClientRect();
+      const gutter = 8;
+      const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      // Never wider than the viewport and never narrower than a usable 260px.
+      const width = Math.min(
+        Math.max(rect.width, 260),
+        Math.max(220, viewportWidth - gutter * 2)
+      );
+
+      // Keep the menu fully inside the viewport horizontally.
+      const left = Math.min(
+        Math.max(gutter, rect.left),
+        Math.max(gutter, viewportWidth - width - gutter)
+      );
+
+      const spaceBelow = viewportHeight - rect.bottom - gutter;
+      const spaceAbove = rect.top - gutter;
+
+      // Open upwards when there is not enough room underneath.
+      const openUp = spaceBelow < 220 && spaceAbove > spaceBelow;
+
+      setPos({
+        left,
+        width,
+        openUp,
+        top: rect.bottom + 6,
+        bottom: viewportHeight - rect.top + 6,
+        maxHeight: Math.max(
+          150,
+          Math.min(430, openUp ? spaceAbove - 6 : spaceBelow - 6)
+        ),
+      });
+    };
+
+    reposition();
+    const frame = requestAnimationFrame(reposition);
+
+    window.addEventListener('resize', reposition);
+    window.addEventListener('orientationchange', reposition);
+    window.addEventListener('scroll', reposition, true);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', reposition);
+      window.removeEventListener('orientationchange', reposition);
+      window.removeEventListener('scroll', reposition, true);
+    };
+  }, [open, anchorRef]);
+
+  // Close on outside tap/click and on Escape.
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const handleOutside = event => {
+      const anchor = anchorRef.current;
+      const panel = panelRef.current;
+      const target = event.target;
+      if (anchor && anchor.contains(target)) return;
+      if (panel && panel.contains(target)) return;
+      onClose();
+    };
+
+    const handleKeyDown = event => {
+      if (event.key === 'Escape' || event.key === 'Esc') onClose();
+    };
+
+    document.addEventListener('mousedown', handleOutside);
+    document.addEventListener('touchstart', handleOutside, { passive: true });
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutside);
+      document.removeEventListener('touchstart', handleOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open, onClose, anchorRef]);
+
+  if (!open || typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div
+      ref={panelRef}
+      className={`report-floating-panel ${className}`.trim()}
+      role="dialog"
+      style={{
+        position: 'fixed',
+        right: 'auto',
+        left: pos ? pos.left : -9999,
+        top: pos && !pos.openUp ? pos.top : undefined,
+        bottom: pos && pos.openUp ? pos.bottom : undefined,
+        width: pos ? pos.width : undefined,
+        maxHeight: pos ? pos.maxHeight : 320,
+        visibility: pos ? 'visible' : 'hidden',
+      }}
+    >
+      {children}
+    </div>,
+    document.body
+  );
+};
+
+// ============================================================================
 // Shared dashboard filter UI
 // Same checkbox/multi-select behavior used by "विस्तृत रिपोर्ट".
 // Empty selection means ALL; explicit values mean only those values.
@@ -135,8 +260,6 @@ const customSelectStyles = {
 const DashboardReportFilter = ({ label, options, value, onChange }) => {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef(null);
-  const menuRef = useRef(null);
-  const [menuPos, setMenuPos] = useState({ top: 0, left: 0, width: 0 });
 
   // ---- Selection state logic (unchanged) ----
   const rawSelected = Array.isArray(value) ? value : [];
@@ -168,57 +291,7 @@ const DashboardReportFilter = ({ label, options, value, onChange }) => {
   const selectAll = () => onChange([]);
   const selectNone = () => onChange(["__NONE__"]);
 
-  // ---- Compute menu position relative to button ----
-  const updateMenuPosition = () => {
-    if (!buttonRef.current) return;
-    const rect = buttonRef.current.getBoundingClientRect();
-    setMenuPos({
-      top: rect.bottom + window.scrollY + 4,
-      left: rect.left + window.scrollX,
-      width: Math.max(rect.width, 260), // never narrower than 260px
-    });
-  };
-
-  // Recompute on open
-  useEffect(() => {
-    if (open) {
-      updateMenuPosition();
-    }
-  }, [open]);
-
-  // Track scroll / resize while open so the menu stays glued to the button
-  useEffect(() => {
-    if (!open) return;
-
-    const handleOutsideClick = (e) => {
-      if (
-        buttonRef.current && !buttonRef.current.contains(e.target) &&
-        menuRef.current && !menuRef.current.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    const handleScrollOrResize = () => updateMenuPosition();
-
-    document.addEventListener('mousedown', handleOutsideClick);
-    window.addEventListener('scroll', handleScrollOrResize, true);
-    window.addEventListener('resize', handleScrollOrResize);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-      window.removeEventListener('scroll', handleScrollOrResize, true);
-      window.removeEventListener('resize', handleScrollOrResize);
-    };
-  }, [open]);
-
-  // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const handleEsc = (e) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [open]);
+  const closeMenu = () => setOpen(false);
 
   return (
     <div
@@ -254,126 +327,40 @@ const DashboardReportFilter = ({ label, options, value, onChange }) => {
         </span>
       </button>
 
-      {open && typeof document !== 'undefined' && createPortal(
-        <div
-          ref={menuRef}
-          className="dashboard-report-filter-menu dashboard-report-filter-menu-portal"
-          style={{
-            position: 'absolute',
-            top: `${menuPos.top}px`,
-            left: `${menuPos.left}px`,
-            width: `${menuPos.width}px`,
-            zIndex: 99999,
-            maxHeight: '320px',
-            overflowY: 'auto',
-            backgroundColor: '#ffffff',
-            border: '1px solid #e0e0e0',
-            borderRadius: '6px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.18)',
-            padding: '8px',
-          }}
-        >
-          <div
-            className="dashboard-report-filter-actions"
-            style={{
-              display: 'flex',
-              gap: '6px',
-              marginBottom: '8px',
-              flexWrap: 'wrap',
-              borderBottom: '1px solid #f0f0f0',
-              paddingBottom: '8px',
-            }}
-          >
-            <button
-              type="button"
-              onClick={selectAll}
-              style={{
-                flex: 1,
-                padding: '5px 8px',
-                border: '1px solid #194e8b',
-                background: '#194e8b',
-                color: '#fff',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-              }}
-            >
-              सभी चुनें
-            </button>
-            <button
-              type="button"
-              onClick={selectNone}
-              style={{
-                flex: 1,
-                padding: '5px 8px',
-                border: '1px solid #c8372d',
-                background: '#fff',
-                color: '#c8372d',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-              }}
-            >
-              कोई नहीं
-            </button>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              style={{
-                padding: '5px 10px',
-                border: '1px solid #ccc',
-                background: '#f8f9fa',
-                color: '#333',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-              }}
-            >
-              बंद करें
-            </button>
-          </div>
+      <FloatingPanel
+        open={open}
+        anchorRef={buttonRef}
+        onClose={closeMenu}
+        className="dashboard-report-filter-menu dashboard-report-filter-menu-portal"
+      >
+        <div className="dashboard-report-filter-actions">
+          <button type="button" onClick={selectAll}>सभी चुनें</button>
+          <button type="button" onClick={selectNone}>कोई नहीं</button>
+          <button type="button" onClick={closeMenu}>बंद करें</button>
+        </div>
 
-          <div className="dashboard-report-filter-list">
-            {options.length === 0 ? (
-              <div
-                className="dashboard-report-filter-empty"
-                style={{ padding: '10px', textAlign: 'center', color: '#888', fontSize: '0.8rem' }}
-              >
-                कोई विकल्प उपलब्ध नहीं
-              </div>
-            ) : (
-              options.map(option => (
-                <label
-                  key={option}
-                  className="dashboard-report-filter-option"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    padding: '6px 8px',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    fontSize: '0.82rem',
-                    borderBottom: '1px solid #f5f5f5',
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    checked={
-                      !noneSelected &&
-                      (allSelected || selected.includes(option))
-                    }
-                    onChange={() => toggleValue(option)}
-                    style={{ cursor: 'pointer' }}
-                  />
-                  <span style={{ flex: 1 }}>{option}</span>
-                </label>
-              ))
-            )}
-          </div>
-        </div>,
-        document.body
-      )}
+        <div className="dashboard-report-filter-list">
+          {options.length === 0 ? (
+            <div className="dashboard-report-filter-empty">
+              कोई विकल्प उपलब्ध नहीं
+            </div>
+          ) : (
+            options.map(option => (
+              <label key={option} className="dashboard-report-filter-option">
+                <input
+                  type="checkbox"
+                  checked={
+                    !noneSelected &&
+                    (allSelected || selected.includes(option))
+                  }
+                  onChange={() => toggleValue(option)}
+                />
+                <span>{option}</span>
+              </label>
+            ))
+          )}
+        </div>
+      </FloatingPanel>
     </div>
   );
 };
@@ -751,6 +738,16 @@ const SummaryMadUpMadTable = ({ data }) => {
     kendra: null,
   });
   const [openSummaryWiseFilter, setOpenSummaryWiseFilter] = useState(null);
+  // One stable anchor ref per filter button so the floating menus can follow
+  // their trigger while the page scrolls or the layout reflows.
+  const summaryWiseAnchorRefs = useRef({});
+  const getSummaryWiseAnchorRef = filterId => {
+    if (!summaryWiseAnchorRefs.current[filterId]) {
+      summaryWiseAnchorRefs.current[filterId] = { current: null };
+    }
+    return summaryWiseAnchorRefs.current[filterId];
+  };
+  const summaryWisePlanAnchorRef = getSummaryWiseAnchorRef('summary-mad-upmad-plan');
   const [selectedSummaryPlanFilter, setSelectedSummaryPlanFilter] = useState(null);
   const [summaryWiseSummaryMode, setSummaryWiseSummaryMode] = useState('financial');
   // Only these three table columns can be shown/hidden from the column selector.
@@ -1012,104 +1009,115 @@ const SummaryMadUpMadTable = ({ data }) => {
           const selectedValues = selected === null || selected === undefined ? options : selected;
           const selectedCount = selectedValues.length;
           const filterId = `summary-mad-upmad-${field}`;
+          const anchorRef = getSummaryWiseAnchorRef(filterId);
           const isOpen = openSummaryWiseFilter === filterId;
           const isFiltered = selected !== null && selected !== undefined && selectedCount !== options.length;
 
           return (
             <div key={field} className="dynamic-report-filter-wrap">
               <button
+                ref={anchorRef}
                 type="button"
                 className={`dynamic-report-filter-btn ${isFiltered ? 'filtered' : ''}`}
                 onClick={() => setOpenSummaryWiseFilter(isOpen ? null : filterId)}
+                aria-expanded={isOpen}
               >
                 <span>{label} फ़िल्टर</span>
                 <span className="dynamic-report-badge">{selectedCount}/{options.length}</span>
                 <span>{isOpen ? '▲' : '▼'}</span>
               </button>
 
-              {isOpen && (
-                <div className="dynamic-report-filter-menu">
-                  <div className="dynamic-report-filter-actions">
-                    <button type="button" onClick={() => setSummaryWiseFilters(prev => ({ ...prev, [field]: null }))}>सभी चुनें</button>
-                    <button type="button" onClick={() => setSummaryWiseFilters(prev => ({ ...prev, [field]: [] }))}>कोई नहीं</button>
-                  </div>
-
-                  <div className="dynamic-report-filter-list">
-                    {options.length === 0 ? (
-                      <div className="dynamic-report-filter-empty">कोई विकल्प उपलब्ध नहीं</div>
-                    ) : (
-                      options.map(value => (
-                        <label key={value} className="dynamic-report-filter-option">
-                          <input
-                            type="checkbox"
-                            checked={selected === null || selected === undefined ? true : selected.includes(value)}
-                            onChange={() => {
-                              const currentScrollY = window.scrollY;
-                              toggleSummaryWiseFilter(field, value);
-                              requestAnimationFrame(() => {
-                                window.scrollTo({ top: currentScrollY, left: window.scrollX, behavior: 'auto' });
-                              });
-                            }}
-                          />
-                          <span>{value}</span>
-                        </label>
-                      ))
-                    )}
-                  </div>
-
-                  <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenSummaryWiseFilter(null)}>
-                    बंद करें
-                  </button>
+              <FloatingPanel
+                open={isOpen}
+                anchorRef={anchorRef}
+                onClose={() => setOpenSummaryWiseFilter(null)}
+                className="dynamic-report-filter-menu"
+              >
+                <div className="dynamic-report-filter-actions">
+                  <button type="button" onClick={() => setSummaryWiseFilters(prev => ({ ...prev, [field]: null }))}>सभी चुनें</button>
+                  <button type="button" onClick={() => setSummaryWiseFilters(prev => ({ ...prev, [field]: [] }))}>कोई नहीं</button>
                 </div>
-              )}
+
+                <div className="dynamic-report-filter-list">
+                  {options.length === 0 ? (
+                    <div className="dynamic-report-filter-empty">कोई विकल्प उपलब्ध नहीं</div>
+                  ) : (
+                    options.map(value => (
+                      <label key={value} className="dynamic-report-filter-option">
+                        <input
+                          type="checkbox"
+                          checked={selected === null || selected === undefined ? true : selected.includes(value)}
+                          onChange={() => {
+                            const currentScrollY = window.scrollY;
+                            toggleSummaryWiseFilter(field, value);
+                            requestAnimationFrame(() => {
+                              window.scrollTo({ top: currentScrollY, left: window.scrollX, behavior: 'auto' });
+                            });
+                          }}
+                        />
+                        <span>{value}</span>
+                      </label>
+                    ))
+                  )}
+                </div>
+
+                <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenSummaryWiseFilter(null)}>
+                  बंद करें
+                </button>
+              </FloatingPanel>
             </div>
           );
         })}
 
         <div className="dynamic-report-filter-wrap">
           <button
+            ref={summaryWisePlanAnchorRef}
             type="button"
             className={`dynamic-report-filter-btn ${selectedSummaryPlanFilter !== null && selectedSummaryPlanFilter !== undefined && selectedSummaryPlanFilter.length !== planList.length ? 'filtered' : ''}`}
             onClick={() => setOpenSummaryWiseFilter(openSummaryWiseFilter === 'summary-mad-upmad-plan' ? null : 'summary-mad-upmad-plan')}
+            aria-expanded={openSummaryWiseFilter === 'summary-mad-upmad-plan'}
           >
             <span>योजना फ़िल्टर</span>
             <span className="dynamic-report-badge">{selectedPlans.length}/{planList.length}</span>
             <span>{openSummaryWiseFilter === 'summary-mad-upmad-plan' ? '▲' : '▼'}</span>
           </button>
 
-          {openSummaryWiseFilter === 'summary-mad-upmad-plan' && (
-            <div className="dynamic-report-filter-menu">
-              <div className="dynamic-report-filter-actions">
-                <button type="button" onClick={() => setSelectedSummaryPlanFilter(null)}>सभी चुनें</button>
-                <button type="button" onClick={() => setSelectedSummaryPlanFilter([])}>कोई नहीं</button>
-              </div>
-              <div className="dynamic-report-filter-list">
-                {planList.length === 0 ? (
-                  <div className="dynamic-report-filter-empty">कोई विकल्प उपलब्ध नहीं</div>
-                ) : (
-                  planList.map(plan => (
-                    <label key={plan} className="dynamic-report-filter-option">
-                      <input
-                        type="checkbox"
-                        checked={selectedPlans.includes(plan)}
-                        onChange={() => {
-                          const currentScrollY = window.scrollY;
-                          togglePlanFilter(plan);
-                          requestAnimationFrame(() => {
-                            window.scrollTo({ top: currentScrollY, left: window.scrollX, behavior: 'auto' });
-                          });
-                        }}
-                      />
-                      <span>{plan}</span>
-                    </label>
-                  ))
-                )}
-              </div>
-              <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenSummaryWiseFilter(null)}>
-                बंद करें
-              </button>
+          <FloatingPanel
+            open={openSummaryWiseFilter === 'summary-mad-upmad-plan'}
+            anchorRef={summaryWisePlanAnchorRef}
+            onClose={() => setOpenSummaryWiseFilter(null)}
+            className="dynamic-report-filter-menu"
+          >
+            <div className="dynamic-report-filter-actions">
+              <button type="button" onClick={() => setSelectedSummaryPlanFilter(null)}>सभी चुनें</button>
+              <button type="button" onClick={() => setSelectedSummaryPlanFilter([])}>कोई नहीं</button>
             </div>
-          )}
+            <div className="dynamic-report-filter-list">
+              {planList.length === 0 ? (
+                <div className="dynamic-report-filter-empty">कोई विकल्प उपलब्ध नहीं</div>
+              ) : (
+                planList.map(plan => (
+                  <label key={plan} className="dynamic-report-filter-option">
+                    <input
+                      type="checkbox"
+                      checked={selectedPlans.includes(plan)}
+                      onChange={() => {
+                        const currentScrollY = window.scrollY;
+                        togglePlanFilter(plan);
+                        requestAnimationFrame(() => {
+                          window.scrollTo({ top: currentScrollY, left: window.scrollX, behavior: 'auto' });
+                        });
+                      }}
+                    />
+                    <span>{plan}</span>
+                  </label>
+                ))
+              )}
+            </div>
+            <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenSummaryWiseFilter(null)}>
+              बंद करें
+            </button>
+          </FloatingPanel>
         </div>
 
         <button
@@ -1297,6 +1305,16 @@ const DynamicReportTabs = ({ sourceData }) => {
   const [openFilter, setOpenFilter] = useState(null);
   const [progressView, setProgressView] = useState('vidhan');
   const [saleView, setSaleView] = useState('vidhan');
+
+  // Stable anchor refs for every filter button in the report toolbar.
+  // The floating menus read these to stay glued to their trigger.
+  const openFilterAnchorRefs = useRef({});
+  const getOpenFilterAnchorRef = filterId => {
+    if (!openFilterAnchorRefs.current[filterId]) {
+      openFilterAnchorRefs.current[filterId] = { current: null };
+    }
+    return openFilterAnchorRefs.current[filterId];
+  };
 
   // Each report tab has an independent financial-year date filter.
   const {
@@ -1516,34 +1534,44 @@ const DynamicReportTabs = ({ sourceData }) => {
     const id = `${section}-${field}`;
     const open = openFilter === id;
     const isFiltered = selected !== null && selected !== undefined && selectedCount !== options.length;
+    const anchorRef = getOpenFilterAnchorRef(id);
 
     return (
       <div className="dynamic-report-filter-wrap">
         <button
+          ref={anchorRef}
           type="button"
           className={`dynamic-report-filter-btn ${isFiltered ? 'filtered' : ''}`}
           onClick={() => setOpenFilter(open ? null : id)}
+          aria-expanded={open}
         >
           <span>{label}</span>
           <span className="dynamic-report-badge">{`${selectedCount}/${options.length}`}</span>
-          <span>▼</span>
+          <span>{open ? '▲' : '▼'}</span>
         </button>
 
-        {open && (
-          <div className="dynamic-report-filter-menu">
-            <div className="dynamic-report-filter-actions">
-              <button
-                type="button"
-                onClick={() => setter(prev => ({ ...prev, [field]: null }))}
-              >सभी चुनें</button>
-              <button
-                type="button"
-                onClick={() => setter(prev => ({ ...prev, [field]: [] }))}
-              >कोई नहीं</button>
-            </div>
+        <FloatingPanel
+          open={open}
+          anchorRef={anchorRef}
+          onClose={() => setOpenFilter(null)}
+          className="dynamic-report-filter-menu"
+        >
+          <div className="dynamic-report-filter-actions">
+            <button
+              type="button"
+              onClick={() => setter(prev => ({ ...prev, [field]: null }))}
+            >सभी चुनें</button>
+            <button
+              type="button"
+              onClick={() => setter(prev => ({ ...prev, [field]: [] }))}
+            >कोई नहीं</button>
+          </div>
 
-            <div className="dynamic-report-filter-list">
-              {options.map(value => (
+          <div className="dynamic-report-filter-list">
+            {options.length === 0 ? (
+              <div className="dynamic-report-filter-empty">कोई विकल्प उपलब्ध नहीं</div>
+            ) : (
+              options.map(value => (
                 <label key={value} className="dynamic-report-filter-option">
                   <input
                     type="checkbox"
@@ -1556,14 +1584,14 @@ const DynamicReportTabs = ({ sourceData }) => {
                   />
                   <span>{value}</span>
                 </label>
-              ))}
-            </div>
-
-            <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenFilter(null)}>
-              बंद करें
-            </button>
+              ))
+            )}
           </div>
-        )}
+
+          <button type="button" className="dynamic-report-filter-close" onClick={() => setOpenFilter(null)}>
+            बंद करें
+          </button>
+        </FloatingPanel>
       </div>
     );
   };
@@ -5094,6 +5122,16 @@ const Dashboard = () => {
                 </div>
               </Alert>
             ) : null}
+
+            {/* ==================== DYNAMIC EXCEL-STYLE REPORT TABS ====================
+                Kept INSIDE the dashboard container so it shares the same page
+                width and the mobile top offset that clears the fixed navbar.
+                Previously it was rendered after <Footer />, which on phones put
+                the whole report block under the fixed header and outside the
+                dashboard layout. */}
+            {!loading && !error && reportApiData.length > 0 && (
+              <DynamicReportTabs sourceData={reportApiData} />
+            )}
           </Container>
         </div>
       </div>
