@@ -3819,6 +3819,7 @@ f.modal-title {
   .progress-hierarchy-filter-group {
     width: 100%;
     min-width: 0;
+    flex: 1 1 0px !important;
   }
 
   .progress-hierarchy-clear-btn {
