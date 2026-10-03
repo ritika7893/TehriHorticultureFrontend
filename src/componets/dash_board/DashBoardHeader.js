@@ -48,19 +48,9 @@ function DashBoardHeader() {
             <Nav.Link as={NavLink} to="/MonthReport">
               MPR रिपोर्ट
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/Dashboard">
-              MIS रिपोर्ट
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/AdminVetanMang">
-              वेतन मांग
-            </Nav.Link>
-
-            <Nav.Link as={NavLink} to="/AdminMonthAttendance">
-              मासिक उपस्थिति
-            </Nav.Link>
-            <Nav.Link as={NavLink} to="/AdminKishanAavedan">
-              किसान आवेदन
-            </Nav.Link>
+          
+           
+           
 
             <Nav.Link as={NavLink} to="/MainDashboard">
               डैशबोर्ड
@@ -77,18 +67,7 @@ function DashBoardHeader() {
               <NavDropdown.Item as={Link} to="/KrishiRegistration">
                 कृषक डेटा एंट्री
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/NurseryFinancialEntry">
-                नर्सरी वित्तीय प्रविष्टि
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/NurseryPhysicalEntry">
-                नर्सरी भौतिक प्रविष्टि
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/UdyanBill">
-                उद्यान बिल
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/KishanBeej">
-                किसान बीज
-              </NavDropdown.Item>
+           
             </NavDropdown>
 
           
@@ -105,9 +84,7 @@ function DashBoardHeader() {
           </Nav>
 
           <Nav className="ms-auto">
-            <Nav.Link as={NavLink} to="/LibrarySystem">
-              लाइब्रेरी सिस्टम
-            </Nav.Link>
+           
           </Nav>
 
           <Nav className="ms-auto">

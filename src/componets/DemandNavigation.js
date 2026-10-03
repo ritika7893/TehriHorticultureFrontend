@@ -83,65 +83,7 @@ const DemandNavigation = () => {
             </NavDropdown>
 
             {/* Second Dropdown: सेवाएं (Services) */}
-            <NavDropdown
-              title="सेवाएं"
-              id="services-nav-dropdown"
-              style={{
-                fontWeight:
-                  isActive("/CenterUdyanBill") ||
-                  isActive("/GetViewLibrary") ||
-                  isActive("/KisanAavedanPortal") ||
-                  isActive("/MonthAttendance")
-                    ? "bold"
-                    : "normal",
-              }}
-            >
-              <NavDropdown.Item
-                active={isActive("/CenterUdyanBill")}
-                onClick={() => navigate("/CenterUdyanBill")}
-                style={{
-                  fontWeight: isActive("/CenterUdyanBill") ? "bold" : "normal",
-                }}
-              >
-                उद्यान बिल
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/GetViewLibrary")}
-                onClick={() => navigate("/GetViewLibrary")}
-                style={{
-                  fontWeight: isActive("/GetViewLibrary") ? "bold" : "normal",
-                }}
-              >
-                लाइब्रेरी
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/KisanAavedanPortal")}
-                onClick={() => navigate("/KisanAavedanPortal")}
-                style={{
-                  fontWeight: isActive("/KisanAavedanPortal") ? "bold" : "normal",
-                }}
-              >
-                किसान आवेदन पोर्टल
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/MonthAttendance")}
-                onClick={() => navigate("/MonthAttendance")}
-                style={{
-                  fontWeight: isActive("/MonthAttendance") ? "bold" : "normal",
-                }}
-              >
-                मासिक उपस्थिति
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/VetanMang")}
-                onClick={() => navigate("/VetanMang")}
-                style={{
-                  fontWeight: isActive("/VetanMang") ? "bold" : "normal",
-                }}
-              >
-                वेतन मांग पत्र
-              </NavDropdown.Item>
-            </NavDropdown>
+           
           </Nav>
 
           {/* Account Dropdown */}
