@@ -383,6 +383,16 @@ font-weight: 700;
   width: 70% !important;
  
 }
+/* Mobile View */
+@media (max-width: 768px) {
+  .drop-option-custom {
+    width: 100% !important;
+    min-height: 44px;
+    padding: 9px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+}
 .compact-input{
   font-size: 14px !important;
 
