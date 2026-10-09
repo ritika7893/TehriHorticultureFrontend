@@ -45,6 +45,16 @@ const DemandNavigation = () => {
             >
               डिमांड जनरेशन
             </Nav.Link>
+             <Nav.Link
+              active={isActive("/VegetableReport")}
+              onClick={() => navigate("/VegetableReport")}
+              style={{
+                fontWeight: isActive("/VegetableReport") ? "bold" : "normal",
+              }}
+            >
+              सब्जी  रिपोर्ट
+            </Nav.Link>
+
 
             {/* First Dropdown: एंट्री */}
             <NavDropdown

@@ -1,0 +1,171 @@
+.vegetable-report-page {
+  padding: 70px 16px 32px;
+}
+
+.vegetable-report-controls {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.vegetable-report-custom-name {
+  max-width: 320px;
+}
+
+.vegetable-report-sheet-wrap {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.vegetable-report-sheet {
+  min-width: 1120px;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 4px;
+  border: 1px solid #1839c5;
+  background: #fff;
+  color: #111;
+  font-family: "Noto Sans Devanagari", "Mangal", sans-serif;
+}
+
+.vegetable-report-title {
+  min-height: 98px;
+  padding: 4px 8px;
+  border-bottom: 1px solid #333;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.vegetable-report-title h4 {
+  margin: 2px 0 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.vegetable-report-title > div:nth-last-child(2),
+.vegetable-report-title > div:last-child {
+  text-align: right;
+}
+
+.vegetable-report-table {
+  width: 100%;
+  margin-bottom: 0;
+  table-layout: fixed;
+  font-size: 0.82rem;
+}
+
+.vegetable-report-table th,
+.vegetable-report-table td {
+  border: 1px solid #333 !important;
+  padding: 3px 4px;
+  vertical-align: middle;
+}
+
+.vegetable-report-table thead th {
+  text-align: center;
+  font-weight: 600;
+}
+
+.vegetable-report-table thead tr:first-child th:first-child {
+  width: 38px;
+}
+
+.vegetable-report-table thead tr:first-child th:nth-child(2) {
+  width: 110px;
+}
+
+.vegetable-report-table thead tr:first-child th:last-child {
+  width: 120px;
+}
+
+.vegetable-report-table tbody td:first-child,
+.vegetable-report-table tbody td:nth-child(2) {
+  text-align: center;
+}
+
+.vegetable-report-input.form-control {
+  min-width: 74px;
+  padding: 2px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: #111;
+  font: inherit;
+  text-align: right;
+  box-shadow: none;
+}
+
+.vegetable-report-total td {
+  font-weight: 700;
+  text-align: center;
+}
+
+.vegetable-report-notes {
+  padding: 6px 2px;
+  border-top: 1px solid #333;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.vegetable-report-signature {
+  min-height: 80px;
+  padding: 22px 24px 4px;
+  text-align: right;
+}
+
+@media (max-width: 767.98px) {
+  .vegetable-report-page {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .vegetable-report-title h4 {
+    font-size: 1rem;
+  }
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 8mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .vegetable-report-sheet,
+  .vegetable-report-sheet * {
+    visibility: visible;
+  }
+
+  .vegetable-report-page {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+  }
+
+  .vegetable-report-sheet-wrap,
+  .vegetable-report-sheet {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    overflow: visible;
+  }
+
+  .vegetable-report-table {
+    font-size: 8pt;
+  }
+
+  .vegetable-report-table input {
+    appearance: none;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+  }
+
+  .vegetable-report-table input[type="number"]::-webkit-inner-spin-button,
+  .vegetable-report-table input[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+    appearance: none;
+  }
+}
