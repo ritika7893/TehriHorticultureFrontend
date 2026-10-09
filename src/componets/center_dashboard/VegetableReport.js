@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Alert,
   Button,
@@ -41,6 +41,13 @@ const getCurrentFinancialYear = () => {
   return `${startYear}-${startYear + 1}`;
 };
 
+const entryYearFromMonth = (financialYear, month) => {
+  if (!financialYear || !month) return "";
+  const [startYear, endYear] = financialYear.split("-").map(Number);
+  const monthIndex = MONTHS.indexOf(month);
+  return monthIndex >= 0 && monthIndex < 3 ? endYear : startYear;
+};
+
 const readResponse = async (response) => {
   const text = await response.text();
   if (!text) return null;
@@ -71,9 +78,9 @@ const formatNumber = (value) => {
   const number = Number(value);
   return Number.isFinite(number) ? number.toFixed(2) : "0.00";
 };
-const createDraft = (key) => ({
+const createDraft = (key, vegetable = "") => ({
   key,
-  vegetable: "",
+  vegetable,
   current_month_sown_area: "",
   previous_month_total_sown_area: "",
   total_damaged_area: "",
@@ -81,6 +88,9 @@ const createDraft = (key) => ({
   previous_month_total_production: "",
   remarks: "",
 });
+const hasDraftValues = (draft) =>
+  INPUT_FIELDS.some((field) => String(draft[field] ?? "").trim() !== "") ||
+  String(draft.remarks ?? "").trim() !== "";
 
 const VegetableReport = () => {
   const { centerData } = useCenter();
@@ -97,8 +107,7 @@ const VegetableReport = () => {
 
   const [components, setComponents] = useState([]);
   const [records, setRecords] = useState([]);
-  const [drafts, setDrafts] = useState([createDraft(0)]);
-  const draftKey = useRef(0);
+  const [drafts, setDrafts] = useState([]);
   const [entryMonth, setEntryMonth] = useState("");
   const [entryFinancialYear, setEntryFinancialYear] = useState(
     getCurrentFinancialYear,
@@ -124,8 +133,14 @@ const VegetableReport = () => {
           getErrorMessage(data, "सब्जियों की सूची प्राप्त नहीं हो सकी।"),
         );
       }
-      setComponents(
-        getItems(data).filter((item) => item.investment_name === "सब्जी"),
+      const vegetableComponents = getItems(data)
+        .filter((item) => item.investment_name === "सब्जी")
+        .sort((first, second) => Number(first.id) - Number(second.id));
+      setComponents(vegetableComponents);
+      setDrafts(
+        vegetableComponents.map((component) =>
+          createDraft(component.id, component.sub_investment_name),
+        ),
       );
     } catch (error) {
       console.error("loadVegetableComponents:", error);
@@ -202,20 +217,6 @@ const VegetableReport = () => {
     );
   };
 
-  const addDraft = () => {
-    draftKey.current += 1;
-    setDrafts((current) => [...current, createDraft(draftKey.current)]);
-  };
-
-  const removeDraft = (key) => {
-    setDrafts((current) => {
-      const remaining = current.filter((draft) => draft.key !== key);
-      return remaining.length
-        ? remaining
-        : [createDraft(++draftKey.current)];
-    });
-  };
-
   const validateNumericFields = (record) => {
     const fields = {};
     INPUT_FIELDS.forEach((field) => {
@@ -244,11 +245,11 @@ const VegetableReport = () => {
       setMessage({ type: "danger", text: "कृपया रिपोर्ट का माह चुनें।" });
       return;
     }
-    const readyDrafts = drafts.filter((draft) => draft.vegetable);
+    const readyDrafts = drafts.filter(hasDraftValues);
     if (!readyDrafts.length) {
       setMessage({
         type: "danger",
-        text: "कम से कम एक सब्जी चुनकर प्रविष्टि जोड़ें।",
+        text: "कम से कम एक सब्जी की जानकारी दर्ज करें।",
       });
       return;
     }
@@ -292,12 +293,11 @@ const VegetableReport = () => {
     }
 
     setDrafts((current) => {
-      const remaining = current.filter(
-        (draft) => !succeededKeys.includes(draft.key),
+      return current.map((draft) =>
+        succeededKeys.includes(draft.key)
+          ? createDraft(draft.key, draft.vegetable)
+          : draft,
       );
-      return remaining.length
-        ? remaining
-        : [createDraft(++draftKey.current)];
     });
     if (succeededKeys.length) {
       setMessage({
@@ -431,9 +431,21 @@ const VegetableReport = () => {
       step="0.01"
       value={draft[field]}
       onChange={(event) => updateDraft(draft.key, field, event.target.value)}
-      style={{ minWidth: "110px" }}
+      className="vegetable-report-input"
     />
   );
+
+  const sumDraftField = (field) =>
+    drafts.reduce((sum, draft) => sum + (Number(draft[field]) || 0), 0);
+
+  const sumRecordField = (field) =>
+    filteredRecords.reduce((sum, record) => sum + (Number(record[field]) || 0), 0);
+
+  const reportMonthLabel =
+    MONTHS.find((month) => month === entryMonth) || "________";
+  const financialYearShort = entryFinancialYear
+    ? `${entryFinancialYear.slice(0, 4)}-${entryFinancialYear.slice(-2)}`
+    : "________";
 
   return (
     <Container fluid className="px-3" style={{ paddingTop: "60px" }}>
@@ -461,9 +473,9 @@ const VegetableReport = () => {
       <Card className="border-0 shadow-sm mb-4">
         <Card.Header className="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <strong>नई मासिक प्रविष्टि</strong>
-          <small className="text-muted">
-            समान माह में एक से अधिक सब्जी प्रविष्टियां जोड़ी जा सकती हैं।
-          </small>
+          <Button type="button" variant="outline-primary" onClick={() => window.print()}>
+            प्रिंट करें
+          </Button>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleCreate}>
@@ -504,78 +516,106 @@ const VegetableReport = () => {
               </Alert>
             ) : (
               <>
-                <div className="table-responsive">
-                  <Table bordered hover size="sm" className="align-middle">
+                <div className="vegetable-report-sheet-wrap">
+                  <div className="vegetable-report-sheet">
+                    <div className="vegetable-report-title">
+                      <strong>अ</strong>
+                      <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                      <div>वर्ष {financialYearShort}</div>
+                      <div>माह — {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</div>
+                    </div>
+                  <Table bordered size="sm" className="vegetable-report-table">
                     <thead className="table-light">
                       <tr>
-                        <th>सब्जी</th>
-                        <th>{INPUT_LABELS.current_month_sown_area}</th>
-                        <th>{INPUT_LABELS.previous_month_total_sown_area}</th>
-                        <th>{INPUT_LABELS.total_damaged_area}</th>
-                        <th>{INPUT_LABELS.current_month_production}</th>
-                        <th>{INPUT_LABELS.previous_month_total_production}</th>
-                        <th>टिप्पणी</th>
-                        <th>हटाएं</th>
+                        <th rowSpan={2}>क्र.सं.</th>
+                        <th rowSpan={2}>सब्जी</th>
+                        <th colSpan={5}>क्षेत्रफल (हेक्टेयर)</th>
+                        <th colSpan={3}>उत्पादन (कुंटल) ({financialYearShort})</th>
+                        <th rowSpan={2}>अभ्युक्ति</th>
+                      </tr>
+                      <tr>
+                        <th>वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल</th>
+                        <th>गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल</th>
+                        <th>कुल बुवाई / रोपण का क्षेत्रफल (3+4)</th>
+                        <th>माह में कीट-व्याधि, सूखा, अतिवृष्टि आदि से क्षति (5 के सापेक्ष)</th>
+                        <th>माह के अन्त में शेष वास्तविक क्षेत्रफल (5-6)</th>
+                        <th>वर्तमान माह उत्पादन</th>
+                        <th>गत माह तक उत्पादन</th>
+                        <th>कुल उत्पादन (8+9)</th>
+                      </tr>
+                      <tr>
+                        {Array.from({ length: 11 }, (_, index) => (
+                          <th key={index}>{index + 1}</th>
+                        ))}
                       </tr>
                     </thead>
                     <tbody>
-                      {drafts.map((draft) => (
+                      {drafts.map((draft, index) => (
                         <tr key={draft.key}>
-                          <td style={{ minWidth: "150px" }}>
-                            <Form.Select
-                              aria-label="सब्जी चुनें"
-                              value={draft.vegetable}
-                              onChange={(event) =>
-                                updateDraft(draft.key, "vegetable", event.target.value)
-                              }
-                            >
-                              <option value="">सब्जी चुनें</option>
-                              {components.map((component) => (
-                                <option key={component.id} value={component.sub_investment_name}>
-                                  {component.sub_investment_name}
-                                </option>
-                              ))}
-                            </Form.Select>
-                          </td>
+                          <td>{index + 1}</td>
+                          <td>{draft.vegetable}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[0])}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[1])}</td>
+                          <td>
+                            {(Number(draft.current_month_sown_area || 0) +
+                              Number(draft.previous_month_total_sown_area || 0)).toFixed(2)}
+                          </td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[2])}</td>
+                          <td>
+                            {(Number(draft.current_month_sown_area || 0) +
+                              Number(draft.previous_month_total_sown_area || 0) -
+                              Number(draft.total_damaged_area || 0)).toFixed(2)}
+                          </td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
                           <td>
+                            {(Number(draft.current_month_production || 0) +
+                              Number(draft.previous_month_total_production || 0)).toFixed(2)}
+                          </td>
+                          <td>
                             <Form.Control
-                              aria-label="टिप्पणी"
+                              aria-label={`${draft.vegetable} - अभ्युक्ति`}
                               value={draft.remarks}
                               onChange={(event) =>
                                 updateDraft(draft.key, "remarks", event.target.value)
                               }
-                              style={{ minWidth: "140px" }}
+                              className="vegetable-report-input"
                             />
-                          </td>
-                          <td>
-                            <Button
-                              type="button"
-                              variant="outline-danger"
-                              size="sm"
-                              disabled={drafts.length === 1}
-                              onClick={() => removeDraft(draft.key)}
-                            >
-                              हटाएं
-                            </Button>
                           </td>
                         </tr>
                       ))}
+                      <tr className="vegetable-report-total">
+                        <td colSpan={2}>योग—</td>
+                        <td>{sumDraftField(INPUT_FIELDS[0]).toFixed(2)}</td>
+                        <td>{sumDraftField(INPUT_FIELDS[1]).toFixed(2)}</td>
+                        <td>{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1])).toFixed(2)}</td>
+                        <td>{sumDraftField(INPUT_FIELDS[2]).toFixed(2)}</td>
+                        <td>{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1]) - sumDraftField(INPUT_FIELDS[2])).toFixed(2)}</td>
+                        <td>{sumDraftField(INPUT_FIELDS[3]).toFixed(2)}</td>
+                        <td>{sumDraftField(INPUT_FIELDS[4]).toFixed(2)}</td>
+                        <td>{(sumDraftField(INPUT_FIELDS[3]) + sumDraftField(INPUT_FIELDS[4])).toFixed(2)}</td>
+                        <td>—</td>
+                      </tr>
                     </tbody>
                   </Table>
+                    <div className="vegetable-report-notes">
+                      <div>
+                        नोट— (1) कॉलम संख्या 4 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                      </div>
+                      <div>
+                        (2) कॉलम संख्या 9 (गत माह तक उत्पादन) के अन्तर्गत माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व का उत्पादन अंकित न किया जाए।
+                      </div>
+                    </div>
+                    <div className="vegetable-report-signature">
+                      हस्ताक्षर<br />
+                      प्रभारी, उद्यान सचल दल केंद्र<br />
+                      {centerName}
+                    </div>
+                  </div>
                 </div>
-                <div className="d-flex flex-wrap gap-2">
-                  <Button type="button" variant="outline-primary" onClick={addDraft}>
-                    + नई प्रविष्टि जोड़ें
-                  </Button>
-                  <Button type="submit" variant="success" disabled={submitting || !centerName}>
-                    {submitting ? "सेव हो रहा है..." : "प्रविष्टियां सेव करें"}
-                  </Button>
-                </div>
+                <Button type="submit" variant="success" disabled={submitting || !centerName}>
+                  {submitting ? "सेव हो रहा है..." : "प्रविष्टियां सेव करें"}
+                </Button>
               </>
             )}
           </Form>
