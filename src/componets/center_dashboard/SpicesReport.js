@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import DemandNavigation from "../DemandNavigation";
 import { useCenter } from "../all_login/CenterContext";
-import "../../componets/center_dashboard/FruitReport.css";
+import "../../componets/center_dashboard/SpicesReport.css";
 
 const API_BASE =
   "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api";

@@ -1,7 +1,7 @@
 .vegetable-report-group-heading td {
   font-weight: bold;
-  text-align: center;
-  padding: 8px;
+  text-align: left;
+  padding: 8px 12px;
   background-color: #e7f1ff;
   border-top: 2px solid #2a4682;
   border-bottom: 2px solid #2a4682;
