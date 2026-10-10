@@ -611,6 +611,7 @@ const VegetableReport = () => {
             size="sm"
             disabled={!selectedIds.length || submitting}
             onClick={handleDeleteSelected}
+            style={{ color: 'white' }}
           >
             चयनित हटाएं ({selectedIds.length})
           </Button>
