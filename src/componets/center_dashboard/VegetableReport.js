@@ -16,8 +16,8 @@ const API_BASE =
 const COMPONENTS_URL = `${API_BASE}/component-list/`;
 const REPORT_URL = `${API_BASE}/vegetable-monthly-report/`;
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून",
+  "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर",
 ];
 const INPUT_FIELDS = [
   "current_month_sown_area",
