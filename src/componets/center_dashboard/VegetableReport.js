@@ -518,12 +518,12 @@ const VegetableReport = () => {
               <>
                 <div className="vegetable-report-sheet-wrap">
                   <div className="vegetable-report-sheet">
-                    <div className="vegetable-report-title">
-                      <strong>अ</strong>
-                      <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
-                      <div>वर्ष {financialYearShort}</div>
-                      <div>माह — {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</div>
-                    </div>
+<div className="vegetable-report-title">
+                       <strong>अ</strong>
+                       <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                       <div>वर्ष <strong>{financialYearShort}</strong></div>
+                       <div>माह — <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong></div>
+                     </div>
                   <Table bordered size="sm" className="vegetable-report-table">
                     <thead className="table-light">
                       <tr>
@@ -579,14 +579,14 @@ const VegetableReport = () => {
                       </tr>
                     </tbody>
                   </Table>
-                    <div className="vegetable-report-notes">
-                      <div>
-                        नोट— (1) कॉलम संख्या 3 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
-                      </div>
-                      <div>
-                        (2) कॉलम संख्या 6 (गत माह तक उत्पादन) के अन्तर्गत माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व का उत्पादन अंकित न किया जाए।
-                      </div>
-                    </div>
+<div className="vegetable-report-notes">
+                       <div>
+                         नोट— (1) कॉलम संख्या 3 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                       </div>
+                       <div>
+                         (2) कॉलम संख्या 6 (गत माह तक उत्पादन) के अन्तर्गत माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व का उत्पादन अंकित न किया जाए।
+                       </div>
+                     </div>
                     <div className="vegetable-report-signature">
                       हस्ताक्षर<br />
                       प्रभारी, उद्यान सचल दल केंद्र<br />
