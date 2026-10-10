@@ -529,22 +529,19 @@ const VegetableReport = () => {
                       <tr>
                         <th rowSpan={2}>क्र.सं.</th>
                         <th rowSpan={2}>सब्जी</th>
-                        <th colSpan={5}>क्षेत्रफल (हेक्टेयर)</th>
-                        <th colSpan={3}>उत्पादन (कुंटल) ({financialYearShort})</th>
+                        <th colSpan={3}>क्षेत्रफल (हेक्टेयर)</th>
+                        <th colSpan={2}>उत्पादन (कुंटल) ({financialYearShort})</th>
                         <th rowSpan={2}>अभ्युक्ति</th>
                       </tr>
                       <tr>
                         <th>वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल</th>
                         <th>गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल</th>
-                        <th>कुल बुवाई / रोपण का क्षेत्रफल (3+4)</th>
                         <th>माह में कीट-व्याधि, सूखा, अतिवृष्टि आदि से क्षति (5 के सापेक्ष)</th>
-                        <th>माह के अन्त में शेष वास्तविक क्षेत्रफल (5-6)</th>
                         <th>वर्तमान माह उत्पादन</th>
                         <th>गत माह तक उत्पादन</th>
-                        <th>कुल उत्पादन (8+9)</th>
                       </tr>
                       <tr>
-                        {Array.from({ length: 11 }, (_, index) => (
+                        {Array.from({ length: 8 }, (_, index) => (
                           <th key={index}>{index + 1}</th>
                         ))}
                       </tr>
@@ -556,22 +553,9 @@ const VegetableReport = () => {
                           <td>{draft.vegetable}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[0])}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[1])}</td>
-                          <td>
-                            {(Number(draft.current_month_sown_area || 0) +
-                              Number(draft.previous_month_total_sown_area || 0)).toFixed(2)}
-                          </td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[2])}</td>
-                          <td>
-                            {(Number(draft.current_month_sown_area || 0) +
-                              Number(draft.previous_month_total_sown_area || 0) -
-                              Number(draft.total_damaged_area || 0)).toFixed(2)}
-                          </td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
-                          <td>
-                            {(Number(draft.current_month_production || 0) +
-                              Number(draft.previous_month_total_production || 0)).toFixed(2)}
-                          </td>
                           <td>
                             <Form.Control
                               aria-label={`${draft.vegetable} - अभ्युक्ति`}
@@ -588,22 +572,19 @@ const VegetableReport = () => {
                         <td colSpan={2}>योग—</td>
                         <td>{sumDraftField(INPUT_FIELDS[0]).toFixed(2)}</td>
                         <td>{sumDraftField(INPUT_FIELDS[1]).toFixed(2)}</td>
-                        <td>{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1])).toFixed(2)}</td>
                         <td>{sumDraftField(INPUT_FIELDS[2]).toFixed(2)}</td>
-                        <td>{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1]) - sumDraftField(INPUT_FIELDS[2])).toFixed(2)}</td>
                         <td>{sumDraftField(INPUT_FIELDS[3]).toFixed(2)}</td>
                         <td>{sumDraftField(INPUT_FIELDS[4]).toFixed(2)}</td>
-                        <td>{(sumDraftField(INPUT_FIELDS[3]) + sumDraftField(INPUT_FIELDS[4])).toFixed(2)}</td>
                         <td>—</td>
                       </tr>
                     </tbody>
                   </Table>
                     <div className="vegetable-report-notes">
                       <div>
-                        नोट— (1) कॉलम संख्या 4 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                        नोट— (1) कॉलम संख्या 3 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
                       </div>
                       <div>
-                        (2) कॉलम संख्या 9 (गत माह तक उत्पादन) के अन्तर्गत माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व का उत्पादन अंकित न किया जाए।
+                        (2) कॉलम संख्या 6 (गत माह तक उत्पादन) के अन्तर्गत माह {reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)} से पूर्व का उत्पादन अंकित न किया जाए।
                       </div>
                     </div>
                     <div className="vegetable-report-signature">
