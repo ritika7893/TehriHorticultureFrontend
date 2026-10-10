@@ -49,6 +49,7 @@ import AdminMonthAttendance from "./componets/dash_board/AdminMonthAttendance";
 import AdminKishanAavedan from "./componets/KishanBeej/AdminKishanAavedan";
 import VegetableReport from "./componets/center_dashboard/VegetableReport";
 import FruitReport from "./componets/center_dashboard/FruitReport";
+import SpicesReport from "./componets/center_dashboard/SpicesReport";
 
 // Navbar wrapper component that uses useAuth (must be inside AuthProvider)
 function NavbarWrapper() {
@@ -64,6 +65,7 @@ function NavbarWrapper() {
     "/AdminKishanAavedan",
     "/VegetableReport",
     "/FruitReport",
+    "/SpicesReport",
   ]);
   const hiddenPaths = new Set([
     "/Dashboard",
@@ -225,6 +227,15 @@ function AppContent() {
             element={
               <ProtectedRoute allowedLoginTypes={["demand"]}>
                 <FruitReport />
+              </ProtectedRoute>
+            }
+          />
+          
+          <Route
+            path="/SpicesReport"
+            element={
+              <ProtectedRoute allowedLoginTypes={["demand"]}>
+                <SpicesReport />
               </ProtectedRoute>
             }
           />

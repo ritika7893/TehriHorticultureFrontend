@@ -52,8 +52,9 @@ const DemandNavigation = () => {
               id="entry-nav-dropdown"
               style={{
                 fontWeight:
+                  isActive("/FruitReport") ||
                   isActive("/VegetableReport") ||
-                  isActive("/VegetableReport")
+                  isActive("/SpicesReport")
                     ? "bold"
                     : "normal",
               }}
@@ -79,6 +80,17 @@ const DemandNavigation = () => {
                 }}
               >
                 सब्जी  रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/SpicesReport")}
+                onClick={() => navigate("/SpicesReport")}
+                style={{
+                  fontWeight: isActive("/SpicesReport")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                मसाला रिपोर्ट
               </NavDropdown.Item>
             </NavDropdown>
             {/* First Dropdown: एंट्री */}
