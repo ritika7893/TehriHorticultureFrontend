@@ -457,10 +457,7 @@ const SpiceReport = () => {
 
       <Card className="border-0 shadow-sm mb-3">
         <Card.Header className="text-white" style={{ backgroundColor: "#2a4682" }}>
-          <h4 className="mb-1">मसाला रिपोर्ट</h4>
-          <div className="heading-report">
-            <h1>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h1>
-          </div>
+        
           <small>केंद्र: {centerName || "केंद्र उपलब्ध नहीं"}</small>
         </Card.Header>
       </Card>
