@@ -47,14 +47,15 @@ const DemandNavigation = () => {
             </Nav.Link>
            
 
-  <NavDropdown
+<NavDropdown
               title="एंट्री"
               id="entry-nav-dropdown"
               style={{
                 fontWeight:
                   isActive("/FruitReport") ||
                   isActive("/VegetableReport") ||
-                  isActive("/SpicesReport")
+                  isActive("/SpicesReport") ||
+                  isActive("/FlowerReport")
                     ? "bold"
                     : "normal",
               }}
@@ -68,7 +69,18 @@ const DemandNavigation = () => {
                     : "normal",
                 }}
               >
-               फल  रिपोर्ट
+                फल  रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/FlowerReport")}
+                onClick={() => navigate("/FlowerReport")}
+                style={{
+                  fontWeight: isActive("/FlowerReport")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                फूल  रिपोर्ट
               </NavDropdown.Item>
               <NavDropdown.Item
                 active={isActive("/VegetableReport")}
