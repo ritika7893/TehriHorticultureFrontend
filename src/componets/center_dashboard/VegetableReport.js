@@ -453,9 +453,8 @@ const VegetableReport = () => {
         <DemandNavigation />
       </div>
       <Card className="border-0 shadow-sm mb-3">
-        <Card.Header className="text-white" style={{ backgroundColor: "#2a4682" }}>
-          <h4 className="mb-1">सब्जी रिपोर्ट</h4>
-          <div style={{ fontWeight: 700, color: "#2a4682" }}>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</div>
+        <Card.Header className="report-clean-card-header">
+          <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>सब्जी रिपोर्ट</h4>
           <small>केंद्र: {centerName || "केंद्र उपलब्ध नहीं"}</small>
         </Card.Header>
       </Card>
@@ -471,12 +470,7 @@ const VegetableReport = () => {
       )}
 
       <Card className="border-0 shadow-sm mb-4">
-        <Card.Header className="d-flex flex-wrap align-items-center justify-content-between gap-2">
-          <strong>नई मासिक प्रविष्टि</strong>
-          <Button type="button" variant="outline-primary" onClick={() => window.print()}>
-            प्रिंट करें
-          </Button>
-        </Card.Header>
+      
         <Card.Body>
           <Form onSubmit={handleCreate}>
             <div className="row g-3 mb-3">

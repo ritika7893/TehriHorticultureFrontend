@@ -468,9 +468,9 @@ const FruitReport = () => {
         <DemandNavigation />
       </div>
 
-      <Card className="border-0 shadow-sm mb-3">
-        <Card.Header className="text-white" style={{ backgroundColor: "#2a4682" }}>
-         
+<Card className="border-0 shadow-sm mb-3">
+        <Card.Header className="report-clean-card-header">
+          <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>फल रिपोर्ट</h4>
           <small>केंद्र: {centerName || "केंद्र उपलब्ध नहीं"}</small>
         </Card.Header>
       </Card>

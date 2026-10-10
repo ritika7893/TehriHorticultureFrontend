@@ -105,41 +105,7 @@ const DemandNavigation = () => {
                 मसाला रिपोर्ट
               </NavDropdown.Item>
             </NavDropdown>
-            {/* First Dropdown: एंट्री */}
-            <NavDropdown
-              title="एंट्री"
-              id="entry-nav-dropdown"
-              style={{
-                fontWeight:
-                  isActive("/DemandGenerate/CenterwiseEntry") ||
-                  isActive("/DemandGenerate/KrishiwiseEntry")
-                    ? "bold"
-                    : "normal",
-              }}
-            >
-              <NavDropdown.Item
-                active={isActive("/DemandGenerate/CenterwiseEntry")}
-                onClick={() => navigate("/DemandGenerate/CenterwiseEntry")}
-                style={{
-                  fontWeight: isActive("/DemandGenerate/CenterwiseEntry")
-                    ? "bold"
-                    : "normal",
-                }}
-              >
-                सेंटरवाइज एंट्री
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/DemandGenerate/KrishiwiseEntry")}
-                onClick={() => navigate("/DemandGenerate/KrishiwiseEntry")}
-                style={{
-                  fontWeight: isActive("/DemandGenerate/KrishiwiseEntry")
-                    ? "bold"
-                    : "normal",
-                }}
-              >
-                कृषिवाइज एंट्री
-              </NavDropdown.Item>
-            </NavDropdown>
+           
 
             {/* Second Dropdown: सेवाएं (Services) */}
            
