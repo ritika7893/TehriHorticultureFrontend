@@ -34,7 +34,7 @@ const INPUT_FIELDS = [
 ];
 
 const INPUT_LABELS = {
-  previous_year_total_covered_area: "गत वर्ष तक कुल विस्तृत क्षेत्रफल",
+  previous_year_total_covered_area: "पिछले वर्ष तक कुल आच्छादित क्षेत्रफल",
   current_month_sown_area: "वर्तमान माह बुवाई / रोपण क्षेत्रफल",
   previous_month_sown_area: "गत माह तक बुवाई / रोपण क्षेत्रफल",
   damaged_area: "कीट-व्याधि आदि से प्रभावित क्षेत्रफल",
@@ -457,6 +457,11 @@ const FlowerReport = () => {
   const financialYearShort = entryFinancialYear
     ? `${entryFinancialYear.slice(0, 4)}-${entryFinancialYear.slice(-2)}`
     : "________";
+  const previousFinancialYearShort = entryFinancialYear
+    ? `${Number(entryFinancialYear.slice(0, 4)) - 1}-${String(
+        Number(entryFinancialYear.slice(-2)) - 1
+      ).padStart(2, "0")}`
+    : "________";
 
   return (
     <Container fluid className="px-3" style={{ paddingTop: "60px" }}>
@@ -558,8 +563,9 @@ const FlowerReport = () => {
                           <th rowSpan={2} className="text-center align-middle">
                             पुष्प
                           </th>
-                          <th rowSpan={2} className="text-center align-middle">
-                            गत वर्ष तक कुल क्षेत्रफल
+                          <th rowSpan={2} className="text-center align-middle flower-covered-header">
+                            <div className="flower-covered-header-main">वर्ष {previousFinancialYearShort} तक कुल आच्छादित क्षेत्रफल (हेक्टेयर में)</div>
+                            <div className="flower-covered-header-note">(बहुवर्षीय पुष्प फसलों जैसे गुलाब आदि के संदर्भ में, यदि माह के दौरान इस क्षेत्रफल में किसी भी कारण से क्षति होती है, तो उसे घटाकर संशोधित आँकड़ा दर्शाया जाए, ताकि वर्ष {financialYearShort} के वास्तविक आँकड़े तैयार किए जा सकें)</div>
                           </th>
                           <th colSpan={3} className="text-center">
                             क्षेत्रफल (हेक्टेयर)
@@ -575,13 +581,13 @@ const FlowerReport = () => {
                           </th>
                         </tr>
                         <tr>
-                          <th className="text-center">वर्तमान माह बुवाई / रोपण</th>
-                          <th className="text-center">गत माह तक बुवाई / रोपण<br/></th>
-                          <th className="text-center">क्षतिग्रस्त क्षेत्रफल<br/></th>
-                          <th className="text-center">वर्तमान माह<br/></th>
-                          <th className="text-center">गत माह तक<br/></th>
-                          <th className="text-center">वर्तमान माह<br/></th>
-                          <th className="text-center">गत माह तक<br/></th>
+                          <th className="text-center">वर्तमान माह में बुवाई/रोपण का क्षेत्रफल</th>
+                          <th className="text-center">गत माह तक बुवाई / रोपण का क्षेत्रफल<br/></th>
+                          <th className="text-center">वर्तमान माह में कीट-व्याधि, सूखा, अतिवृष्टि, निर्माण आदि कारणों से कुल क्षेत्रफल में क्षति<br/></th>
+                          <th className="text-center">लाइकड/कट फ्लावर (संख्या)<br/></th>
+                          <th className="text-center">कुंडल<br/></th>
+                          <th className="text-center">लाइकड/कट फ्लावर (संख्या)<br/></th>
+                          <th className="text-center">कुंडल<br/></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -762,7 +768,7 @@ const FlowerReport = () => {
                     </th>
                     <th>क्र.सं.</th>
                     <th>पुष्प</th>
-                    <th>गत वर्ष तक क्षेत्रफल (3)</th>
+                    <th>वर्ष {previousFinancialYearShort} तक कुल आच्छादित क्षेत्रफल (3)</th>
                     <th>वर्तमान माह बुवाई (4)</th>
                     <th>गत माह तक बुवाई (5)</th>
                     <th>क्षतिग्रस्त क्षेत्रफल (7)</th>
