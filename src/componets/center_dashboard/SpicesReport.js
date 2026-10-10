@@ -531,7 +531,7 @@ const SpiceReport = () => {
                 <div className="vegetable-report-sheet-wrap">
                   <div className="vegetable-report-sheet">
                     <div className="vegetable-report-title">
-                      <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                      <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
                       <div>
                         वर्ष <strong>{financialYearShort}</strong>
                       </div>
@@ -553,30 +553,27 @@ const SpiceReport = () => {
                       <thead className="table-light">
                         <tr>
                           <th rowSpan={2} className="text-center align-middle">
-                            क्र.सं.<br/>(1)
+                            क्र.सं.
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            मसाले<br/>(2)
-                          </th>
-                          <th colSpan={5} className="text-center">
-                            क्षेत्रफल (हेक्टेयर)
+                            मसाले
                           </th>
                           <th colSpan={3} className="text-center">
+                            क्षेत्रफल (हेक्टेयर)
+                          </th>
+                          <th colSpan={2} className="text-center">
                             उत्पादन (कुंटल) ({financialYearShort})
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            अभ्युक्ति<br/>(11)
+                            अभ्युक्ति
                           </th>
                         </tr>
                         <tr>
-                          <th className="text-center">वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल<br/>(3)</th>
-                          <th className="text-center">गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल<br/>(4)</th>
-                          <th className="text-center">कुल क्षेत्रफल (3+4)<br/>(5)</th>
-                          <th className="text-center">माह में कीट-व्याधि, सूखा, अतिवृष्टि आदि कारणों से कुल क्षेत्रफल में क्षति (कॉलम संख्या-5 के सापेक्ष)<br/>(6)</th>
-                          <th className="text-center">माह के अंत में शेष वास्तविक क्षेत्रफल (5-6)<br/>(7)</th>
-                          <th className="text-center">वर्तमान माह में उत्पादन<br/>(8)</th>
-                          <th className="text-center">गत माह तक उत्पादन<br/>(9)</th>
-                          <th className="text-center">कुल उत्पादन (8+9)<br/>(10)</th>
+                          <th className="text-center">वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल</th>
+                          <th className="text-center">गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल</th>
+                          <th className="text-center">माह में कीट-व्याधि, सूखा, अतिवृष्टि आदि कारणों से कुल क्षेत्रफल में क्षति (कॉलम संख्या-5 के सापेक्ष)</th>
+                          <th className="text-center">वर्तमान माह में उत्पादन</th>
+                          <th className="text-center">गत माह तक उत्पादन</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -593,12 +590,9 @@ const SpiceReport = () => {
                               <td>{draft.spice}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[0])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[1])}</td>
-                              <td className="text-center">{formatNumber(val3 + val4)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[2])}</td>
-                              <td className="text-center">{formatNumber(val3 + val4 - val6)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
-                              <td className="text-center">{formatNumber(val8 + val9)}</td>
                               <td>
                                 <Form.Control
                                   aria-label={`${draft.spice} - अभ्युक्ति`}
@@ -616,12 +610,9 @@ const SpiceReport = () => {
                           <td colSpan={2} className="text-end">योग—</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[0]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[1]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[2]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1]) - sumDraftField(INPUT_FIELDS[2])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[3]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[4]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[3]) + sumDraftField(INPUT_FIELDS[4])).toFixed(2)}</td>
                           <td className="text-center">—</td>
                         </tr>
                       </tbody>
@@ -756,15 +747,12 @@ const SpiceReport = () => {
                     </th>
                     <th>क्र.सं.</th>
                     <th>मसाले</th>
-                    <th>वर्तमान माह बुवाई (3)</th>
-                    <th>गत माह तक बुवाई (4)</th>
-                    <th>कुल क्षेत्रफल (5)</th>
-                    <th>क्षतिग्रस्त क्षेत्रफल (6)</th>
-                    <th>शेष क्षेत्रफल (7)</th>
-                    <th>वर्तमान माह उत्पादन (8)</th>
-                    <th>गत माह तक उत्पादन (9)</th>
-                    <th>कुल उत्पादन (10)</th>
-                    <th>टिप्पणी (11)</th>
+                    <th>वर्तमान माह बुवाई </th>
+                    <th>गत माह तक बुवाई</th>
+                    <th>क्षतिग्रस्त क्षेत्रफल</th>
+                    <th>वर्तमान माह उत्पादन </th>
+                    <th>गत माह तक उत्पादन</th>
+                    <th>टिप्पणी</th>
                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
                     <th>कार्यवाही</th>
@@ -791,12 +779,9 @@ const SpiceReport = () => {
                         <td>{record.spice}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[0])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[1])}</td>
-                        <td>{formatNumber(val3 + val4)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[2])}</td>
-                        <td>{formatNumber(val3 + val4 - val6)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[3])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[4])}</td>
-                        <td>{formatNumber(val8 + val9)}</td>
                         <td>
                           {editingId === record.id ? (
                             <Form.Control

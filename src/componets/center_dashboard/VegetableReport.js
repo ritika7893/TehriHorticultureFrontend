@@ -455,7 +455,7 @@ const VegetableReport = () => {
       <Card className="border-0 shadow-sm mb-3">
         <Card.Header className="text-white" style={{ backgroundColor: "#2a4682" }}>
           <h4 className="mb-1">सब्जी रिपोर्ट</h4>
-          <div>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</div>
+          <div style={{ fontWeight: 700, color: "#2a4682" }}>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</div>
           <small>केंद्र: {centerName || "केंद्र उपलब्ध नहीं"}</small>
         </Card.Header>
       </Card>
@@ -520,7 +520,7 @@ const VegetableReport = () => {
                   <div className="vegetable-report-sheet">
 <div className="vegetable-report-title">
                        <strong>अ</strong>
-                       <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                       <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
                        <div>वर्ष <strong>{financialYearShort}</strong></div>
                        <div>माह — <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong></div>
                      </div>

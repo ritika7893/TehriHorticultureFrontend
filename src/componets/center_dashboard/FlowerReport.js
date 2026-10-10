@@ -540,7 +540,7 @@ const FlowerReport = () => {
                 <div className="vegetable-report-sheet-wrap">
                   <div className="vegetable-report-sheet">
                     <div className="vegetable-report-title">
-                      <h4>पुष्पों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                      <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>पुष्पों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
                       <div>
                         वर्ष <strong>{financialYearShort}</strong>
                       </div>
@@ -562,39 +562,35 @@ const FlowerReport = () => {
                       <thead className="table-light">
                         <tr>
                           <th rowSpan={2} className="text-center align-middle">
-                            क्र.सं.<br/>(1)
+                            क्र.सं.
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            पुष्प<br/>(2)
+                            पुष्प
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            गत वर्ष तक कुल क्षेत्रफल<br/>(3)
+                            गत वर्ष तक कुल क्षेत्रफल
                           </th>
-                          <th colSpan={5} className="text-center">
+                          <th colSpan={3} className="text-center">
                             क्षेत्रफल (हेक्टेयर)
                           </th>
-                          <th colSpan={3} className="text-center">
+                          <th colSpan={2} className="text-center">
                             स्पाइक / कट फ्लॉवर उत्पादन (संख्या)
                           </th>
-                          <th colSpan={3} className="text-center">
+                          <th colSpan={2} className="text-center">
                             लूज फ्लॉवर उत्पादन (कुंटल)
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            अभ्युक्ति<br/>(15)
+                            अभ्युक्ति
                           </th>
                         </tr>
                         <tr>
-                          <th className="text-center">वर्तमान माह बुवाई / रोपण<br/>(4)</th>
-                          <th className="text-center">गत माह तक बुवाई / रोपण<br/>(5)</th>
-                          <th className="text-center">कुल क्षेत्रफल (4+5)<br/>(6)</th>
-                          <th className="text-center">क्षतिग्रस्त क्षेत्रफल<br/>(7)</th>
-                          <th className="text-center">शेष क्षेत्रफल (6-7)<br/>(8)</th>
-                          <th className="text-center">वर्तमान माह<br/>(9)</th>
-                          <th className="text-center">गत माह तक<br/>(10)</th>
-                          <th className="text-center">कुल उत्पादन (9+10)<br/>(11)</th>
-                          <th className="text-center">वर्तमान माह<br/>(12)</th>
-                          <th className="text-center">गत माह तक<br/>(13)</th>
-                          <th className="text-center">कुल उत्पादन (12+13)<br/>(14)</th>
+                          <th className="text-center">वर्तमान माह बुवाई / रोपण</th>
+                          <th className="text-center">गत माह तक बुवाई / रोपण<br/></th>
+                          <th className="text-center">क्षतिग्रस्त क्षेत्रफल<br/></th>
+                          <th className="text-center">वर्तमान माह<br/></th>
+                          <th className="text-center">गत माह तक<br/></th>
+                          <th className="text-center">वर्तमान माह<br/></th>
+                          <th className="text-center">गत माह तक<br/></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -614,15 +610,11 @@ const FlowerReport = () => {
                               <td>{renderDraftInput(draft, INPUT_FIELDS[0])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[1])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[2])}</td>
-                              <td className="text-center">{formatNumber(val4 + val5)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
-                              <td className="text-center">{formatNumber(val4 + val5 - val7)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[5])}</td>
-                              <td className="text-center">{formatNumber(val9 + val10)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[6])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[7])}</td>
-                              <td className="text-center">{formatNumber(val12 + val13)}</td>
                               <td>
                                 <Form.Control
                                   aria-label={`${draft.flower} - अभ्युक्ति`}
@@ -640,15 +632,11 @@ const FlowerReport = () => {
                           <td colSpan={3} className="text-end">योग—</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[1]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[2]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[1]) + sumDraftField(INPUT_FIELDS[2])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[3]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[1]) + sumDraftField(INPUT_FIELDS[2]) - sumDraftField(INPUT_FIELDS[3])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[4]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[5]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[4]) + sumDraftField(INPUT_FIELDS[5])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[6]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[7]).toFixed(2)}</td>
-                          <td className="text-center">{(sumDraftField(INPUT_FIELDS[6]) + sumDraftField(INPUT_FIELDS[7])).toFixed(2)}</td>
                           <td className="text-center">—</td>
                         </tr>
                       </tbody>
@@ -786,15 +774,11 @@ const FlowerReport = () => {
                     <th>गत वर्ष तक क्षेत्रफल (3)</th>
                     <th>वर्तमान माह बुवाई (4)</th>
                     <th>गत माह तक बुवाई (5)</th>
-                    <th>कुल क्षेत्रफल (6)</th>
                     <th>क्षतिग्रस्त क्षेत्रफल (7)</th>
-                    <th>शेष क्षेत्रफल (8)</th>
                     <th>वर्तमान स्पाइक (9)</th>
                     <th>गत माह स्पाइक (10)</th>
-                    <th>कुल स्पाइक (11)</th>
                     <th>वर्तमान लूज (12)</th>
                     <th>गत माह लूज (13)</th>
-                    <th>कुल लूज (14)</th>
                     <th>टिप्पणी (15)</th>
                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
@@ -825,15 +809,11 @@ const FlowerReport = () => {
                         <td>{renderNumericCell(record, INPUT_FIELDS[0])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[1])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[2])}</td>
-                        <td>{formatNumber(val4 + val5)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[3])}</td>
-                        <td>{formatNumber(val4 + val5 - val7)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[4])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[5])}</td>
-                        <td>{formatNumber(val9 + val10)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[6])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[7])}</td>
-                        <td>{formatNumber(val12 + val13)}</td>
                         <td>
                           {editingId === record.id ? (
                             <Form.Control
@@ -891,7 +871,7 @@ const FlowerReport = () => {
                   {!filteredRecords.length && (
                     <tr>
                       <td
-                        colSpan={19}
+                        colSpan={15}
                         className="text-center text-muted py-4"
                       >
                         इस चयन के लिए कोई प्रविष्टि उपलब्ध नहीं है।

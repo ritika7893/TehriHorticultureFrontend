@@ -544,7 +544,7 @@ const FruitReport = () => {
                 <div className="vegetable-report-sheet-wrap">
                   <div className="vegetable-report-sheet">
                     <div className="vegetable-report-title">
-                      <h4>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
+                      <h4 style={{ fontSize: "1.15rem", fontWeight: 700, margin: 0, color: "#2a4682" }}>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h4>
                       <div>
                         वर्ष <strong>{financialYearShort}</strong>
                       </div>
