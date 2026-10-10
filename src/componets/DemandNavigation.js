@@ -45,17 +45,42 @@ const DemandNavigation = () => {
             >
               डिमांड जनरेशन
             </Nav.Link>
-             <Nav.Link
-              active={isActive("/VegetableReport")}
-              onClick={() => navigate("/VegetableReport")}
+           
+
+  <NavDropdown
+              title="एंट्री"
+              id="entry-nav-dropdown"
               style={{
-                fontWeight: isActive("/VegetableReport") ? "bold" : "normal",
+                fontWeight:
+                  isActive("/VegetableReport") ||
+                  isActive("/VegetableReport")
+                    ? "bold"
+                    : "normal",
               }}
             >
-              सब्जी  रिपोर्ट
-            </Nav.Link>
-
-
+              <NavDropdown.Item
+                active={isActive("/FruitReport")}
+                onClick={() => navigate("/FruitReport")}
+                style={{
+                  fontWeight: isActive("/FruitReport")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+               फल  रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/VegetableReport")}
+                onClick={() => navigate("/VegetableReport")}
+                style={{
+                  fontWeight: isActive("/VegetableReport")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                सब्जी  रिपोर्ट
+              </NavDropdown.Item>
+            </NavDropdown>
             {/* First Dropdown: एंट्री */}
             <NavDropdown
               title="एंट्री"
