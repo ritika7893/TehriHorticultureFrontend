@@ -653,15 +653,12 @@ const FruitReport = () => {
                           return (
                             <>
                               {fruitDrafts.map(renderDraftRow)}
-                              {fruitDrafts.length > 0 && groupTotalRow(fruitDrafts, "फल योग")}
                               {citrusDrafts.length > 0 && (
-                                <div className="vegetable-report-heading">
                                 <tr className="vegetable-report-group-heading" key="citrus-heading">
                                   <td colSpan={12} className="text-center bg-primary bg-opacity-10">
                                     <strong>फल-नींबू प्रजाति</strong>
                                   </td>
                                 </tr>
-                                </div>
                               )}
                               {citrusDrafts.map(renderDraftRow)}
                               {citrusDrafts.length > 0 && groupTotalRow(citrusDrafts, "फल-नींबू प्रजाति योग")}
