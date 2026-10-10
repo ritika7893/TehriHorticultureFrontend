@@ -26,7 +26,7 @@
 }
 
 .flower-covered-header-main {
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: #1a2a5c;
   margin-bottom: 4px;
@@ -34,7 +34,7 @@
 }
 
 .flower-covered-header-note {
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 400;
   color: #555;
   line-height: 1.35;
@@ -75,24 +75,24 @@
   background-color: #eef2ff;
   color: #1a2a5c;
   font-weight: 600;
-  font-size: 0.82rem;
+  font-size: 0.72rem;
   vertical-align: middle;
   text-align: center;
-  padding: 8px 6px;
+  padding: 6px 4px;
   border: 1px solid #cbd3e0;
 }
 
 .vegetable-report-table td {
-  font-size: 0.85rem;
+  font-size: 10px;
   vertical-align: middle;
-  padding: 6px 8px;
+  padding: 4px 6px;
   border: 1px solid #e0e4ea;
   text-align: center;
 }
 
 .vegetable-report-table td input {
-  font-size: 0.85rem;
-  padding: 4px 6px;
+  font-size: 10px;
+  padding: 3px 4px;
 }
 
 .vegetable-report-total {
@@ -137,12 +137,12 @@
 }
 
 .vegetable-report-input {
-  font-size: 0.85rem;
-  padding: 4px 6px;
+  font-size: 0.75rem;
+  padding: 3px 4px;
   border: 1px solid #ced4da;
   border-radius: 4px;
   width: 100%;
-  max-width: 110px;
+  max-width: 100px;
 }
 
 /* Card header clean style */
