@@ -565,7 +565,7 @@ const FlowerReport = () => {
                           </th>
                           <th rowSpan={2} className="text-center align-middle flower-covered-header">
                             <div className="flower-covered-header-main">वर्ष {previousFinancialYearShort} तक कुल आच्छादित क्षेत्रफल (हेक्टेयर में)</div>
-                            <div className="flower-covered-header-note">(बहुवर्षीय पुष्प फसलों जैसे गुलाब आदि के संदर्भ में, यदि माह के दौरान इस क्षेत्रफल में किसी भी कारण से क्षति होती है, तो उसे घटाकर संशोधित आँकड़ा दर्शाया जाए, ताकि वर्ष {financialYearShort} के वास्तविक आँकड़े तैयार किए जा सकें)</div>
+                            <div className="flower-covered-header-note">(बहुवर्षीय पुष्प फसलों जैसे गुलाब आदि के संदर्भ में, यदि <span style={{ color: "#cb7c7c;" }}>माह के दौरान इस क्षेत्रफल में किसी भी कारण से क्षति होती है, तो उसे घटा</span>कर संशोधित आँकड़ा दर्शाया जाए, ताकि वर्ष {financialYearShort} के वास्तविक आँकड़े तैयार किए जा सकें)</div>
                           </th>
                           <th colSpan={3} className="text-center">
                             क्षेत्रफल (हेक्टेयर)
