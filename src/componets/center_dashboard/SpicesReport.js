@@ -15,7 +15,7 @@ import "../../componets/center_dashboard/FruitReport.css";
 const API_BASE =
   "https://dhotehri.in/tehrihorticulture/tehrihorticulture_backend/api";
 const COMPONENTS_URL = `${API_BASE}/component-list/`;
-const REPORT_URL = `${API_BASE}/fruit-monthly-report/`;
+const REPORT_URL = `${API_BASE}/spice-monthly-report/`;
 
 const MONTHS = [
   "जनवरी", "फ़रवरी", "मार्च", "अप्रैल", "मई", "जून",
@@ -23,16 +23,16 @@ const MONTHS = [
 ];
 
 const INPUT_FIELDS = [
-  "previous_month_total_area",
-  "current_month_planted_area",
+  "current_month_sown_area",
+  "previous_month_sown_area",
   "damaged_area",
   "current_month_production",
   "previous_month_production",
 ];
 
 const INPUT_LABELS = {
-  previous_month_total_area: "गत माह तक का कुल क्षेत्रफल",
-  current_month_planted_area: "वर्तमान माह में नर्सरी क्षेत्रफल",
+  current_month_sown_area: "वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल",
+  previous_month_sown_area: "गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल",
   damaged_area: "कीट-व्याधि आदि से प्रभावित क्षेत्रफल",
   current_month_production: "वर्तमान माह उत्पादन",
   previous_month_production: "गत माह तक उत्पादन",
@@ -84,11 +84,11 @@ const formatNumber = (value) => {
   return Number.isFinite(number) ? number.toFixed(2) : "0.00";
 };
 
-const createDraft = (key, fruit = "") => ({
+const createDraft = (key, spice = "") => ({
   key,
-  fruit,
-  previous_month_total_area: "",
-  current_month_planted_area: "",
+  spice,
+  current_month_sown_area: "",
+  previous_month_sown_area: "",
   damaged_area: "",
   current_month_production: "",
   previous_month_production: "",
@@ -99,7 +99,7 @@ const hasDraftValues = (draft) =>
   INPUT_FIELDS.some((field) => String(draft[field] ?? "").trim() !== "") ||
   String(draft.remarks ?? "").trim() !== "";
 
-const SpicesReport = () => {
+const SpiceReport = () => {
   const { centerData } = useCenter();
   const centerName = String(centerData?.centerName || "").trim();
   const currentYear = Number(getCurrentFinancialYear().slice(0, 4));
@@ -121,7 +121,7 @@ const SpicesReport = () => {
   );
   const [filterMonth, setFilterMonth] = useState("");
   const [filterFinancialYear, setFilterFinancialYear] = useState("");
-  const [filterFruit, setFilterFruit] = useState("");
+  const [filterSpice, setFilterSpice] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editingRecord, setEditingRecord] = useState(null);
@@ -137,23 +137,23 @@ const SpicesReport = () => {
       const data = await readResponse(response);
       if (!response.ok) {
         throw new Error(
-          getErrorMessage(data, "फलों की सूची प्राप्त नहीं हो सकी।")
+          getErrorMessage(data, "मसालों की सूची प्राप्त नहीं हो सकी।")
         );
       }
-      const fruitComponents = getItems(data)
-        .filter((item) => item.investment_name === "फल")
+      const spiceComponents = getItems(data)
+        .filter((item) => item.investment_name === "मसाले")
         .sort((first, second) => Number(first.id) - Number(second.id));
-      setComponents(fruitComponents);
+      setComponents(spiceComponents);
       setDrafts(
-        fruitComponents.map((component) =>
+        spiceComponents.map((component) =>
           createDraft(component.id, component.sub_investment_name)
         )
       );
     } catch (error) {
-      console.error("loadFruitComponents:", error);
+      console.error("loadSpiceComponents:", error);
       setMessage({
         type: "danger",
-        text: error.message || "फलों की सूची प्राप्त नहीं हो सकी।",
+        text: error.message || "मसालों की सूची प्राप्त नहीं हो सकी।",
       });
     } finally {
       setLoadingComponents(false);
@@ -173,7 +173,7 @@ const SpicesReport = () => {
       const data = await readResponse(response);
       if (!response.ok) {
         throw new Error(
-          getErrorMessage(data, "फल रिपोर्ट प्राप्त नहीं हो सकी।")
+          getErrorMessage(data, "मसाला रिपोर्ट प्राप्त नहीं हो सकी।")
         );
       }
       const centerKey = centerName.toLocaleLowerCase();
@@ -186,10 +186,10 @@ const SpicesReport = () => {
         )
       );
     } catch (error) {
-      console.error("loadFruitReports:", error);
+      console.error("loadSpiceReports:", error);
       setMessage({
         type: "danger",
-        text: error.message || "फल रिपोर्ट प्राप्त नहीं हो सकी।",
+        text: error.message || "मसाला रिपोर्ट प्राप्त नहीं हो सकी।",
       });
     } finally {
       setLoadingRecords(false);
@@ -211,9 +211,9 @@ const SpicesReport = () => {
           (!filterFinancialYear ||
             record.financial_year === filterFinancialYear) &&
           (!filterMonth || record.month === filterMonth) &&
-          (!filterFruit || record.fruit === filterFruit)
+          (!filterSpice || record.spice === filterSpice)
       ),
-    [filterFinancialYear, filterMonth, filterFruit, records]
+    [filterFinancialYear, filterMonth, filterSpice, records]
   );
 
   const updateDraft = (key, field, value) => {
@@ -256,7 +256,7 @@ const SpicesReport = () => {
     if (!readyDrafts.length) {
       setMessage({
         type: "danger",
-        text: "कम से कम एक फल की जानकारी दर्ज करें।",
+        text: "कम से कम एक मसाले की जानकारी दर्ज करें।",
       });
       return;
     }
@@ -265,7 +265,7 @@ const SpicesReport = () => {
     try {
       payloads = readyDrafts.map((draft) => ({
         center_name: centerName,
-        fruit: draft.fruit,
+        spice: draft.spice,
         ...validateNumericFields(draft),
         remarks: String(draft.remarks || "").trim(),
         financial_year: entryFinancialYear,
@@ -292,9 +292,9 @@ const SpicesReport = () => {
         }
         succeededKeys.push(readyDrafts[index].key);
       } catch (error) {
-        console.error("createFruitReport:", error);
+        console.error("createSpiceReport:", error);
         failures.push(
-          `${readyDrafts[index].fruit}: ${error.message || "सेव नहीं हुआ"}`
+          `${readyDrafts[index].spice}: ${error.message || "सेव नहीं हुआ"}`
         );
       }
     }
@@ -302,7 +302,7 @@ const SpicesReport = () => {
     setDrafts((current) =>
       current.map((draft) =>
         succeededKeys.includes(draft.key)
-          ? createDraft(draft.key, draft.fruit)
+          ? createDraft(draft.key, draft.spice)
           : draft
       )
     );
@@ -356,7 +356,7 @@ const SpicesReport = () => {
       setMessage({ type: "success", text: "प्रविष्टि सफलतापूर्वक अपडेट हुई।" });
       await loadRecords();
     } catch (error) {
-      console.error("updateFruitReport:", error);
+      console.error("updateSpiceReport:", error);
       setMessage({
         type: "danger",
         text: error.message || "प्रविष्टि अपडेट नहीं हो सकी।",
@@ -403,7 +403,7 @@ const SpicesReport = () => {
       setMessage({ type: "success", text: "चुनी गई प्रविष्टियां हटा दी गईं।" });
       await loadRecords();
     } catch (error) {
-      console.error("deleteFruitReports:", error);
+      console.error("deleteSpiceReports:", error);
       setMessage({
         type: "danger",
         text: error.message || "प्रविष्टियां हटाई नहीं जा सकीं।",
@@ -430,7 +430,7 @@ const SpicesReport = () => {
 
   const renderDraftInput = (draft, field) => (
     <Form.Control
-      aria-label={`${draft.fruit || "फल"} - ${INPUT_LABELS[field]}`}
+      aria-label={`${draft.spice || "मसाला"} - ${INPUT_LABELS[field]}`}
       type="number"
       min="0"
       step="0.01"
@@ -457,7 +457,10 @@ const SpicesReport = () => {
 
       <Card className="border-0 shadow-sm mb-3">
         <Card.Header className="text-white" style={{ backgroundColor: "#2a4682" }}>
-         
+          <h4 className="mb-1">मसाला रिपोर्ट</h4>
+          <div className="heading-report">
+            <h1>औद्योगिक फसलों के माहवार क्षेत्रफल / उत्पादन के आंकड़े</h1>
+          </div>
           <small>केंद्र: {centerName || "केंद्र उपलब्ध नहीं"}</small>
         </Card.Header>
       </Card>
@@ -524,7 +527,7 @@ const SpicesReport = () => {
               </div>
             ) : components.length === 0 ? (
               <Alert variant="warning" className="mb-0">
-                component-list API में कोई फल उपलब्ध नहीं है।
+                component-list API में कोई मसाला उपलब्ध नहीं है।
               </Alert>
             ) : (
               <>
@@ -556,56 +559,52 @@ const SpicesReport = () => {
                             क्र.सं.<br/>(1)
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            फल<br/>(2)
+                            मसाले<br/>(2)
                           </th>
                           <th colSpan={5} className="text-center">
                             क्षेत्रफल (हेक्टेयर)
-                          </th>
-                          <th rowSpan={2} className="text-center align-middle" style={{ minWidth: "150px" }}>
-                            माह में नर्सरी क्षेत्रफल के अंतर्गत रोपित पौधों की संख्या (कॉलम संख्या-4 के सापेक्ष)<br/>(8)
                           </th>
                           <th colSpan={3} className="text-center">
                             उत्पादन (कुंटल) ({financialYearShort})
                           </th>
                           <th rowSpan={2} className="text-center align-middle">
-                            अभ्युक्ति<br/>(12)
+                            अभ्युक्ति<br/>(11)
                           </th>
                         </tr>
                         <tr>
-                          <th className="text-center">गत माह तक का कुल क्षेत्रफल<br/>(3)</th>
-                          <th className="text-center">वर्तमान माह में नर्सरी क्षेत्रफल<br/>(4)</th>
+                          <th className="text-center">वर्तमान माह में बुवाई / रोपण का कुल क्षेत्रफल<br/>(3)</th>
+                          <th className="text-center">गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल<br/>(4)</th>
                           <th className="text-center">कुल क्षेत्रफल (3+4)<br/>(5)</th>
-                          <th className="text-center">वर्तमान माह में कीट-व्याधि, इल्मी, सूखा, बाढ़, भूस्खलन आदि कारणों से कुल क्षेत्रफल में क्षति (कॉलम संख्या-5 के सापेक्ष)<br/>(6)</th>
+                          <th className="text-center">माह में कीट-व्याधि, सूखा, अतिवृष्टि आदि कारणों से कुल क्षेत्रफल में क्षति (कॉलम संख्या-5 के सापेक्ष)<br/>(6)</th>
                           <th className="text-center">माह के अंत में शेष वास्तविक क्षेत्रफल (5-6)<br/>(7)</th>
-                          <th className="text-center">वर्तमान माह में उत्पादन<br/>(9)</th>
-                          <th className="text-center">गत माह तक उत्पादन<br/>(10)</th>
-                          <th className="text-center">कुल उत्पादन (9+10)<br/>(11)</th>
+                          <th className="text-center">वर्तमान माह में उत्पादन<br/>(8)</th>
+                          <th className="text-center">गत माह तक उत्पादन<br/>(9)</th>
+                          <th className="text-center">कुल उत्पादन (8+9)<br/>(10)</th>
                         </tr>
                       </thead>
                       <tbody>
                         {drafts.map((draft, index) => {
-                          const val3 = Number(draft.previous_month_total_area) || 0;
-                          const val4 = Number(draft.current_month_planted_area) || 0;
+                          const val3 = Number(draft.current_month_sown_area) || 0;
+                          const val4 = Number(draft.previous_month_sown_area) || 0;
                           const val6 = Number(draft.damaged_area) || 0;
-                          const val9 = Number(draft.current_month_production) || 0;
-                          const val10 = Number(draft.previous_month_production) || 0;
+                          const val8 = Number(draft.current_month_production) || 0;
+                          const val9 = Number(draft.previous_month_production) || 0;
 
                           return (
                             <tr key={draft.key}>
                               <td className="text-center">{index + 1}</td>
-                              <td>{draft.fruit}</td>
+                              <td>{draft.spice}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[0])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[1])}</td>
                               <td className="text-center">{formatNumber(val3 + val4)}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[2])}</td>
                               <td className="text-center">{formatNumber(val3 + val4 - val6)}</td>
-                              <td className="text-center">—</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
-                              <td className="text-center">{formatNumber(val9 + val10)}</td>
+                              <td className="text-center">{formatNumber(val8 + val9)}</td>
                               <td>
                                 <Form.Control
-                                  aria-label={`${draft.fruit} - अभ्युक्ति`}
+                                  aria-label={`${draft.spice} - अभ्युक्ति`}
                                   value={draft.remarks}
                                   onChange={(event) =>
                                     updateDraft(draft.key, "remarks", event.target.value)
@@ -623,7 +622,6 @@ const SpicesReport = () => {
                           <td className="text-center">{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1])).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[2]).toFixed(2)}</td>
                           <td className="text-center">{(sumDraftField(INPUT_FIELDS[0]) + sumDraftField(INPUT_FIELDS[1]) - sumDraftField(INPUT_FIELDS[2])).toFixed(2)}</td>
-                          <td className="text-center">—</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[3]).toFixed(2)}</td>
                           <td className="text-center">{sumDraftField(INPUT_FIELDS[4]).toFixed(2)}</td>
                           <td className="text-center">{(sumDraftField(INPUT_FIELDS[3]) + sumDraftField(INPUT_FIELDS[4])).toFixed(2)}</td>
@@ -634,7 +632,15 @@ const SpicesReport = () => {
 
                     <div className="vegetable-report-notes">
                       <div>
-                        नोट— (1) कॉलम संख्या 10 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
+                        नोट— (1) कॉलम संख्या 4 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह{" "}
+                        <strong>
+                          {reportMonthLabel}{" "}
+                          {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                        </strong>{" "}
+                        से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                      </div>
+                      <div>
+                        (2) कॉलम संख्या 9 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
                         <strong>
                           {reportMonthLabel}{" "}
                           {entryYearFromMonth(entryFinancialYear, entryMonth)}
@@ -668,7 +674,7 @@ const SpicesReport = () => {
 
       <Card className="border-0 shadow-sm">
         <Card.Header className="d-flex flex-wrap justify-content-between align-items-center gap-2">
-          <strong>सेव की गई फल प्रविष्टियां</strong>
+          <strong>सेव की गई मसाला प्रविष्टियां</strong>
           <Button
             variant="outline-danger"
             size="sm"
@@ -712,12 +718,12 @@ const SpicesReport = () => {
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-12 col-md-4">
-              <Form.Label>फल के नाम से छांटें</Form.Label>
+              <Form.Label>मसाले के नाम से छांटें</Form.Label>
               <Form.Select
-                value={filterFruit}
-                onChange={(event) => setFilterFruit(event.target.value)}
+                value={filterSpice}
+                onChange={(event) => setFilterSpice(event.target.value)}
               >
-                <option value="">सभी फल</option>
+                <option value="">सभी मसाले</option>
                 {components.map((component) => (
                   <option
                     key={component.id}
@@ -752,17 +758,16 @@ const SpicesReport = () => {
                       />
                     </th>
                     <th>क्र.सं.</th>
-                    <th>फल</th>
-                    <th>गत माह तक क्षेत्रफल (3)</th>
-                    <th>वर्तमान माह नर्सरी क्षेत्रफल (4)</th>
+                    <th>मसाले</th>
+                    <th>वर्तमान माह बुवाई (3)</th>
+                    <th>गत माह तक बुवाई (4)</th>
                     <th>कुल क्षेत्रफल (5)</th>
                     <th>क्षतिग्रस्त क्षेत्रफल (6)</th>
                     <th>शेष क्षेत्रफल (7)</th>
-                    <th>रोपित पौधों की संख्या (8)</th>
-                    <th>वर्तमान माह उत्पादन (9)</th>
-                    <th>गत माह तक उत्पादन (10)</th>
-                    <th>कुल उत्पादन (11)</th>
-                    <th>टिप्पणी (12)</th>
+                    <th>वर्तमान माह उत्पादन (8)</th>
+                    <th>गत माह तक उत्पादन (9)</th>
+                    <th>कुल उत्पादन (10)</th>
+                    <th>टिप्पणी (11)</th>
                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
                     <th>कार्यवाही</th>
@@ -770,32 +775,31 @@ const SpicesReport = () => {
                 </thead>
                 <tbody>
                   {filteredRecords.map((record, index) => {
-                    const val3 = Number(record.previous_month_total_area) || 0;
-                    const val4 = Number(record.current_month_planted_area) || 0;
+                    const val3 = Number(record.current_month_sown_area) || 0;
+                    const val4 = Number(record.previous_month_sown_area) || 0;
                     const val6 = Number(record.damaged_area) || 0;
-                    const val9 = Number(record.current_month_production) || 0;
-                    const val10 = Number(record.previous_month_production) || 0;
+                    const val8 = Number(record.current_month_production) || 0;
+                    const val9 = Number(record.previous_month_production) || 0;
 
                     return (
                       <tr key={record.id}>
                         <td>
                           <Form.Check
-                            aria-label={`${record.fruit} प्रविष्टि चुनें`}
+                            aria-label={`${record.spice} प्रविष्टि चुनें`}
                             checked={selectedIds.includes(record.id)}
                             onChange={() => toggleSelected(record.id)}
                           />
                         </td>
                         <td>{index + 1}</td>
-                        <td>{record.fruit}</td>
+                        <td>{record.spice}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[0])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[1])}</td>
                         <td>{formatNumber(val3 + val4)}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[2])}</td>
                         <td>{formatNumber(val3 + val4 - val6)}</td>
-                        <td>—</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[3])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[4])}</td>
-                        <td>{formatNumber(val9 + val10)}</td>
+                        <td>{formatNumber(val8 + val9)}</td>
                         <td>
                           {editingId === record.id ? (
                             <Form.Control
@@ -853,7 +857,7 @@ const SpicesReport = () => {
                   {!filteredRecords.length && (
                     <tr>
                       <td
-                        colSpan={16}
+                        colSpan={15}
                         className="text-center text-muted py-4"
                       >
                         इस चयन के लिए कोई प्रविष्टि उपलब्ध नहीं है।
@@ -870,4 +874,4 @@ const SpicesReport = () => {
   );
 };
 
-export default SpicesReport;
+export default SpiceReport;
