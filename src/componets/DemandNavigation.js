@@ -47,13 +47,15 @@ const DemandNavigation = () => {
             </Nav.Link>
            
 
-  <NavDropdown
+<NavDropdown
               title="एंट्री"
               id="entry-nav-dropdown"
               style={{
                 fontWeight:
+                  isActive("/FruitReport") ||
                   isActive("/VegetableReport") ||
-                  isActive("/VegetableReport")
+                  isActive("/SpicesReport") ||
+                  isActive("/FlowerReport")
                     ? "bold"
                     : "normal",
               }}
@@ -67,7 +69,18 @@ const DemandNavigation = () => {
                     : "normal",
                 }}
               >
-               फल  रिपोर्ट
+                फल  रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/FlowerReport")}
+                onClick={() => navigate("/FlowerReport")}
+                style={{
+                  fontWeight: isActive("/FlowerReport")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                फूल  रिपोर्ट
               </NavDropdown.Item>
               <NavDropdown.Item
                 active={isActive("/VegetableReport")}
@@ -80,42 +93,19 @@ const DemandNavigation = () => {
               >
                 सब्जी  रिपोर्ट
               </NavDropdown.Item>
-            </NavDropdown>
-            {/* First Dropdown: एंट्री */}
-            <NavDropdown
-              title="एंट्री"
-              id="entry-nav-dropdown"
-              style={{
-                fontWeight:
-                  isActive("/DemandGenerate/CenterwiseEntry") ||
-                  isActive("/DemandGenerate/KrishiwiseEntry")
-                    ? "bold"
-                    : "normal",
-              }}
-            >
               <NavDropdown.Item
-                active={isActive("/DemandGenerate/CenterwiseEntry")}
-                onClick={() => navigate("/DemandGenerate/CenterwiseEntry")}
+                active={isActive("/SpicesReport")}
+                onClick={() => navigate("/SpicesReport")}
                 style={{
-                  fontWeight: isActive("/DemandGenerate/CenterwiseEntry")
+                  fontWeight: isActive("/SpicesReport")
                     ? "bold"
                     : "normal",
                 }}
               >
-                सेंटरवाइज एंट्री
-              </NavDropdown.Item>
-              <NavDropdown.Item
-                active={isActive("/DemandGenerate/KrishiwiseEntry")}
-                onClick={() => navigate("/DemandGenerate/KrishiwiseEntry")}
-                style={{
-                  fontWeight: isActive("/DemandGenerate/KrishiwiseEntry")
-                    ? "bold"
-                    : "normal",
-                }}
-              >
-                कृषिवाइज एंट्री
+                मसाला रिपोर्ट
               </NavDropdown.Item>
             </NavDropdown>
+           
 
             {/* Second Dropdown: सेवाएं (Services) */}
            

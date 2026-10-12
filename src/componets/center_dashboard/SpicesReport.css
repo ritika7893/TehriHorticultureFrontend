@@ -1,0 +1,123 @@
+.vegetable-report-sheet-wrap {
+  overflow-x: auto;
+}
+
+.vegetable-report-sheet {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.vegetable-report-title {
+  text-align: left;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #2a4682;
+}
+
+.vegetable-report-title h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2a4682;
+}
+
+.vegetable-report-title div {
+  font-size: 0.95rem;
+  margin: 2px 0;
+}
+
+.vegetable-report-table th {
+  background-color: #eef2ff;
+  color: #1a2a5c;
+  font-weight: 600;
+  font-size: 0.82rem;
+  vertical-align: middle;
+  text-align: center;
+  padding: 8px 6px;
+  border: 1px solid #cbd3e0;
+}
+
+.vegetable-report-table td {
+  font-size: 0.85rem;
+  vertical-align: middle;
+  padding: 6px 8px;
+  border: 1px solid #e0e4ea;
+  text-align: center;
+}
+
+.vegetable-report-table td input {
+  font-size: 0.85rem;
+  padding: 4px 6px;
+}
+
+.vegetable-report-total {
+  background-color: #f0f4ff;
+  font-weight: 700;
+  color: #1a2a5c;
+}
+
+.vegetable-report-total td {
+  font-weight: 700;
+  padding: 8px 6px;
+  border: 1px solid #cbd3e0;
+}
+
+.vegetable-report-group-heading td {
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 12px;
+  background-color: #e7f1ff;
+  border-top: 2px solid #2a4682;
+  border-bottom: 2px solid #2a4682;
+  color: #1a2a5c;
+  font-size: 0.9rem;
+}
+
+.vegetable-report-notes {
+  margin: 12px 0;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.vegetable-report-notes strong {
+  color: #1a2a5c;
+}
+
+.vegetable-report-signature {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  text-align: right;
+  line-height: 1.7;
+}
+
+.vegetable-report-input {
+  font-size: 0.85rem;
+  padding: 4px 6px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 110px;
+}
+
+/* Card header clean style */
+.report-clean-card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 2px solid #2a4682;
+  padding: 12px 16px;
+}
+
+.report-clean-card-header h4,
+.report-clean-card-header .heading-report h1 {
+  color: #1a2a5c;
+  font-weight: 700;
+  margin: 0;
+}
+
+.report-clean-card-header small {
+  color: #495057;
+  font-weight: 500;
+}

@@ -383,6 +383,10 @@ font-weight: 700;
   width: 70% !important;
  
 }
+.report-clean-card-header h4{
+  font-size: 18px;
+  font-weight: 700;
+}
 /* Mobile View */
 @media (max-width: 768px) {
   .drop-option-custom {

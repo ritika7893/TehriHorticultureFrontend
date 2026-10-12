@@ -1,0 +1,165 @@
+.vegetable-report-sheet-wrap {
+  overflow-x: auto;
+}
+
+.vegetable-report-sheet {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.vegetable-report-title {
+  text-align: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #2a4682;
+}
+
+.flower-covered-header {
+  text-align: center;
+  vertical-align: middle;
+  padding: 6px 8px;
+  width: 150px;
+  min-width: 150px;
+}
+
+.flower-covered-header-main {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #1a2a5c;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.flower-covered-header-note {
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: #555;
+  line-height: 1.35;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px dashed #cbd3e0;
+}
+
+/* Wider columns for flower report */
+.vegetable-report-table .flower-covered-header-column {
+  width: 150px;
+  min-width: 150px;
+}
+
+.vegetable-report-table .flower-name-column {
+  width: 120px;
+  min-width: 120px;
+}
+
+.vegetable-report-table .flower-remarks-column {
+  width: 130px;
+  min-width: 130px;
+}
+
+.vegetable-report-title h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2a4682;
+}
+
+.vegetable-report-title div {
+  font-size: 0.95rem;
+  margin: 2px 0;
+}
+
+.vegetable-report-table th {
+  background-color: #eef2ff;
+  color: #1a2a5c;
+  font-weight: 600;
+  font-size: 0.72rem;
+  vertical-align: middle;
+  text-align: center;
+  padding: 6px 4px;
+  border: 1px solid #cbd3e0;
+}
+
+.vegetable-report-table td {
+  font-size: 10px;
+  vertical-align: middle;
+  padding: 4px 6px;
+  border: 1px solid #e0e4ea;
+  text-align: center;
+}
+
+.vegetable-report-table td input {
+  font-size: 10px;
+  padding: 3px 4px;
+}
+
+.vegetable-report-total {
+  background-color: #f0f4ff;
+  font-weight: 700;
+  color: #1a2a5c;
+}
+
+.vegetable-report-total td {
+  font-weight: 700;
+  padding: 8px 6px;
+  border: 1px solid #cbd3e0;
+}
+
+.vegetable-report-group-heading td {
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 12px;
+  background-color: #e7f1ff;
+  border-top: 2px solid #2a4682;
+  border-bottom: 2px solid #2a4682;
+  color: #1a2a5c;
+  font-size: 0.9rem;
+}
+
+.vegetable-report-notes {
+  margin: 12px 0;
+  font-size: 0.85rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.vegetable-report-notes strong {
+  color: #1a2a5c;
+}
+
+.vegetable-report-signature {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  text-align: right;
+  line-height: 1.7;
+}
+
+.vegetable-report-input {
+  font-size: 0.75rem;
+  padding: 3px 4px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 100px;
+}
+
+/* Card header clean style */
+.report-clean-card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 2px solid #2a4682;
+  padding: 12px 16px;
+}
+
+.report-clean-card-header h4,
+.report-clean-card-header .heading-report h1 {
+  color: #1a2a5c;
+  font-weight: 700;
+  margin: 0;
+}
+
+.report-clean-card-header small {
+  color: #495057;
+  font-weight: 500;
+}
