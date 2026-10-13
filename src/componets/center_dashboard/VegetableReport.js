@@ -32,6 +32,7 @@ const INPUT_LABELS = {
   total_damaged_area: "कीट-व्याधि आदि से प्रभावित क्षेत्रफल",
   current_month_production: "वर्तमान माह उत्पादन",
   previous_month_total_production: "गत माह तक उत्पादन",
+  remarks: "अभ्युक्ति",
 };
 
 const getCurrentFinancialYear = () => {
@@ -117,6 +118,7 @@ const VegetableReport = () => {
   const [filterVegetable, setFilterVegetable] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
   const [editingId, setEditingId] = useState(null);
+  const [prabhariName, setPrabhariName] = useState("");
   const [editingRecord, setEditingRecord] = useState(null);
   const [loadingComponents, setLoadingComponents] = useState(true);
   const [loadingRecords, setLoadingRecords] = useState(false);
@@ -260,6 +262,7 @@ const VegetableReport = () => {
         center_name: centerName,
         vegetable: draft.vegetable,
         ...validateNumericFields(draft),
+        prabhari_ka_naam: String(prabhariName || "").trim(),
         remarks: String(draft.remarks || "").trim(),
         financial_year: entryFinancialYear,
         month: entryMonth,
@@ -333,6 +336,7 @@ const VegetableReport = () => {
       const payload = {
         id: record.id,
         ...validateNumericFields(editingRecord),
+        prabhari_ka_naam: String(prabhariName || "").trim(),
         remarks: String(editingRecord.remarks || "").trim(),
       };
       const response = await fetch(REPORT_URL, {
@@ -437,9 +441,6 @@ const VegetableReport = () => {
 
   const sumDraftField = (field) =>
     drafts.reduce((sum, draft) => sum + (Number(draft[field]) || 0), 0);
-
-  const sumRecordField = (field) =>
-    filteredRecords.reduce((sum, record) => sum + (Number(record[field]) || 0), 0);
 
   const reportMonthLabel =
     MONTHS.find((month) => month === entryMonth) || "________";
@@ -574,14 +575,24 @@ const VegetableReport = () => {
                     </tbody>
                   </Table>
 <div className="vegetable-report-notes">
-                       <div>
-                         नोट— (1) कॉलम संख्या 3 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
-                       </div>
-                       <div>
-                         (2) कॉलम संख्या 6 (गत माह तक उत्पादन) के अन्तर्गत माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व का उत्पादन अंकित न किया जाए।
-                       </div>
-                     </div>
-                    <div className="vegetable-report-signature">
+                        <div>
+                          नोट— (1) कॉलम संख्या 3 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                        </div>
+                        <div>
+                          (2) कॉलम संख्या 6 (गत माह तक उत्पादन) के अन्तर्गत माह <strong>{reportMonthLabel} {entryYearFromMonth(entryFinancialYear, entryMonth)}</strong> से पूर्व का उत्पादन अंकित न किया जाए।
+                        </div>
+                      </div>
+                      <div className="mb-3" style={{ maxWidth: "400px" }}>
+                        <Form.Label>प्रभारी का नाम</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={prabhariName}
+                          onChange={(event) => setPrabhariName(event.target.value)}
+                          placeholder="प्रभारी का नाम दर्ज करें"
+                          className="vegetable-report-input"
+                        />
+                      </div>
+                     <div className="vegetable-report-signature">
                       हस्ताक्षर<br />
                       प्रभारी, उद्यान सचल दल केंद्र<br />
                       {centerName}
@@ -711,7 +722,7 @@ const VegetableReport = () => {
                   })}
                   {!filteredRecords.length && (
                     <tr>
-                      <td colSpan={12} className="text-center text-muted py-4">
+                      <td colSpan={11} className="text-center text-muted py-4">
                         इस चयन के लिए कोई प्रविष्टि उपलब्ध नहीं है।
                       </td>
                     </tr>
