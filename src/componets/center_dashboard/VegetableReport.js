@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import {
   Alert,
   Button,
@@ -112,6 +112,8 @@ const VegetableReport = () => {
   const [loadingComponents, setLoadingComponents] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const formRef = useRef(null);
 
   const loadComponents = useCallback(async () => {
     setLoadingComponents(true);
@@ -155,6 +157,20 @@ const VegetableReport = () => {
     );
   };
 
+  const validateDraftFields = (draft) => {
+    const errors = {};
+    INPUT_FIELDS.forEach((field) => {
+      const value = String(draft[field] ?? "").trim();
+      if (!value) {
+        errors[field] = "यह फील्ड आवश्यक है";
+      }
+    });
+    if (!String(draft.remarks ?? "").trim()) {
+      errors.remarks = "यह फील्ड आवश्यक है";
+    }
+    return errors;
+  };
+
   const validateNumericFields = (record) => {
     const fields = {};
     INPUT_FIELDS.forEach((field) => {
@@ -172,6 +188,9 @@ const VegetableReport = () => {
   const handleCreate = async (event) => {
     event.preventDefault();
     setMessage({ type: "", text: "" });
+    setFieldErrors({});
+    let hasErrors = false;
+
     if (!centerName) {
       setMessage({
         type: "danger",
@@ -180,14 +199,47 @@ const VegetableReport = () => {
       return;
     }
     if (!entryMonth) {
-      setMessage({ type: "danger", text: "कृपया रिपोर्ट का माह चुनें।" });
-      return;
+      setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (!String(prabhariName || "").trim()) {
+      setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
     }
     const readyDrafts = drafts.filter(hasDraftValues);
     if (!readyDrafts.length) {
       setMessage({
         type: "danger",
         text: "कम से कम एक सब्जी की जानकारी दर्ज करें।",
+      });
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    const invalidDrafts = readyDrafts.filter((draft) =>
+      INPUT_FIELDS.every((field) => String(draft[field] ?? "").trim() === ""),
+    );
+    if (invalidDrafts.length) {
+      const names = invalidDrafts.map((d) => d.vegetable).join(", ");
+      setMessage({
+        type: "danger",
+        text: `निम्न सब्जियों के लिए कम से कम एक संख्यात्मक मान दर्ज करें: ${names}`,
+      });
+      return;
+    }
+
+    const allErrors = {};
+    readyDrafts.forEach((draft) => {
+      const errors = validateDraftFields(draft);
+      if (Object.keys(errors).length > 0) {
+        allErrors[draft.key] = errors;
+        hasErrors = true;
+      }
+    });
+    if (hasErrors) {
+      setFieldErrors((prev) => ({ ...prev, ...allErrors }));
+      setMessage({
+        type: "danger",
+        text: "कृपया सभी आवश्यक फील्ड भरें।",
       });
       return;
     }
@@ -254,17 +306,45 @@ const VegetableReport = () => {
     setSubmitting(false);
   };
 
-  const renderDraftInput = (draft, field) => (
-    <Form.Control
-      aria-label={`${draft.vegetable || "सब्जी"} - ${INPUT_LABELS[field]}`}
-      type="number"
-      min="0"
-      step="0.01"
-      value={draft[field]}
-      onChange={(event) => updateDraft(draft.key, field, event.target.value)}
-      className="vegetable-report-input"
-    />
-  );
+  const renderDraftInput = (draft, field) => {
+    const error = fieldErrors[draft.key]?.[field];
+    return (
+      <div>
+        <Form.Control
+          aria-label={`${draft.vegetable || "सब्जी"} - ${INPUT_LABELS[field]}`}
+          type="number"
+          min="0"
+          step="0.01"
+          value={draft[field]}
+          onChange={(event) => {
+            updateDraft(draft.key, field, event.target.value);
+            if (fieldErrors[draft.key]?.[field]) {
+              setFieldErrors((prev) => {
+                const next = { ...prev };
+                if (next[draft.key]) {
+                  const fieldErrorsCopy = { ...next[draft.key] };
+                  delete fieldErrorsCopy[field];
+                  if (Object.keys(fieldErrorsCopy).length === 0) {
+                    delete next[draft.key];
+                  } else {
+                    next[draft.key] = fieldErrorsCopy;
+                  }
+                }
+                return next;
+              });
+            }
+          }}
+          className="vegetable-report-input"
+          isInvalid={!!error}
+        />
+        {error && (
+          <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+            {error}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const sumDraftField = (field) =>
     drafts.reduce((sum, draft) => sum + (Number(draft[field]) || 0), 0);
@@ -276,7 +356,7 @@ const VegetableReport = () => {
     : "________";
 
   return (
-    <Container fluid className="px-3" style={{ paddingTop: "60px" }}>
+    <Container fluid className="px-3" style={{ paddingTop: "60px" }} ref={formRef}>
       <div className="mb-3">
         <DemandNavigation />
       </div>
@@ -314,17 +394,32 @@ const VegetableReport = () => {
                 </Form.Select>
               </Form.Group>
               <Form.Group className="col-12 col-md-4">
-                <Form.Label>माह</Form.Label>
+                <Form.Label>माह <span className="text-danger">*</span></Form.Label>
                 <Form.Select
                   value={entryMonth}
-                  onChange={(event) => setEntryMonth(event.target.value)}
-                  required
+                  onChange={(event) => {
+                    setEntryMonth(event.target.value);
+                    if (fieldErrors.entryMonth) {
+                      setFieldErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.entryMonth;
+                        return next;
+                      });
+                    }
+                  }}
+                  isInvalid={!!fieldErrors.entryMonth}
+                  className={fieldErrors.entryMonth ? "is-invalid" : ""}
                 >
                   <option value="">माह चुनें</option>
                   {MONTHS.map((month) => (
                     <option key={month} value={month}>{month}</option>
                   ))}
                 </Form.Select>
+                {fieldErrors.entryMonth && (
+                  <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                    {fieldErrors.entryMonth}
+                  </div>
+                )}
               </Form.Group>
             </div>
 
@@ -350,9 +445,9 @@ const VegetableReport = () => {
                     <thead className="table-light">
                       <tr>
                         <th rowSpan={2}>क्र.सं.</th>
-                        <th rowSpan={2}>सब्जी</th>
-                        <th colSpan={3}>क्षेत्रफल (हेक्टेयर)</th>
-                        <th colSpan={2}>उत्पादन (कुंटल) ({financialYearShort})</th>
+                        <th rowSpan={2}>सब्जी <span className="text-danger">*</span></th>
+                        <th colSpan={3}>क्षेत्रफल (हेक्टेयर) <span className="text-danger">*</span></th>
+                        <th colSpan={2}>उत्पादन (कुंटल) ({financialYearShort}) <span className="text-danger">*</span></th>
                         <th rowSpan={2}>अभ्युक्ति</th>
                       </tr>
                       <tr>
@@ -379,14 +474,37 @@ const VegetableReport = () => {
                           <td>{renderDraftInput(draft, INPUT_FIELDS[3])}</td>
                           <td>{renderDraftInput(draft, INPUT_FIELDS[4])}</td>
                           <td>
-                            <Form.Control
-                              aria-label={`${draft.vegetable} - अभ्युक्ति`}
-                              value={draft.remarks}
-                              onChange={(event) =>
-                                updateDraft(draft.key, "remarks", event.target.value)
-                              }
-                              className="vegetable-report-input"
-                            />
+                            <div>
+                              <Form.Control
+                                aria-label={`${draft.vegetable} - अभ्युक्ति`}
+                                value={draft.remarks}
+                                onChange={(event) => {
+                                  updateDraft(draft.key, "remarks", event.target.value);
+                                  if (fieldErrors[draft.key]?.remarks) {
+                                    setFieldErrors((prev) => {
+                                      const next = { ...prev };
+                                      if (next[draft.key]) {
+                                        const fieldErrorsCopy = { ...next[draft.key] };
+                                        delete fieldErrorsCopy.remarks;
+                                        if (Object.keys(fieldErrorsCopy).length === 0) {
+                                          delete next[draft.key];
+                                        } else {
+                                          next[draft.key] = fieldErrorsCopy;
+                                        }
+                                      }
+                                      return next;
+                                    });
+                                  }
+                                }}
+                                className="vegetable-report-input"
+                                isInvalid={!!fieldErrors[draft.key]?.remarks}
+                              />
+                              {fieldErrors[draft.key]?.remarks && (
+                                <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                                  {fieldErrors[draft.key].remarks}
+                                </div>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -410,14 +528,29 @@ const VegetableReport = () => {
                         </div>
                       </div>
                       <div className="mb-3" style={{ maxWidth: "400px" }}>
-                        <Form.Label>प्रभारी का नाम</Form.Label>
+                        <Form.Label>प्रभारी का नाम <span className="text-danger">*</span></Form.Label>
                         <Form.Control
                           type="text"
                           value={prabhariName}
-                          onChange={(event) => setPrabhariName(event.target.value)}
+                          onChange={(event) => {
+                            setPrabhariName(event.target.value);
+                            if (fieldErrors.prabhariName) {
+                              setFieldErrors((prev) => {
+                                const next = { ...prev };
+                                delete next.prabhariName;
+                                return next;
+                              });
+                            }
+                          }}
                           placeholder="प्रभारी का नाम दर्ज करें"
                           className="vegetable-report-input"
+                          isInvalid={!!fieldErrors.prabhariName}
                         />
+                        {fieldErrors.prabhariName && (
+                          <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                            {fieldErrors.prabhariName}
+                          </div>
+                        )}
                       </div>
                      <div className="vegetable-report-signature">
                       हस्ताक्षर<br />
