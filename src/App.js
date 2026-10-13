@@ -48,6 +48,7 @@ import AdminVetanMang from "./componets/dash_board/AdminVetanMang";
 import AdminMonthAttendance from "./componets/dash_board/AdminMonthAttendance";
 import AdminKishanAavedan from "./componets/KishanBeej/AdminKishanAavedan";
 import VegetableReport from "./componets/center_dashboard/VegetableReport";
+import SavedVegetableEntries from "./componets/center_dashboard/SavedVegetableEntries";
 import FruitReport from "./componets/center_dashboard/FruitReport";
 import SpicesReport from "./componets/center_dashboard/SpicesReport";
 import FlowerReport from "./componets/center_dashboard/FlowerReport";
@@ -66,6 +67,7 @@ function NavbarWrapper() {
     "/AdminVetanMang",
     "/AdminKishanAavedan",
     "/VegetableReport",
+    "/SavedVegetableEntries",
     "/FruitReport",
     "/FlowerReport",
     "/SpicesReport",
@@ -161,14 +163,22 @@ function AppContent() {
       </ProtectedRoute>
     }
   />
-  <Route
-    path="/VegetableReport"
-    element={
-      <ProtectedRoute allowedLoginTypes={["demand"]}>
-        <VegetableReport />
-      </ProtectedRoute>
-    }
-  />
+<Route
+            path="/VegetableReport"
+            element={
+              <ProtectedRoute allowedLoginTypes={["demand"]}>
+                <VegetableReport />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/SavedVegetableEntries"
+            element={
+              <ProtectedRoute allowedLoginTypes={["demand"]}>
+                <SavedVegetableEntries />
+              </ProtectedRoute>
+            }
+          />
   <Route
     path="/AdminVetanMang"
     element={

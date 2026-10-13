@@ -105,6 +105,28 @@ const DemandNavigation = () => {
                 मसाला रिपोर्ट
               </NavDropdown.Item>
             </NavDropdown>
+
+            <NavDropdown
+              title="सेव की गई प्रविष्टियां"
+              id="saved-entries-nav-dropdown"
+              style={{
+                fontWeight: isActive("/SavedVegetableEntries")
+                  ? "bold"
+                  : "normal",
+              }}
+            >
+              <NavDropdown.Item
+                active={isActive("/SavedVegetableEntries")}
+                onClick={() => navigate("/SavedVegetableEntries")}
+                style={{
+                  fontWeight: isActive("/SavedVegetableEntries")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                सेव की गई सब्जी प्रविष्टियां
+              </NavDropdown.Item>
+            </NavDropdown>
            
 
             {/* Second Dropdown: सेवाएं (Services) */}
