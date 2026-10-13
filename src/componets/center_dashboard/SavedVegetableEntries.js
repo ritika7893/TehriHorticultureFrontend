@@ -236,7 +236,7 @@ const SavedVegetableEntries = () => {
         center_name: centerName,
         vegetable: record.vegetable,
         ...validateNumericFields(editingRecord),
-        prabhari_ka_naam: String(record.prabhari_ka_naam || "").trim(),
+        prabhari_ka_naam: String(editingRecord.prabhari_ka_naam || "").trim(),
         remarks: String(editingRecord.remarks || "").trim(),
         financial_year: record.financial_year,
         month: record.month,
@@ -397,6 +397,7 @@ const SavedVegetableEntries = () => {
                     <th>वर्तमान माह उत्पादन</th>
                     <th>गत माह तक उत्पादन</th>
                     <th>टिप्पणी</th>
+                    <th>प्रभारी का नाम</th>
                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
                     <th>कार्यवाही</th>
@@ -428,6 +429,16 @@ const SavedVegetableEntries = () => {
                             style={{ minWidth: "140px" }}
                           />
                         ) : record.remarks || "—"}
+                      </td>
+                      <td>
+                        {editingId === record.id ? (
+                          <Form.Control
+                            aria-label="प्रभारी का नाम"
+                            value={editingRecord?.prabhari_ka_naam ?? ""}
+                            onChange={(event) => updateEditingRecord("prabhari_ka_naam", event.target.value)}
+                            style={{ minWidth: "140px" }}
+                          />
+                        ) : record.prabhari_ka_naam || "—"}
                       </td>
                       <td>{record.month}</td>
                       <td>{record.financial_year}</td>
