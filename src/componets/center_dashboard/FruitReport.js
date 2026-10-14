@@ -120,6 +120,8 @@ const FruitReport = () => {
   const [entryFinancialYear, setEntryFinancialYear] = useState(
     getCurrentFinancialYear
   );
+  const [prabhariName, setPrabhariName] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const [filterMonth, setFilterMonth] = useState("");
   const [filterFinancialYear, setFilterFinancialYear] = useState("");
   const [filterFruit, setFilterFruit] = useState("");
@@ -251,6 +253,9 @@ const FruitReport = () => {
   const handleCreate = async (event) => {
     event.preventDefault();
     setMessage({ type: "", text: "" });
+    setFieldErrors({});
+    let hasErrors = false;
+
     if (!centerName) {
       setMessage({
         type: "danger",
@@ -259,7 +264,18 @@ const FruitReport = () => {
       return;
     }
     if (!entryMonth) {
-      setMessage({ type: "danger", text: "कृपया रिपोर्ट का माह चुनें।" });
+      setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (!String(prabhariName || "").trim()) {
+      setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (hasErrors) {
+      setMessage({
+        type: "danger",
+        text: "कृपया सभी आवश्यक फील्ड भरें।",
+      });
       return;
     }
     const readyDrafts = drafts.filter(hasDraftValues);
@@ -277,6 +293,7 @@ const FruitReport = () => {
         center_name: centerName,
         fruit: draft.fruit,
         ...validateNumericFields(draft),
+        prabhari_ka_naam: String(prabhariName || "").trim(),
         remarks: String(draft.remarks || "").trim(),
         financial_year: entryFinancialYear,
         month: entryMonth,
@@ -323,6 +340,9 @@ const FruitReport = () => {
           ? `${succeededKeys.length} प्रविष्टि सेव हुई। ${failures.join(" ")}`
           : `${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`,
       });
+      if (!failures.length) {
+        alert(`${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`);
+      }
       await loadRecords();
     } else {
       setMessage({
@@ -515,10 +535,21 @@ const FruitReport = () => {
                 </Form.Select>
               </Form.Group>
               <Form.Group className="col-12 col-md-4">
-                <Form.Label>माह</Form.Label>
+                <Form.Label>माह <span className="text-danger">*</span></Form.Label>
                 <Form.Select
                   value={entryMonth}
-                  onChange={(event) => setEntryMonth(event.target.value)}
+                  onChange={(event) => {
+                    setEntryMonth(event.target.value);
+                    if (fieldErrors.entryMonth) {
+                      setFieldErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.entryMonth;
+                        return next;
+                      });
+                    }
+                  }}
+                  isInvalid={!!fieldErrors.entryMonth}
+                  className={fieldErrors.entryMonth ? "is-invalid" : ""}
                   required
                 >
                   <option value="">माह चुनें</option>
@@ -528,6 +559,14 @@ const FruitReport = () => {
                     </option>
                   ))}
                 </Form.Select>
+                {fieldErrors.entryMonth && (
+                  <div
+                    className="invalid-feedback d-block"
+                    style={{ fontSize: "0.75rem", marginTop: "2px" }}
+                  >
+                    {fieldErrors.entryMonth}
+                  </div>
+                )}
               </Form.Group>
             </div>
 
@@ -673,6 +712,37 @@ const FruitReport = () => {
                         </strong>{" "}
                         से पूर्व का उत्पादन अंकित न किया जाए।
                       </div>
+                    </div>
+
+                    <div className="mb-3" style={{ maxWidth: "400px" }}>
+                      <Form.Label>
+                        प्रभारी का नाम <span className="text-danger">*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={prabhariName}
+                        onChange={(event) => {
+                          setPrabhariName(event.target.value);
+                          if (fieldErrors.prabhariName) {
+                            setFieldErrors((prev) => {
+                              const next = { ...prev };
+                              delete next.prabhariName;
+                              return next;
+                            });
+                          }
+                        }}
+                        placeholder="प्रभारी का नाम दर्ज करें"
+                        className="vegetable-report-input"
+                        isInvalid={!!fieldErrors.prabhariName}
+                      />
+                      {fieldErrors.prabhariName && (
+                        <div
+                          className="invalid-feedback d-block"
+                          style={{ fontSize: "0.75rem", marginTop: "2px" }}
+                        >
+                          {fieldErrors.prabhariName}
+                        </div>
+                      )}
                     </div>
 
                     <div className="vegetable-report-signature">

@@ -250,8 +250,13 @@ const SavedFruitEntries = () => {
     try {
       const payload = {
         id: record.id,
+        center_name: centerName,
+        fruit: record.fruit,
         ...validateNumericFields(editingRecord),
+        prabhari_ka_naam: String(editingRecord.prabhari_ka_naam || "").trim(),
         remarks: String(editingRecord.remarks || "").trim(),
+        financial_year: record.financial_year,
+        month: record.month,
       };
       const response = await fetch(REPORT_URL, {
         method: "PUT",
@@ -491,6 +496,20 @@ const SavedFruitEntries = () => {
                   )}
                 </tbody>
               </Table>
+            </div>
+          )}
+          {filteredRecords.length > 0 && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                <div className="d-flex flex-wrap gap-3">
+                  {filteredRecords.map((record) => (
+                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                      <strong>{record.fruit}:</strong> {record.prabhari_ka_naam || "—"}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </Card.Body>
