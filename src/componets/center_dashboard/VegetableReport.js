@@ -207,23 +207,13 @@ const VegetableReport = () => {
       hasErrors = true;
     }
     const readyDrafts = drafts.filter(hasDraftValues);
-    if (!readyDrafts.length) {
+    if (readyDrafts.length !== drafts.length) {
       setMessage({
         type: "danger",
-        text: "कम से कम एक सब्जी की जानकारी दर्ज करें।",
+        text: "सभी सब्जी की जानकारी दर्ज करें।",
       });
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-    const invalidDrafts = readyDrafts.filter((draft) =>
-      INPUT_FIELDS.every((field) => String(draft[field] ?? "").trim() === ""),
-    );
-    if (invalidDrafts.length) {
-      const names = invalidDrafts.map((d) => d.vegetable).join(", ");
-      setMessage({
-        type: "danger",
-        text: `निम्न सब्जियों के लिए कम से कम एक संख्यात्मक मान दर्ज करें: ${names}`,
-      });
+      alert("सभी सब्जी की जानकारी दर्ज करें।");
       return;
     }
 
