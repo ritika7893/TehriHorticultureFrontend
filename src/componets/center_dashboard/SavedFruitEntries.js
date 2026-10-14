@@ -498,20 +498,36 @@ const SavedFruitEntries = () => {
               </Table>
             </div>
           )}
-          {filteredRecords.length > 0 && (
-            <div className="mt-3 p-3 border rounded bg-light">
-              <div className="d-flex flex-wrap align-items-center gap-3">
-                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
-                <div className="d-flex flex-wrap gap-3">
-                  {filteredRecords.map((record) => (
-                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                      <strong>{record.fruit}:</strong> {record.prabhari_ka_naam || "—"}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+           {filteredRecords.length > 0 && (
+             <div className="mt-3 p-3 border rounded bg-light">
+               <div className="d-flex flex-wrap align-items-center gap-3">
+                 <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                 <div className="d-flex flex-wrap gap-3">
+                   {/* Check if all records have the same prabhari_ka_naam */}
+                   {filteredRecords.length > 0 && (() => {
+                     const prabhariNames = filteredRecords.map(r => r.prabhari_ka_naam || "").filter(Boolean);
+                     const allSame = prabhariNames.length > 0 && prabhariNames.every(name => name === prabhariNames[0]);
+                     
+                     if (allSame && prabhariNames.length > 0) {
+                       // Show single name if all are the same
+                       return (
+                         <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                           <strong>सभी फल:</strong> {prabhariNames[0] || "—"}
+                         </span>
+                       );
+                     } else {
+                       // Show per fruit if names differ
+                       return filteredRecords.map((record) => (
+                         <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                           <strong>{record.fruit}:</strong> {record.prabhari_ka_naam || "—"}
+                         </span>
+                       ));
+                     }
+                   })()}
+                 </div>
+               </div>
+             </div>
+           )}
         </Card.Body>
       </Card>
     </Container>
