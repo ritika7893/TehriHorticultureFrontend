@@ -614,13 +614,7 @@ const [filterMonth, setFilterMonth] = useState("");
       <Card className="border-0 shadow-sm mb-4">
         <Card.Header className="d-flex flex-wrap align-items-center justify-content-between gap-2">
           <strong>नई मासिक प्रविष्टि</strong>
-          <Button
-            type="button"
-            variant="outline-primary"
-            onClick={() => window.print()}
-          >
-            प्रिंट करें
-          </Button>
+         
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleCreate}>
