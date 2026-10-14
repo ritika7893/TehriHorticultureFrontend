@@ -46,8 +46,7 @@ const DemandNavigation = () => {
               डिमांड जनरेशन
             </Nav.Link>
            
-
-<NavDropdown
+            <NavDropdown
               title="एंट्री"
               id="entry-nav-dropdown"
               style={{
@@ -110,9 +109,13 @@ const DemandNavigation = () => {
               title="सेव की गई प्रविष्टियां"
               id="saved-entries-nav-dropdown"
               style={{
-                fontWeight: isActive("/SavedVegetableEntries")
-                  ? "bold"
-                  : "normal",
+                fontWeight:
+                  isActive("/SavedVegetableEntries") ||
+                  isActive("/SavedFruitEntries") ||
+                  isActive("/SavedFlowerEntries") ||
+                  isActive("/SavedSpicesEntries")
+                    ? "bold"
+                    : "normal",
               }}
             >
               <NavDropdown.Item
@@ -126,8 +129,40 @@ const DemandNavigation = () => {
               >
                 सेव की गई सब्जी प्रविष्टियां
               </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/SavedFruitEntries")}
+                onClick={() => navigate("/SavedFruitEntries")}
+                style={{
+                  fontWeight: isActive("/SavedFruitEntries")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                सेव की गई फल प्रविष्टियां
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/SavedFlowerEntries")}
+                onClick={() => navigate("/SavedFlowerEntries")}
+                style={{
+                  fontWeight: isActive("/SavedFlowerEntries")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                सेव की गई पुष्प प्रविष्टियां
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                active={isActive("/SavedSpicesEntries")}
+                onClick={() => navigate("/SavedSpicesEntries")}
+                style={{
+                  fontWeight: isActive("/SavedSpicesEntries")
+                    ? "bold"
+                    : "normal",
+                }}
+              >
+                सेव की गई मसाला प्रविष्टियां
+              </NavDropdown.Item>
             </NavDropdown>
-           
 
             {/* Second Dropdown: सेवाएं (Services) */}
            

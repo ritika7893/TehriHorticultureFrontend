@@ -52,6 +52,9 @@ import SavedVegetableEntries from "./componets/center_dashboard/SavedVegetableEn
 import FruitReport from "./componets/center_dashboard/FruitReport";
 import SpicesReport from "./componets/center_dashboard/SpicesReport";
 import FlowerReport from "./componets/center_dashboard/FlowerReport";
+import SavedFruitEntries from "./componets/center_dashboard/SavedFruitEntries";
+import SavedFlowerEntries from "./componets/center_dashboard/SavedFlowerEntries";
+import SavedSpicesEntries from "./componets/center_dashboard/SavedSpicesEntries";
 
 
 // Navbar wrapper component that uses useAuth (must be inside AuthProvider)
@@ -71,6 +74,9 @@ function NavbarWrapper() {
     "/FruitReport",
     "/FlowerReport",
     "/SpicesReport",
+    "/SavedFruitEntries",
+    "/SavedFlowerEntries",
+    "/SavedSpicesEntries",
   ]);
   const hiddenPaths = new Set([
     "/Dashboard",
@@ -83,7 +89,7 @@ function NavbarWrapper() {
     "/MPR",
     "/AddEditComponent",
     "/DemandGenerate",
-  
+   
     "/DemandGenerate/CenterwiseEntry",
     "/DemandGenerate/KrishiwiseEntry",
     "/KendraPasswordReset",
@@ -147,273 +153,298 @@ function AppContent() {
             }
           />
           
-  <Route
-            path="/MonthReport"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <MonthReport />
-              </ProtectedRoute>
-            }
-          />
-  <Route
-    path="/VetanMang"
-    element={
-      <ProtectedRoute allowedLoginTypes={["demand"]}>
-        <VetanMang />
-      </ProtectedRoute>
-    }
-  />
-<Route
-            path="/VegetableReport"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <VegetableReport />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/SavedVegetableEntries"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <SavedVegetableEntries />
-              </ProtectedRoute>
-            }
-          />
-  <Route
-    path="/AdminVetanMang"
-    element={
-      <ProtectedRoute allowedLoginTypes={["admin"]}>
-        <AdminVetanMang />
-      </ProtectedRoute>
-    }
-  />
-  <Route
-    path="/AdminMonthAttendance"
-    element={
-      <ProtectedRoute allowedLoginTypes={["admin"]}>
-        <AdminMonthAttendance />
-      </ProtectedRoute>
-    }
-  />
-          <Route
-            path="/Registration"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <Registration />
-              </ProtectedRoute>
-            }
-          />
-            <Route
-            path="/AdminKishanAavedan"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <AdminKishanAavedan />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/UdyanBill"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <UdyanBill />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/KishanBeej"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <KishanBeej />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/MonthAttendance"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <MonthAttendance />
-              </ProtectedRoute>
-            }
-          />
-           <Route
-            path="/FruitReport"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <FruitReport />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/FlowerReport"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <FlowerReport />
-              </ProtectedRoute>
-            }
-          />
+        <Route
+          path="/MonthReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <MonthReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/VetanMang"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <VetanMang />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/VegetableReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <VegetableReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SavedVegetableEntries"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <SavedVegetableEntries />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminVetanMang"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminVetanMang />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminMonthAttendance"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminMonthAttendance />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Registration"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <Registration />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminKishanAavedan"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminKishanAavedan />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/UdyanBill"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <UdyanBill />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/KishanBeej"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <KishanBeej />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/MonthAttendance"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <MonthAttendance />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/FruitReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <FruitReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/FlowerReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <FlowerReport />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/SpicesReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <SpicesReport />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/SavedFruitEntries"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <SavedFruitEntries />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SavedFlowerEntries"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <SavedFlowerEntries />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SavedSpicesEntries"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <SavedSpicesEntries />
+            </ProtectedRoute>
+          }
+        />
           
+        <Route
+          path="/LibrarySystem"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <LibrarySystem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/HorticultureManagementSystem"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <HorticultureManagementSystem />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/SeedFarmers"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <SeedFarmers />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/KisanAavedanPortal"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin", "demand"]}>
+              <KisanAavedanPortal />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/KrishiRegistration"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <KrishiRegistration />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/MainDashboard"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <MainDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Billing"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <Billing />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AllBills"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AllBills />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/MPR"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <MPR />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AddEditComponent"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AddEditComponent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/DemandGenerate"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <DemandGenerate />
+            </ProtectedRoute>
+          }
+        />
           <Route
-            path="/SpicesReport"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <SpicesReport />
-              </ProtectedRoute>
-            }
-          />
-          
-          <Route
-            path="/LibrarySystem"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <LibrarySystem />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/HorticultureManagementSystem"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <HorticultureManagementSystem />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/SeedFarmers"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <SeedFarmers />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/KisanAavedanPortal"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin", "demand"]}>
-                <KisanAavedanPortal />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/KrishiRegistration"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <KrishiRegistration />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/MainDashboard"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <MainDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/Billing"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <Billing />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/AllBills"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <AllBills />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/MPR"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <MPR />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/AddEditComponent"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <AddEditComponent />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/DemandGenerate"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <DemandGenerate />
-              </ProtectedRoute>
-            }
-          />
-            <Route
-            path="/CenterUdyanBill"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <CenterUdyanBill />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/DemandGenerate/CenterwiseEntry"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <DemandCenterwiseEntry />
-              </ProtectedRoute>
-            }
-          />
-          
-          <Route
-            path="/DemandGenerate/KrishiwiseEntry"
-            element={
-              <ProtectedRoute allowedLoginTypes={["demand"]}>
-                <DemandKrishiwiseEntry />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/KendraPasswordReset"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <KendraPasswordReset />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/DemandView"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin"]}>
-                <DemandView />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/GetViewLibrary"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin", "demand"]}>
-                <GetViewLibrary />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/NurseryFinancialEntry"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin", "nursery"]}>
-                <NurseryFinancialEntry />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/NurseryPhysicalEntry"
-            element={
-              <ProtectedRoute allowedLoginTypes={["admin", "nursery"]}>
-                <NurseryPhysicalEntry />
-              </ProtectedRoute>
-            }
-          />
+          path="/CenterUdyanBill"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <CenterUdyanBill />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/DemandGenerate/CenterwiseEntry"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <DemandCenterwiseEntry />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/DemandGenerate/KrishiwiseEntry"
+          element={
+            <ProtectedRoute allowedLoginTypes={["demand"]}>
+              <DemandKrishiwiseEntry />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/KendraPasswordReset"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <KendraPasswordReset />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/DemandView"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <DemandView />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/GetViewLibrary"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin", "demand"]}>
+              <GetViewLibrary />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/NurseryFinancialEntry"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin", "nursery"]}>
+              <NurseryFinancialEntry />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/NurseryPhysicalEntry"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin", "nursery"]}>
+              <NurseryPhysicalEntry />
+            </ProtectedRoute>
+          }
+        />
         </Routes>
       </main>
 
