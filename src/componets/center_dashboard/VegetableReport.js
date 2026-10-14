@@ -291,12 +291,16 @@ const VegetableReport = () => {
       );
     });
     if (succeededKeys.length) {
+      const successText = failures.length
+        ? `${succeededKeys.length} प्रविष्टि सेव हुई। ${failures.join(" ")}`
+        : `${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`;
       setMessage({
         type: failures.length ? "warning" : "success",
-        text: failures.length
-          ? `${succeededKeys.length} प्रविष्टि सेव हुई। ${failures.join(" ")}`
-          : `${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`,
+        text: successText,
       });
+      if (!failures.length) {
+        alert(`${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`);
+      }
     } else {
       setMessage({
         type: "danger",
