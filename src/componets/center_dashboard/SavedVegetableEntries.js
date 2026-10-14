@@ -185,6 +185,19 @@ const SavedVegetableEntries = () => {
     [filterFinancialYear, filterMonth, filterVegetable, records],
   );
 
+  const uniqueFinancialYears = useMemo(
+    () => [...new Set(records.map((r) => r.financial_year).filter(Boolean))].sort(),
+    [records],
+  );
+  const uniqueMonths = useMemo(
+    () => [...new Set(records.map((r) => r.month).filter(Boolean))].sort((a, b) => MONTHS.indexOf(a) - MONTHS.indexOf(b)),
+    [records],
+  );
+  const uniqueVegetables = useMemo(
+    () => [...new Set(records.map((r) => r.vegetable).filter(Boolean))].sort(),
+    [records],
+  );
+
   const toggleSelected = (id) => {
     setSelectedIds((current) =>
       current.includes(id)
@@ -352,25 +365,21 @@ const SavedVegetableEntries = () => {
               <Form.Label>वित्तीय वर्ष से छांटें</Form.Label>
               <Form.Select value={filterFinancialYear} onChange={(event) => setFilterFinancialYear(event.target.value)}>
                 <option value="">सभी वित्तीय वर्ष</option>
-                {financialYearOptions.map((year) => <option key={year} value={year}>{year}</option>)}
+                {uniqueFinancialYears.map((year) => <option key={year} value={year}>{year}</option>)}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-12 col-md-4">
               <Form.Label>माह से छांटें</Form.Label>
               <Form.Select value={filterMonth} onChange={(event) => setFilterMonth(event.target.value)}>
                 <option value="">सभी माह</option>
-                {MONTHS.map((month) => <option key={month} value={month}>{month}</option>)}
+                {uniqueMonths.map((month) => <option key={month} value={month}>{month}</option>)}
               </Form.Select>
             </Form.Group>
             <Form.Group className="col-12 col-md-4">
               <Form.Label>सब्जी के नाम से छांटें</Form.Label>
               <Form.Select value={filterVegetable} onChange={(event) => setFilterVegetable(event.target.value)}>
                 <option value="">सभी सब्जियां</option>
-                {components.map((component) => (
-                  <option key={component.id} value={component.sub_investment_name}>
-                    {component.sub_investment_name}
-                  </option>
-                ))}
+                {uniqueVegetables.map((veg) => <option key={veg} value={veg}>{veg}</option>)}
               </Form.Select>
             </Form.Group>
           </div>
@@ -397,7 +406,6 @@ const SavedVegetableEntries = () => {
                     <th>वर्तमान माह उत्पादन</th>
                     <th>गत माह तक उत्पादन</th>
                     <th>टिप्पणी</th>
-                    <th>प्रभारी का नाम</th>
                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
                     <th>कार्यवाही</th>
@@ -430,16 +438,6 @@ const SavedVegetableEntries = () => {
                           />
                         ) : record.remarks || "—"}
                       </td>
-                      <td>
-                        {editingId === record.id ? (
-                          <Form.Control
-                            aria-label="प्रभारी का नाम"
-                            value={editingRecord?.prabhari_ka_naam ?? ""}
-                            onChange={(event) => updateEditingRecord("prabhari_ka_naam", event.target.value)}
-                            style={{ minWidth: "140px" }}
-                          />
-                        ) : record.prabhari_ka_naam || "—"}
-                      </td>
                       <td>{record.month}</td>
                       <td>{record.financial_year}</td>
                       <td className="text-nowrap">
@@ -456,13 +454,27 @@ const SavedVegetableEntries = () => {
                   ))}
                   {!filteredRecords.length && (
                     <tr>
-                      <td colSpan={12} className="text-center text-muted py-4">
+                      <td colSpan={11} className="text-center text-muted py-4">
                         इस चयन के लिए कोई प्रविष्टि उपलब्ध नहीं है।
                       </td>
                     </tr>
                   )}
                 </tbody>
               </Table>
+            </div>
+          )}
+          {filteredRecords.length > 0 && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                <div className="d-flex flex-wrap gap-3">
+                  {filteredRecords.map((record) => (
+                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                      <strong>{record.vegetable}:</strong> {record.prabhari_ka_naam || "—"}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </Card.Body>
