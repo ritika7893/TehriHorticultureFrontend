@@ -120,9 +120,11 @@ const FruitReport = () => {
   const [entryFinancialYear, setEntryFinancialYear] = useState(
     getCurrentFinancialYear
   );
-  const [prabhariName, setPrabhariName] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
-  const [filterMonth, setFilterMonth] = useState("");
+const [prabhariName, setPrabhariName] = useState("");
+const [fieldErrors, setFieldErrors] = useState({});
+const [draftFieldErrors, setDraftFieldErrors] = useState({});
+const [editingFieldErrors, setEditingFieldErrors] = useState({});
+const [filterMonth, setFilterMonth] = useState("");
   const [filterFinancialYear, setFilterFinancialYear] = useState("");
   const [filterFruit, setFilterFruit] = useState("");
   const [selectedIds, setSelectedIds] = useState([]);
@@ -236,19 +238,42 @@ const FruitReport = () => {
     );
   };
 
-  const validateNumericFields = (record) => {
-    const fields = {};
-    INPUT_FIELDS.forEach((field) => {
-      const value = String(record[field] ?? "").trim();
-      if (value && (!Number.isFinite(Number(value)) || Number(value) < 0)) {
-        throw new Error(
-          `${INPUT_LABELS[field]} में शून्य या उससे अधिक संख्या दर्ज करें।`
-        );
-      }
-      fields[field] = value ? Number(value).toFixed(2) : "0.00";
-    });
-    return fields;
-  };
+   const validateNumericFields = (record) => {
+     const fields = {};
+     INPUT_FIELDS.forEach((field) => {
+       const value = String(record[field] ?? "").trim();
+       if (value && (!Number.isFinite(Number(value)) || Number(value) < 0)) {
+         throw new Error(
+           `${INPUT_LABELS[field]} में शून्य या उससे अधिक संख्या दर्ज करें।`
+         );
+       }
+       fields[field] = value ? Number(value).toFixed(2) : "0.00";
+     });
+     return fields;
+   };
+   
+    const validateDraftFields = (draft) => {
+      const errors = {};
+      const validatedFields = {};
+      
+      INPUT_FIELDS.forEach((field) => {
+        const fieldKey = `${draft.key}-${field}`;
+        const value = String(draft[field] ?? "").trim();
+        
+        // Check if field is empty (required)
+        if (!value) {
+          errors[fieldKey] = "यह फील्ड आवश्यक है";
+        } 
+        // Check if value is a valid number
+        else if (!Number.isFinite(Number(value)) || Number(value) < 0) {
+          errors[fieldKey] = `${INPUT_LABELS[field]} में शून्य या उससे अधिक संख्या दर्ज करें।`;
+        } else {
+          validatedFields[field] = Number(value).toFixed(2);
+        }
+      });
+      
+      return { errors, validatedFields };
+    };
 
   const handleCreate = async (event) => {
     event.preventDefault();
@@ -256,75 +281,97 @@ const FruitReport = () => {
     setFieldErrors({});
     let hasErrors = false;
 
-    if (!centerName) {
-      setMessage({
-        type: "danger",
-        text: "लॉग-इन केंद्र का नाम उपलब्ध नहीं है। कृपया दोबारा लॉग-इन करें।",
-      });
-      return;
-    }
-    if (!entryMonth) {
-      setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
-      hasErrors = true;
-    }
-    if (!String(prabhariName || "").trim()) {
-      setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
-      hasErrors = true;
-    }
-    if (hasErrors) {
-      setMessage({
-        type: "danger",
-        text: "कृपया सभी आवश्यक फील्ड भरें।",
-      });
-      return;
-    }
-    const readyDrafts = drafts.filter(hasDraftValues);
-    if (!readyDrafts.length) {
-      setMessage({
-        type: "danger",
-        text: "कम से कम एक फल की जानकारी दर्ज करें।",
-      });
-      return;
-    }
+     if (!centerName) {
+       setMessage({
+         type: "danger",
+         text: "लॉग-इन केंद्र का नाम उपलब्ध नहीं है। कृपया दोबारा लॉग-इन करें।",
+       });
+       window.scrollTo(0, 0);
+       return;
+     }
+     if (!entryMonth) {
+       setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
+       hasErrors = true;
+     }
+     if (!String(prabhariName || "").trim()) {
+       setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
+       hasErrors = true;
+     }
+     if (hasErrors) {
+       setMessage({
+         type: "danger",
+         text: "कृपया सभी आवश्यक फील्ड भरें।",
+       });
+       window.scrollTo(0, 0);
+       return;
+     }
+      const readyDrafts = drafts.filter(hasDraftValues);
+      if (readyDrafts.length !== drafts.length) {
+        setMessage({
+          type: "danger",
+          text: "सभी फल की जानकारी दर्ज करें।",
+        });
+        window.scrollTo(0, 0);
+        alert("सभी फल की जानकारी दर्ज करें।");
+        return;
+      }
 
-    let payloads;
-    try {
-      payloads = readyDrafts.map((draft) => ({
-        center_name: centerName,
-        fruit: draft.fruit,
-        ...validateNumericFields(draft),
-        prabhari_ka_naam: String(prabhariName || "").trim(),
-        remarks: String(draft.remarks || "").trim(),
-        financial_year: entryFinancialYear,
-        month: entryMonth,
-      }));
-    } catch (error) {
-      setMessage({ type: "danger", text: error.message });
-      return;
-    }
+     // Validate all draft fields and collect errors
+     let allValid = true;
+     const draftErrors = {};
+     const validatedPayloads = [];
+     
+     readyDrafts.forEach((draft) => {
+       const { errors, validatedFields } = validateDraftFields(draft);
+       if (Object.keys(errors).length > 0) {
+         allValid = false;
+         Object.assign(draftErrors, errors);
+       }
+       validatedPayloads.push({
+         center_name: centerName,
+         fruit: draft.fruit,
+         ...validatedFields,
+         prabhari_ka_naam: String(prabhariName || "").trim(),
+         remarks: String(draft.remarks || "").trim(),
+         financial_year: entryFinancialYear,
+         month: entryMonth,
+       });
+     });
+     
+      // Set draft field errors
+      setDraftFieldErrors(draftErrors);
+      
+      if (!allValid) {
+        setMessage({
+          type: "danger",
+          text: "कृपया सभी संख्या फील्ड में सही मान दर्ज करें।",
+        });
+        window.scrollTo(0, 0);
+        return;
+      }
 
     setSubmitting(true);
     const succeededKeys = [];
     const failures = [];
-    for (let index = 0; index < readyDrafts.length; index += 1) {
-      try {
-        const response = await fetch(REPORT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payloads[index]),
-        });
-        const data = await readResponse(response);
-        if (!response.ok) {
-          throw new Error(getErrorMessage(data, "प्रविष्टि सेव नहीं हो सकी।"));
-        }
-        succeededKeys.push(readyDrafts[index].key);
-      } catch (error) {
-        console.error("createFruitReport:", error);
-        failures.push(
-          `${readyDrafts[index].fruit}: ${error.message || "सेव नहीं हुआ"}`
-        );
-      }
-    }
+     for (let index = 0; index < readyDrafts.length; index += 1) {
+       try {
+         const response = await fetch(REPORT_URL, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(validatedPayloads[index]),
+         });
+         const data = await readResponse(response);
+         if (!response.ok) {
+           throw new Error(getErrorMessage(data, "प्रविष्टि सेव नहीं हो सकी।"));
+         }
+         succeededKeys.push(readyDrafts[index].key);
+       } catch (error) {
+         console.error("createFruitReport:", error);
+         failures.push(
+           `${readyDrafts[index].fruit}: ${error.message || "सेव नहीं हुआ"}`
+         );
+       }
+     }
 
     setDrafts((current) =>
       current.map((draft) =>
@@ -344,57 +391,72 @@ const FruitReport = () => {
         alert(`${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`);
       }
       await loadRecords();
-    } else {
-      setMessage({
-        type: "danger",
-        text: failures.join(" ") || "प्रविष्टि सेव नहीं हो सकी।",
-      });
-    }
+     } else {
+       setMessage({
+         type: "danger",
+         text: failures.join(" ") || "प्रविष्टि सेव नहीं हो सकी।",
+       });
+       window.scrollTo(0, 0);
+     }
     setSubmitting(false);
   };
 
-  const startEditing = (record) => {
-    setEditingId(record.id);
-    setEditingRecord({ ...record });
-  };
+   const startEditing = (record) => {
+     setEditingId(record.id);
+     setEditingRecord({ ...record });
+     setEditingFieldErrors({}); // Clear editing errors when starting new edit
+   };
 
   const updateEditingRecord = (field, value) => {
     setEditingRecord((current) => ({ ...current, [field]: value }));
   };
 
-  const handleUpdate = async (record) => {
-    if (!record?.id || !editingRecord) return;
-    setSubmitting(true);
-    setMessage({ type: "", text: "" });
-    try {
-      const payload = {
-        id: record.id,
-        ...validateNumericFields(editingRecord),
-        remarks: String(editingRecord.remarks || "").trim(),
-      };
-      const response = await fetch(REPORT_URL, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = await readResponse(response);
-      if (!response.ok) {
-        throw new Error(getErrorMessage(data, "प्रविष्टि अपडेट नहीं हो सकी।"));
-      }
-      setEditingId(null);
-      setEditingRecord(null);
-      setMessage({ type: "success", text: "प्रविष्टि सफलतापूर्वक अपडेट हुई।" });
-      await loadRecords();
-    } catch (error) {
-      console.error("updateFruitReport:", error);
-      setMessage({
-        type: "danger",
-        text: error.message || "प्रविष्टि अपडेट नहीं हो सकी।",
-      });
-    } finally {
-      setSubmitting(false);
-    }
-  };
+   const handleUpdate = async (record) => {
+     if (!record?.id || !editingRecord) return;
+     setSubmitting(true);
+     setMessage({ type: "", text: "" });
+     
+     // Validate editing record fields
+     const { errors, validatedFields } = validateDraftFields(editingRecord);
+     if (Object.keys(errors).length > 0) {
+       // Set field-specific errors for editing
+       setEditingFieldErrors(errors);
+       window.scrollTo(0, 0);
+       setSubmitting(false);
+       return;
+     }
+     
+     try {
+       const payload = {
+         id: record.id,
+         ...validatedFields,
+         remarks: String(editingRecord.remarks || "").trim(),
+       };
+       const response = await fetch(REPORT_URL, {
+         method: "PUT",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(payload),
+       });
+       const data = await readResponse(response);
+       if (!response.ok) {
+         throw new Error(getErrorMessage(data, "प्रविष्टि अपडेट नहीं हो सकी।"));
+       }
+       setEditingId(null);
+       setEditingRecord(null);
+       setEditingFieldErrors({}); // Clear editing errors on success
+       setMessage({ type: "success", text: "प्रविष्टि सफलतापूर्वक अपडेट हुई।" });
+       await loadRecords();
+     } catch (error) {
+       console.error("updateFruitReport:", error);
+       setMessage({
+         type: "danger",
+         text: error.message || "प्रविष्टि अपडेट नहीं हो सकी।",
+       });
+       window.scrollTo(0, 0);
+     } finally {
+       setSubmitting(false);
+     }
+   };
 
   const toggleSelected = (id) => {
     setSelectedIds((current) =>
@@ -432,43 +494,87 @@ const FruitReport = () => {
       setSelectedIds([]);
       setMessage({ type: "success", text: "चुनी गई प्रविष्टियां हटा दी गईं।" });
       await loadRecords();
-    } catch (error) {
-      console.error("deleteFruitReports:", error);
-      setMessage({
-        type: "danger",
-        text: error.message || "प्रविष्टियां हटाई नहीं जा सकीं।",
-      });
-    } finally {
-      setSubmitting(false);
-    }
+     } catch (error) {
+       console.error("deleteFruitReports:", error);
+       setMessage({
+         type: "danger",
+         text: error.message || "प्रविष्टियां हटाई नहीं जा सकीं।",
+       });
+       window.scrollTo(0, 0);
+     } finally {
+       setSubmitting(false);
+     }
   };
 
-  const renderNumericCell = (record, field) =>
-    editingId === record.id ? (
-      <Form.Control
-        aria-label={INPUT_LABELS[field]}
-        type="number"
-        min="0"
-        step="0.01"
-        value={editingRecord?.[field] ?? ""}
-        onChange={(event) => updateEditingRecord(field, event.target.value)}
-        style={{ minWidth: "105px" }}
-      />
-    ) : (
-      formatNumber(record[field])
-    );
+   const renderNumericCell = (record, field) =>
+     editingId === record.id ? (
+       <div className="d-flex flex-column">
+         <Form.Control
+           aria-label={INPUT_LABELS[field]}
+           type="number"
+           min="0"
+           step="0.01"
+           value={editingRecord?.[field] ?? ""}
+           onChange={(event) => {
+             updateEditingRecord(field, event.target.value);
+             // Clear error for this specific field when user starts typing
+             const fieldKey = `${record.id}-${field}`;
+             if (editingFieldErrors[fieldKey]) {
+               setEditingFieldErrors(prev => {
+                 const newErrors = { ...prev };
+                 delete newErrors[fieldKey];
+                 return newErrors;
+               });
+             }
+           }}
+           isInvalid={!!editingFieldErrors[`${record.id}-${field}`]}
+           className="vegetable-report-input"
+           style={{ minWidth: "105px" }}
+         />
+         {editingFieldErrors[`${record.id}-${field}`] && (
+           <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+             {editingFieldErrors[`${record.id}-${field}`]}
+           </div>
+         )}
+       </div>
+     ) : (
+       formatNumber(record[field])
+     );
 
-  const renderDraftInput = (draft, field) => (
-    <Form.Control
-      aria-label={`${draft.fruit || "फल"} - ${INPUT_LABELS[field]}`}
-      type="number"
-      min="0"
-      step="0.01"
-      value={draft[field]}
-      onChange={(event) => updateDraft(draft.key, field, event.target.value)}
-      className="vegetable-report-input"
-    />
-  );
+   const renderDraftInput = (draft, field) => {
+     const fieldKey = `${draft.key}-${field}`;
+     const hasError = !!draftFieldErrors[fieldKey];
+     
+     return (
+       <div className="d-flex flex-column">
+         <Form.Control
+           aria-label={`${draft.fruit || "फल"} - ${INPUT_LABELS[field]}`}
+           type="number"
+           min="0"
+           step="0.01"
+           value={draft[field]}
+           onChange={(event) => {
+             updateDraft(draft.key, field, event.target.value);
+             // Clear error for this specific field when user starts typing
+             if (hasError) {
+               setDraftFieldErrors(prev => {
+                 const newErrors = { ...prev };
+                 delete newErrors[fieldKey];
+                 return newErrors;
+               });
+             }
+           }}
+           isInvalid={hasError}
+           className="vegetable-report-input"
+         />
+         {hasError && (
+           <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+             {draftFieldErrors[fieldKey]}
+           </div>
+         )}
+       </div>
+     );
+   };
 
   const sumDraftField = (field) =>
     drafts.reduce((sum, draft) => sum + (Number(draft[field]) || 0), 0);
@@ -550,7 +656,7 @@ const FruitReport = () => {
                   }}
                   isInvalid={!!fieldErrors.entryMonth}
                   className={fieldErrors.entryMonth ? "is-invalid" : ""}
-                  required
+               
                 >
                   <option value="">माह चुनें</option>
                   {MONTHS.map((month) => (
@@ -604,18 +710,18 @@ const FruitReport = () => {
                     >
                       <thead className="table-light">
                         <tr>
-                          <th rowSpan={2} className="text-center align-middle">
-                            क्र.सं.<br/>(1)
-                          </th>
+<th rowSpan={2} className="text-center align-middle">
+  माह क्र.सं.<br/>(1)
+</th>
                           <th rowSpan={2} className="text-center align-middle">
                             फल<br/>(2)
                           </th>
                           <th colSpan={3} className="text-center">
                             क्षेत्रफल (हेक्टेयर)
                           </th>
-                          <th colSpan={2} className="text-center">
-                            उत्पादन (कुंटल) ({financialYearShort})
-                          </th>
+<th colSpan={2} className="text-center">
+  उत्पादन (कुंटल) (2026-27)
+</th>
                           <th rowSpan={2} className="text-center align-middle">
                             अभ्युक्ति<br/>(12)
                           </th>
