@@ -494,11 +494,9 @@ const SavedSpicesEntries = () => {
               <div className="d-flex flex-wrap align-items-center gap-3">
                 <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
                 <div className="d-flex flex-wrap gap-3">
-                  {filteredRecords.map((record) => (
-                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                      <strong>{record.spice}:</strong> {record.prabhari_ka_naam || "—"}
-                    </span>
-                  ))}
+                  <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                    {filteredRecords[0]?.prabhari_ka_naam || "—"}
+                  </span>
                 </div>
               </div>
             </div>

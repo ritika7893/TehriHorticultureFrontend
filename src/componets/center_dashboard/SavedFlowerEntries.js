@@ -368,6 +368,7 @@ const SavedFlowerEntries = () => {
             disabled={!selectedIds.length || submitting}
             onClick={handleDeleteSelected}
             style={{ color: 'white' }}
+            className="ms-auto"
           >
             चयनित हटाएं ({selectedIds.length})
           </Button>
