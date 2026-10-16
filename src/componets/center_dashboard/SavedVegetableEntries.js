@@ -8,6 +8,9 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
+import * as XLSX from "xlsx";
+import html2pdf from "html2pdf.js";
+import { FaFileExcel, FaFilePdf } from "react-icons/fa";
 import DemandNavigation from "../DemandNavigation";
 import { useCenter } from "../all_login/CenterContext";
 import "./VegetableReport.css";
@@ -309,6 +312,167 @@ const SavedVegetableEntries = () => {
     }
   };
 
+  const exportToExcel = () => {
+    try {
+      const headers = [
+        "क्र.सं.",
+        "सब्जी",
+        "वर्तमान माह क्षेत्रफल",
+        "गत माह तक क्षेत्रफल",
+        "क्षतिग्रस्त क्षेत्रफल",
+        "वर्तमान माह उत्पादन",
+        "गत माह तक उत्पादन",
+        "टिप्पणी",
+        "माह",
+        "वित्तीय वर्ष",
+        "प्रभारी का नाम",
+      ];
+      const rows = filteredRecords.map((record, index) => [
+        index + 1,
+        record.vegetable,
+        formatNumber(record.current_month_sown_area),
+        formatNumber(record.previous_month_total_sown_area),
+        formatNumber(record.total_damaged_area),
+        formatNumber(record.current_month_production),
+        formatNumber(record.previous_month_total_production),
+        record.remarks || "",
+        record.month,
+        record.financial_year,
+        record.prabhari_ka_naam || "",
+      ]);
+      const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "सब्जी प्रविष्टियां");
+      XLSX.writeFile(workbook, `सब्जी_प्रविष्टियां_${new Date().toISOString().split("T")[0]}.xlsx`);
+    } catch (error) {
+      console.error("exportToExcel error:", error);
+      alert("एक्सेल फाइल बनाने में त्रुटि हुई।");
+    }
+  };
+
+  const exportToPDF = () => {
+    try {
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "20px";
+      wrapper.style.fontFamily = "Arial, sans-serif";
+      wrapper.style.overflow = "visible";
+      wrapper.style.color = "#000000";
+
+      const header = document.createElement("h3");
+      header.textContent = "सब्जी प्रविष्टियां";
+      header.style.textAlign = "center";
+      header.style.marginBottom = "10px";
+      wrapper.appendChild(header);
+
+      const meta = document.createElement("div");
+      meta.style.textAlign = "center";
+      meta.style.marginBottom = "15px";
+      meta.style.fontSize = "12px";
+      meta.textContent = `केंद्र: ${centerName} | वित्तीय वर्ष: ${filterFinancialYear || "सभी"} | माह: ${filterMonth || "सभी"}`;
+      wrapper.appendChild(meta);
+
+      const table = document.createElement("table");
+      table.style.borderCollapse = "collapse";
+      table.style.width = "100%";
+      table.style.tableLayout = "fixed";
+
+      const headers = [
+        { text: "क्र.सं.", width: "4%" },
+        { text: "सब्जी", width: "10%" },
+        { text: "वर्तमान माह क्षेत्रफल", width: "10%" },
+        { text: "गत माह तक क्षेत्रफल", width: "10%" },
+        { text: "क्षतिग्रस्त क्षेत्रफल", width: "9%" },
+        { text: "वर्तमान माह उत्पादन", width: "10%" },
+        { text: "गत माह तक उत्पादन", width: "10%" },
+        { text: "टिप्पणी", width: "12%" },
+        { text: "माह", width: "7%" },
+        { text: "वित्तीय वर्ष", width: "8%" },
+        { text: "प्रभारी का नाम", width: "10%" },
+      ];
+
+      const thead = document.createElement("thead");
+      const headerRow = document.createElement("tr");
+      headers.forEach(({ text, width }) => {
+        const th = document.createElement("th");
+        th.textContent = text;
+        th.style.border = "1px solid #000";
+        th.style.padding = "4px";
+        th.style.backgroundColor = "#0B488F";
+        th.style.color = "#000000";
+        th.style.textAlign = "center";
+        th.style.whiteSpace = "normal";
+        th.style.wordBreak = "break-word";
+        th.style.fontSize = "7px";
+        th.style.width = width;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+
+      const tbody = document.createElement("tbody");
+      filteredRecords.forEach((record, index) => {
+        const row = document.createElement("tr");
+        const cells = [
+          index + 1,
+          record.vegetable,
+          formatNumber(record.current_month_sown_area),
+          formatNumber(record.previous_month_total_sown_area),
+          formatNumber(record.total_damaged_area),
+          formatNumber(record.current_month_production),
+          formatNumber(record.previous_month_total_production),
+          record.remarks || "",
+          record.month,
+          record.financial_year,
+          record.prabhari_ka_naam || "",
+        ];
+        cells.forEach((text, cellIndex) => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          td.style.border = "1px solid #000";
+          td.style.padding = "4px";
+          td.style.textAlign = "center";
+          td.style.color = "#000000";
+          td.style.whiteSpace = "normal";
+          td.style.wordBreak = "break-word";
+          td.style.fontSize = "7px";
+          td.style.width = headers[cellIndex].width;
+          row.appendChild(td);
+        });
+        tbody.appendChild(row);
+      });
+      table.appendChild(tbody);
+      wrapper.appendChild(table);
+
+      document.body.appendChild(wrapper);
+
+      const opt = {
+        margin: 5,
+        filename: `सब्जी_प्रविष्टियां_${new Date().toISOString().split("T")[0]}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          windowWidth: wrapper.scrollWidth,
+          windowHeight: wrapper.scrollHeight,
+          scrollX: 0,
+          scrollY: 0,
+        },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+        pagebreak: { mode: ["css", "legacy"] },
+      };
+      html2pdf()
+        .set(opt)
+        .from(wrapper)
+        .save()
+        .then(() => {
+          document.body.removeChild(wrapper);
+        });
+    } catch (error) {
+      console.error("exportToPDF error:", error);
+      alert("PDF बनाने में त्रुटि हुई।");
+    }
+  };
+
   const renderNumericCell = (record, field) =>
     editingId === record.id ? (
       <Form.Control
@@ -349,15 +513,33 @@ const SavedVegetableEntries = () => {
       <Card className="border-0 shadow-sm">
         <Card.Header className="d-flex flex-wrap justify-content-between align-items-center gap-2">
           <strong>सेव की गई सब्जी प्रविष्टियां</strong>
-          <Button
-            variant="outline-danger"
-            size="sm"
-            disabled={!selectedIds.length || submitting}
-            onClick={handleDeleteSelected}
-            style={{ color: 'white' }}
-          >
-            चयनित हटाएं ({selectedIds.length})
-          </Button>
+          <div className="d-flex flex-wrap gap-2 align-items-center">
+            <Button
+              variant="outline-success"
+              size="sm"
+              disabled={!filteredRecords.length}
+              onClick={exportToExcel}
+            >
+              <FaFileExcel /> Excel
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              disabled={!filteredRecords.length}
+              onClick={exportToPDF}
+            >
+              <FaFilePdf /> PDF
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              disabled={!selectedIds.length || submitting}
+              onClick={handleDeleteSelected}
+              style={{ color: 'white' }}
+            >
+              चयनित हटाएं ({selectedIds.length})
+            </Button>
+          </div>
         </Card.Header>
         <Card.Body>
           <div className="row g-3 mb-3">
@@ -467,13 +649,9 @@ const SavedVegetableEntries = () => {
             <div className="mt-3 p-3 border rounded bg-light">
               <div className="d-flex flex-wrap align-items-center gap-3">
                 <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
-                <div className="d-flex flex-wrap gap-3">
-                  {filteredRecords.map((record) => (
-                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                      {record.prabhari_ka_naam || "—"}
-                    </span>
-                  ))}
-                </div>
+                <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                  {filteredRecords[0]?.prabhari_ka_naam || "—"}
+                </span>
               </div>
             </div>
           )}
