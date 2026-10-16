@@ -423,7 +423,7 @@ const SavedFruitEntries = () => {
       HEADER_GROUPS.forEach((g) => {
         const cell = row1.getCell(col);
         cell.value = g.label;
-        applyHeaderStyle(cell, { fontSize: 11 });
+        applyHeaderStyle(cell, { fontSize: 9 });
 
         if (g.colspan === 1 && !g.hasSub) {
           ws.mergeCells(1, col, 2, col);
@@ -443,7 +443,7 @@ const SavedFruitEntries = () => {
           g.subHeaders.forEach((s) => {
             const cell = row2.getCell(subCol);
             cell.value = s;
-            applyHeaderStyle(cell, { fontSize: 10 });
+            applyHeaderStyle(cell, { fontSize: 8 });
             subCol++;
           });
         } else {
@@ -585,6 +585,7 @@ const SavedFruitEntries = () => {
         th.style.color = "#ffffff";
         th.style.textAlign = "center";
         th.style.fontWeight = "700";
+        th.style.fontSize = "0.7rem";
         th.style.whiteSpace = "normal";
         th.style.wordBreak = "break-word";
         th.style.width = colWidths[colIdx];
@@ -606,6 +607,7 @@ const SavedFruitEntries = () => {
             th.style.color = "#ffffff";
             th.style.textAlign = "center";
             th.style.fontWeight = "700";
+            th.style.fontSize = "0.65rem";
             th.style.whiteSpace = "normal";
             th.style.wordBreak = "break-word";
             tr2.appendChild(th);
@@ -745,6 +747,7 @@ const SavedFruitEntries = () => {
           {message.text}
         </Alert>
       )}
+
 
       <Card className="border-0 shadow-sm">
         <Card.Header className="d-flex flex-wrap justify-content-between align-items-center gap-2">
