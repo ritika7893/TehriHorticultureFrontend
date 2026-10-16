@@ -368,13 +368,8 @@ const SavedVegetableEntries = () => {
       const colWidths = [8, 20, 16, 16, 16, 16, 16, 22, 12, 14, 20];
       ws.columns = colWidths.map((w) => ({ width: w }));
 
-      const applyHeaderStyle = (cell, { bg, fontSize = 11 }) => {
-        cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: fontSize };
-        cell.fill = {
-          type: "pattern",
-          pattern: "solid",
-          fgColor: { argb: bg },
-        };
+      const applyHeaderStyle = (cell, { fontSize = 11 }) => {
+        cell.font = { bold: true, color: { argb: "FF000000" }, size: fontSize };
         cell.alignment = {
           horizontal: "center",
           vertical: "middle",
@@ -395,7 +390,7 @@ const SavedVegetableEntries = () => {
       HEADER_GROUPS.forEach((g) => {
         const cell = row1.getCell(col);
         cell.value = g.label;
-        applyHeaderStyle(cell, { bg: "FF2A4682", fontSize: 9 });
+        applyHeaderStyle(cell, { fontSize: 9 });
 
         if (g.colspan === 1 && !g.hasSub) {
           // ★ rowSpan=2: merge vertically across both header rows
@@ -417,7 +412,7 @@ const SavedVegetableEntries = () => {
           g.subHeaders.forEach((s) => {
             const cell = row2.getCell(subCol);
             cell.value = s;
-            applyHeaderStyle(cell, { bg: "FF3A5BA0", fontSize: 8 });
+            applyHeaderStyle(cell, { fontSize: 8 });
             subCol++;
           });
         } else {
@@ -464,7 +459,7 @@ const SavedVegetableEntries = () => {
       fRow.height = 26;
       const fCell = fRow.getCell(1);
       fCell.value = `प्रभारी का नाम: ${filteredRecords[0]?.prabhari_ka_naam || "—"}`;
-      fCell.font = { bold: true, color: { argb: "FF2A4682" }, size: 11 };
+      fCell.font = { bold: true, color: { argb: "FF2A4682" }, size: 9 };
       fCell.fill = {
         type: "pattern",
         pattern: "solid",
