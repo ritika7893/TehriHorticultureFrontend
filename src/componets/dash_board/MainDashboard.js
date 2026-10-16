@@ -110,7 +110,7 @@ const MainDashboard = () => {
   return (
     <div className="horticulture-dashboard">
       <DashBoardHeader />
-      <Container fluid className="py-4 px-3 px-lg-4">
+      <Container fluid className="py-4 px-3 px-lg-4 table-container">
         <div className="horticulture-heading d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
           <div><div className="horticulture-eyebrow">TEHRI GARHWAL - MONTHLY REPORTS</div><h1>Horticulture Dashboard</h1><p>Explore cultivation and production by center, month, financial year, and category.</p></div>
           <Button variant="outline-success" onClick={loadReports} disabled={loading}>{loading ? <Spinner size="sm" animation="border" className="me-2" /> : "Refresh"}Refresh data</Button>

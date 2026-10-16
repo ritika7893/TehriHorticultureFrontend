@@ -85,6 +85,9 @@ body {
     color: #fff !important;
     font-size: 12px;
 }
+.table-container{
+  margin-top: 26px;
+}
 label.reset-label{
     font-size: 14px;
     font-weight: 600;}
