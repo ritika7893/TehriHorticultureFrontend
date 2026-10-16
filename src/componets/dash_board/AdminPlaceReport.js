@@ -28,6 +28,7 @@ const CATEGORY_CONFIG = {
     headerGroups: [
       { label: "क्र.सं.", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "सब्जी", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "केंद्र", colspan: 1, hasSub: false, subHeaders: [] },
       {
         label: "क्षेत्रफल (हेक्टेयर)",
         colspan: 3,
@@ -59,6 +60,7 @@ const CATEGORY_CONFIG = {
     buildRow: (record, index, fmt) => [
       index + 1,
       record.vegetable || "",
+      record.center_name || "",
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_total_sown_area),
       fmt(record.total_damaged_area),
@@ -77,6 +79,7 @@ const CATEGORY_CONFIG = {
     headerGroups: [
       { label: "क्र.सं.", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "फल", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "केंद्र", colspan: 1, hasSub: false, subHeaders: [] },
       {
         label: "क्षेत्रफल (हेक्टेयर)",
         colspan: 3,
@@ -108,6 +111,7 @@ const CATEGORY_CONFIG = {
     buildRow: (record, index, fmt) => [
       index + 1,
       record.fruit || "",
+      record.center_name || "",
       fmt(record.current_month_planted_area),
       fmt(record.previous_month_total_area),
       fmt(record.damaged_area),
@@ -126,6 +130,7 @@ const CATEGORY_CONFIG = {
     headerGroups: [
       { label: "क्र.सं.", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "मसाले", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "केंद्र", colspan: 1, hasSub: false, subHeaders: [] },
       {
         label: "क्षेत्रफल (हेक्टेयर)",
         colspan: 3,
@@ -157,6 +162,7 @@ const CATEGORY_CONFIG = {
     buildRow: (record, index, fmt) => [
       index + 1,
       record.spice || "",
+      record.center_name || "",
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_sown_area),
       fmt(record.damaged_area),
@@ -175,6 +181,7 @@ const CATEGORY_CONFIG = {
     headerGroups: [
       { label: "क्र.सं.", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "पुष्प", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "केंद्र", colspan: 1, hasSub: false, subHeaders: [] },
       {
         label: "क्षेत्रफल",
         colspan: 4,
@@ -215,6 +222,7 @@ const CATEGORY_CONFIG = {
     buildRow: (record, index, fmt) => [
       index + 1,
       record.flower || "",
+      record.center_name || "",
       fmt(record.previous_year_total_covered_area),
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_sown_area),
@@ -773,6 +781,13 @@ const AdminCategoryReport = ({ category }) => {
                     >
                       {category === "vegetables" ? "सब्जी" : category === "fruits" ? "फल" : category === "spices" ? "मसाले" : "पुष्प"}
                     </th>
+                    <th
+                      rowSpan={2}
+                      className="align-middle text-center"
+                      style={{ width: "14%" }}
+                    >
+                      केंद्र
+                    </th>
                     {category === "flowers" ? (
                       <>
                         <th
@@ -888,6 +903,7 @@ const AdminCategoryReport = ({ category }) => {
                     <tr key={record.id ?? index}>
                       <td>{index + 1}</td>
                       <td>{record[config.item] || ""}</td>
+                      <td>{record.center_name || "—"}</td>
                       {category === "flowers" ? (
                         <>
                           <td>{fmt(record.previous_year_total_covered_area)}</td>
@@ -917,7 +933,7 @@ const AdminCategoryReport = ({ category }) => {
                     <tr>
                       <td
                         colSpan={
-                          category === "flowers" ? 14 : 11
+                          category === "flowers" ? 15 : 12
                         }
                         className="text-center text-muted py-4"
                       >
