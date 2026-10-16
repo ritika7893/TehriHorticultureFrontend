@@ -138,6 +138,8 @@ const FlowerReport = () => {
   const [loadingRecords, setLoadingRecords] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [fieldErrors, setFieldErrors] = useState({});
+  const [prabhariName, setPrabhariName] = useState("");
 
   const loadComponents = useCallback(async () => {
     setLoadingComponents(true);
@@ -247,9 +249,23 @@ const FlowerReport = () => {
     return fields;
   };
 
+  const validateDraftFields = (draft) => {
+    const errors = {};
+    INPUT_FIELDS.forEach((field) => {
+      const value = String(draft[field] ?? "").trim();
+      if (!value) {
+        errors[field] = "यह फील्ड आवश्यक है";
+      }
+    });
+    return errors;
+  };
+
   const handleCreate = async (event) => {
     event.preventDefault();
     setMessage({ type: "", text: "" });
+    setFieldErrors({});
+    let hasErrors = false;
+
     if (!centerName) {
       setMessage({
         type: "danger",
@@ -258,14 +274,36 @@ const FlowerReport = () => {
       return;
     }
     if (!entryMonth) {
-      setMessage({ type: "danger", text: "कृपया रिपोर्ट का माह चुनें।" });
-      return;
+      setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (!String(prabhariName || "").trim()) {
+      setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
     }
     const readyDrafts = drafts.filter(hasDraftValues);
-    if (!readyDrafts.length) {
+    if (readyDrafts.length !== drafts.length) {
       setMessage({
         type: "danger",
-        text: "कम से कम एक पुष्प की जानकारी दर्ज करें।",
+        text: "All पुष्प की जानकारी दर्ज करें।",
+      });
+      alert("All पुष्प की जानकारी दर्ज करें।");
+      return;
+    }
+
+    const allErrors = {};
+    readyDrafts.forEach((draft) => {
+      const errors = validateDraftFields(draft);
+      if (Object.keys(errors).length > 0) {
+        allErrors[draft.key] = errors;
+        hasErrors = true;
+      }
+    });
+    if (hasErrors) {
+      setFieldErrors((prev) => ({ ...prev, ...allErrors }));
+      setMessage({
+        type: "danger",
+        text: "कृपया सभी आवश्यक फील्ड भरें।",
       });
       return;
     }
@@ -276,6 +314,7 @@ const FlowerReport = () => {
         center_name: centerName,
         flower: draft.flower,
         ...validateNumericFields(draft),
+        prabhari_ka_naam: String(prabhariName || "").trim(),
         remarks: String(draft.remarks || "").trim(),
         financial_year: entryFinancialYear,
         month: entryMonth,
@@ -322,6 +361,9 @@ const FlowerReport = () => {
           ? `${succeededKeys.length} प्रविष्टि सेव हुई। ${failures.join(" ")}`
           : `${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`,
       });
+      if (!failures.length) {
+        alert(`${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`);
+      }
       await loadRecords();
     } else {
       setMessage({
@@ -437,17 +479,45 @@ const FlowerReport = () => {
       formatNumber(record[field])
     );
 
-  const renderDraftInput = (draft, field) => (
-    <Form.Control
-      aria-label={`${draft.flower || "पुष्प"} - ${INPUT_LABELS[field]}`}
-      type="number"
-      min="0"
-      step="0.01"
-      value={draft[field]}
-      onChange={(event) => updateDraft(draft.key, field, event.target.value)}
-      className="vegetable-report-input"
-    />
-  );
+  const renderDraftInput = (draft, field) => {
+    const error = fieldErrors[draft.key]?.[field];
+    return (
+      <div>
+        <Form.Control
+          aria-label={`${draft.flower || "पुष्प"} - ${INPUT_LABELS[field]}`}
+          type="number"
+          min="0"
+          step="0.01"
+          value={draft[field]}
+          onChange={(event) => {
+            updateDraft(draft.key, field, event.target.value);
+            if (fieldErrors[draft.key]?.[field]) {
+              setFieldErrors((prev) => {
+                const next = { ...prev };
+                if (next[draft.key]) {
+                  const fieldErrorsCopy = { ...next[draft.key] };
+                  delete fieldErrorsCopy[field];
+                  if (Object.keys(fieldErrorsCopy).length === 0) {
+                    delete next[draft.key];
+                  } else {
+                    next[draft.key] = fieldErrorsCopy;
+                  }
+                }
+                return next;
+              });
+            }
+          }}
+          className="vegetable-report-input"
+          isInvalid={!!error}
+        />
+        {error && (
+          <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+            {error}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const sumDraftField = (field) =>
     drafts.reduce((sum, draft) => sum + (Number(draft[field]) || 0), 0);
@@ -490,38 +560,53 @@ const FlowerReport = () => {
        
         <Card.Body>
           <Form onSubmit={handleCreate}>
-            <div className="row g-3 mb-3">
-              <Form.Group className="col-12 col-md-4">
-                <Form.Label>वित्तीय वर्ष</Form.Label>
-                <Form.Select
-                  value={entryFinancialYear}
-                  onChange={(event) =>
-                    setEntryFinancialYear(event.target.value)
-                  }
-                >
-                  {financialYearOptions.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className="col-12 col-md-4">
-                <Form.Label>माह</Form.Label>
-                <Form.Select
-                  value={entryMonth}
-                  onChange={(event) => setEntryMonth(event.target.value)}
-                  required
-                >
-                  <option value="">माह चुनें</option>
-                  {MONTHS.map((month) => (
-                    <option key={month} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Form.Group>
-            </div>
+<div className="row g-3 mb-3">
+               <Form.Group className="col-12 col-md-4">
+                 <Form.Label>वित्तीय वर्ष</Form.Label>
+                 <Form.Select
+                   value={entryFinancialYear}
+                   onChange={(event) =>
+                     setEntryFinancialYear(event.target.value)
+                   }
+                 >
+                   {financialYearOptions.map((year) => (
+                     <option key={year} value={year}>
+                       {year}
+                     </option>
+                   ))}
+                 </Form.Select>
+               </Form.Group>
+               <Form.Group className="col-12 col-md-4">
+                 <Form.Label>माह <span className="text-danger">*</span></Form.Label>
+                 <Form.Select
+                   value={entryMonth}
+                   onChange={(event) => {
+                     setEntryMonth(event.target.value);
+                     if (fieldErrors.entryMonth) {
+                       setFieldErrors((prev) => {
+                         const next = { ...prev };
+                         delete next.entryMonth;
+                         return next;
+                       });
+                     }
+                   }}
+                   isInvalid={!!fieldErrors.entryMonth}
+                   className={fieldErrors.entryMonth ? "is-invalid" : ""}
+                 >
+                   <option value="">माह चुनें</option>
+                   {MONTHS.map((month) => (
+                     <option key={month} value={month}>
+                       {month}
+                     </option>
+                   ))}
+                 </Form.Select>
+                 {fieldErrors.entryMonth && (
+                   <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                     {fieldErrors.entryMonth}
+                   </div>
+                 )}
+               </Form.Group>
+             </div>
 
             {loadingComponents ? (
               <div className="text-center py-4">
@@ -567,15 +652,15 @@ const FlowerReport = () => {
                             <div className="flower-covered-header-main">वर्ष {previousFinancialYearShort} तक कुल आच्छादित क्षेत्रफल (हेक्टेयर में)</div>
                             <div className="flower-covered-header-note">(बहुवर्षीय पुष्प फसलों जैसे गुलाब आदि के संदर्भ में, यदि <span style={{ color: "#b36363" }}>माह के दौरान इस क्षेत्रफल में किसी भी कारण से क्षति होती है, तो उसे घटा</span>कर संशोधित आँकड़ा दर्शाया जाए, ताकि वर्ष {financialYearShort} के वास्तविक आँकड़े तैयार किए जा सकें)</div>
                           </th>
-                          <th colSpan={3} className="text-center">
-                            क्षेत्रफल (हेक्टेयर)
+<th colSpan={3} className="text-center">
+                            क्षेत्रफल (हेक्टेयर) <span className="text-danger">*</span>
                           </th>
-                          <th colSpan={2} className="text-center">
-                            स्पाइक / कट फ्लॉवर उत्पादन (संख्या)
-                          </th>
-                          <th colSpan={2} className="text-center">
-                            लूज फ्लॉवर उत्पादन (कुंटल)
-                          </th>
+<th colSpan={2} className="text-center">
+                             स्पाइक / कट फ्लॉवर उत्पादन (संख्या) <span className="text-danger">*</span>
+                           </th>
+                           <th colSpan={2} className="text-center">
+                             लूज फ्लॉवर उत्पादन (कुंटल) <span className="text-danger">*</span>
+                           </th>
                           <th rowSpan={2} className="text-center align-middle">
                             अभ्युक्ति
                           </th>
@@ -612,16 +697,37 @@ const FlowerReport = () => {
                               <td>{renderDraftInput(draft, INPUT_FIELDS[5])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[6])}</td>
                               <td>{renderDraftInput(draft, INPUT_FIELDS[7])}</td>
-                              <td>
-                                <Form.Control
-                                  aria-label={`${draft.flower} - अभ्युक्ति`}
-                                  value={draft.remarks}
-                                  onChange={(event) =>
-                                    updateDraft(draft.key, "remarks", event.target.value)
-                                  }
-                                  className="vegetable-report-input"
-                                />
-                              </td>
+<td>
+                                 <Form.Control
+                                   aria-label={`${draft.flower} - अभ्युक्ति`}
+                                   value={draft.remarks}
+                                   onChange={(event) => {
+                                     updateDraft(draft.key, "remarks", event.target.value);
+                                     if (fieldErrors[draft.key]?.remarks) {
+                                       setFieldErrors((prev) => {
+                                         const next = { ...prev };
+                                         if (next[draft.key]) {
+                                           const fieldErrorsCopy = { ...next[draft.key] };
+                                           delete fieldErrorsCopy.remarks;
+                                           if (Object.keys(fieldErrorsCopy).length === 0) {
+                                             delete next[draft.key];
+                                           } else {
+                                             next[draft.key] = fieldErrorsCopy;
+                                           }
+                                         }
+                                         return next;
+                                       });
+                                     }
+                                   }}
+                                   className="vegetable-report-input"
+                                   isInvalid={!!fieldErrors[draft.key]?.remarks}
+                                 />
+                                 {fieldErrors[draft.key]?.remarks && (
+                                   <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                                     {fieldErrors[draft.key].remarks}
+                                   </div>
+                                 )}
+                               </td>
                             </tr>
                           );
                         })}
@@ -639,32 +745,58 @@ const FlowerReport = () => {
                       </tbody>
                     </Table>
 
-                    <div className="vegetable-report-notes">
-                      <div>
-                        नोट— (1) कॉलम संख्या 5 (गत माह तक बुवाई / रोपण क्षेत्रफल) में माह{" "}
-                        <strong>
-                          {reportMonthLabel}{" "}
-                          {entryYearFromMonth(entryFinancialYear, entryMonth)}
-                        </strong>{" "}
-                        से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
-                      </div>
-                      <div>
-                        (2) कॉलम संख्या 10 व 13 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
-                        <strong>
-                          {reportMonthLabel}{" "}
-                          {entryYearFromMonth(entryFinancialYear, entryMonth)}
-                        </strong>{" "}
-                        से पूर्व का उत्पादन अंकित न किया जाए।
-                      </div>
-                    </div>
+<div className="vegetable-report-notes">
+                       <div>
+                         नोट— (1) कॉलम संख्या 5 (गत माह तक बुवाई / रोपण क्षेत्रफल) में माह{" "}
+                         <strong>
+                           {reportMonthLabel}{" "}
+                           {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                         </strong>{" "}
+                         से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                       </div>
+                       <div>
+                         (2) कॉलम संख्या 10 व 13 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
+                         <strong>
+                           {reportMonthLabel}{" "}
+                           {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                         </strong>{" "}
+                         से पूर्व का उत्पादन अंकित न किया जाए।
+                       </div>
+                     </div>
 
-                    <div className="vegetable-report-signature">
-                      हस्ताक्षर
-                      <br />
-                      प्रभारी, उद्यान सचल दल केंद्र
-                      <br />
-                      {centerName}
-                    </div>
+                     <div className="mb-3" style={{ maxWidth: "400px" }}>
+                       <Form.Label>प्रभारी का नाम <span className="text-danger">*</span></Form.Label>
+                       <Form.Control
+                         type="text"
+                         value={prabhariName}
+                         onChange={(event) => {
+                           setPrabhariName(event.target.value);
+                           if (fieldErrors.prabhariName) {
+                             setFieldErrors((prev) => {
+                               const next = { ...prev };
+                               delete next.prabhariName;
+                               return next;
+                             });
+                           }
+                         }}
+                         placeholder="प्रभारी का नाम दर्ज करें"
+                         className="vegetable-report-input"
+                         isInvalid={!!fieldErrors.prabhariName}
+                       />
+                       {fieldErrors.prabhariName && (
+                         <div className="invalid-feedback d-block" style={{ fontSize: "0.75rem", marginTop: "2px" }}>
+                           {fieldErrors.prabhariName}
+                         </div>
+                       )}
+                     </div>
+
+                     <div className="vegetable-report-signature">
+                       हस्ताक्षर
+                       <br />
+                       प्रभारी, उद्यान सचल दल केंद्र
+                       <br />
+                       {centerName}
+                     </div>
                   </div>
                 </div>
 

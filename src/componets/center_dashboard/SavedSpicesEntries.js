@@ -246,6 +246,7 @@ const SavedSpicesEntries = () => {
       const payload = {
         id: record.id,
         ...validateNumericFields(editingRecord),
+        prabhari_ka_naam: String(editingRecord.prabhari_ka_naam || "").trim(),
         remarks: String(editingRecord.remarks || "").trim(),
       };
       const response = await fetch(REPORT_URL, {
@@ -486,6 +487,20 @@ const SavedSpicesEntries = () => {
                   )}
                 </tbody>
               </Table>
+            </div>
+          )}
+          {filteredRecords.length > 0 && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                <div className="d-flex flex-wrap gap-3">
+                  {filteredRecords.map((record) => (
+                    <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                      <strong>{record.spice}:</strong> {record.prabhari_ka_naam || "—"}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </Card.Body>

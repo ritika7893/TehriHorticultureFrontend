@@ -275,6 +275,7 @@ const SavedFlowerEntries = () => {
       const payload = {
         id: record.id,
         ...validateNumericFields(editingRecord),
+        prabhari_ka_naam: String(editingRecord.prabhari_ka_naam || "").trim(),
         remarks: String(editingRecord.remarks || "").trim(),
       };
       const response = await fetch(REPORT_URL, {
@@ -440,8 +441,8 @@ const SavedFlowerEntries = () => {
                     <th>गत माह स्पाइक (10)</th>
                     <th>वर्तमान लूज (12)</th>
                     <th>गत माह लूज (13)</th>
-                    <th>टिप्पणी (15)</th>
-                    <th>माह</th>
+<th>टिप्पणी (15)</th>
+                     <th>माह</th>
                     <th>वित्तीय वर्ष</th>
                     <th>कार्यवाही</th>
                   </tr>
@@ -475,20 +476,20 @@ const SavedFlowerEntries = () => {
                         <td>{renderNumericCell(record, INPUT_FIELDS[5])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[6])}</td>
                         <td>{renderNumericCell(record, INPUT_FIELDS[7])}</td>
-                        <td>
-                          {editingId === record.id ? (
-                            <Form.Control
-                              aria-label="टिप्पणी"
-                              value={editingRecord?.remarks ?? ""}
-                              onChange={(event) =>
-                                updateEditingRecord("remarks", event.target.value)}
-                              style={{ minWidth: "140px" }}
-                            />
-                          ) : (
-                            record.remarks || "—"
-                          )}
-                        </td>
-                        <td>{record.month}</td>
+<td>
+                           {editingId === record.id ? (
+                             <Form.Control
+                               aria-label="टिप्पणी"
+                               value={editingRecord?.remarks ?? ""}
+                               onChange={(event) =>
+                                 updateEditingRecord("remarks", event.target.value)}
+                               style={{ minWidth: "140px" }}
+                             />
+                           ) : (
+                             record.remarks || "—"
+                           )}
+                         </td>
+                         <td>{record.month}</td>
                         <td>{record.financial_year}</td>
                         <td className="text-nowrap">
                           {editingId === record.id ? (
@@ -540,6 +541,18 @@ const SavedFlowerEntries = () => {
                   )}
                 </tbody>
               </Table>
+            </div>
+          )}
+          {filteredRecords.length > 0 && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                <div className="d-flex flex-wrap gap-3">
+                  <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                    {filteredRecords[0]?.prabhari_ka_naam || "—"}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
         </Card.Body>

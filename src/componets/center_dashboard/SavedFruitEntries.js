@@ -95,6 +95,10 @@ const SavedFruitEntries = () => {
   const [filterMonth, setFilterMonth] = useState("");
   const [filterFinancialYear, setFilterFinancialYear] = useState("");
   const [filterFruit, setFilterFruit] = useState("");
+  const [entryMonth, setEntryMonth] = useState("");
+  const [entryFinancialYear, setEntryFinancialYear] = useState(
+    getCurrentFinancialYear
+  );
   const [selectedIds, setSelectedIds] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editingRecord, setEditingRecord] = useState(null);
@@ -201,6 +205,19 @@ const SavedFruitEntries = () => {
     () => [...new Set(records.map((r) => r.fruit).filter(Boolean))].sort(),
     [records]
   );
+
+  const entryYearFromMonth = (financialYear, month) => {
+    if (!financialYear || !month) return "";
+    const [startYear, endYear] = financialYear.split("-").map(Number);
+    const monthIndex = MONTHS.indexOf(month);
+    return monthIndex >= 0 && monthIndex < 3 ? endYear : startYear;
+  };
+
+  const financialYearShort = entryFinancialYear
+    ? `${entryFinancialYear.slice(0, 4)}-${entryFinancialYear.slice(-2)}`
+    : "________";
+  const reportMonthLabel =
+    MONTHS.find((month) => month === entryMonth) || "________";
 
   const toggleSelected = (id) => {
     setSelectedIds((current) =>
@@ -378,6 +395,23 @@ const SavedFruitEntries = () => {
             </Form.Group>
           </div>
 
+          {filteredRecords.length > 0 && (
+            <div className="mb-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <div>
+                  <strong>वर्ष:</strong> {financialYearShort}
+                </div>
+                <div>
+                  <strong>माह:</strong> {" "}
+                  <strong>
+                    {reportMonthLabel}{" "}
+                    {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                  </strong>
+                </div>
+              </div>
+            </div>
+          )}
+
           {loadingRecords ? (
             <div className="text-center py-4">
               <Spinner animation="border" role="status" />
@@ -496,38 +530,20 @@ const SavedFruitEntries = () => {
                   )}
                 </tbody>
               </Table>
+</div>
+          )}
+          {filteredRecords.length > 0 && (
+            <div className="mt-3 p-3 border rounded bg-light">
+              <div className="d-flex flex-wrap align-items-center gap-3">
+                <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
+                <div className="d-flex flex-wrap gap-3">
+                  <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
+                    {filteredRecords[0]?.prabhari_ka_naam || "—"}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
-           {filteredRecords.length > 0 && (
-             <div className="mt-3 p-3 border rounded bg-light">
-               <div className="d-flex flex-wrap align-items-center gap-3">
-                 <strong style={{ color: "#2a4682", minWidth: "120px" }}>प्रभारी का नाम:</strong>
-                 <div className="d-flex flex-wrap gap-3">
-                   {/* Check if all records have the same prabhari_ka_naam */}
-                   {filteredRecords.length > 0 && (() => {
-                     const prabhariNames = filteredRecords.map(r => r.prabhari_ka_naam || "").filter(Boolean);
-                     const allSame = prabhariNames.length > 0 && prabhariNames.every(name => name === prabhariNames[0]);
-                     
-                     if (allSame && prabhariNames.length > 0) {
-                       // Show single name if all are the same
-                       return (
-                         <span className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                           <strong>सभी फल:</strong> {prabhariNames[0] || "—"}
-                         </span>
-                       );
-                     } else {
-                       // Show per fruit if names differ
-                       return filteredRecords.map((record) => (
-                         <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                           <strong>{record.fruit}:</strong> {record.prabhari_ka_naam || "—"}
-                         </span>
-                       ));
-                     }
-                   })()}
-                 </div>
-               </div>
-             </div>
-           )}
         </Card.Body>
       </Card>
     </Container>

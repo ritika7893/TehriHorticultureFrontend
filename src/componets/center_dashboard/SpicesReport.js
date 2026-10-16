@@ -119,6 +119,8 @@ const SpiceReport = () => {
   const [entryFinancialYear, setEntryFinancialYear] = useState(
     getCurrentFinancialYear
   );
+  const [prabhariName, setPrabhariName] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
   const [filterMonth, setFilterMonth] = useState("");
   const [filterFinancialYear, setFilterFinancialYear] = useState("");
   const [filterSpice, setFilterSpice] = useState("");
@@ -241,6 +243,9 @@ const SpiceReport = () => {
   const handleCreate = async (event) => {
     event.preventDefault();
     setMessage({ type: "", text: "" });
+    setFieldErrors({});
+    let hasErrors = false;
+
     if (!centerName) {
       setMessage({
         type: "danger",
@@ -249,15 +254,30 @@ const SpiceReport = () => {
       return;
     }
     if (!entryMonth) {
-      setMessage({ type: "danger", text: "कृपया रिपोर्ट का माह चुनें।" });
+      setFieldErrors((prev) => ({ ...prev, entryMonth: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (!String(prabhariName || "").trim()) {
+      setFieldErrors((prev) => ({ ...prev, prabhariName: "यह फील्ड आवश्यक है" }));
+      hasErrors = true;
+    }
+    if (hasErrors) {
+      setMessage({
+        type: "danger",
+        text: "कृपया सभी आवश्यक फील्ड भरें।",
+      });
+      window.scrollTo(0, 0);
+      alert("कृपया सभी आवश्यक फील्ड भरें।");
       return;
     }
     const readyDrafts = drafts.filter(hasDraftValues);
-    if (!readyDrafts.length) {
+    if (readyDrafts.length !== drafts.length) {
       setMessage({
         type: "danger",
-        text: "कम से कम एक मसाले की जानकारी दर्ज करें।",
+        text: "सभी मसाले की जानकारी दर्ज करें।",
       });
+      window.scrollTo(0, 0);
+      alert("सभी मसाले की जानकारी दर्ज करें।");
       return;
     }
 
@@ -267,6 +287,7 @@ const SpiceReport = () => {
         center_name: centerName,
         spice: draft.spice,
         ...validateNumericFields(draft),
+        prabhari_ka_naam: String(prabhariName || "").trim(),
         remarks: String(draft.remarks || "").trim(),
         financial_year: entryFinancialYear,
         month: entryMonth,
@@ -313,6 +334,9 @@ const SpiceReport = () => {
           ? `${succeededKeys.length} प्रविष्टि सेव हुई। ${failures.join(" ")}`
           : `${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`,
       });
+      if (!failures.length) {
+        alert(`${succeededKeys.length} प्रविष्टि सफलतापूर्वक सेव हुई।`);
+      }
       await loadRecords();
     } else {
       setMessage({
@@ -492,12 +516,22 @@ const SpiceReport = () => {
                   ))}
                 </Form.Select>
               </Form.Group>
-              <Form.Group className="col-12 col-md-4">
-                <Form.Label>माह</Form.Label>
+<Form.Group className="col-12 col-md-4">
+                <Form.Label>माह <span className="text-danger">*</span></Form.Label>
                 <Form.Select
                   value={entryMonth}
-                  onChange={(event) => setEntryMonth(event.target.value)}
-                  required
+                  onChange={(event) => {
+                    setEntryMonth(event.target.value);
+                    if (fieldErrors.entryMonth) {
+                      setFieldErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.entryMonth;
+                        return next;
+                      });
+                    }
+                  }}
+                  isInvalid={!!fieldErrors.entryMonth}
+                  className={fieldErrors.entryMonth ? "is-invalid" : ""}
                 >
                   <option value="">माह चुनें</option>
                   {MONTHS.map((month) => (
@@ -506,6 +540,14 @@ const SpiceReport = () => {
                     </option>
                   ))}
                 </Form.Select>
+                {fieldErrors.entryMonth && (
+                  <div
+                    className="invalid-feedback d-block"
+                    style={{ fontSize: "0.75rem", marginTop: "2px" }}
+                  >
+                    {fieldErrors.entryMonth}
+                  </div>
+                )}
               </Form.Group>
             </div>
 
@@ -609,32 +651,63 @@ const SpiceReport = () => {
                       </tbody>
                     </Table>
 
-                    <div className="vegetable-report-notes">
-                      <div>
-                        नोट— (1) कॉलम संख्या 4 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह{" "}
-                        <strong>
-                          {reportMonthLabel}{" "}
-                          {entryYearFromMonth(entryFinancialYear, entryMonth)}
-                        </strong>{" "}
-                        से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
-                      </div>
-                      <div>
-                        (2) कॉलम संख्या 9 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
-                        <strong>
-                          {reportMonthLabel}{" "}
-                          {entryYearFromMonth(entryFinancialYear, entryMonth)}
-                        </strong>{" "}
-                        से पूर्व का उत्पादन अंकित न किया जाए।
-                      </div>
-                    </div>
+<div className="vegetable-report-notes">
+                       <div>
+                         नोट— (1) कॉलम संख्या 4 (गत माह तक बुवाई / रोपण के अन्तर्गत क्षेत्रफल) में माह{" "}
+                         <strong>
+                           {reportMonthLabel}{" "}
+                           {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                         </strong>{" "}
+                         से पूर्व बुवाई / रोपण का क्षेत्रफल अंकित न किया जाए।
+                       </div>
+                       <div>
+                         (2) कॉलम संख्या 9 (गत माह तक उत्पादन) के अन्तर्गत माह{" "}
+                         <strong>
+                           {reportMonthLabel}{" "}
+                           {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                         </strong>{" "}
+                         से पूर्व का उत्पादन अंकित न किया जाए।
+                       </div>
+                     </div>
 
-                    <div className="vegetable-report-signature">
-                      हस्ताक्षर
-                      <br />
-                      प्रभारी, उद्यान सचल दल केंद्र
-                      <br />
-                      {centerName}
-                    </div>
+                     <div className="mb-3" style={{ maxWidth: "400px" }}>
+                       <Form.Label>
+                         प्रभारी का नाम <span className="text-danger">*</span>
+                       </Form.Label>
+                       <Form.Control
+                         type="text"
+                         value={prabhariName}
+                         onChange={(event) => {
+                           setPrabhariName(event.target.value);
+                           if (fieldErrors.prabhariName) {
+                             setFieldErrors((prev) => {
+                               const next = { ...prev };
+                               delete next.prabhariName;
+                               return next;
+                             });
+                           }
+                         }}
+                         placeholder="प्रभारी का नाम दर्ज करें"
+                         className="vegetable-report-input"
+                         isInvalid={!!fieldErrors.prabhariName}
+                       />
+                       {fieldErrors.prabhariName && (
+                         <div
+                           className="invalid-feedback d-block"
+                           style={{ fontSize: "0.75rem", marginTop: "2px" }}
+                         >
+                           {fieldErrors.prabhariName}
+                         </div>
+                       )}
+                     </div>
+
+                     <div className="vegetable-report-signature">
+                       हस्ताक्षर
+                       <br />
+                       प्रभारी, उद्यान सचल दल केंद्र
+                       <br />
+                       {centerName}
+                     </div>
                   </div>
                 </div>
 

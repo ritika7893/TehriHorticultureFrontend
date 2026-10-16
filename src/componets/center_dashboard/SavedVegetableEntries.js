@@ -470,7 +470,7 @@ const SavedVegetableEntries = () => {
                 <div className="d-flex flex-wrap gap-3">
                   {filteredRecords.map((record) => (
                     <span key={record.id} className="d-flex align-items-center gap-1" style={{ whiteSpace: "nowrap" }}>
-                      <strong>{record.vegetable}:</strong> {record.prabhari_ka_naam || "—"}
+                      {record.prabhari_ka_naam || "—"}
                     </span>
                   ))}
                 </div>
