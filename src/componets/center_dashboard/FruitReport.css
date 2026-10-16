@@ -69,7 +69,7 @@
 .vegetable-report-table th:nth-child(3),
 .vegetable-report-table td:nth-child(3) {
   width: 10%;
-  min-width: 90px;
+  min-width: 226px;
 }
 
 .vegetable-report-table th:nth-child(4),
