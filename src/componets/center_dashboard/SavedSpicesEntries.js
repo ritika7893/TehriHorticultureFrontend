@@ -549,7 +549,7 @@ const SavedSpicesEntries = () => {
       table.style.fontSize = "9px";
 
       const colWidths = [
-        "4%", "10%", "22%", "0%", "0%", "16%", "0%", "10%", "8%", "15%", "15%",
+        "4%", "10%", "34%", "0%", "0%", "18%", "0%", "9%", "6%", "10%", "9%",
       ];
 
       // thead: TWO rows with rowSpan/colSpan
