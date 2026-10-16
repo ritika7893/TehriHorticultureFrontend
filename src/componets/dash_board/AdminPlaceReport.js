@@ -46,6 +46,7 @@ const CATEGORY_CONFIG = {
         subHeaders: ["वर्तमान माह उत्पादन", "गत माह तक उत्पादन"],
       },
       { label: "अभ्युक्ति", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "प्रभारी का नाम", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "माह", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "वित्तीय वर्ष", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "कार्यवाही", colspan: 1, hasSub: false, subHeaders: [] },
@@ -61,6 +62,7 @@ const CATEGORY_CONFIG = {
       index + 1,
       record.vegetable || "",
       record.center_name || "",
+      record.prabhari_ka_naam || "",
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_total_sown_area),
       fmt(record.total_damaged_area),
@@ -97,6 +99,7 @@ const CATEGORY_CONFIG = {
         subHeaders: ["वर्तमान माह उत्पादन", "गत माह तक उत्पादन"],
       },
       { label: "अभ्युक्ति", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "प्रभारी का नाम", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "माह", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "वित्तीय वर्ष", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "कार्यवाही", colspan: 1, hasSub: false, subHeaders: [] },
@@ -112,6 +115,7 @@ const CATEGORY_CONFIG = {
       index + 1,
       record.fruit || "",
       record.center_name || "",
+      record.prabhari_ka_naam || "",
       fmt(record.current_month_planted_area),
       fmt(record.previous_month_total_area),
       fmt(record.damaged_area),
@@ -148,6 +152,7 @@ const CATEGORY_CONFIG = {
         subHeaders: ["वर्तमान माह उत्पादन", "गत माह तक उत्पादन"],
       },
       { label: "अभ्युक्ति", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "प्रभारी का नाम", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "माह", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "वित्तीय वर्ष", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "कार्यवाही", colspan: 1, hasSub: false, subHeaders: [] },
@@ -163,6 +168,7 @@ const CATEGORY_CONFIG = {
       index + 1,
       record.spice || "",
       record.center_name || "",
+      record.prabhari_ka_naam || "",
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_sown_area),
       fmt(record.damaged_area),
@@ -205,6 +211,7 @@ const CATEGORY_CONFIG = {
         ],
       },
       { label: "टिप्पणी(15)", colspan: 1, hasSub: false, subHeaders: [] },
+      { label: "प्रभारी का नाम", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "माह", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "वित्तीय वर्ष", colspan: 1, hasSub: false, subHeaders: [] },
       { label: "कार्यवाही", colspan: 1, hasSub: false, subHeaders: [] },
@@ -223,6 +230,7 @@ const CATEGORY_CONFIG = {
       index + 1,
       record.flower || "",
       record.center_name || "",
+      record.prabhari_ka_naam || "",
       fmt(record.previous_year_total_covered_area),
       fmt(record.current_month_sown_area),
       fmt(record.previous_month_sown_area),
@@ -788,6 +796,13 @@ const AdminCategoryReport = ({ category }) => {
                     >
                       केंद्र
                     </th>
+                    <th
+                      rowSpan={2}
+                      className="align-middle text-center"
+                      style={{ width: "14%" }}
+                    >
+                      प्रभारी का नाम
+                    </th>
                     {category === "flowers" ? (
                       <>
                         <th
@@ -904,6 +919,7 @@ const AdminCategoryReport = ({ category }) => {
                       <td>{index + 1}</td>
                       <td>{record[config.item] || ""}</td>
                       <td>{record.center_name || "—"}</td>
+                      <td>{record.prabhari_ka_naam || "—"}</td>
                       {category === "flowers" ? (
                         <>
                           <td>{fmt(record.previous_year_total_covered_area)}</td>
@@ -933,7 +949,7 @@ const AdminCategoryReport = ({ category }) => {
                     <tr>
                       <td
                         colSpan={
-                          category === "flowers" ? 15 : 12
+                          category === "flowers" ? 16 : 13
                         }
                         className="text-center text-muted py-4"
                       >
