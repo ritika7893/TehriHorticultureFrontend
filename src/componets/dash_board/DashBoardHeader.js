@@ -57,6 +57,24 @@ function DashBoardHeader() {
             </Nav.Link>
 
             <NavDropdown
+              title=" रिपोर्ट"
+              id="admin-report-nav-dropdown"
+            >
+              <NavDropdown.Item as={Link} to="/AdminVegetableReport">
+                सब्जी रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/AdminFruitReport">
+                फल रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/AdminSpicesReport">
+                मसाला रिपोर्ट
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/AdminFlowerReport">
+                फूल रिपोर्ट
+              </NavDropdown.Item>
+            </NavDropdown>
+
+            <NavDropdown
               title="डेटा एंट्री"
               id="basic-nav-dropdown"
               active={dataEntryRoutes.includes(location.pathname)}

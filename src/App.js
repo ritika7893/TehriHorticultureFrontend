@@ -18,6 +18,7 @@ import Dashboard from "./componets/dash_board/Dashboard";
 import Registration from "./componets/dash_board/Registration";
 import KrishiRegistration from "./componets/dash_board/KrishiRegistration";
 import MainDashboard from "./componets/dash_board/MainDashboard";
+import { AdminVegetableReport, AdminFruitReport, AdminSpicesReport, AdminFlowerReport } from "./componets/dash_board/AdminPlaceReport";
 import Billing from "./componets/dash_board/Billing";
 import AllBills from "./componets/dash_board/AllBills";
 import MPR from "./componets/dash_board/MPR";
@@ -77,6 +78,10 @@ function NavbarWrapper() {
     "/SavedFruitEntries",
     "/SavedFlowerEntries",
     "/SavedSpicesEntries",
+    "/AdminVegetableReport",
+    "/AdminFruitReport",
+    "/AdminSpicesReport",
+    "/AdminFlowerReport",
   ]);
   const hiddenPaths = new Set([
     "/Dashboard",
@@ -103,7 +108,11 @@ function NavbarWrapper() {
     "/CenterUdyanBill",
     "/VetanMang",
     "/MonthAttendance",
-    "/AdminKishanAavedan"
+    "/AdminKishanAavedan",
+    "/AdminVegetableReport",
+    "/AdminFruitReport",
+    "/AdminSpicesReport",
+    "/AdminFlowerReport",
     
   ]);
 
@@ -337,6 +346,38 @@ function AppContent() {
           element={
             <ProtectedRoute allowedLoginTypes={["admin"]}>
               <MainDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminVegetableReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminVegetableReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminFruitReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminFruitReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminSpicesReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminSpicesReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AdminFlowerReport"
+          element={
+            <ProtectedRoute allowedLoginTypes={["admin"]}>
+              <AdminFlowerReport />
             </ProtectedRoute>
           }
         />
