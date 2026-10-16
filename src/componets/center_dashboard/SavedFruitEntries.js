@@ -215,6 +215,10 @@ const SavedFruitEntries = () => {
     loadRecords();
   }, [loadRecords]);
 
+  useEffect(() => {
+    setEntryMonth(filterMonth);
+  }, [filterMonth]);
+
   const filteredRecords = useMemo(
     () =>
       records.filter(
@@ -397,13 +401,8 @@ const SavedFruitEntries = () => {
       const colWidths = [8, 20, 18, 18, 18, 18, 18, 22, 12, 14, 20];
       ws.columns = colWidths.map((w) => ({ width: w }));
 
-      const applyHeaderStyle = (cell, { bg, fontSize = 11 }) => {
-        cell.font = { bold: true, color: { argb: "FFFFFFFF" }, size: fontSize };
-        cell.fill = {
-          type: "pattern",
-          pattern: "solid",
-          fgColor: { argb: bg },
-        };
+      const applyHeaderStyle = (cell, { fontSize = 11 }) => {
+        cell.font = { bold: true, color: { argb: "FF000000" }, size: fontSize };
         cell.alignment = {
           horizontal: "center",
           vertical: "middle",
@@ -424,7 +423,7 @@ const SavedFruitEntries = () => {
       HEADER_GROUPS.forEach((g) => {
         const cell = row1.getCell(col);
         cell.value = g.label;
-        applyHeaderStyle(cell, { bg: "FF2A4682", fontSize: 11 });
+        applyHeaderStyle(cell, { fontSize: 11 });
 
         if (g.colspan === 1 && !g.hasSub) {
           ws.mergeCells(1, col, 2, col);
@@ -444,7 +443,7 @@ const SavedFruitEntries = () => {
           g.subHeaders.forEach((s) => {
             const cell = row2.getCell(subCol);
             cell.value = s;
-            applyHeaderStyle(cell, { bg: "FF3A5BA0", fontSize: 10 });
+            applyHeaderStyle(cell, { fontSize: 10 });
             subCol++;
           });
         } else {
@@ -857,7 +856,7 @@ const SavedFruitEntries = () => {
                 <thead className="table-light">
                   {/* Row 1: Group headers with rowSpan/colSpan */}
                   <tr>
-                    <th rowSpan={2} className="align-middle text-center" style={{ fontSize: "0.8rem" }}>
+                    <th rowSpan={2} className="align-middle text-center" style={{ fontSize: "10px" }}>
                       <Form.Check
                         aria-label="दिख रही सभी प्रविष्टियां चुनें"
                         checked={
