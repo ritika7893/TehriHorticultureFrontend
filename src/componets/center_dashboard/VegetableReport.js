@@ -8,9 +8,6 @@ import {
   Spinner,
   Table,
 } from "react-bootstrap";
-import * as XLSX from "xlsx";
-import html2pdf from "html2pdf.js";
-import { FaFileExcel, FaFilePdf } from "react-icons/fa";
 import DemandNavigation from "../DemandNavigation";
 import { useCenter } from "../all_login/CenterContext";
 
@@ -186,163 +183,6 @@ const VegetableReport = () => {
       fields[field] = value ? Number(value).toFixed(2) : "0.00";
     });
     return fields;
-  };
-
-  const formatNumber = (value) => {
-    const number = Number(value);
-    return Number.isFinite(number) ? number.toFixed(2) : "0.00";
-  };
-
-  const exportToExcel = () => {
-    try {
-      const headers = [
-        "क्र.सं.",
-        "सब्जी",
-        "वर्तमान माह क्षेत्रफल",
-        "गत माह तक क्षेत्रफल",
-        "क्षतिग्रस्त क्षेत्रफल",
-        "वर्तमान माह उत्पादन",
-        "गत माह तक उत्पादन",
-        "टिप्पणी",
-      ];
-      const rows = drafts.map((draft, index) => [
-        index + 1,
-        draft.vegetable,
-        formatNumber(draft.current_month_sown_area),
-        formatNumber(draft.previous_month_total_sown_area),
-        formatNumber(draft.total_damaged_area),
-        formatNumber(draft.current_month_production),
-        formatNumber(draft.previous_month_total_production),
-        draft.remarks || "",
-      ]);
-      const worksheet = XLSX.utils.aoa_to_sheet([headers, ...rows]);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "सब्जी रिपोर्ट");
-      XLSX.writeFile(
-        workbook,
-        `सब्जी_रिपोर्ट_${new Date().toISOString().split("T")[0]}.xlsx`,
-      );
-    } catch (error) {
-      console.error("exportToExcel error:", error);
-      alert("एक्सेल फाइल बनाने में त्रुटि हुई।");
-    }
-  };
-
-  const exportToPDF = () => {
-    try {
-      const wrapper = document.createElement("div");
-      wrapper.style.padding = "20px";
-      wrapper.style.fontFamily = "Arial, sans-serif";
-      wrapper.style.overflow = "visible";
-      wrapper.style.color = "#000000";
-
-      const header = document.createElement("h3");
-      header.textContent = "सब्जी रिपोर्ट";
-      header.style.textAlign = "center";
-      header.style.marginBottom = "10px";
-      wrapper.appendChild(header);
-
-      const meta = document.createElement("div");
-      meta.style.textAlign = "center";
-      meta.style.marginBottom = "15px";
-      meta.style.fontSize = "12px";
-      meta.textContent = `केंद्र: ${centerName} | वित्तीय वर्ष: ${entryFinancialYear || "सभी"} | माह: ${entryMonth || "सभी"}`;
-      wrapper.appendChild(meta);
-
-      const table = document.createElement("table");
-      table.style.borderCollapse = "collapse";
-      table.style.width = "100%";
-      table.style.tableLayout = "fixed";
-
-      const headers = [
-        { text: "क्र.सं.", width: "5%" },
-        { text: "सब्जी", width: "15%" },
-        { text: "वर्तमान माह क्षेत्रफल", width: "13%" },
-        { text: "गत माह तक क्षेत्रफल", width: "13%" },
-        { text: "क्षतिग्रस्त क्षेत्रफल", width: "12%" },
-        { text: "वर्तमान माह उत्पादन", width: "13%" },
-        { text: "गत माह तक उत्पादन", width: "13%" },
-        { text: "टिप्पणी", width: "16%" },
-      ];
-
-      const thead = document.createElement("thead");
-      const headerRow = document.createElement("tr");
-      headers.forEach(({ text, width }) => {
-        const th = document.createElement("th");
-        th.textContent = text;
-        th.style.border = "1px solid #000";
-        th.style.padding = "4px";
-        th.style.backgroundColor = "#0B488F";
-        th.style.color = "#000000";
-        th.style.textAlign = "center";
-        th.style.whiteSpace = "normal";
-        th.style.wordBreak = "break-word";
-        th.style.fontSize = "7px";
-        th.style.width = width;
-        headerRow.appendChild(th);
-      });
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
-
-      const tbody = document.createElement("tbody");
-      drafts.forEach((draft, index) => {
-        const row = document.createElement("tr");
-        const cells = [
-          index + 1,
-          draft.vegetable,
-          formatNumber(draft.current_month_sown_area),
-          formatNumber(draft.previous_month_total_sown_area),
-          formatNumber(draft.total_damaged_area),
-          formatNumber(draft.current_month_production),
-          formatNumber(draft.previous_month_total_production),
-          draft.remarks || "",
-        ];
-        cells.forEach((text, cellIndex) => {
-          const td = document.createElement("td");
-          td.textContent = text;
-          td.style.border = "1px solid #000";
-          td.style.padding = "4px";
-          td.style.textAlign = "center";
-          td.style.color = "#000000";
-          td.style.whiteSpace = "normal";
-          td.style.wordBreak = "break-word";
-          td.style.fontSize = "7px";
-          td.style.width = headers[cellIndex].width;
-          row.appendChild(td);
-        });
-        tbody.appendChild(row);
-      });
-      table.appendChild(tbody);
-      wrapper.appendChild(table);
-
-      document.body.appendChild(wrapper);
-
-      const opt = {
-        margin: 5,
-        filename: `सब्जी_रिपोर्ट_${new Date().toISOString().split("T")[0]}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          windowWidth: wrapper.scrollWidth,
-          windowHeight: wrapper.scrollHeight,
-          scrollX: 0,
-          scrollY: 0,
-        },
-        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-        pagebreak: { mode: ["css", "legacy"] },
-      };
-      html2pdf()
-        .set(opt)
-        .from(wrapper)
-        .save()
-        .then(() => {
-          document.body.removeChild(wrapper);
-        });
-    } catch (error) {
-      console.error("exportToPDF error:", error);
-      alert("PDF बनाने में त्रुटि हुई।");
-    }
   };
 
   const handleCreate = async (event) => {
@@ -530,28 +370,6 @@ const VegetableReport = () => {
           {message.text}
         </Alert>
       )}
-
-      <div className="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-        <strong>सब्जी रिपोर्ट</strong>
-        <div className="d-flex flex-wrap gap-2 align-items-center">
-          <Button
-            variant="outline-success"
-            size="sm"
-            disabled={!drafts.length}
-            onClick={exportToExcel}
-          >
-            <FaFileExcel /> Excel
-          </Button>
-          <Button
-            variant="outline-danger"
-            size="sm"
-            disabled={!drafts.length}
-            onClick={exportToPDF}
-          >
-            <FaFilePdf /> PDF
-          </Button>
-        </div>
-      </div>
 
       <Card className="border-0 shadow-sm mb-4">
       
