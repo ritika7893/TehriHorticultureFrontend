@@ -402,13 +402,12 @@ const SavedFlowerEntries = () => {
             <div className="mb-3 p-3 border rounded bg-light">
               <div className="d-flex flex-wrap align-items-center gap-3">
                 <div>
-                  <strong>वर्ष:</strong> {financialYearShort}
+                  <strong>वर्ष:</strong> {filteredRecords[0]?.financial_year || "________"}
                 </div>
                 <div>
                   <strong>माह:</strong> {" "}
                   <strong>
-                    {reportMonthLabel}{" "}
-                    {entryYearFromMonth(entryFinancialYear, entryMonth)}
+                    {filteredRecords[0]?.month || "________"}
                   </strong>
                 </div>
               </div>
