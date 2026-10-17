@@ -1,198 +1,870 @@
-.login-page {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
+/* ============================================
+   Uttarakhand Horticulture Dept - Login Page
+   Theme: BLUE + Natural Green Accent
+   Layout: Split-screen (60% hero / 40% form)
+   ============================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+.uk-login-page {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Noto Sans Devanagari', sans-serif;
-}
-
-.login-container {
-  border-radius: 12px;
-  overflow: hidden;
-  background: white;
-  box-shadow: 0 10px 25px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
-  margin: 20px 0;
-}
-
-.login-image {
-  background: url('https://picsum.photos/seed/login/800/1200.jpg') center center/cover;
+  min-height: 100vh;
+  background: url('../../assets/images//Himalayanimage.png') center center / cover no-repeat;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
 
-.image-overlay {
+/* Overlay for entire page to ensure form readability */
+.uk-login-page::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(0, 123, 255, 0.8) 0%, rgba(0, 82, 212, 0.8) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(13, 71, 161, 0.35) 0%,
+    rgba(21, 101, 192, 0.25) 50%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Ensure login card content is above overlay */
+.uk-login-main {
+  position: relative;
+  z-index: 2;
+}
+
+/* ============ TOP GOVERNMENT HEADER (WHITE) ============ */
+.uk-gov-header {
+  background: #ffffff;
+  color: #0d47a1;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  z-index: 10;
+  border-bottom: 3px solid #1976d2;
+}
+
+.gov-logo-wrap {
+  width: 56px;
+  height: 56px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  color: white;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gov-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gov-title-wrap {
+  flex: 1;
+}
+
+.gov-title-main {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: #0d47a1;
+  line-height: 1.3;
+}
+
+.gov-title-sub {
+  font-size: 0.78rem;
+  margin: 0;
+  color: #546e7a;
+  font-weight: 500;
+}
+
+/* ============ MAIN SPLIT SECTION ============ */
+.uk-login-main {
+  flex: 1;
+  position: relative;
+}
+
+/* ============ HERO SECTION (Left ~60%) ============ */
+.uk-hero-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: transparent;
+}
+
+.uk-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ 
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
   text-align: center;
+}
+
+.hero-content {
+  max-width: 600px;
+  margin: 0 auto;
   padding: 2rem;
 }
 
-.image-overlay h2 {
+.hero-title {
+  font-size: 3.8rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.hero-subtitle {
+  font-size: 1.7rem;
   font-weight: 600;
-  margin-bottom: 0.8rem;
-  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #ffd54f;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
 }
 
-.image-overlay p {
-  font-size: 0.95rem;
-  opacity: 0.9;
+.hero-divider {
+  width: 90px;
+  height: 4px;
+  background: #ffd54f;
+  margin: 1.5rem auto;
+  border-radius: 2px;
 }
 
-.login-form {
-  padding: 20px 0;
+.hero-description {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.login-form h3 {
+/* ============ FORM SECTION (Right ~40%) ============ */
+.uk-form-section {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: transparent;
+  overflow: visible;
+}
+
+.login-card-wrap {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 4;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  border-top: 4px solid #1976d2;
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+}
+
+/* ============ SPROUT / LEAF ICON ============ */
+.leaf-icon-circle {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  background: #e8f5e9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4caf50;
+  font-size: 2rem;
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+}
+
+.login-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 0.3rem;
+}
+
+.login-subtitle {
+  font-size: 0.85rem;
+  color: #78909c;
+  margin: 0;
+}
+
+/* ============ LOGIN TYPE DROPDOWN ============ */
+.login-type-toggle {
+  border: 1.5px solid #bbdefb !important;
+  color: #0d47a1 !important;
+  background: #ffffff !important;
   font-weight: 600;
-  color: #333;
-  font-size: 1.3rem;
+  font-size: 0.85rem;
+  padding: 0.55rem 1rem;
+  border-radius: 6px !important;
+  text-align: left;
+  position: relative;
+  opacity: 1 !important;
 }
 
-.form-label {
-  font-weight: 600;
-  color: #000 !important;
-  margin-bottom: 0.4rem;
-  font-size: 12px;
+.login-type-toggle:hover,
+.login-type-toggle:focus {
+  background: #e3f2fd !important;
+  border-color: #1976d2 !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
 }
 
-.form-control {
+.login-type-toggle::after {
+  margin-left: auto;
+}
+
+/* Dropdown menu z-index fix */
+.login-card .dropdown {
+  position: relative;
+  z-index: 5;
+}
+
+.login-card .dropdown-menu {
+  z-index: 9999 !important;
+  position: absolute !important;
+  display: none !important;
+  min-width: 100%;
+  margin-top: 0;
+  padding: 0.5rem 0;
+  background: #ffffff !important;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
-  padding: 6px 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: #212529 !important;
+  font-size: 0.85rem;
+}
+
+.login-card .dropdown-menu.show {
+  display: block !important;
+}
+
+.login-card .dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #212529 !important;
+  background: #ffffff !important;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  opacity: 1 !important;
+  font-weight: 500;
+  line-height: 1.6;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+}
+
+.login-card .dropdown-item:hover {
+  background: #e3f2fd !important;
+  color: #0d47a1 !important;
+  opacity: 1 !important;
+}
+
+.login-card .dropdown-item.active,
+.login-card .dropdown-item:focus {
+  background: #e3f2fd !important;
+  color: #0d47a1 !important;
+  outline: none;
+  opacity: 1 !important;
+}
+
+/* ============ FORM LABELS ============ */
+.uk-form-section .form-label {
+  font-weight: 600;
+  color: #37474f !important;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+  display: block;
+}
+
+/* ============ INPUT FIELDS ============ */
+.uk-input {
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  padding: 0.7rem 0.85rem !important;
+  font-size: 0.9rem !important;
+  height: auto !important;
   transition: all 0.3s ease;
-  font-size: 12px;
+  background: #fafafa;
+  color: #37474f;
 }
 
-.form-control:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-.account-not {
-  font-size: 0.75rem;
+.uk-input:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.15) !important;
+  background: #ffffff;
 }
 
-/* Fix for password input container */
+/* Input with icon container */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 12px;
+  color: #9e9e9e;
+  font-size: 0.95rem;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.input-with-icon .uk-input {
+  padding-left: 38px !important;
+}
+
+/* Password input container */
 .password-input-container {
   position: relative !important;
   display: flex;
   align-items: center;
 }
 
-.password-input-container .form-control {
-  padding-right: 45px;
+.password-input-container .input-icon-left {
+  position: absolute;
+  left: 12px;
+  color: #9e9e9e;
+  font-size: 0.95rem;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.password-input-container .uk-input-password {
+  padding-left: 38px !important;
+  padding-right: 45px !important;
   width: 100%;
 }
 
-/* Updated password toggle button */
 .password-toggle {
   position: absolute;
   right: 12px;
-  top: 33%;
+  top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #777;
+  color: #9e9e9e;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
   z-index: 10;
-  padding: 0px;
+  padding: 0;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #1976d2;
+}
+
+/* ============ REMEMBER ME & FORGOT PASSWORD ============ */
+.remember-me {
+  font-size: 0.8rem;
+}
+
+.remember-me .form-check-input {
+  border-color: #bbdefb;
+}
+
+.remember-me .form-check-input:checked {
+  background-color: #1976d2;
+  border-color: #1976d2;
+}
+
+.remember-me .form-check-label {
+  color: #37474f;
+}
+
+.forgot-link {
+  color: #1976d2;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-link:hover {
+  color: #0d47a1;
+  text-decoration: underline;
+}
+
+.forget-btn {
+  font-size: 0.8rem;
+}
+
+/* ============ CHANGE PASSWORD LINK ============ */
+.change-password p {
+  color: #d32f2f;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.change-password p:hover {
+  color: #b71c1c;
+}
+
+/* ============ LOGIN BUTTON (ROYAL BLUE) ============ */
+.login-btn {
+  background: #1976d2 !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-weight: 600;
+  font-size: 0.95rem !important;
+  padding: 0.8rem 1.5rem !important;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+  letter-spacing: 0.5px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.password-toggle:hover {
-  color: #007bff;
+.login-btn:hover:not(:disabled) {
+  background: #1565c0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4);
 }
 
-.remember-me {
-  font-size: 0.7rem;
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-.forgot-password-btn {
-  background: none;
-  border: none;
-  color: #007bff;
-  font-size: 0.7rem;
+/* ============ ALERTS ============ */
+.alert {
+  border-radius: 6px;
+  font-size: 0.82rem;
+  padding: 0.55rem 0.85rem;
+}
+
+/* ============ FORM SELECT STYLING ============ */
+.uk-form-section .form-select {
+  border: 1.5px solid #e0e0e0 !important;
+  border-radius: 6px !important;
+  padding: 0.7rem 0.85rem !important;
+  font-size: 0.9rem !important;
+  height: auto !important;
+  background-color: #fafafa;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%231976d2' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 14px 10px;
+  color: #37474f;
+}
+
+.uk-form-section .form-select:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 0.2rem rgba(25, 118, 210, 0.15) !important;
+  background-color: #ffffff;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 991px) {
+  .uk-form-section {
+    background: transparent;
+    min-height: calc(100vh - 70px);
+  }
+}
+
+@media (max-width: 768px) {
+  .gov-title-main {
+    font-size: 0.88rem;
+  }
+  .gov-title-sub {
+    font-size: 0.68rem;
+  }
+  .gov-logo-wrap {
+    width: 46px;
+    height: 46px;
+  }
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+  .login-title {
+    font-size: 1.4rem;
+  }
+  .uk-input {
+    font-size: 0.85rem !important;
+  }
+  .hero-title {
+    font-size: 2.8rem;
+  }
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .gov-title-main {
+    font-size: 0.76rem;
+  }
+  .gov-title-sub {
+    font-size: 0.6rem;
+  }
+  .gov-logo-wrap {
+    width: 42px;
+    height: 42px;
+  }
+  .login-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 10px;
+  }
+  .leaf-icon-circle {
+    width: 60px;
+    height: 60px;
+    font-size: 1.6rem;
+  }
+  .uk-form-section {
+    padding: 1.5rem 0.75rem;
+  }
+  .hero-content {
+    padding: 1.5rem;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  .hero-description {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============ ANIMATIONS ============ */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.login-card {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.hero-content {
+  animation: slideInLeft 0.8s ease forwards;
+}
+
+.login-card .leaf-icon-circle {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.login-card .dropdown {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.login-card .mb-3:nth-of-type(1) {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.login-card .mb-3:nth-of-type(2) {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.login-card button.login-btn {
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+
+/* ==========================================================
+   RESPONSIVE LAYOUT + LOGIN SELECT OVERLAP FIX
+   Keep this block at the end of login.css.
+   ========================================================== */
+
+.uk-login-page,
+.uk-login-page * {
+  box-sizing: border-box;
+}
+
+.uk-login-page {
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+.uk-login-main {
+  width: 100%;
+  min-width: 0;
+}
+
+.uk-login-main > .container-fluid,
+.uk-login-main .row {
+  width: 100%;
+  min-width: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.uk-form-section {
+  min-width: 0;
+}
+
+.login-card-wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 440px;
+}
+
+.login-card {
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+/* Use a regular select for the login type.
+   Native select menus are handled by the browser/OS and won't overlap
+   the form's following controls like an absolutely positioned menu. */
+.login-type-group {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-bottom: 1.25rem !important;
+}
+
+.login-type-select,
+.uk-form-section .login-type-select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding-right: 2.5rem !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
   cursor: pointer;
+  position: relative;
+  z-index: 1;
 }
 
-.forgot-password-btn:hover {
-  text-decoration: underline;
-  color: #0056b3;
+/* Remove old Bootstrap dropdown layering if any old markup remains. */
+.login-card .dropdown {
+  position: relative;
+  z-index: auto;
+  animation: none;
+  opacity: 1;
+}
+
+.login-card .dropdown-menu {
+  z-index: 20 !important;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Ensure form controls shrink within narrow screens. */
+.uk-form-section .form-control,
+.uk-form-section .form-select,
+.input-with-icon,
+.password-input-container {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.uk-form-section .form-label {
+  overflow-wrap: anywhere;
+}
+
+.uk-form-section .alert {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.forget-btn {
+  flex-wrap: wrap;
+  column-gap: 0.75rem;
+  row-gap: 0.5rem;
+}
+
+.forget-btn > * {
+  min-width: 0;
 }
 
 .login-btn {
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  font-size: 0.7rem;
+  max-width: 100%;
+  white-space: normal;
 }
 
-.login-btn:hover {
-  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-}
-
-.register-link {
-  color: #007bff;
-  font-weight: 500;
-  text-decoration: none;
-  font-size: 0.7rem;
-}
-
-.register-link:hover {
-  text-decoration: underline;
-}
-
-.alert {
-  border-radius: 6px;
-  font-size: 0.85rem;
-  padding: 8px 12px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 767px) {
-  .login-container {
-    margin: 0;
-    border-radius: 0;
+@media (min-width: 992px) {
+  .uk-login-main .row {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
-  
-  .login-form {
-    padding: 2px;
-    border-radius: 6px;
+
+  .uk-form-section {
+    padding: clamp(1rem, 3vw, 2.5rem);
   }
-  
-  .image-overlay h2 {
-    font-size: 1.3rem;
-  }
-  
-  .image-overlay p {
-    font-size: 0.85rem;
+
+  .login-card {
+    padding: clamp(1.5rem, 2.5vw, 2.5rem);
   }
 }
 
-/* Animation for form elements */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (max-width: 991.98px) {
+  .uk-login-main .row {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .uk-form-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 1.5rem 1rem;
+    align-items: center;
+  }
+
+  .login-card-wrap {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .login-card {
+    padding: 2rem;
+  }
 }
 
-.login-form .form-group,
-.login-form button {
-  animation: fadeIn 0.5s ease forwards;
+@media (max-width: 576px) {
+  .uk-form-section {
+    padding: 1rem 0.75rem;
+    align-items: flex-start;
+  }
+
+  .login-card-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .login-card {
+    padding: 1.5rem 1rem;
+    border-radius: 10px;
+  }
+
+  .login-title {
+    font-size: 1.35rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .leaf-icon-circle {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+
+  .uk-input,
+  .uk-form-section .form-select {
+    font-size: 16px !important; /* prevents automatic zoom on mobile Safari */
+  }
+
+  .forget-btn {
+    align-items: flex-start !important;
+  }
+
+  .remember-me,
+  .forgot-link {
+    font-size: 0.78rem;
+  }
+
+  .login-btn {
+    padding: 0.75rem 1rem !important;
+  }
 }
 
-.login-form .form-group:nth-child(1) { animation-delay: 0.1s; }
-.login-form .form-group:nth-child(2) { animation-delay: 0.2s; }
-.login-form .form-group:nth-child(3) { animation-delay: 0.3s; }
-.login-form button { animation-delay: 0.4s; }
+@media (max-width: 360px) {
+  .uk-form-section {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .login-card {
+    padding: 1.25rem 0.85rem;
+  }
+
+  .forget-btn {
+    flex-direction: column;
+  }
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  .login-card,
+  .hero-content,
+  .login-card .leaf-icon-circle,
+  .login-card .dropdown,
+  .login-card .mb-3,
+  .login-card button.login-btn {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+}

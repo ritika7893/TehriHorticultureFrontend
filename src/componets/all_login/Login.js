@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, Col, Container, Row, Form, Alert, Spinner, Dropdown } from "react-bootstrap";
+import { Button, Col, Container, Row, Form, Alert, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaLeaf, FaUser, FaLock, FaEnvelope, FaSignInAlt } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/css/login.css";
 import { useCenter } from "./CenterContext";
@@ -14,52 +14,52 @@ export default function Login() {
   // Kenra names for demand generate login
   const kenraNames = [
     "अखोरी",
-  "अंजनीसैंण",
-  "अच्चरीखूंट",
-  "गाजा",
-  "गर्केत",
-  "घनसाली",
-  "घुत्तू",
-  "चम्बा",
-  "जड़ीपानी",
-  "जौनपुर",
-  "टिहरी",
-  "थत्यूड़",
-  "थौलधार",
-  "देवदर्शनी",
-  "देवप्रयाग",
-  "धनोल्टी",
-  "नंदगांव",
-  "नैनबाग",
-  "नरेन्द्रनगर",
-  "न्योली",
-  "पंतवारी",
-  "पवखाल",
-  "पावकी देवी",
-  "प्रतापनगर",
-  "बौराड़ी",
-  "बाचेलीखाल",
-  "भवान",
-  "भेदियाना",
-  "भिलंगना",
-  "मरौड़ा",
-  "मुनि की रेती",
-  "म्याणी",
-  "राजाखेत",
-  "लंबगांव",
-  "लेसर",
-  "वली",
-  "श्रीकोट",
-  "सबली",
-  "हुलानाखाल",
-  "हिंडोलाखाल",
-  "हिसरियाखाल",
-  "फकोट",
-  "कमांद",
-  "कोड़ी",
-  "कुमाल्डा",
-  "कीर्तिनगर",
-  "छाम"
+    "अंजनीसैंण",
+    "अच्चरीखूंट",
+    "गाजा",
+    "गर्केत",
+    "घनसाली",
+    "घुत्तू",
+    "चम्बा",
+    "जड़ीपानी",
+    "जौनपुर",
+    "टिहरी",
+    "थत्यूड़",
+    "थौलधार",
+    "देवदर्शनी",
+    "देवप्रयाग",
+    "धनोल्टी",
+    "नंदगांव",
+    "नैनबाग",
+    "नरेन्द्रनगर",
+    "न्योली",
+    "पंतवारी",
+    "पवखाल",
+    "पावकी देवी",
+    "प्रतापनगर",
+    "बौराड़ी",
+    "बाचेलीखाल",
+    "भवान",
+    "भेदियाना",
+    "भिलंगना",
+    "मरौड़ा",
+    "मुनि की रेती",
+    "म्याणी",
+    "राजाखेत",
+    "लंबगांव",
+    "लेसर",
+    "वली",
+    "श्रीकोट",
+    "सबली",
+    "हुलानाखाल",
+    "हिंडोलाखाल",
+    "हिसरियाखाल",
+    "फकोट",
+    "कमांद",
+    "कोड़ी",
+    "कुमाल्डा",
+    "कीर्तिनगर",
+    "छाम"
   ];
 
   // Login type state
@@ -355,246 +355,275 @@ export default function Login() {
   };
 
   return (
-    <div className="login-page">
-      <Container>
-        <Row className="justify-content-center align-items-center">
-          <Col md={10} lg={8} xl={6} className="mt-2">
-            <div className="login-container shadow-lg">
-              <Row className="g-0">
-                <Col md={6} className="login-image d-none d-md-block">
-                  <div className="image-overlay">
-                    <h2>स्वागत है</h2>
-                    <p>कृपया अपने खाते में लॉगिन करें</p>
-                  </div>
-                </Col>
-                <Col md={6} className="p-4 p-md-5">
-                  <div className="login-form">
-                    <h3 className="mb-4 text-center">लॉगिन</h3>
-                    
-                    {/* Login Type Selector */}
-                    <div className="mb-4">
-                      <Dropdown className="w-100">
-                        <Dropdown.Toggle variant="outline-secondary" id="login-type-dropdown" className="w-100">
-                          {loginType === "regular" ? "Admin Login" : loginType === "demand" ? "Center Login" : "Nursery Login"}
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu className="w-100">
-                          <Dropdown.Item onClick={() => setLoginType("regular")}>Admin Login</Dropdown.Item>
-                          <Dropdown.Item onClick={() => setLoginType("demand")}>Center Login</Dropdown.Item>
-                          <Dropdown.Item onClick={() => setLoginType("nursery")}>Nursery Login</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
+    <div className="uk-login-page">
+    
+
+      {/* ============ Main Split Layout ============ */}
+      <div className="uk-login-main">
+        <Container fluid className="px-0">
+          <Row className="g-0 min-vh-100">
+            {/* ===== LEFT: Hero with Mountain Background (60%) ===== */}
+            <Col lg={7} md={6} className="uk-hero-section d-none d-lg-flex">
+              <div className="hero-overlay">
+                <div className="hero-content">
+                  <h2 className="hero-title">हरित उत्तराखण्ड</h2>
+                  <p className="hero-subtitle">समृद्ध किसान, सशक्त प्रदेश</p>
+                  <div className="hero-divider"></div>
+                  <p className="hero-description">
+                    उद्यान, बागवानी एवं खाद्य प्रसंस्करण के माध्यम से
+                    उत्तराखण्ड को आत्मनिर्भर और समृद्ध बनाने की दिशा में
+                    हमारा प्रयास!
+                  </p>
+                </div>
+              </div>
+            </Col>
+
+            {/* ===== RIGHT: Login Form Card (40%) ===== */}
+            <Col lg={5} md={6} xs={12} className="uk-form-section">
+              <div className="login-card-wrap">
+                <div className="login-card">
+                  {/* Sprout Icon + Heading */}
+                  <div className="text-center mb-4">
+                    <div className="leaf-icon-circle">
+                      <FaLeaf />
                     </div>
-                    
-                    {error && <Alert variant="danger" className="mb-4">{error}</Alert>}
-                    {success && <Alert variant="success" className="mb-4">{success}</Alert>}
-                    
-                    {showPasswordChangeOption && (
-                      <div className="text-center change-password mb-4">
-                        <p 
-                          onClick={handleChangePasswordClick}
-                        >
-                          Change Password
-                        </p>
-                      </div>
-                    )}
-                    
-                    {/* Regular Login Form */}
-                    {loginType === "regular" && (
-                      <Form onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3">
-                          <Form.Label>ईमेल या उपयोगकर्ता नाम</Form.Label>
+                    <h3 className="login-title">लॉगिन</h3>
+                    <p className="login-subtitle">अपने खाते में प्रवेश करें</p>
+                  </div>
+
+                  {/* Login Type Selector - native select prevents menu overlap */}
+                  <Form.Group className="mb-3 login-type-group">
+                    <Form.Label htmlFor="login-type-select">Login Type</Form.Label>
+                    <Form.Select
+                      id="login-type-select"
+                      name="loginType"
+                      value={loginType}
+                      onChange={(e) => {
+                        setLoginType(e.target.value);
+                        setError("");
+                        setSuccess("");
+                        setShowPasswordChangeOption(false);
+                      }}
+                      className="form-control-lg uk-input login-type-select"
+                      aria-label="Select login type"
+                    >
+                      <option value="regular">Admin Login</option>
+                      <option value="demand">Center Login</option>
+                      <option value="nursery">Nursery Login</option>
+                    </Form.Select>
+                  </Form.Group>
+
+                  {error && <Alert variant="danger" className="mb-3">{error}</Alert>}
+                  {success && <Alert variant="success" className="mb-3">{success}</Alert>}
+
+                  {showPasswordChangeOption && (
+                    <div className="text-center change-password mb-3">
+                      <p onClick={handleChangePasswordClick}>Change Password</p>
+                    </div>
+                  )}
+
+                  {/* ===== Regular Login Form ===== */}
+                  {loginType === "regular" && (
+                    <Form onSubmit={handleSubmit}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>ईमेल या उपयोगकर्ता नाम</Form.Label>
+                        <div className="input-with-icon">
+                          <FaEnvelope className="input-icon" />
                           <Form.Control
                             type="text"
                             name="identifier"
                             placeholder="ईमेल या उपयोगकर्ता नाम दर्ज करें"
                             value={formData.identifier}
                             onChange={handleChange}
-                            className="form-control-lg"
+                            className="form-control-lg uk-input"
                             required
                           />
-                        </Form.Group>
+                        </div>
+                      </Form.Group>
 
-                        <Form.Group className="mb-3">
-                          <Form.Label>पासवर्ड</Form.Label>
-                          <div className="password-input-container">
-                            <Form.Control
-                              type={showPassword ? "text" : "password"}
-                              name="password"
-                              placeholder="पासवर्ड दर्ज करें"
-                              value={formData.password}
-                              onChange={handleChange}
-                              className="form-control-lg"
-                              required
-                            />
-                            <button
-                              type="button"
-                              className="password-toggle"
-                              onClick={() => setShowPassword(!showPassword)}
-                              aria-label="Toggle password visibility"
-                            >
-                              {showPassword ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                          </div>
-                        </Form.Group>
-
-                        <div className="d-flex justify-content-between align-items-center forget-btn mb-4">
-                          <Form.Check
-                            type="checkbox"
-                            id="remember-me"
-                            label="मुझे याद रखें"
-                            className="remember-me"
+                      <Form.Group className="mb-3">
+                        <Form.Label>पासवर्ड</Form.Label>
+                        <div className="password-input-container">
+                          <FaLock className="input-icon input-icon-left" />
+                          <Form.Control
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="पासवर्ड दर्ज करें"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="form-control-lg uk-input uk-input-password"
+                            required
                           />
-                          {/* <p className="mb-0">
-                            <Link to="/ForgotPassword" className="text-decoration-none">
-                              पासवर्ड भूल गए?
-                            </Link>
-                          </p> */}
-                        </div>
-                        <div className="text-center">
-                          <Button 
-                            type="submit" 
-                            className="login-btn" 
-                            disabled={isLoading}
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowPassword(!showPassword)}
+                            aria-label="Toggle password visibility"
                           >
-                            {isLoading ? (
-                              <>
-                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                <span className="ms-2">लॉगिन हो रहे हैं...</span>
-                              </>
-                            ) : (
-                              "लॉगिन"
-                            )}
-                          </Button>
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
                         </div>
-                      </Form>
-                    )}
-                    
-                    {/* Demand Generate Login Form */}
-                    {loginType === "demand" && (
-                      <Form onSubmit={handleDemandSubmit}>
-                        <Form.Group className="mb-3">
-                          <Form.Label>उपयोगकर्ता नाम</Form.Label>
-                          <Form.Select
-                            name="username"
-                            value={demandFormData.username}
+                      </Form.Group>
+
+                      <div className="d-flex justify-content-between align-items-center forget-btn mb-4">
+                        <Form.Check
+                          type="checkbox"
+                          id="remember-me"
+                          label="मुझे याद रखें"
+                          className="remember-me"
+                        />
+                        <p className="mb-0">
+                          <Link to="/ForgotPassword" className="forgot-link">
+                            पासवर्ड भूल गए?
+                          </Link>
+                        </p>
+                      </div>
+
+                      <div className="text-center">
+                        <Button type="submit" className="login-btn w-100" disabled={isLoading}>
+                          {isLoading ? (
+                            <>
+                              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                              <span className="ms-2">लॉगिन हो रहे हैं...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaSignInAlt className="me-2" />
+                              लॉगिन
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </Form>
+                  )}
+
+                  {/* ===== Demand Generate Login Form ===== */}
+                  {loginType === "demand" && (
+                    <Form onSubmit={handleDemandSubmit}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>उपयोगकर्ता नाम</Form.Label>
+                        <Form.Select
+                          name="username"
+                          value={demandFormData.username}
+                          onChange={handleDemandChange}
+                          className="form-control-lg uk-input"
+                          required
+                        >
+                          <option value="">केन्द्र नाम चुनें</option>
+                          {kenraNames.map((name, index) => (
+                            <option key={index} value={name}>{name}</option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+
+                      <Form.Group className="mb-3">
+                        <Form.Label>पासवर्ड</Form.Label>
+                        <div className="password-input-container">
+                          <FaLock className="input-icon input-icon-left" />
+                          <Form.Control
+                            type={showDemandPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="पासवर्ड दर्ज करें"
+                            value={demandFormData.password}
                             onChange={handleDemandChange}
-                            className="form-control-lg"
+                            className="form-control-lg uk-input uk-input-password"
                             required
+                          />
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowDemandPassword(!showDemandPassword)}
+                            aria-label="Toggle password visibility"
                           >
-                            <option value="">केन्द्र नाम चुनें</option>
-                            {kenraNames.map((name, index) => (
-                              <option key={index} value={name}>{name}</option>
-                            ))}
-                          </Form.Select>
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                          <Form.Label>पासवर्ड</Form.Label>
-                          <div className="password-input-container">
-                            <Form.Control
-                              type={showDemandPassword ? "text" : "password"}
-                              name="password"
-                              placeholder="पासवर्ड दर्ज करें"
-                              value={demandFormData.password}
-                              onChange={handleDemandChange}
-                              className="form-control-lg"
-                              required
-                            />
-                            <button
-                              type="button"
-                              className="password-toggle"
-                              onClick={() => setShowDemandPassword(!showDemandPassword)}
-                              aria-label="Toggle password visibility"
-                            >
-                              {showDemandPassword ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                          </div>
-                        </Form.Group>
-
-                        <div className="text-center">
-                          <Button 
-                            type="submit" 
-                            className="login-btn" 
-                            disabled={isLoading}
-                          >
-                            {isLoading ? (
-                              <>
-                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                <span className="ms-2">लॉगिन हो रहे हैं...</span>
-                              </>
-                            ) : (
-                              "डिमांड लॉगिन"
-                            )}
-                          </Button>
+                            {showDemandPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
                         </div>
-                      </Form>
-                    )}
+                      </Form.Group>
 
-                    {/* Nursery Login Form */}
-                    {loginType === "nursery" && (
-                      <Form onSubmit={handleNurserySubmit}>
-                        <Form.Group className="mb-3">
-                          <Form.Label>उपयोगकर्ता नाम</Form.Label>
+                      <div className="text-center">
+                        <Button type="submit" className="login-btn w-100" disabled={isLoading}>
+                          {isLoading ? (
+                            <>
+                              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                              <span className="ms-2">लॉगिन हो रहे हैं...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaSignInAlt className="me-2" />
+                              डिमांड लॉगिन
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </Form>
+                  )}
+
+                  {/* ===== Nursery Login Form ===== */}
+                  {loginType === "nursery" && (
+                    <Form onSubmit={handleNurserySubmit}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>उपयोगकर्ता नाम</Form.Label>
+                        <div className="input-with-icon">
+                          <FaUser className="input-icon" />
                           <Form.Control
                             type="text"
                             name="username"
                             placeholder="उपयोगकर्ता नाम दर्ज करें"
                             value={nurseryFormData.username}
                             onChange={handleNurseryChange}
-                            className="form-control-lg"
+                            className="form-control-lg uk-input"
                             required
                           />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                          <Form.Label>पासवर्ड</Form.Label>
-                          <div className="password-input-container">
-                            <Form.Control
-                              type={showNurseryPassword ? "text" : "password"}
-                              name="password"
-                              placeholder="पासवर्ड दर्ज करें"
-                              value={nurseryFormData.password}
-                              onChange={handleNurseryChange}
-                              className="form-control-lg"
-                              required
-                            />
-                            <button
-                              type="button"
-                              className="password-toggle"
-                              onClick={() => setShowNurseryPassword(!showNurseryPassword)}
-                              aria-label="Toggle password visibility"
-                            >
-                              {showNurseryPassword ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                          </div>
-                        </Form.Group>
-
-                        <div className="text-center">
-                          <Button 
-                            type="submit" 
-                            className="login-btn" 
-                            disabled={isLoading}
-                          >
-                            {isLoading ? (
-                              <>
-                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                <span className="ms-2">लॉगिन हो रहे हैं...</span>
-                              </>
-                            ) : (
-                              "नर्सरी लॉगिन"
-                            )}
-                          </Button>
                         </div>
-                      </Form>
-                    )}
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </Col>
-          
-        </Row>
-      </Container>
+                      </Form.Group>
+
+                      <Form.Group className="mb-3">
+                        <Form.Label>पासवर्ड</Form.Label>
+                        <div className="password-input-container">
+                          <FaLock className="input-icon input-icon-left" />
+                          <Form.Control
+                            type={showNurseryPassword ? "text" : "password"}
+                            name="password"
+                            placeholder="पासवर्ड दर्ज करें"
+                            value={nurseryFormData.password}
+                            onChange={handleNurseryChange}
+                            className="form-control-lg uk-input uk-input-password"
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowNurseryPassword(!showNurseryPassword)}
+                            aria-label="Toggle password visibility"
+                          >
+                            {showNurseryPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
+                        </div>
+                      </Form.Group>
+
+                      <div className="text-center">
+                        <Button type="submit" className="login-btn w-100" disabled={isLoading}>
+                          {isLoading ? (
+                            <>
+                              <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                              <span className="ms-2">लॉगिन हो रहे हैं...</span>
+                            </>
+                          ) : (
+                            <>
+                              <FaSignInAlt className="me-2" />
+                              नर्सरी लॉगिन
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </Form>
+                  )}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </div>
   );
 }
